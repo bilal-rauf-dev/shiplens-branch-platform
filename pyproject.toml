@@ -1,0 +1,23 @@
+[tool.ruff]
+target-version = "py312"
+extend-exclude = [".tmp"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "S", "DJ", "UP", "TID251"]
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"django.utils.timezone.now" = { msg = "Use apps.core.clock.now() for domain timestamps." }
+"datetime.date.today" = { msg = "Use apps.core.clock.today() for business dates." }
+
+[tool.ruff.lint.per-file-ignores]
+"apps/core/clock.py" = ["TID251"]
+"tests/**/*.py" = ["S101"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings.test"
+python_files = ["test_*.py"]
+testpaths = ["tests"]
+addopts = "--cov=apps --cov-report=term-missing"
+
+[tool.coverage.run]
+omit = ["*/migrations/*"]

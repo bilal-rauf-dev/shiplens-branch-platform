@@ -47,3 +47,27 @@ is disposable; the workflow removes its containers and volumes on completion.
 `pip-audit` is pinned in the development lock and is not installed in the production
 image. Django's existing `security.W021` waiver is retained because HSTS preloading
 is deliberately disabled on the shared Render domain.
+
+## Permission regression checks
+
+`tests/rbac/registry.py` describes each protected route's HTTP method, URL builder,
+fixture factory and expected success status. The fixture supplies valid form data
+and an in-scope target when the route needs one. The shared scenario assigns a
+branch to Branch Lead and HR Lead actors; current dashboard/list placeholders do
+not need a domain object of their own.
+
+When adding a route to `ROUTE_ACTIONS`, add its request recipe in the same change.
+The coverage test rejects missing and obsolete recipes. The matrix suite iterates
+`ROUTE_ACTIONS` directly for all five roles and ANON. It derives access from
+`PERMISSIONS`, checks allowed success statuses, redirects anonymous users to login
+with the original URL in `next`, and requires 403 for other roles. Denials must not
+alter domain records. Allowed POSTs must use valid data and append an audit event.
+
+`T-RBAC-SERVICE` also invokes administration services directly for every disallowed
+role and ANON, requiring `PermissionDenied` and unchanged domain records. An
+additional check covers anonymous access to the own-password service. These tests
+run in the existing PostgreSQL pytest job with the current dependencies.
+
+For a focused run, use `pytest tests/rbac`. The frozen permission table, generated
+documentation sync, URL resolver coverage and object-scope tests remain separate
+checks so they can catch different classes of mistake.

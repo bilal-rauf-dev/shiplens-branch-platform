@@ -83,6 +83,10 @@ docker compose exec web python manage.py export_permissions
 The tests compare the matrix to the frozen plan copy in `tests/rbac_expected.yaml`
 and verify that the generated document matches the committed file. That YAML file
 uses JSON syntax (a YAML 1.2 subset), so the tests need no extra YAML dependency.
+`tests/rbac/registry.py` supplies a valid request recipe for every protected route.
+The suite checks every role and anonymous access against the central matrix, plus
+direct service denials. New protected routes must add a recipe or CI fails; see
+[permission regression checks](docs/ci.md#permission-regression-checks).
 Super Admins can open [Users](http://localhost:8000/en/app/users/) and
 [System settings](http://localhost:8000/en/app/settings/) from the navigation.
 User creation and password reset show a generated temporary password only in that

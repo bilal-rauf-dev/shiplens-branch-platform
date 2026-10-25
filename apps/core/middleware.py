@@ -3,7 +3,16 @@
 from contextvars import ContextVar
 from uuid import UUID, uuid4
 
+from django.conf import settings
+from django.contrib.auth.views import redirect_to_login
+from django.core.exceptions import PermissionDenied
+from django.http import Http404
+from django.urls import reverse
+
+from apps.accounts.permissions import can
+from apps.audit.services import record_denial
 from apps.core import views
+from apps.core.routes import PUBLIC_ROUTES, ROUTE_ACTIONS
 
 request_id = ContextVar("request_id", default=None)
 
@@ -36,3 +45,28 @@ class RequestIdMiddleware:
         finally:
             # Reset even when a request fails, so the next request cannot inherit it.
             request_id.reset(token)
+
+
+class RouteRegistryMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        return self.get_response(request)
+
+    def process_view(self, request, view_func, view_args, view_kwargs):
+        """Authorize after URL resolution and before any view can run."""
+        if request.path == "/health" or request.path.startswith(settings.STATIC_URL):
+            return None
+        # Include namespaces so an unrelated route cannot borrow a registered name.
+        route_name = request.resolver_match.view_name
+        if route_name in PUBLIC_ROUTES:
+            return None
+        if route_name not in ROUTE_ACTIONS:
+            raise Http404
+        if not request.user.is_authenticated:
+            return redirect_to_login(request.get_full_path(), reverse("account-login"))
+        if not can(request.user, ROUTE_ACTIONS[route_name]):
+            record_denial(request.user, route_name, ROUTE_ACTIONS[route_name])
+            raise PermissionDenied
+        return None

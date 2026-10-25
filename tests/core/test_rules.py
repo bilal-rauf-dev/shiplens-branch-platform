@@ -3,6 +3,8 @@ from django.test import override_settings
 
 from apps.core import rules
 
+pytestmark = pytest.mark.django_db
+
 
 def test_t_config_defaults():
     assert rules.get("collection_lock_days") == 7

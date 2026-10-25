@@ -51,3 +51,13 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=40s \
 ENTRYPOINT ["./bin/start.sh"]
 # Clear the Python base image's default command so normal starts run start.sh.
 CMD []
+
+FROM runtime AS dev
+USER root
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y gettext \
+    && rm -rf /var/lib/apt/lists/*
+USER 10001
+
+# Docker builds the last stage by default; CI and Render get the lean runtime.
+FROM runtime AS production

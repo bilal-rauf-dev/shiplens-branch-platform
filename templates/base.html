@@ -13,7 +13,21 @@
       <div class="container">
         <a class="brand" href="{% url 'home' %}">{% translate "ShipLens" %}</a>
         <nav aria-label="{% translate 'Main navigation' %}">
-          {% block navigation %}{% endblock %}
+          {% block navigation %}
+            {% if user.is_authenticated %}
+              {% if user.role == "SUPER_ADMIN" %}
+                <a href="{% url 'user-list' %}">{% translate "Users" %}</a>
+                <a href="{% url 'settings-view' %}">{% translate "System settings" %}</a>
+              {% endif %}
+              <a href="{% url 'account-change-password' %}">{% translate "Change password" %}</a>
+              <form method="post" action="{% url 'account-logout' %}">
+                {% csrf_token %}
+                <button type="submit">{% translate "Log out" %}</button>
+              </form>
+            {% else %}
+              <a href="{% url 'account-login' %}">{% translate "Log in" %}</a>
+            {% endif %}
+          {% endblock %}
         </nav>
       </div>
     </header>

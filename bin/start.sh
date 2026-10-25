@@ -14,6 +14,7 @@ if [ "${DEMO_MODE:-false}" = "true" ] && python manage.py help seed_demo >/dev/n
 fi
 
 exec gunicorn config.wsgi \
+    --no-control-socket \
     --bind "0.0.0.0:${PORT:-8000}" \
     --workers "${WEB_CONCURRENCY:-2}" \
     --timeout 60 \

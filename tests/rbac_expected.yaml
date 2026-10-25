@@ -1,0 +1,305 @@
+{
+  "public_actions": [
+    "account.login",
+    "account.set_language",
+    "application.submit",
+    "health",
+    "public.view"
+  ],
+  "permissions": {
+    "public.view": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "CONTENT_EDITOR": "GLOBAL",
+      "BRANCH_LEAD": "GLOBAL",
+      "HR_LEAD": "GLOBAL"
+    },
+    "application.submit": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "CONTENT_EDITOR": "GLOBAL",
+      "BRANCH_LEAD": "GLOBAL",
+      "HR_LEAD": "GLOBAL"
+    },
+    "account.login": {},
+    "account.logout": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "CONTENT_EDITOR": "GLOBAL",
+      "BRANCH_LEAD": "GLOBAL",
+      "HR_LEAD": "GLOBAL"
+    },
+    "account.change_password": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "CONTENT_EDITOR": "GLOBAL",
+      "BRANCH_LEAD": "GLOBAL",
+      "HR_LEAD": "GLOBAL"
+    },
+    "account.set_language": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "CONTENT_EDITOR": "GLOBAL",
+      "BRANCH_LEAD": "GLOBAL",
+      "HR_LEAD": "GLOBAL"
+    },
+    "user.list": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "user.view": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "user.create": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "user.update": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "user.reset_password": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "assignment.manage": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "city.manage": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "volunteer_role.manage": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "settings.view": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "settings.update": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "demo.reset": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "branch.list": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "BRANCH_LEAD": "ASSIGNED",
+      "HR_LEAD": "ASSIGNED"
+    },
+    "branch.view": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "BRANCH_LEAD": "ASSIGNED",
+      "HR_LEAD": "ASSIGNED"
+    },
+    "branch.create": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "branch.update": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "branch.transition": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "application.list": {
+      "SUPER_ADMIN": "GLOBAL",
+      "HR_LEAD": "ASSIGNED"
+    },
+    "application.view": {
+      "SUPER_ADMIN": "GLOBAL",
+      "HR_LEAD": "ASSIGNED"
+    },
+    "application.accept": {
+      "HR_LEAD": "ASSIGNED"
+    },
+    "application.decline": {
+      "HR_LEAD": "ASSIGNED"
+    },
+    "application.reassign_branch": {
+      "SUPER_ADMIN": "GLOBAL",
+      "HR_LEAD": "ASSIGNED"
+    },
+    "member.list": {
+      "SUPER_ADMIN": "GLOBAL",
+      "BRANCH_LEAD": "ASSIGNED",
+      "HR_LEAD": "ASSIGNED"
+    },
+    "member.view": {
+      "SUPER_ADMIN": "GLOBAL",
+      "BRANCH_LEAD": "ASSIGNED",
+      "HR_LEAD": "ASSIGNED"
+    },
+    "member.update": {
+      "SUPER_ADMIN": "GLOBAL",
+      "HR_LEAD": "ASSIGNED"
+    },
+    "member.reinstate": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "team.list": {
+      "SUPER_ADMIN": "GLOBAL",
+      "BRANCH_LEAD": "ASSIGNED",
+      "HR_LEAD": "ASSIGNED"
+    },
+    "team.manage": {
+      "SUPER_ADMIN": "GLOBAL",
+      "HR_LEAD": "ASSIGNED"
+    },
+    "member.export_csv": {
+      "SUPER_ADMIN": "GLOBAL",
+      "HR_LEAD": "ASSIGNED"
+    },
+    "collection.list": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "collection.view": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "collection.create": {
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "collection.update": {
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "collection.void": {
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "collection.adjust": {
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "transfer.create": {
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "transfer.list": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "transfer.view": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "collection.export_csv": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "report.list": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "report.view": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "report.edit_narrative": {
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "report.submit": {
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "report.resubmit": {
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "report.approve": {
+      "FINANCE_REVIEWER": "GLOBAL"
+    },
+    "report.return": {
+      "FINANCE_REVIEWER": "GLOBAL"
+    },
+    "report.export_pdf": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "report.export_csv": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "dashboard.head_office": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL"
+    },
+    "dashboard.branch": {
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "dashboard.hr": {
+      "HR_LEAD": "ASSIGNED"
+    },
+    "summary.export_pdf": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL"
+    },
+    "summary.export_csv": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL"
+    },
+    "unsent.export_csv": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "BRANCH_LEAD": "ASSIGNED"
+    },
+    "audit.list": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "audit.view": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "audit.export_csv": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "audit.verify_chain": {
+      "SUPER_ADMIN": "GLOBAL"
+    },
+    "audit.entity_history": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "CONTENT_EDITOR": "GLOBAL",
+      "BRANCH_LEAD": "ASSIGNED",
+      "HR_LEAD": "ASSIGNED"
+    },
+    "content.list": {
+      "SUPER_ADMIN": "GLOBAL",
+      "CONTENT_EDITOR": "GLOBAL"
+    },
+    "content.view": {
+      "SUPER_ADMIN": "GLOBAL",
+      "CONTENT_EDITOR": "GLOBAL"
+    },
+    "content.create": {
+      "SUPER_ADMIN": "GLOBAL",
+      "CONTENT_EDITOR": "GLOBAL"
+    },
+    "content.update": {
+      "SUPER_ADMIN": "GLOBAL",
+      "CONTENT_EDITOR": "GLOBAL"
+    },
+    "content.publish": {
+      "SUPER_ADMIN": "GLOBAL",
+      "CONTENT_EDITOR": "GLOBAL"
+    },
+    "content.unpublish": {
+      "SUPER_ADMIN": "GLOBAL",
+      "CONTENT_EDITOR": "GLOBAL"
+    },
+    "content.archive": {
+      "SUPER_ADMIN": "GLOBAL",
+      "CONTENT_EDITOR": "GLOBAL"
+    },
+    "content.restore": {
+      "SUPER_ADMIN": "GLOBAL",
+      "CONTENT_EDITOR": "GLOBAL"
+    },
+    "health": {
+      "SUPER_ADMIN": "GLOBAL",
+      "FINANCE_REVIEWER": "GLOBAL",
+      "CONTENT_EDITOR": "GLOBAL",
+      "BRANCH_LEAD": "GLOBAL",
+      "HR_LEAD": "GLOBAL"
+    }
+  }
+}

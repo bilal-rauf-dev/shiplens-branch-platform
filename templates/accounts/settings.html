@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "System settings" %} · {% translate "ShipLens" %}{% endblock %}
+{% block content %}
+  <h1>{% translate "System settings" %}</h1>
+  <p>{% translate "Changes apply immediately and are recorded in the audit log." %}</p>
+  <form method="post" action="{% url 'settings-update' %}">
+    {% csrf_token %}
+    {% include "accounts/_form_fields.html" %}
+    <button type="submit">{% translate "Save settings" %}</button>
+  </form>
+{% endblock %}

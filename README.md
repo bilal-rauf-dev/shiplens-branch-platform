@@ -4,14 +4,17 @@ A bilingual (English/Urdu) platform that connects volunteer branches to head off
 
 Solo entry for **ShipLens 1.0** by EchoLens Digital. Work in progress; the full README comes with the release.
 
-The current P1 build is a walking skeleton: English and Urdu placeholder home pages,
-a database health endpoint, Docker packaging and CI. Authentication, domain screens
-and demo seed data arrive in later tasks.
+The current build includes English and Urdu home pages, secure email login and
+password changes, role-specific placeholder pages, a database health endpoint,
+Docker packaging and CI. The central permission matrix and branch assignments are
+implemented, with default-deny route enforcement, localized error pages and an
+append-only audit log. Domain screens and demo seed data arrive in later tasks.
 
 - Planning documents: [`docs/planning/`](docs/planning/00-executive-summary.md)
 - AI usage declaration: [`AI-USAGE.md`](AI-USAGE.md)
 - Licence: [MIT](LICENSE)
 - CI jobs and checks: [`docs/ci.md`](docs/ci.md)
+- Generated permission matrix and scope rules: [`docs/permissions.md`](docs/permissions.md)
 
 ## Run locally
 
@@ -43,7 +46,7 @@ docker compose up --build
 ```
 
 Compose waits for PostgreSQL, applies migrations, creates the database cache table,
-then starts Django's development server. Open:
+compiles translation catalogs, then starts Django's development server. Open:
 
 - [English home](http://localhost:8000/en/)
 - [Urdu home](http://localhost:8000/ur/)
@@ -53,6 +56,84 @@ then starts Django's development server. Open:
 To stop the stack, run `docker compose down` in another terminal. The named database
 volume is retained. See [CI documentation](docs/ci.md) for checks and the PostgreSQL
 test requirements.
+
+To bootstrap a local staff account after updating an existing checkout, apply the
+migrations and run Django's interactive account-creation command:
+
+```sh
+docker compose exec web python manage.py migrate --noinput
+docker compose exec web python manage.py createsuperuser
+```
+
+This creates our `SUPER_ADMIN` role; the application does not use Django's admin,
+`is_staff`, or `is_superuser` permission flags. Open
+[staff login](http://localhost:8000/en/accounts/login/). Passwords require at least
+12 characters and must pass common-password, similarity and numeric-password
+checks. Five failed attempts lock that email/client-IP pair for 15 minutes.
+Sessions expire after one hour idle or eight hours from login; activity does not
+extend the absolute deadline.
+
+The permission source is `apps/accounts/permissions.py`. After an intentional
+matrix change, regenerate its documentation with:
+
+```sh
+docker compose exec web python manage.py export_permissions
+```
+
+The tests compare the matrix to the frozen plan copy in `tests/rbac_expected.yaml`
+and verify that the generated document matches the committed file. That YAML file
+uses JSON syntax (a YAML 1.2 subset), so the tests need no extra YAML dependency.
+`tests/rbac/registry.py` supplies a valid request recipe for every protected route.
+The suite checks every role and anonymous access against the central matrix, plus
+direct service denials. New protected routes must add a recipe or CI fails; see
+[permission regression checks](docs/ci.md#permission-regression-checks).
+Super Admins can open [Users](http://localhost:8000/en/app/users/) and
+[System settings](http://localhost:8000/en/app/settings/) from the navigation.
+User creation and password reset show a generated temporary password only in that
+response, with caching disabled. Copy it before leaving; the next login requires a
+password change. Deactivation and reset revoke existing sessions.
+
+The last active Super Admin cannot be demoted or deactivated, including competing
+requests. Demo accounts cannot be edited or reset; demo Super Admins cannot create
+or promote another Super Admin. Only Branch Leads and HR Leads may receive branch
+assignments, and new assignments cannot target closed branches. Removing a branch
+assignment removes only the access link and records its history in the audit log.
+Changing a lead to a role without branch scope removes their assignment links.
+
+Settings override deployment defaults immediately: collection lock days (1–30),
+current-week submission, minimum volunteer age (14–25), and applications per hour
+(1–50). `apply_rate_per_hour` is the numeric application-rate rule; the former
+`apply_rate` string default is replaced. Every administration write uses an atomic
+service and records an audit event. All user mutation services set `updated_at`
+from `clock.now()`.
+
+Every named route must appear in `apps/core/routes.py`, either in `PUBLIC_ROUTES`
+or mapped to a permission in `ROUTE_ACTIONS`. Unregistered routes return 404;
+private routes redirect anonymous visitors to login and return 403 for roles
+without the declared permission. Generic list/detail views use
+`PermissionRequiredMixin` to filter their querysets before object lookup. Public
+login continues to redirect already signed-in visitors to their role's home.
+
+The 403, 404 and 500 pages use generic text with English/Urdu translations. Error
+rendering avoids request context processors and database lookups. Translation
+catalogs compile during Docker builds and Compose startup. Compose selects the
+`dev` stage, which adds GNU gettext for source-mounted development. The default
+build ends at `production` (based on the lean `runtime` stage); CI and Render keep
+building without a target and do not include gettext or `msgfmt`.
+The entrypoint disables Gunicorn's optional control socket because the runtime
+user has no home directory; container lifecycle commands manage the server.
+
+Audit rows record authentication events, password changes, branch assignments and
+permission denials (at most one per user/route every 60 seconds). Request context
+captures the validated client IP, a truncated user agent and the UUID request ID.
+Only the attempted email is captured from failed-login credentials. Secret keys
+are redacted recursively from before/after/metadata, and before/after retain only
+changed fields. See [audit design](docs/audit.md) for the hash and database guards.
+Verify the stored chain with:
+
+```sh
+docker compose exec web python manage.py verify_audit_chain
+```
 
 ## Deploy
 
@@ -69,7 +150,7 @@ Render builds the existing Dockerfile and checks `/health`.
 4. Create the Blueprint and wait for the web service to become healthy. The
    production entrypoint runs migrations and creates the cache table before
    starting gunicorn. It runs `seed_demo --if-empty` only when demo mode is enabled
-   and that command exists; seeding is skipped in P1.
+   and that command exists; seeding is skipped until that command is implemented.
 5. Open the actual HTTPS service URL shown by Render and check `/health`, `/en/`
    and `/ur/`. Health reports the first seven characters of `RENDER_GIT_COMMIT`.
 6. Confirm auto-deploy is **After CI Checks Pass**. Subsequent `main` commits deploy
@@ -91,6 +172,7 @@ and secret behavior is described in the [Render Blueprint reference](https://ren
 | `DJANGO_ALLOWED_HOSTS` | Comma-separated hostnames, without schemes or ports. Blueprint default: `shiplens-web.onrender.com`. Add custom domains here. |
 | `CSRF_TRUSTED_ORIGINS` | Comma-separated origins including their scheme. Blueprint default: `https://shiplens-web.onrender.com`. Add custom HTTPS origins here. |
 | `RENDER_EXTERNAL_HOSTNAME` | Supplied automatically by Render and appended to the host/origin settings. Leave empty locally. |
+| `TRUSTED_PROXY_HOPS` | Trusted forwarded entries counted from the right; default `1` for Render. Set `0` to ignore forwarding headers when running without a trusted reverse proxy. The same client-IP helper is used for login lockout and rate-limit keys. |
 | `DEMO_MODE` | `false` in the local example; `true` in the Blueprint. Enables guarded demo seeding once the command exists. |
 | `DEMO_PASSWORD` | Set manually during Blueprint creation (`sync: false`). Used when demo accounts are implemented. Manage later changes in Render's environment settings. |
 | `WEB_CONCURRENCY` | Production gunicorn worker count; Blueprint value: `2`. |

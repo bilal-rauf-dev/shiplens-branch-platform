@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Users" %} · {% translate "ShipLens" %}{% endblock %}
+{% block content %}
+  <h1>{% translate "Users" %}</h1>
+  <p><a href="{% url 'user-create' %}">{% translate "Create user" %}</a></p>
+  <div class="table-container">
+    <table>
+      <caption>{% translate "Staff accounts" %}</caption>
+      <thead><tr><th scope="col">{% translate "Name" %}</th><th scope="col">{% translate "Email" %}</th><th scope="col">{% translate "Role" %}</th><th scope="col">{% translate "Active" %}</th></tr></thead>
+      <tbody>
+      {% for account in accounts %}
+        <tr><td><a href="{% url 'user-detail' account.pk %}">{{ account.full_name }}</a></td><td>{{ account.email }}</td><td>{{ account.get_role_display }}</td><td>{% if account.is_active %}{% translate "Yes" %}{% else %}{% translate "No" %}{% endif %}</td></tr>
+      {% empty %}
+        <tr><td colspan="4">{% translate "No users found." %}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

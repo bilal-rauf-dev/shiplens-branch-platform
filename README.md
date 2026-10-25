@@ -83,8 +83,25 @@ docker compose exec web python manage.py export_permissions
 The tests compare the matrix to the frozen plan copy in `tests/rbac_expected.yaml`
 and verify that the generated document matches the committed file. That YAML file
 uses JSON syntax (a YAML 1.2 subset), so the tests need no extra YAML dependency.
-Branch assignments currently have a service entry point; their administration
-screen comes in P2 Step 5.
+Super Admins can open [Users](http://localhost:8000/en/app/users/) and
+[System settings](http://localhost:8000/en/app/settings/) from the navigation.
+User creation and password reset show a generated temporary password only in that
+response, with caching disabled. Copy it before leaving; the next login requires a
+password change. Deactivation and reset revoke existing sessions.
+
+The last active Super Admin cannot be demoted or deactivated, including competing
+requests. Demo accounts cannot be edited or reset; demo Super Admins cannot create
+or promote another Super Admin. Only Branch Leads and HR Leads may receive branch
+assignments, and new assignments cannot target closed branches. Removing a branch
+assignment removes only the access link and records its history in the audit log.
+Changing a lead to a role without branch scope removes their assignment links.
+
+Settings override deployment defaults immediately: collection lock days (1–30),
+current-week submission, minimum volunteer age (14–25), and applications per hour
+(1–50). `apply_rate_per_hour` is the numeric application-rate rule; the former
+`apply_rate` string default is replaced. Every administration write uses an atomic
+service and records an audit event. All user mutation services set `updated_at`
+from `clock.now()`.
 
 Every named route must appear in `apps/core/routes.py`, either in `PUBLIC_ROUTES`
 or mapped to a permission in `ROUTE_ACTIONS`. Unregistered routes return 404;

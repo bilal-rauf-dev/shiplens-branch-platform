@@ -124,6 +124,13 @@ PASSWORD_HASHERS = ["django.contrib.auth.hashers.Argon2PasswordHasher"]
 
 # Defaults from docs/planning/07-business-rules.md; DB overrides arrive in P2.
 BUSINESS_RULES = {
+    "temporary_password_bytes": 24,
+    "collection_lock_days_min": 1,
+    "collection_lock_days_max": 30,
+    "min_volunteer_age_min": 14,
+    "min_volunteer_age_max": 25,
+    "apply_rate_per_hour_min": 1,
+    "apply_rate_per_hour_max": 50,
     "audit_denial_seconds": 60,
     "password_min_length": 12,
     "auth_failure_limit": 5,
@@ -132,7 +139,7 @@ BUSINESS_RULES = {
     "session_idle_seconds": 60 * 60,
     "min_volunteer_age": 16,  # BR-043
     "form_min_seconds": 3,  # BR-051
-    "apply_rate": "5/h",  # BR-051
+    "apply_rate_per_hour": 5,  # BR-051
     "max_collection": Decimal("10000000.00"),  # BR-060
     "collection_lock_days": 7,  # BR-064
     "week_start_day": "MON",  # BR-080

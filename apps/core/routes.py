@@ -1,6 +1,17 @@
 """Every reachable named route must be explicitly public or declare an action."""
 
 ROUTE_ACTIONS = {
+    "user-list": "user.list",
+    "user-create": "user.create",
+    "user-detail": "user.view",
+    "user-edit": "user.update",
+    "user-deactivate": "user.update",
+    "user-reactivate": "user.update",
+    "user-reset-password": "user.reset_password",
+    "user-assign-branch": "assignment.manage",
+    "user-remove-branch": "assignment.manage",
+    "settings-view": "settings.view",
+    "settings-update": "settings.update",
     "account-logout": "account.logout",
     "account-change-password": "account.change_password",
     "dashboard-head-office": "dashboard.head_office",

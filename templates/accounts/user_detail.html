@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ account.full_name }} · {% translate "ShipLens" %}{% endblock %}
+{% block content %}
+  <h1>{{ account.full_name }}</h1>
+  <dl>
+    <dt>{% translate "Email" %}</dt><dd>{{ account.email }}</dd>
+    <dt>{% translate "Role" %}</dt><dd>{{ account.get_role_display }}</dd>
+    <dt>{% translate "Active" %}</dt><dd>{% if account.is_active %}{% translate "Yes" %}{% else %}{% translate "No" %}{% endif %}</dd>
+  </dl>
+  {% if account.is_demo %}
+    <p>{% translate "Demo accounts cannot be edited." %}</p>
+  {% else %}
+    <p><a href="{% url 'user-edit' account.pk %}">{% translate "Edit user" %}</a></p>
+    <div class="actions">
+      {% if account.is_active %}
+        <form method="post" action="{% url 'user-deactivate' account.pk %}">{% csrf_token %}<button type="submit">{% translate "Deactivate user" %}</button></form>
+      {% else %}
+        <form method="post" action="{% url 'user-reactivate' account.pk %}">{% csrf_token %}<button type="submit">{% translate "Reactivate user" %}</button></form>
+      {% endif %}
+      <form method="post" action="{% url 'user-reset-password' account.pk %}">{% csrf_token %}<button type="submit">{% translate "Issue temporary password" %}</button></form>
+    </div>
+  {% endif %}
+  <h2>{% translate "Branch assignments" %}</h2>
+  <ul>
+  {% for assignment in account.branch_assignments.all %}
+    <li>{{ assignment.branch.code }} · {{ assignment.branch.name_en }}
+      {% if not account.is_demo %}
+        <form method="post" action="{% url 'user-remove-branch' account.pk assignment.branch_id %}">{% csrf_token %}<button type="submit">{% translate "Remove assignment" %}</button></form>
+      {% endif %}
+    </li>
+  {% empty %}
+    <li>{% translate "No branch assignments." %}</li>
+  {% endfor %}
+  </ul>
+  {% if not account.is_demo %}
+    {% if account.role == "BRANCH_LEAD" or account.role == "HR_LEAD" %}
+      <form method="post" action="{% url 'user-assign-branch' account.pk %}">
+        {% csrf_token %}
+        {% include "accounts/_form_fields.html" with form=assignment_form %}
+        <button type="submit">{% translate "Assign branch" %}</button>
+      </form>
+    {% endif %}
+  {% endif %}
+{% endblock %}

@@ -127,6 +127,7 @@ nav {
 }
 
 input,
+select,
 button {
   font: inherit;
   padding-block: var(--s-2);
@@ -156,4 +157,31 @@ button:hover {
 
 .help-text {
   color: var(--c-muted);
+}
+
+input[type="checkbox"] {
+  inline-size: auto;
+}
+
+.table-container {
+  overflow: auto;
+}
+
+table {
+  border-collapse: collapse;
+  inline-size: 100%;
+}
+
+th,
+td {
+  padding-block: var(--s-3);
+  padding-inline: var(--s-3);
+  border-block-end: 1px solid var(--c-border);
+  text-align: start;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
 }

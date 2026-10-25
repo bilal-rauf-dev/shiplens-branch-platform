@@ -15,6 +15,10 @@
         <nav aria-label="{% translate 'Main navigation' %}">
           {% block navigation %}
             {% if user.is_authenticated %}
+              {% if user.role == "SUPER_ADMIN" %}
+                <a href="{% url 'user-list' %}">{% translate "Users" %}</a>
+                <a href="{% url 'settings-view' %}">{% translate "System settings" %}</a>
+              {% endif %}
               <a href="{% url 'account-change-password' %}">{% translate "Change password" %}</a>
               <form method="post" action="{% url 'account-logout' %}">
                 {% csrf_token %}

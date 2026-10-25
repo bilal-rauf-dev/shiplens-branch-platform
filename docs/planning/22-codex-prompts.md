@@ -136,7 +136,7 @@ Read first: AGENTS.md, docs/planning/05-rbac-matrix.md (all), 08-data-model.md (
 STEP 1 — Custom user + login
 - apps/accounts: User(AbstractBaseUser) with a custom UserManager (no PermissionsMixin, no is_staff/is_superuser: authorisation uses our own matrix) with email login, full_name, role (TextChoices: SUPER_ADMIN, FINANCE_REVIEWER, CONTENT_EDITOR, BRANCH_LEAD, HR_LEAD) with a CheckConstraint, is_active, is_demo, must_change_password, preferred_language; case-insensitive unique email (UniqueConstraint on Lower("email")). AUTH_USER_MODEL set before the first migration.
 - Argon2 first in PASSWORD_HASHERS; validators: MinimumLength 12, CommonPassword, UserAttributeSimilarity, Numeric.
-- django-axes: 5 failures, 15 min cooloff, lockout keyed on username+IP; reads the client IP from the first X-Forwarded-For hop (Render).
+- django-axes: 5 failures, 15 min cooloff, lockout keyed on username+IP; reads the client IP via core.net.client_ip() (proxy-appended X-Forwarded-For entry, counted from the right).
 - Login/logout views (logout POST-only), change-password view; middleware redirecting users with must_change_password to change-password; generic error "Email or password is incorrect."; role home redirect after login (05 §1.2 / 16 §1.2: SA/FR → dashboard placeholder, BL → branch placeholder, HR → applications placeholder, CE → content placeholder).
 - Session settings: DB sessions, 8 h max, SESSION_SAVE_EVERY_REQUEST with 1 h idle via a small middleware.
 - Tests: T-AUTH-LOGIN, T-AUTH-FORCE-CHANGE, T-SEC-LOCKOUT (6th attempt blocked), T-SEC-PASSWORD (short and common rejected), T-SEC-PASSWORD-HASH (stored hash starts with "argon2"), T-SEC-SESSION-ROTATE (session key changes on login).
@@ -161,7 +161,7 @@ STEP 4 — Audit log
 - audit.record(actor, action, entity=None, *, entity_type=None, entity_id=None, entity_label="", branch_id=None, before=None, after=None, metadata=None): asserts connection.in_atomic_block; reads IP/UA/request id from the request contextvar; actor None → "system" or "anonymous" depending on context; redacts keys matching password/token/secret; diff helper storing only changed fields; hash chain under pg_advisory_xact_lock(<constant>) with sha256(prev_hash + canonical JSON (sorted keys, Decimal and datetime serialised as strings)).
 - verify_chain() returning (ok, first_bad_id); management command verify_audit_chain.
 - Signals for auth.login_succeeded, auth.login_failed (no password, email only), auth.logout, auth.locked_out (axes signal), auth.password_changed.
-- Middleware sets the request context (ip from the first X-Forwarded-For hop, user agent truncated to 200, request id).
+- Middleware sets the request context (ip from core.net.client_ip(), user agent truncated to 200, request id).
 - Tests: T-AUD-IMMUTABLE (raw UPDATE/DELETE raise), T-AUD-ATOMIC (record + exception → nothing saved), T-AUD-CHAIN (verify ok; disable trigger inside the test, tamper with a row, verify fails at that id), T-AUD-REDACT, T-AUD-SECURITY (login ok/fail rows).
 Commit: feat(audit): add append-only audit log with hash chain
 

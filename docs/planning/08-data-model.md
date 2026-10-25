@@ -252,7 +252,7 @@ id · content_id FK CASCADE · locale varchar(5) · title varchar(150) · summar
 | branch_id | bigint | for scoping/filtering |
 | before / after | jsonb | changed fields only + identifiers |
 | metadata | jsonb | e.g. export filters, row count, reason |
-| ip | inet | from `X-Forwarded-For` first hop (Render proxy) |
+| ip | inet | `core.net.client_ip()`: the X-Forwarded-For entry appended by the trusted proxy, counted `TRUSTED_PROXY_HOPS` from the right (never the client-supplied leftmost entry) |
 | user_agent | varchar(200) | truncated |
 | request_id | uuid | from middleware (`X-Request-ID`) |
 | prev_hash / hash | char(64) | chain |

@@ -1,4 +1,4 @@
-FROM python:3.12-slim-bookworm AS builder
+FROM python:3.15-slim-bookworm AS builder
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -20,7 +20,7 @@ RUN SECRET_KEY=build-only-dummy-key-not-for-runtime \
     DJANGO_SETTINGS_MODULE=config.settings.prod \
     python manage.py compilemessages
 
-FROM python:3.12-slim-bookworm AS runtime
+FROM python:3.15-slim-bookworm AS runtime
 
 ARG GIT_SHA=dev
 ENV PYTHONDONTWRITEBYTECODE=1 \

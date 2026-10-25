@@ -15,6 +15,7 @@ append-only audit log. Domain screens and demo seed data arrive in later tasks.
 - Licence: [MIT](LICENSE)
 - CI jobs and checks: [`docs/ci.md`](docs/ci.md)
 - Generated permission matrix and scope rules: [`docs/permissions.md`](docs/permissions.md)
+- Branch model, counters and migration notes: [`docs/branch-register.md`](docs/branch-register.md)
 
 ## Run locally
 

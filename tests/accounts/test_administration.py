@@ -42,8 +42,8 @@ def target():
 
 
 @pytest.fixture
-def branch():
-    return Branch.objects.create(code="BR-KHI-01", name_en="Karachi")
+def branch(branch_factory):
+    return branch_factory()
 
 
 def settings_values(**overrides):

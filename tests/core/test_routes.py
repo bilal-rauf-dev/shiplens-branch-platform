@@ -13,7 +13,6 @@ from django.views.generic import TemplateView
 from apps.accounts.models import Role, User
 from apps.accounts.permissions import PERMISSIONS
 from apps.accounts.services import assign_branch
-from apps.branches.models import Branch
 from apps.core.middleware import RouteRegistryMiddleware
 from apps.core.routes import PUBLIC_ROUTES, ROUTE_ACTIONS
 from apps.core.views import PermissionRequiredMixin, server_error
@@ -121,9 +120,9 @@ def test_static_exemption_does_not_match_similar_prefix(rf):
         )
 
 
-def test_t_rbac_scope_detail_view(staff, staff_client, test_routes):
-    assigned = Branch.objects.create(code="BR-KHI-01", name_en="Karachi")
-    other = Branch.objects.create(code="BR-LHE-01", name_en="Lahore")
+def test_t_rbac_scope_detail_view(staff, staff_client, test_routes, branch_factory):
+    assigned = branch_factory()
+    other = branch_factory(code="BR-LHE-01", name_en="Lahore")
     lead = User.objects.create_user(
         email="scoped@example.com", full_name="Scoped Lead", role=Role.BRANCH_LEAD
     )

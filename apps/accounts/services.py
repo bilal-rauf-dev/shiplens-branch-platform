@@ -8,8 +8,10 @@ from django.core.exceptions import PermissionDenied, ValidationError
 from django.db import transaction
 from django.utils.translation import gettext_lazy as _
 
-from apps.accounts.models import User
+from apps.accounts.models import Role, User, UserBranchAssignment
+from apps.accounts.permissions import require
 from apps.accounts.signals import password_changed
+from apps.branches.models import Branch
 from apps.core import clock, rules
 
 
@@ -63,3 +65,19 @@ def change_password(request, old_password, new_password):
         request.user = user
         password_changed.send(sender=User, request=request, user=user)
         return user
+
+
+def assign_branch(actor, user, branch):
+    """Assign a branch once, serializing assignments with changes to the user's role."""
+    with transaction.atomic():
+        require(actor, "assignment.manage")
+        user = User.objects.select_for_update().get(pk=user.pk)
+        if user.role not in {Role.BRANCH_LEAD, Role.HR_LEAD}:
+            raise ValidationError(
+                _("Only Branch Leads and HR Leads can be assigned branches.")
+            )
+        branch = Branch.objects.get(pk=branch.pk)
+        assignment, _created = UserBranchAssignment.objects.get_or_create(
+            user=user, branch=branch, defaults={"created_by": actor}
+        )
+        return assignment

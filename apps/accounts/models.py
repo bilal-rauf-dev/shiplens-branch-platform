@@ -1,5 +1,6 @@
 """Email identity and one explicit business role per user."""
 
+from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.password_validation import validate_password
 from django.db import models, transaction
@@ -93,3 +94,39 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return self.email
+
+
+class UserBranchAssignment(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.RESTRICT,
+        related_name="branch_assignments",
+        verbose_name=_("user"),
+    )
+    branch = models.ForeignKey(
+        "branches.Branch",
+        on_delete=models.RESTRICT,
+        related_name="user_assignments",
+        verbose_name=_("branch"),
+    )
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.RESTRICT,
+        related_name="created_branch_assignments",
+        verbose_name=_("created by"),
+    )
+    created_at = models.DateTimeField(_("created at"), default=clock.now)
+
+    class Meta:
+        db_table = "user_branch_assignments"
+        verbose_name = _("user branch assignment")
+        verbose_name_plural = _("user branch assignments")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "branch"],
+                name="user_branch_assignments_unique",
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.user_id}: {self.branch_id}"

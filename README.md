@@ -6,13 +6,15 @@ Solo entry for **ShipLens 1.0** by EchoLens Digital. Work in progress; the full 
 
 The current build includes English and Urdu home pages, secure email login and
 password changes, role-specific placeholder pages, a database health endpoint,
-Docker packaging and CI. The central permission matrix and audit log arrive in
-later P2 steps; domain screens and demo seed data arrive in later tasks.
+Docker packaging and CI. The central permission matrix and branch assignments are
+implemented; request-wide route enforcement and the audit log arrive in later P2
+steps. Domain screens and demo seed data arrive in later tasks.
 
 - Planning documents: [`docs/planning/`](docs/planning/00-executive-summary.md)
 - AI usage declaration: [`AI-USAGE.md`](AI-USAGE.md)
 - Licence: [MIT](LICENSE)
 - CI jobs and checks: [`docs/ci.md`](docs/ci.md)
+- Generated permission matrix and scope rules: [`docs/permissions.md`](docs/permissions.md)
 
 ## Run locally
 
@@ -70,6 +72,19 @@ This creates our `SUPER_ADMIN` role; the application does not use Django's admin
 checks. Five failed attempts lock that email/client-IP pair for 15 minutes.
 Sessions expire after one hour idle or eight hours from login; activity does not
 extend the absolute deadline.
+
+The permission source is `apps/accounts/permissions.py`. After an intentional
+matrix change, regenerate its documentation with:
+
+```sh
+docker compose exec web python manage.py export_permissions
+```
+
+The tests compare the matrix to the frozen plan copy in `tests/rbac_expected.yaml`
+and verify that the generated document matches the committed file. That YAML file
+uses JSON syntax (a YAML 1.2 subset), so the tests need no extra YAML dependency.
+Branch assignments currently have a service entry point; their administration
+screen comes in P2 Step 5.
 
 ## Deploy
 

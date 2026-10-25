@@ -3,7 +3,20 @@
 from contextvars import ContextVar
 from uuid import UUID, uuid4
 
+from apps.core import views
+
 request_id = ContextVar("request_id", default=None)
+
+
+class HealthCheckMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        # Probes use IP addresses over internal HTTP; this endpoint exposes no secrets.
+        if request.path == "/health":
+            return views.health(request)
+        return self.get_response(request)
 
 
 class RequestIdMiddleware:

@@ -90,3 +90,35 @@ def test_health_requires_get(client):
     assert response.status_code == 405
     assert response["Allow"] == "GET"
     assert response["Cache-Control"] == "no-store"
+
+
+@pytest.mark.django_db
+def test_t_ops_health_internal_http_in_production(client, settings):
+    settings.SECURE_SSL_REDIRECT = True
+    settings.ALLOWED_HOSTS = ["example.com"]
+
+    response = client.get("/health", HTTP_HOST="127.0.0.1:8000")
+
+    assert response.status_code == 200
+    assert response.json()["status"] == "ok"
+    assert reverse("health") == "/health"
+
+
+@pytest.mark.parametrize("path", ["/en/", "/health/", "/healthcheck", "/en/health"])
+def test_t_sec_host_validation_outside_health(client, settings, path):
+    settings.SECURE_SSL_REDIRECT = True
+    settings.ALLOWED_HOSTS = ["example.com"]
+
+    response = client.get(path, HTTP_HOST="127.0.0.1:8000")
+
+    assert response.status_code == 400
+
+
+def test_t_sec_https_redirect_outside_health(client, settings):
+    settings.SECURE_SSL_REDIRECT = True
+    settings.ALLOWED_HOSTS = ["example.com"]
+
+    response = client.get("/en/", HTTP_HOST="example.com")
+
+    assert response.status_code == 301
+    assert response.url == "https://example.com/en/"

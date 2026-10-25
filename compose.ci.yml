@@ -1,0 +1,30 @@
+# Disposable production smoke stack; no .env file or source bind mount is used.
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: shiplens
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d shiplens"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    image: shiplens:ci
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.prod
+      SECRET_KEY: ci-only-placeholder-signing-key-not-used-for-deployment-0123456789
+      DATABASE_URL: postgres://postgres:postgres@db:5432/shiplens
+      DJANGO_ALLOWED_HOSTS: example.com
+      CSRF_TRUSTED_ORIGINS: https://example.com
+      DEMO_MODE: "false"
+      WEB_CONCURRENCY: "2"
+      PORT: "8000"
+    ports:
+      - "127.0.0.1:${CI_WEB_PORT:-8000}:8000"
+    depends_on:
+      db:
+        condition: service_healthy

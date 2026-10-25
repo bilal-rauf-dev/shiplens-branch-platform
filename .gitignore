@@ -28,6 +28,7 @@ playwright-report/
 
 # Tooling
 .ruff_cache/
+.tmp/
 .mypy_cache/
 node_modules/
 

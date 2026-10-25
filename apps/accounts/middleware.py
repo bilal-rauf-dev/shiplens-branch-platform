@@ -37,6 +37,10 @@ class MustChangePasswordMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
+        return self.get_response(request)
+
+    def process_view(self, request, view_func, view_args, view_kwargs):
+        # The route registry checks registration before this redirect is considered.
         if request.user.is_authenticated and request.user.must_change_password:
             exempt_paths = {
                 reverse("account-change-password"),
@@ -47,4 +51,4 @@ class MustChangePasswordMiddleware:
                 settings.STATIC_URL
             ):
                 return redirect("account-change-password")
-        return self.get_response(request)
+        return None

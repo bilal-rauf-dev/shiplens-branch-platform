@@ -1,0 +1,26 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ShipLens\n"
+"Language: ur\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Access denied"
+msgstr "رسائی کی اجازت نہیں"
+
+msgid "You do not have permission to access this page."
+msgstr "آپ کو اس صفحے تک رسائی کی اجازت نہیں ہے۔"
+
+msgid "Page not found"
+msgstr "صفحہ نہیں ملا"
+
+msgid "The page you requested could not be found."
+msgstr "آپ کا مطلوبہ صفحہ نہیں مل سکا۔"
+
+msgid "Something went wrong"
+msgstr "کچھ غلط ہو گیا"
+
+msgid "Please try again later."
+msgstr "براہ کرم کچھ دیر بعد دوبارہ کوشش کریں۔"

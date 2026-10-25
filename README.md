@@ -7,8 +7,8 @@ Solo entry for **ShipLens 1.0** by EchoLens Digital. Work in progress; the full 
 The current build includes English and Urdu home pages, secure email login and
 password changes, role-specific placeholder pages, a database health endpoint,
 Docker packaging and CI. The central permission matrix and branch assignments are
-implemented; request-wide route enforcement and the audit log arrive in later P2
-steps. Domain screens and demo seed data arrive in later tasks.
+implemented, with default-deny route enforcement and localized error pages. The
+audit log arrives in P2 Step 4. Domain screens and demo seed data arrive in later tasks.
 
 - Planning documents: [`docs/planning/`](docs/planning/00-executive-summary.md)
 - AI usage declaration: [`AI-USAGE.md`](AI-USAGE.md)
@@ -46,7 +46,7 @@ docker compose up --build
 ```
 
 Compose waits for PostgreSQL, applies migrations, creates the database cache table,
-then starts Django's development server. Open:
+compiles translation catalogs, then starts Django's development server. Open:
 
 - [English home](http://localhost:8000/en/)
 - [Urdu home](http://localhost:8000/ur/)
@@ -85,6 +85,18 @@ and verify that the generated document matches the committed file. That YAML fil
 uses JSON syntax (a YAML 1.2 subset), so the tests need no extra YAML dependency.
 Branch assignments currently have a service entry point; their administration
 screen comes in P2 Step 5.
+
+Every named route must appear in `apps/core/routes.py`, either in `PUBLIC_ROUTES`
+or mapped to a permission in `ROUTE_ACTIONS`. Unregistered routes return 404;
+private routes redirect anonymous visitors to login and return 403 for roles
+without the declared permission. Generic list/detail views use
+`PermissionRequiredMixin` to filter their querysets before object lookup. Public
+login continues to redirect already signed-in visitors to their role's home.
+
+The 403, 404 and 500 pages use generic text with English/Urdu translations. Error
+rendering avoids request context processors and database lookups. Translation
+catalogs compile during Docker builds and Compose startup; GNU gettext is also
+included in the runtime image for the source-mounted development setup.
 
 ## Deploy
 

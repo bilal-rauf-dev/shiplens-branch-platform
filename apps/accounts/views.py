@@ -1,7 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import redirect_to_login
-from django.core.exceptions import PermissionDenied, ValidationError
+from django.core.exceptions import ValidationError
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -14,6 +12,7 @@ from django.views.generic import FormView, TemplateView
 from apps.accounts import selectors, services
 from apps.accounts.forms import ChangePasswordForm, LoginForm
 from apps.core import rules
+from apps.core.views import PermissionRequiredMixin
 
 
 @method_decorator(sensitive_post_parameters("password"), name="dispatch")
@@ -43,7 +42,8 @@ class LoginView(FormView):
     sensitive_post_parameters("old_password", "new_password1", "new_password2"),
     name="dispatch",
 )
-class ChangePasswordView(LoginRequiredMixin, FormView):
+class ChangePasswordView(PermissionRequiredMixin, FormView):
+    required_action = "account.change_password"
     template_name = "accounts/change_password.html"
     form_class = ChangePasswordForm
 
@@ -84,17 +84,9 @@ def locked_out(request, response=None, credentials=None):
     )
 
 
-class RoleHomeView(TemplateView):
+class RoleHomeView(PermissionRequiredMixin, TemplateView):
     template_name = "accounts/role_home.html"
-    allowed_roles = ()
     title = _("Staff area")
-
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect_to_login(request.get_full_path(), reverse("account-login"))
-        if request.user.role not in self.allowed_roles:
-            raise PermissionDenied
-        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         return {**super().get_context_data(**kwargs), "page_title": self.title}

@@ -26,6 +26,8 @@ services:
       - >-
         python manage.py migrate --noinput &&
         python manage.py createcachetable &&
+        python manage.py compilemessages
+        --ignore=.venv --ignore=venv --ignore=.tmp --ignore=node_modules --ignore=.git &&
         python manage.py runserver 0.0.0.0:$${PORT:-8000}
     ports:
       - "8000:${PORT:-8000}"

@@ -1,7 +1,6 @@
 from django.urls import path
 from django.utils.translation import gettext_lazy as _
 
-from apps.accounts.models import Role
 from apps.accounts.views import ChangePasswordView, LoginView, RoleHomeView, logout
 
 urlpatterns = [
@@ -15,28 +14,26 @@ urlpatterns = [
     path(
         "app/dashboard/",
         RoleHomeView.as_view(
-            allowed_roles=(Role.SUPER_ADMIN, Role.FINANCE_REVIEWER),
+            required_action="dashboard.head_office",
             title=_("Dashboard"),
         ),
         name="dashboard-head-office",
     ),
     path(
         "app/my-branch/",
-        RoleHomeView.as_view(allowed_roles=(Role.BRANCH_LEAD,), title=_("My branch")),
+        RoleHomeView.as_view(required_action="dashboard.branch", title=_("My branch")),
         name="dashboard-branch",
     ),
     path(
         "app/applications/",
         RoleHomeView.as_view(
-            allowed_roles=(Role.SUPER_ADMIN, Role.HR_LEAD), title=_("Applications")
+            required_action="application.list", title=_("Applications")
         ),
         name="application-list",
     ),
     path(
         "app/content/",
-        RoleHomeView.as_view(
-            allowed_roles=(Role.SUPER_ADMIN, Role.CONTENT_EDITOR), title=_("Content")
-        ),
+        RoleHomeView.as_view(required_action="content.list", title=_("Content")),
         name="content-list",
     ),
 ]

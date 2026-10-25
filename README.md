@@ -7,8 +7,8 @@ Solo entry for **ShipLens 1.0** by EchoLens Digital. Work in progress; the full 
 The current build includes English and Urdu home pages, secure email login and
 password changes, role-specific placeholder pages, a database health endpoint,
 Docker packaging and CI. The central permission matrix and branch assignments are
-implemented, with default-deny route enforcement and localized error pages. The
-audit log arrives in P2 Step 4. Domain screens and demo seed data arrive in later tasks.
+implemented, with default-deny route enforcement, localized error pages and an
+append-only audit log. Domain screens and demo seed data arrive in later tasks.
 
 - Planning documents: [`docs/planning/`](docs/planning/00-executive-summary.md)
 - AI usage declaration: [`AI-USAGE.md`](AI-USAGE.md)
@@ -95,8 +95,24 @@ login continues to redirect already signed-in visitors to their role's home.
 
 The 403, 404 and 500 pages use generic text with English/Urdu translations. Error
 rendering avoids request context processors and database lookups. Translation
-catalogs compile during Docker builds and Compose startup; GNU gettext is also
-included in the runtime image for the source-mounted development setup.
+catalogs compile during Docker builds and Compose startup. Compose selects the
+`dev` stage, which adds GNU gettext for source-mounted development. The default
+build ends at `production` (based on the lean `runtime` stage); CI and Render keep
+building without a target and do not include gettext or `msgfmt`.
+The entrypoint disables Gunicorn's optional control socket because the runtime
+user has no home directory; container lifecycle commands manage the server.
+
+Audit rows record authentication events, password changes, branch assignments and
+permission denials (at most one per user/route every 60 seconds). Request context
+captures the validated client IP, a truncated user agent and the UUID request ID.
+Only the attempted email is captured from failed-login credentials. Secret keys
+are redacted recursively from before/after/metadata, and before/after retain only
+changed fields. See [audit design](docs/audit.md) for the hash and database guards.
+Verify the stored chain with:
+
+```sh
+docker compose exec web python manage.py verify_audit_chain
+```
 
 ## Deploy
 

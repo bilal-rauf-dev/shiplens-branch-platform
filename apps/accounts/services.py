@@ -8,6 +8,7 @@ from django.core.exceptions import PermissionDenied, ValidationError
 from django.db import transaction
 from django.utils.translation import gettext_lazy as _
 
+from apps import audit
 from apps.accounts.models import Role, User, UserBranchAssignment
 from apps.accounts.permissions import require
 from apps.accounts.signals import password_changed
@@ -16,7 +17,7 @@ from apps.core import clock, rules
 
 
 def authenticate_user(request, email, password):
-    """Keep failure tracking and future auth audit signals in the same transaction."""
+    """Keep failure tracking and auth audit signals in the same transaction."""
     with transaction.atomic():
         return auth.authenticate(request, username=email, password=password)
 
@@ -80,4 +81,12 @@ def assign_branch(actor, user, branch):
         assignment, _created = UserBranchAssignment.objects.get_or_create(
             user=user, branch=branch, defaults={"created_by": actor}
         )
+        if _created:
+            audit.record(
+                actor,
+                "assignment.added",
+                entity=assignment,
+                branch_id=branch.pk,
+                after={"user_id": user.pk, "branch_id": branch.pk},
+            )
         return assignment

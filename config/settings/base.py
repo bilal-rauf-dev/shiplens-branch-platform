@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "apps.core.apps.CoreConfig",
     "apps.accounts.apps.AccountsConfig",
     "apps.branches.apps.BranchesConfig",
+    "apps.audit.apps.AuditConfig",
     "axes",
 ]
 AUTH_USER_MODEL = "accounts.User"
@@ -66,6 +67,7 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "apps.audit.middleware.AuditContextMiddleware",
     "apps.accounts.middleware.SessionTimeoutMiddleware",
     "apps.core.middleware.RouteRegistryMiddleware",
     "apps.accounts.middleware.MustChangePasswordMiddleware",
@@ -122,6 +124,7 @@ PASSWORD_HASHERS = ["django.contrib.auth.hashers.Argon2PasswordHasher"]
 
 # Defaults from docs/planning/07-business-rules.md; DB overrides arrive in P2.
 BUSINESS_RULES = {
+    "audit_denial_seconds": 60,
     "password_min_length": 12,
     "auth_failure_limit": 5,
     "auth_cooloff_minutes": 15,

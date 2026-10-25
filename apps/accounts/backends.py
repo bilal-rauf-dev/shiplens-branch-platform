@@ -31,6 +31,6 @@ def login_email(request, credentials=None):
     email = (
         credentials.get("email")
         or credentials.get("username")
-        or request.POST.get("email", "")
+        or (request.POST.get("email", "") if request is not None else "")
     )
     return User.objects.normalize_email(email)

@@ -10,6 +10,7 @@ from django.http import Http404
 from django.urls import reverse
 
 from apps.accounts.permissions import can
+from apps.audit.services import record_denial
 from apps.core import views
 from apps.core.routes import PUBLIC_ROUTES, ROUTE_ACTIONS
 
@@ -66,5 +67,6 @@ class RouteRegistryMiddleware:
         if not request.user.is_authenticated:
             return redirect_to_login(request.get_full_path(), reverse("account-login"))
         if not can(request.user, ROUTE_ACTIONS[route_name]):
+            record_denial(request.user, route_name, ROUTE_ACTIONS[route_name])
             raise PermissionDenied
         return None

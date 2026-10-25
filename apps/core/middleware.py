@@ -1,7 +1,7 @@
 """Keep a correlation ID local to each request."""
 
 from contextvars import ContextVar
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 request_id = ContextVar("request_id", default=None)
 
@@ -11,7 +11,10 @@ class RequestIdMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        correlation_id = request.headers.get("X-Request-ID") or str(uuid4())
+        try:
+            correlation_id = str(UUID(request.headers.get("X-Request-ID", "")))
+        except ValueError:
+            correlation_id = str(uuid4())
         token = request_id.set(correlation_id)
         try:
             response = self.get_response(request)

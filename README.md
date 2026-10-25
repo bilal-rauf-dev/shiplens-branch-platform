@@ -4,9 +4,10 @@ A bilingual (English/Urdu) platform that connects volunteer branches to head off
 
 Solo entry for **ShipLens 1.0** by EchoLens Digital. Work in progress; the full README comes with the release.
 
-The current P1 build is a walking skeleton: English and Urdu placeholder home pages,
-a database health endpoint, Docker packaging and CI. Authentication, domain screens
-and demo seed data arrive in later tasks.
+The current build includes English and Urdu home pages, secure email login and
+password changes, role-specific placeholder pages, a database health endpoint,
+Docker packaging and CI. The central permission matrix and audit log arrive in
+later P2 steps; domain screens and demo seed data arrive in later tasks.
 
 - Planning documents: [`docs/planning/`](docs/planning/00-executive-summary.md)
 - AI usage declaration: [`AI-USAGE.md`](AI-USAGE.md)
@@ -54,6 +55,22 @@ To stop the stack, run `docker compose down` in another terminal. The named data
 volume is retained. See [CI documentation](docs/ci.md) for checks and the PostgreSQL
 test requirements.
 
+To bootstrap a local staff account after updating an existing checkout, apply the
+migrations and run Django's interactive account-creation command:
+
+```sh
+docker compose exec web python manage.py migrate --noinput
+docker compose exec web python manage.py createsuperuser
+```
+
+This creates our `SUPER_ADMIN` role; the application does not use Django's admin,
+`is_staff`, or `is_superuser` permission flags. Open
+[staff login](http://localhost:8000/en/accounts/login/). Passwords require at least
+12 characters and must pass common-password, similarity and numeric-password
+checks. Five failed attempts lock that email/client-IP pair for 15 minutes.
+Sessions expire after one hour idle or eight hours from login; activity does not
+extend the absolute deadline.
+
 ## Deploy
 
 The root [`render.yaml`](render.yaml) defines a Docker web service and a PostgreSQL
@@ -69,7 +86,7 @@ Render builds the existing Dockerfile and checks `/health`.
 4. Create the Blueprint and wait for the web service to become healthy. The
    production entrypoint runs migrations and creates the cache table before
    starting gunicorn. It runs `seed_demo --if-empty` only when demo mode is enabled
-   and that command exists; seeding is skipped in P1.
+   and that command exists; seeding is skipped until that command is implemented.
 5. Open the actual HTTPS service URL shown by Render and check `/health`, `/en/`
    and `/ur/`. Health reports the first seven characters of `RENDER_GIT_COMMIT`.
 6. Confirm auto-deploy is **After CI Checks Pass**. Subsequent `main` commits deploy
@@ -91,6 +108,7 @@ and secret behavior is described in the [Render Blueprint reference](https://ren
 | `DJANGO_ALLOWED_HOSTS` | Comma-separated hostnames, without schemes or ports. Blueprint default: `shiplens-web.onrender.com`. Add custom domains here. |
 | `CSRF_TRUSTED_ORIGINS` | Comma-separated origins including their scheme. Blueprint default: `https://shiplens-web.onrender.com`. Add custom HTTPS origins here. |
 | `RENDER_EXTERNAL_HOSTNAME` | Supplied automatically by Render and appended to the host/origin settings. Leave empty locally. |
+| `TRUSTED_PROXY_HOPS` | Trusted forwarded entries counted from the right; default `1` for Render. Set `0` to ignore forwarding headers when running without a trusted reverse proxy. The same client-IP helper is used for login lockout and rate-limit keys. |
 | `DEMO_MODE` | `false` in the local example; `true` in the Blueprint. Enables guarded demo seeding once the command exists. |
 | `DEMO_PASSWORD` | Set manually during Blueprint creation (`sync: false`). Used when demo accounts are implemented. Manage later changes in Render's environment settings. |
 | `WEB_CONCURRENCY` | Production gunicorn worker count; Blueprint value: `2`. |

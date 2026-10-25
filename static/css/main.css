@@ -111,3 +111,49 @@ h1 {
 .skip-link:focus {
   transform: translateY(0);
 }
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+.form-field {
+  display: grid;
+  gap: var(--s-2);
+  margin-block-end: var(--s-5);
+  max-inline-size: 32rem;
+}
+
+input,
+button {
+  font: inherit;
+  padding-block: var(--s-2);
+  padding-inline: var(--s-3);
+  border: 1px solid var(--c-input-border);
+  border-radius: var(--radius);
+}
+
+input {
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+button {
+  color: var(--c-bg);
+  background: var(--c-primary);
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--c-primary-ink);
+}
+
+.errorlist {
+  color: var(--c-danger);
+}
+
+.help-text {
+  color: var(--c-muted);
+}

@@ -21,4 +21,21 @@ changes made outside the service. Names are unique ignoring case within a city.
 The migrations seed ten bilingual cities. Branches created through the service
 receive both names, actor fields and timestamps.
 
-Lifecycle transitions and register screens follow in P3 Steps 2 and 3.
+`transition` checks `branch.transition`, locks the current row and looks up its
+state/action pair in `BRANCH_TRANSITIONS`. Only Forming → Active, Active → Paused,
+Paused → Active, and any non-Closed state → Closed are allowed. Closed is terminal.
+Pause and close require a trimmed reason of 5–300 characters; the bounds come
+from `rules.get`. Activate and resume clear the current reason, while audit
+history retains earlier reasons. Activation sets the Karachi opening date only
+when missing; resuming preserves it. Closing records the Karachi closing date.
+Actor, timestamp and audit history update in the same transaction.
+
+`close_blockers` currently returns an empty list. P6 will add unsent collections
+and P7 will add open reports. A nonempty list prevents closing. Branch assignments
+remain for history; the assignment service locks the branch and rejects new
+assignments once it is Closed.
+
+The POST-only `/en/branches/<id>/<action>/` endpoint (also available in Urdu)
+returns translated text: 200 on success, 409 for an invalid transition or blocked
+close, and 400 for invalid reasons. It is protected by the route registry and
+CSRF checks. Register screens and their forms follow in P3 Step 3.

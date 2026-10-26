@@ -24,3 +24,15 @@ msgstr "کچھ غلط ہو گیا"
 
 msgid "Please try again later."
 msgstr "براہ کرم کچھ دیر بعد دوبارہ کوشش کریں۔"
+
+msgid "This action is not allowed in the branch's current state."
+msgstr "شاخ کی موجودہ حالت میں اس کارروائی کی اجازت نہیں ہے۔"
+
+msgid "This branch cannot be closed: %(blockers)s"
+msgstr "یہ شاخ بند نہیں کی جا سکتی: %(blockers)s"
+
+msgid "Give a reason between %(minimum)s and %(maximum)s characters."
+msgstr "%(minimum)s سے %(maximum)s حروف میں وجہ لکھیں۔"
+
+msgid "Branch status updated."
+msgstr "شاخ کی حالت تبدیل کر دی گئی ہے۔"

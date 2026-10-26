@@ -24,6 +24,14 @@ def page_url(name, fixture):
     return reverse(name)
 
 
+def transition_url(name, fixture):
+    return reverse(name, kwargs={"pk": fixture["branch"].pk, "action": "activate"})
+
+
+def branch_object(scenario):
+    return {"branch": scenario["branch"], "data": {}}
+
+
 def user_url(name, fixture):
     return reverse(name, kwargs={"pk": fixture["target"].pk})
 
@@ -115,6 +123,7 @@ def settings_payload(scenario):
 # The four columns are method, URL builder, in-scope fixture factory and success
 # status. Payloads must be valid so a validation error cannot masquerade as denial.
 ROUTE_CASES = {
+    "branch-transition": RouteCase("POST", transition_url, branch_object, 200),
     "user-list": RouteCase("GET", page_url, no_object, 200),
     "user-create": RouteCase("POST", page_url, create_payload, 200),
     "user-detail": RouteCase("GET", user_url, user_object, 200),

@@ -6,6 +6,7 @@ from django.urls import reverse
 from apps.accounts.models import Role, User, UserBranchAssignment
 from apps.accounts.permissions import PERMISSIONS
 from apps.audit.models import AuditLog
+from apps.branches.models import Branch
 from apps.core.models import SystemSetting
 from apps.core.routes import ROUTE_ACTIONS
 from tests.rbac.registry import ROUTE_CASES
@@ -23,6 +24,7 @@ def test_t_rbac_registry_covers_every_protected_route():
 def domain_snapshot():
     """Permission denials may be audited, but must not change business records."""
     return {
+        "branches": list(Branch.objects.order_by("pk").values()),
         "users": list(User.objects.order_by("pk").values()),
         "assignments": list(UserBranchAssignment.objects.order_by("pk").values()),
         "settings": list(SystemSetting.objects.order_by("pk").values()),

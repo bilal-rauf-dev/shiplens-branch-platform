@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Cities" %} · {% translate "ShipLens" %}{% endblock %}
+{% block content %}
+  <h1>{% translate "Cities" %}</h1>
+  <p><a href="{% url 'city-create' %}">{% translate "New city" %}</a></p>
+  <div class="table-container"><table>
+    <thead><tr><th scope="col">{% translate "Code" %}</th><th scope="col">{% translate "English name" %}</th><th scope="col">{% translate "Urdu name" %}</th><th scope="col">{% translate "Actions" %}</th></tr></thead>
+    <tbody>{% for city in cities %}<tr><td>{{ city.code }}</td><td>{{ city.name_en }}</td><td>{{ city.name_ur }}</td><td><a href="{% url 'city-edit' city.pk %}">{% translate "Edit city" %}</a></td></tr>{% empty %}<tr><td colspan="4">{% translate "No cities found." %}</td></tr>{% endfor %}</tbody>
+  </table></div>
+{% endblock %}

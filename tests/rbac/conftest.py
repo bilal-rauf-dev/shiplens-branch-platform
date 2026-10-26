@@ -4,7 +4,6 @@ from django.contrib.auth.models import AnonymousUser
 
 from apps.accounts.models import Role, User
 from apps.accounts.services import assign_branch
-from apps.branches.models import Branch
 from tests.accounts.conftest import TEST_PASSWORD
 
 
@@ -15,7 +14,7 @@ def matrix_password_hash():
 
 
 @pytest.fixture
-def scenario(db, role, matrix_password_hash, clock):
+def scenario(db, role, matrix_password_hash, clock, branch_factory):
     admin = User.objects.create(
         email="rbac-admin@example.com",
         full_name="Matrix Admin",
@@ -33,7 +32,7 @@ def scenario(db, role, matrix_password_hash, clock):
             role=role,
             password=matrix_password_hash,
         )
-    branch = Branch.objects.create(code="BR-KHI-01", name_en="Karachi")
+    branch = branch_factory()
     if role in {Role.BRANCH_LEAD, Role.HR_LEAD}:
         assign_branch(admin, actor, branch)
     return {"actor": actor, "admin": admin, "branch": branch}

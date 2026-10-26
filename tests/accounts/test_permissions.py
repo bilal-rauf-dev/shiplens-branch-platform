@@ -85,10 +85,10 @@ def test_permissions_fail_closed():
 
 
 @pytest.fixture
-def branches(db):
+def branches(branch_factory):
     return (
-        Branch.objects.create(code="BR-KHI-01", name_en="Karachi"),
-        Branch.objects.create(code="BR-LHE-01", name_en="Lahore"),
+        branch_factory(code="BR-KHI-01", name_en="Karachi"),
+        branch_factory(code="BR-LHE-01", name_en="Lahore"),
     )
 
 
@@ -144,9 +144,13 @@ def test_assignment_database_constraints(user, lead, branches):
             obj.delete()
     assignment.refresh_from_db()
     with pytest.raises(IntegrityError), transaction.atomic():
-        Branch.objects.create(code=branches[0].code, name_en="Duplicate")
+        Branch.objects.create(
+            code=branches[0].code, name_en="Duplicate", city=branches[0].city
+        )
     with pytest.raises(IntegrityError), transaction.atomic():
-        Branch.objects.create(code="BR-BAD-01", name_en="Invalid", status="UNKNOWN")
+        Branch.objects.create(
+            code="BR-BAD-01", name_en="Invalid", city=branches[0].city, status="UNKNOWN"
+        )
     assert str(assignment) == f"{lead.pk}: {branches[0].pk}"
     assert str(branches[0]) == "Karachi"
 
@@ -272,8 +276,8 @@ def test_public_and_denied_querysets(user, branches):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("status", BranchStatus.values)
-def test_branch_status_choices(status):
-    branch = Branch.objects.create(code="BR-KHI-01", name_en="Karachi", status=status)
+def test_branch_status_choices(status, branch_factory):
+    branch = branch_factory(code="BR-KHI-01", name_en="Karachi", status=status)
     branch.full_clean()
 
 

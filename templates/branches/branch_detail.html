@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ branch.code }} · {% translate "ShipLens" %}{% endblock %}
+{% block content %}
+  <p><a href="{% url 'branch-list' %}">{% translate "Back to branches" %}</a></p>
+  <h1>{{ branch.code }} · {% if LANGUAGE_CODE == "ur" %}{{ branch.name_ur }}{% else %}{{ branch.name_en }}{% endif %}</h1>
+  {% if errors %}<div class="form-errors" role="alert"><ul>{% for error in errors %}<li>{{ error }}</li>{% endfor %}</ul></div>{% endif %}
+  <p><span class="status-badge" data-status="{{ branch.status }}">{{ branch.get_status_display }}</span></p>
+  <dl class="record-details">
+    <dt>{% translate "City" %}</dt><dd>{{ branch.city.name_en }} ({{ branch.city.code }})</dd>
+    <dt>{% translate "English name" %}</dt><dd>{{ branch.name_en }}</dd>
+    <dt>{% translate "Urdu name" %}</dt><dd>{{ branch.name_ur }}</dd>
+    <dt>{% translate "English address" %}</dt><dd>{{ branch.address_en|default:"—" }}</dd>
+    <dt>{% translate "Urdu address" %}</dt><dd>{{ branch.address_ur|default:"—" }}</dd>
+    <dt>{% translate "Phone" %}</dt><dd>{{ branch.phone|default:"—" }}</dd>
+    <dt>{% translate "Email" %}</dt><dd>{{ branch.email|default:"—" }}</dd>
+    <dt>{% translate "Status reason" %}</dt><dd>{{ branch.status_reason|default:"—" }}</dd>
+    <dt>{% translate "Opened on" %}</dt><dd>{{ branch.opened_on|default:"—" }}</dd>
+    <dt>{% translate "Closed on" %}</dt><dd>{{ branch.closed_on|default:"—" }}</dd>
+  </dl>
+  <section><h2>{% translate "Counts" %}</h2><p>{% translate "Members" %}: — · {% translate "Unsent collections" %}: —</p></section>
+  {% if can_edit %}<p><a href="{% url 'branch-edit' branch.pk %}">{% translate "Edit branch" %}</a></p>{% endif %}
+  {% if actions %}
+    <section><h2>{% translate "Change status" %}</h2>
+      <div class="actions">
+        {% for action in actions %}
+          <form method="post" action="{% url 'branch-transition' branch.pk action %}">
+            {% csrf_token %}
+            {% if action == "pause" or action == "close" %}
+              <label for="reason-{{ action }}">{% translate "Reason" %}</label>
+              <textarea id="reason-{{ action }}" name="reason" minlength="5" maxlength="300" required>{% if submitted_action == action %}{{ submitted_reason }}{% endif %}</textarea>
+            {% endif %}
+            <button type="submit">{% if action == "activate" %}{% translate "Activate" %}{% elif action == "pause" %}{% translate "Pause" %}{% elif action == "resume" %}{% translate "Resume" %}{% else %}{% translate "Close" %}{% endif %}</button>
+          </form>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+  {% if show_history %}{% include "partials/history.html" %}{% endif %}
+{% endblock %}

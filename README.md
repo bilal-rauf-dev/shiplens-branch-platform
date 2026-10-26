@@ -8,13 +8,16 @@ The current build includes English and Urdu home pages, secure email login and
 password changes, role-specific placeholder pages, a database health endpoint,
 Docker packaging and CI. The central permission matrix and branch assignments are
 implemented, with default-deny route enforcement, localized error pages and an
-append-only audit log. Domain screens and demo seed data arrive in later tasks.
+append-only audit log. The branch and city register provides scoped lists,
+audited editing and lifecycle controls. Other domain screens and demo seed data
+arrive in later tasks.
 
 - Planning documents: [`docs/planning/`](docs/planning/00-executive-summary.md)
 - AI usage declaration: [`AI-USAGE.md`](AI-USAGE.md)
 - Licence: [MIT](LICENSE)
 - CI jobs and checks: [`docs/ci.md`](docs/ci.md)
 - Generated permission matrix and scope rules: [`docs/permissions.md`](docs/permissions.md)
+- Branch model, counters and migration notes: [`docs/branch-register.md`](docs/branch-register.md)
 
 ## Run locally
 

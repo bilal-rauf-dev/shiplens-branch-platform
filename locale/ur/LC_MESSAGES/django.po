@@ -24,3 +24,189 @@ msgstr "کچھ غلط ہو گیا"
 
 msgid "Please try again later."
 msgstr "براہ کرم کچھ دیر بعد دوبارہ کوشش کریں۔"
+
+msgid "This action is not allowed in the branch's current state."
+msgstr "شاخ کی موجودہ حالت میں اس کارروائی کی اجازت نہیں ہے۔"
+
+msgid "This branch cannot be closed: %(blockers)s"
+msgstr "یہ شاخ بند نہیں کی جا سکتی: %(blockers)s"
+
+msgid "Give a reason between %(minimum)s and %(maximum)s characters."
+msgstr "%(minimum)s سے %(maximum)s حروف میں وجہ لکھیں۔"
+
+msgid "Branch status updated."
+msgstr "شاخ کی حالت تبدیل کر دی گئی ہے۔"
+
+msgid "Branches"
+msgstr "شاخیں"
+
+msgid "Branch register"
+msgstr "شاخوں کا اندراج"
+
+msgid "New branch"
+msgstr "نئی شاخ"
+
+msgid "Create branch"
+msgstr "شاخ بنائیں"
+
+msgid "Edit branch"
+msgstr "شاخ میں ترمیم"
+
+msgid "Save branch"
+msgstr "شاخ محفوظ کریں"
+
+msgid "Back to branches"
+msgstr "شاخوں کی فہرست پر واپس"
+
+msgid "Cities"
+msgstr "شہر"
+
+msgid "New city"
+msgstr "نیا شہر"
+
+msgid "Create city"
+msgstr "شہر بنائیں"
+
+msgid "Edit city"
+msgstr "شہر میں ترمیم"
+
+msgid "Save city"
+msgstr "شہر محفوظ کریں"
+
+msgid "Back to cities"
+msgstr "شہروں کی فہرست پر واپس"
+
+msgid "Code"
+msgstr "کوڈ"
+
+msgid "Name"
+msgstr "نام"
+
+msgid "City"
+msgstr "شہر"
+
+msgid "Status"
+msgstr "حالت"
+
+msgid "All statuses"
+msgstr "تمام حالتیں"
+
+msgid "Members"
+msgstr "ارکان"
+
+msgid "Unsent"
+msgstr "غیر بھیجی گئی"
+
+msgid "Unsent collections"
+msgstr "غیر بھیجی گئی وصولیاں"
+
+msgid "Apply filters"
+msgstr "فلٹر لگائیں"
+
+msgid "No branches found."
+msgstr "کوئی شاخ نہیں ملی۔"
+
+msgid "No cities found."
+msgstr "کوئی شہر نہیں ملا۔"
+
+msgid "Branch pages"
+msgstr "شاخوں کے صفحات"
+
+msgid "Previous"
+msgstr "پچھلا"
+
+msgid "Next"
+msgstr "اگلا"
+
+msgid "Page %(current)s of %(total)s"
+msgstr "صفحہ %(current)s از %(total)s"
+
+msgid "English name"
+msgstr "انگریزی نام"
+
+msgid "Urdu name"
+msgstr "اردو نام"
+
+msgid "English address"
+msgstr "انگریزی پتہ"
+
+msgid "Urdu address"
+msgstr "اردو پتہ"
+
+msgid "Phone"
+msgstr "فون"
+
+msgid "Email"
+msgstr "ای میل"
+
+msgid "Status reason"
+msgstr "حالت کی وجہ"
+
+msgid "Opened on"
+msgstr "کھولنے کی تاریخ"
+
+msgid "Closed on"
+msgstr "بند کرنے کی تاریخ"
+
+msgid "Counts"
+msgstr "تعداد"
+
+msgid "Change status"
+msgstr "حالت تبدیل کریں"
+
+msgid "Reason"
+msgstr "وجہ"
+
+msgid "Activate"
+msgstr "فعال کریں"
+
+msgid "Pause"
+msgstr "روکیں"
+
+msgid "Resume"
+msgstr "دوبارہ شروع کریں"
+
+msgid "Close"
+msgstr "بند کریں"
+
+msgid "History"
+msgstr "تاریخچہ"
+
+msgid "PKT"
+msgstr "پاکستانی وقت"
+
+msgid "No history yet."
+msgstr "ابھی کوئی تاریخچہ نہیں۔"
+
+msgid "Actions"
+msgstr "کارروائیاں"
+
+msgid "Branch created"
+msgstr "شاخ بنائی گئی"
+
+msgid "Branch updated"
+msgstr "شاخ میں ترمیم ہوئی"
+
+msgid "Branch activated"
+msgstr "شاخ فعال ہوئی"
+
+msgid "Branch paused"
+msgstr "شاخ روکی گئی"
+
+msgid "Branch resumed"
+msgstr "شاخ دوبارہ شروع ہوئی"
+
+msgid "Branch closed"
+msgstr "شاخ بند ہوئی"
+
+msgid "Forming"
+msgstr "تشکیل میں"
+
+msgid "Active"
+msgstr "فعال"
+
+msgid "Paused"
+msgstr "رکی ہوئی"
+
+msgid "Closed"
+msgstr "بند"

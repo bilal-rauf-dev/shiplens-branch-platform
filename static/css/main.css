@@ -128,6 +128,7 @@ nav {
 
 input,
 select,
+textarea,
 button {
   font: inherit;
   padding-block: var(--s-2);
@@ -136,10 +137,38 @@ button {
   border-radius: var(--radius);
 }
 
-input {
+input,
+textarea {
   inline-size: 100%;
   min-inline-size: 0;
 }
+
+.filter-bar,
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3);
+  margin-block: var(--s-5);
+}
+
+.status-badge,
+.notice {
+  display: inline-block;
+  padding-block: var(--s-1);
+  padding-inline: var(--s-2);
+  border-radius: var(--radius);
+  background: var(--c-surface);
+}
+
+.status-badge[data-status="ACTIVE"] { color: var(--c-success); }
+.status-badge[data-status="PAUSED"] { color: var(--c-warning); }
+.status-badge[data-status="CLOSED"] { color: var(--c-danger); }
+.form-errors { color: var(--c-danger); }
+.record-details { display: grid; grid-template-columns: max-content 1fr; gap: var(--s-2) var(--s-4); }
+.record-details dt { font-weight: 700; }
+.record-details dd { margin-inline: 0; }
+.history { margin-block-start: var(--s-8); }
 
 button {
   color: var(--c-bg);

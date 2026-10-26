@@ -3,6 +3,29 @@ import time_machine
 from django.core.management import call_command
 from django.db import connection, transaction
 
+from apps.branches.models import Branch, City
+
+
+@pytest.fixture
+def branch_factory(db):
+    """Give older permission tests valid full branch records."""
+
+    def create(*, code="BR-KHI-01", name_en="Karachi", **fields):
+        city_code = code.split("-")[1]
+        city, _ = City.objects.get_or_create(
+            code=city_code,
+            defaults={"name_en": name_en, "name_ur": "آزمائشی شہر"},
+        )
+        return Branch.objects.create(
+            code=code,
+            city=city,
+            name_en=name_en,
+            name_ur="آزمائشی شاخ",
+            **fields,
+        )
+
+    return create
+
 
 @pytest.fixture(scope="session", autouse=True)
 def audit_test_database(django_db_setup, django_db_blocker):

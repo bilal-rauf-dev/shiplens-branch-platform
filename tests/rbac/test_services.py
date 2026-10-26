@@ -7,11 +7,18 @@ from django.core.exceptions import PermissionDenied
 from apps.accounts import services
 from apps.accounts.models import Role
 from apps.accounts.permissions import PERMISSIONS
+from apps.branches import services as branch_services
+from apps.branches.models import City
 from tests.rbac.registry import (
     NEW_PASSWORD,
     assigned_user_object,
     assignment_payload,
+    branch_object,
+    create_branch_payload,
+    create_city_payload,
     create_payload,
+    edit_branch_payload,
+    edit_city_payload,
     edit_payload,
     inactive_user_object,
     settings_payload,
@@ -63,7 +70,40 @@ def update_settings(scenario, fixture):
     return services.update_settings(scenario["actor"], **fixture["data"])
 
 
+def create_branch(scenario, fixture):
+    data = fixture["data"].copy()
+    data["city"] = City.objects.get(pk=data["city"])
+    return branch_services.create_branch(scenario["actor"], **data)
+
+
+def update_branch(scenario, fixture):
+    return branch_services.update_branch(
+        scenario["actor"], fixture["branch"], **fixture["data"]
+    )
+
+
+def transition_branch(scenario, fixture):
+    return branch_services.transition(scenario["actor"], fixture["branch"], "activate")
+
+
+def create_city(scenario, fixture):
+    return branch_services.create_city(scenario["actor"], **fixture["data"])
+
+
+def update_city(scenario, fixture):
+    return branch_services.update_city(
+        scenario["actor"], fixture["city"], **fixture["data"]
+    )
+
+
 SERVICE_CASES = {
+    "create_branch": ServiceCase("branch.create", create_branch, create_branch_payload),
+    "update_branch": ServiceCase("branch.update", update_branch, edit_branch_payload),
+    "transition_branch": ServiceCase(
+        "branch.transition", transition_branch, branch_object
+    ),
+    "create_city": ServiceCase("city.manage", create_city, create_city_payload),
+    "update_city": ServiceCase("city.manage", update_city, edit_city_payload),
     "create_user": ServiceCase("user.create", create_user, create_payload),
     "update_user": ServiceCase("user.update", update_user, edit_payload),
     "deactivate_user": ServiceCase("user.update", deactivate_user, user_object),

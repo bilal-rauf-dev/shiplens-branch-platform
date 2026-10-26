@@ -1,6 +1,14 @@
 """Every reachable named route must be explicitly public or declare an action."""
 
 ROUTE_ACTIONS = {
+    "branch-list": "branch.list",
+    "branch-detail": "branch.view",
+    "branch-create": "branch.create",
+    "branch-edit": "branch.update",
+    "city-list": "city.manage",
+    "city-create": "city.manage",
+    "city-edit": "city.manage",
+    "branch-transition": "branch.transition",
     "user-list": "user.list",
     "user-create": "user.create",
     "user-detail": "user.view",

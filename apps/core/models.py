@@ -23,3 +23,17 @@ class SystemSetting(models.Model):
 
     def __str__(self):
         return self.key
+
+
+class IdSequence(models.Model):
+    key = models.CharField(_("key"), max_length=40, primary_key=True)
+    last_value = models.PositiveIntegerField(_("last value"), default=0)
+    updated_at = models.DateTimeField(_("updated at"), default=clock.now)
+
+    class Meta:
+        db_table = "id_sequences"
+        verbose_name = _("ID sequence")
+        verbose_name_plural = _("ID sequences")
+
+    def __str__(self):
+        return self.key

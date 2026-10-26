@@ -13,5 +13,6 @@ urlpatterns = [path("health", health, name="health")]
 urlpatterns += i18n_patterns(
     path("", HomeView.as_view(), name="home"),
     path("", include("apps.accounts.urls")),
+    path("", include("apps.branches.urls")),
     prefix_default_language=True,
 )

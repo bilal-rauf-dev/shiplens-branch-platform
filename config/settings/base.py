@@ -124,6 +124,8 @@ PASSWORD_HASHERS = ["django.contrib.auth.hashers.Argon2PasswordHasher"]
 
 # Defaults from docs/planning/07-business-rules.md; DB overrides arrive in P2.
 BUSINESS_RULES = {
+    "branch_reason_min_length": 5,
+    "branch_reason_max_length": 300,
     "temporary_password_bytes": 24,
     "collection_lock_days_min": 1,
     "collection_lock_days_max": 30,

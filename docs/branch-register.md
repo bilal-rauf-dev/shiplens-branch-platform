@@ -35,7 +35,14 @@ and P7 will add open reports. A nonempty list prevents closing. Branch assignmen
 remain for history; the assignment service locks the branch and rejects new
 assignments once it is Closed.
 
+The register has city and branch create/edit screens for Super Admins. Finance
+Reviewers see every branch read-only; Branch and HR Leads see assigned branches.
+The list supports city/status filters and pages of 25. Only permitted staff see
+a branch's history. Counts remain placeholders until member and collection data
+arrive. City codes stay fixed after creation so existing branch codes still match.
+
 The POST-only `/en/branches/<id>/<action>/` endpoint (also available in Urdu)
-returns translated text: 200 on success, 409 for an invalid transition or blocked
-close, and 400 for invalid reasons. It is protected by the route registry and
-CSRF checks. Register screens and their forms follow in P3 Step 3.
+redirects successful actions to the detail page, where a translated message is
+shown once. Invalid reasons re-render the detail page with HTTP 400; invalid or
+blocked transitions do the same with HTTP 409. The endpoint remains protected
+by the route registry and CSRF checks.

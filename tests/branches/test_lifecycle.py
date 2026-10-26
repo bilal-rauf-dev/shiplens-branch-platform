@@ -162,7 +162,7 @@ def test_view_conflicts_validation_and_methods(signed_in, branch):
     assert (
         signed_in.post(endpoint(branch, "close"), {"reason": "bad"}).status_code == 400
     )
-    assert signed_in.post(endpoint(branch, "activate")).status_code == 200
+    assert signed_in.post(endpoint(branch, "activate")).status_code == 302
     assert signed_in.post(endpoint(branch, "activate")).status_code == 409
     assert AuditLog.objects.filter(action="branch.activated").count() == 1
     missing = reverse(
@@ -199,8 +199,8 @@ def test_transition_responses_are_translated(
     assert invalid.status_code == 400
     assert "حروف میں وجہ لکھیں" in invalid.text
     success = signed_in.post(f"{root}/activate/")
-    assert success.status_code == 200
-    assert "شاخ کی حالت تبدیل" in success.text
+    assert success.status_code == 302
+    assert "شاخ کی حالت تبدیل" in signed_in.get(success.url).text
 
 
 @pytest.mark.parametrize(

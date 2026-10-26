@@ -19,6 +19,9 @@
                 <a href="{% url 'user-list' %}">{% translate "Users" %}</a>
                 <a href="{% url 'settings-view' %}">{% translate "System settings" %}</a>
               {% endif %}
+              {% if user.role == "SUPER_ADMIN" or user.role == "FINANCE_REVIEWER" or user.role == "BRANCH_LEAD" or user.role == "HR_LEAD" %}
+                <a href="{% url 'branch-list' %}">{% translate "Branches" %}</a>
+              {% endif %}
               <a href="{% url 'account-change-password' %}">{% translate "Change password" %}</a>
               <form method="post" action="{% url 'account-logout' %}">
                 {% csrf_token %}
@@ -32,6 +35,9 @@
       </div>
     </header>
     <main id="main" class="container" tabindex="-1">
+      {% if messages %}
+        {% for message in messages %}<p class="notice" role="status">{{ message }}</p>{% endfor %}
+      {% endif %}
       {% block content %}{% endblock %}
     </main>
     <footer class="site-footer">

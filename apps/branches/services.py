@@ -12,6 +12,49 @@ from apps.core import clock, ids, rules
 EDITABLE_FIELDS = ("name_en", "name_ur", "address_en", "address_ur", "phone", "email")
 
 
+def create_city(actor, *, code, name_en, name_ur):
+    """Add a bilingual city and record who created it. BR-005."""
+    with transaction.atomic():
+        require(actor, "city.manage")
+        city = City(
+            code=code,
+            name_en=name_en,
+            name_ur=name_ur,
+            created_at=clock.now(),
+            updated_at=clock.now(),
+        )
+        city.full_clean()
+        city.save(force_insert=True)
+        audit.record(
+            actor,
+            "city.created",
+            entity=city,
+            after={"code": city.code, "name_en": city.name_en, "name_ur": city.name_ur},
+        )
+        return city
+
+
+def update_city(actor, city, *, name_en, name_ur):
+    """Edit a city's names while keeping its code stable for branch IDs."""
+    with transaction.atomic():
+        require(actor, "city.manage")
+        city = City.objects.select_for_update(no_key=True).get(pk=city.pk)
+        before = {"name_en": city.name_en, "name_ur": city.name_ur}
+        city.name_en = name_en
+        city.name_ur = name_ur
+        city.updated_at = clock.now()
+        city.full_clean()
+        city.save(update_fields=["name_en", "name_ur", "updated_at"])
+        audit.record(
+            actor,
+            "city.updated",
+            entity=city,
+            before=before,
+            after={"name_en": city.name_en, "name_ur": city.name_ur},
+        )
+        return city
+
+
 class InvalidTransition(Exception):
     """The requested state change is unavailable or blocked by business records."""
 

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Branches" %} · {% translate "ShipLens" %}{% endblock %}
+{% block content %}
+  <h1>{% translate "Branches" %}</h1>
+  <div class="actions">
+    {% if can_create %}<a href="{% url 'branch-create' %}">{% translate "New branch" %}</a>{% endif %}
+    {% if can_manage_cities %}<a href="{% url 'city-list' %}">{% translate "Cities" %}</a>{% endif %}
+  </div>
+  <form method="get" class="filter-bar">
+    {{ filter_form.city.label_tag }} {{ filter_form.city }}
+    {{ filter_form.status.label_tag }} {{ filter_form.status }}
+    <button type="submit">{% translate "Apply filters" %}</button>
+  </form>
+  <div class="table-container">
+    <table>
+      <caption>{% translate "Branch register" %}</caption>
+      <thead><tr><th scope="col">{% translate "Code" %}</th><th scope="col">{% translate "Name" %}</th><th scope="col">{% translate "City" %}</th><th scope="col">{% translate "Status" %}</th><th scope="col">{% translate "Members" %}</th><th scope="col">{% translate "Unsent" %}</th></tr></thead>
+      <tbody>
+        {% for branch in branches %}
+          <tr><td><a href="{% url 'branch-detail' branch.pk %}">{{ branch.code }}</a></td><td>{% if LANGUAGE_CODE == "ur" %}{{ branch.name_ur }}{% else %}{{ branch.name_en }}{% endif %}</td><td>{{ branch.city.code }}</td><td><span class="status-badge" data-status="{{ branch.status }}">{{ branch.get_status_display }}</span></td><td>—</td><td>—</td></tr>
+        {% empty %}<tr><td colspan="6">{% translate "No branches found." %}</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% if is_paginated %}
+    <nav aria-label="{% translate 'Branch pages' %}" class="pagination">
+      {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}&amp;city={{ request.GET.city|urlencode }}&amp;status={{ request.GET.status|urlencode }}">{% translate "Previous" %}</a>{% endif %}
+      <span>{% blocktranslate with current=page_obj.number total=page_obj.paginator.num_pages %}Page {{ current }} of {{ total }}{% endblocktranslate %}</span>
+      {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}&amp;city={{ request.GET.city|urlencode }}&amp;status={{ request.GET.status|urlencode }}">{% translate "Next" %}</a>{% endif %}
+    </nav>
+  {% endif %}
+{% endblock %}

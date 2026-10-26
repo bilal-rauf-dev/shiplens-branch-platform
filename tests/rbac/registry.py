@@ -7,6 +7,7 @@ from django.urls import reverse
 
 from apps.accounts.models import Role, User
 from apps.accounts.services import assign_branch
+from apps.branches.models import City
 from tests.accounts.conftest import TEST_PASSWORD
 
 NEW_PASSWORD = "Spruce!Harbor-92-Lantern"  # noqa: S105 -- test-only credential.
@@ -30,6 +31,57 @@ def transition_url(name, fixture):
 
 def branch_object(scenario):
     return {"branch": scenario["branch"], "data": {}}
+
+
+def branch_url(name, fixture):
+    return reverse(name, kwargs={"pk": fixture["branch"].pk})
+
+
+def city_url(name, fixture):
+    return reverse(name, kwargs={"pk": fixture["city"].pk})
+
+
+def city_object(scenario):
+    return {"city": scenario["branch"].city, "data": {}}
+
+
+def create_city_payload(scenario):
+    return {"data": {"code": "ZZZ", "name_en": "New City", "name_ur": "نیا شہر"}}
+
+
+def edit_city_payload(scenario):
+    return {
+        "city": scenario["branch"].city,
+        "data": {"name_en": "Edited City", "name_ur": "تبدیل شدہ شہر"},
+    }
+
+
+def create_branch_payload(scenario):
+    return {
+        "data": {
+            "city": City.objects.get(code="ISB").pk,
+            "name_en": "New Branch",
+            "name_ur": "نئی شاخ",
+            "address_en": "",
+            "address_ur": "",
+            "phone": "",
+            "email": "",
+        }
+    }
+
+
+def edit_branch_payload(scenario):
+    return {
+        "branch": scenario["branch"],
+        "data": {
+            "name_en": "Edited Branch",
+            "name_ur": "تبدیل شدہ شاخ",
+            "address_en": "",
+            "address_ur": "",
+            "phone": "",
+            "email": "",
+        },
+    }
 
 
 def user_url(name, fixture):
@@ -123,7 +175,14 @@ def settings_payload(scenario):
 # The four columns are method, URL builder, in-scope fixture factory and success
 # status. Payloads must be valid so a validation error cannot masquerade as denial.
 ROUTE_CASES = {
-    "branch-transition": RouteCase("POST", transition_url, branch_object, 200),
+    "branch-transition": RouteCase("POST", transition_url, branch_object, 302),
+    "branch-list": RouteCase("GET", page_url, no_object, 200),
+    "branch-detail": RouteCase("GET", branch_url, branch_object, 200),
+    "branch-create": RouteCase("POST", page_url, create_branch_payload, 302),
+    "branch-edit": RouteCase("POST", branch_url, edit_branch_payload, 302),
+    "city-list": RouteCase("GET", page_url, no_object, 200),
+    "city-create": RouteCase("POST", page_url, create_city_payload, 302),
+    "city-edit": RouteCase("POST", city_url, edit_city_payload, 302),
     "user-list": RouteCase("GET", page_url, no_object, 200),
     "user-create": RouteCase("POST", page_url, create_payload, 200),
     "user-detail": RouteCase("GET", user_url, user_object, 200),

@@ -276,7 +276,7 @@ STEP 1 — Application model + public form
 Commit: feat(volunteers): add public application form with validation and spam guards
 
 STEP 2 — HR decision services
-- accept_application(actor, app_id, team_id, role_id): one transaction — select_for_update the application → require PENDING → member_id via ids.next_value("member:YYYY") → create Member (status ACTIVE, joined_on today, branch from application, team must belong to branch) → link → ACCEPTED, decided_by/at → audit application.accepted + member.created. decline_application(actor, app_id, reason 5–500) and reassign_branch(actor, app_id, branch_id). Scope: HR only for assigned branches (reassign requires either branch in scope).
+- accept_application(actor, app_id, team_id, role_id): one transaction — select_for_update the application → require PENDING → member_id via ids.next_value("member:YYYY") → create Member (status ACTIVE, joined_on today, branch from application, team must belong to branch) → link → ACCEPTED, decided_by/at → audit application.accepted + member.created. decline_application(actor, app_id, reason 5–500) and reassign_branch(actor, app_id, branch_id). Scope: HR only for assigned branches (reassign requires the source application's branch in scope; the target may be any Active/Forming branch).
 - Tests: T-APP-ACCEPT-ATOMIC (patch audit.record to raise after member insert → no member row, app still PENDING), T-APP-ACCEPT-RACE (two threads accept the same app → exactly one member, the other gets InvalidTransition), T-APP-TERMINAL, T-MEM-ID-FORMAT, T-MEM-ID-RACE (10 apps accepted concurrently → 10 unique sequential IDs), T-ID-REFS.
 Commit: feat(volunteers): add HR review with atomic accept creating members
 

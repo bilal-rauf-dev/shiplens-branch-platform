@@ -22,7 +22,12 @@ from tests.rbac.registry import (
     edit_branch_payload,
     edit_city_payload,
     edit_payload,
+    inactive_member_object,
     inactive_user_object,
+    left_member_object,
+    member_edit_payload,
+    member_left_payload,
+    member_object,
     settings_payload,
     team_create_payload,
     team_object,
@@ -155,7 +160,56 @@ def deactivate_volunteer_role(scenario, fixture):
     )
 
 
+def update_member(scenario, fixture):
+    data = fixture["data"].copy()
+    data["team_id"] = None
+    return volunteer_services.update_member(
+        scenario["actor"], fixture["member"].pk, **data
+    )
+
+
+def deactivate_member(scenario, fixture):
+    return volunteer_services.transition_member(
+        scenario["actor"], fixture["member"].pk, "deactivate"
+    )
+
+
+def reactivate_member(scenario, fixture):
+    return volunteer_services.transition_member(
+        scenario["actor"], fixture["member"].pk, "reactivate"
+    )
+
+
+def mark_member_left(scenario, fixture):
+    return volunteer_services.transition_member(
+        scenario["actor"],
+        fixture["member"].pk,
+        "mark_left",
+        left_on=fixture["member"].joined_on,
+    )
+
+
+def reinstate_member(scenario, fixture):
+    return volunteer_services.transition_member(
+        scenario["actor"],
+        fixture["member"].pk,
+        "reinstate",
+        reason=fixture["data"]["reason"],
+    )
+
+
 SERVICE_CASES = {
+    "update_member": ServiceCase("member.update", update_member, member_edit_payload),
+    "deactivate_member": ServiceCase("member.update", deactivate_member, member_object),
+    "reactivate_member": ServiceCase(
+        "member.update", reactivate_member, inactive_member_object
+    ),
+    "mark_member_left": ServiceCase(
+        "member.update", mark_member_left, member_left_payload
+    ),
+    "reinstate_member": ServiceCase(
+        "member.reinstate", reinstate_member, left_member_object
+    ),
     "create_team": ServiceCase("team.manage", create_team, team_create_payload),
     "rename_team": ServiceCase("team.manage", rename_team, team_object),
     "deactivate_team": ServiceCase("team.manage", deactivate_team, team_object),

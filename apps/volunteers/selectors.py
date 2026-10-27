@@ -42,6 +42,45 @@ def members():
     return Member.objects.select_related("branch", "team", "volunteer_role")
 
 
+def member_history(user, member):
+    """Build rows for the shared, permission-checked history partial."""
+    if not can(user, "audit.entity_history", member):
+        return []
+    labels = {
+        "status": _("Status"),
+        "left_on": _("Left on"),
+        "team_id": _("Team"),
+        "volunteer_role_id": _("Volunteer role"),
+        "phone": _("Mobile number"),
+        "notes": _("Notes"),
+        "member_id": _("Member ID"),
+        "branch_id": _("Branch"),
+    }
+    actions = {
+        "member.created": _("Member created"),
+        "member.updated": _("Member updated"),
+        "member.status_changed": _("Member status changed"),
+        "member.reinstated": _("Member reinstated"),
+    }
+    return [
+        {
+            "event": event,
+            "action_label": actions.get(event.action, event.action),
+            "changes": [
+                {
+                    "field": labels.get(field, field),
+                    "before": event.before.get(field),
+                    "after": event.after.get(field),
+                }
+                for field in sorted(event.before.keys() | event.after.keys())
+            ],
+        }
+        for event in AuditLog.objects.filter(
+            entity_type="member", entity_id=member.pk
+        ).order_by("-occurred_at", "-pk")
+    ]
+
+
 def member_branches(user):
     return scope_queryset(
         user, "member.list", Branch.objects.order_by("code"), branch_field="pk"

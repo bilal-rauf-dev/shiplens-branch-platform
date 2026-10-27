@@ -54,6 +54,54 @@ class TeamForm(forms.Form):
     name = forms.CharField(label=_("Team name"), max_length=60)
 
 
+class MemberEditForm(forms.Form):
+    team_id = forms.ModelChoiceField(
+        label=_("Team"), queryset=Team.objects.none(), required=False
+    )
+    role_id = forms.ModelChoiceField(
+        label=_("Volunteer role"), queryset=VolunteerRole.objects.none()
+    )
+    phone = forms.RegexField(
+        label=_("Mobile number"),
+        regex=r"\A\+923[0-9]{9}\Z",
+        max_length=16,
+        widget=forms.TextInput(
+            attrs={"type": "tel", "inputmode": "tel", "pattern": r"\+923[0-9]{9}"}
+        ),
+        help_text=_("Use the international format, for example +923001234567."),
+    )
+    notes = forms.CharField(
+        label=_("Notes"), max_length=1000, required=False, widget=forms.Textarea
+    )
+
+    def __init__(self, *args, member, **kwargs):
+        super().__init__(*args, **kwargs)
+        from django.db.models import Q
+
+        self.fields["team_id"].queryset = (
+            Team.objects.filter(branch_id=member.branch_id)
+            .filter(Q(is_active=True) | Q(pk=member.team_id))
+            .order_by("name")
+        )
+        self.fields["role_id"].queryset = VolunteerRole.objects.filter(
+            Q(is_active=True) | Q(pk=member.volunteer_role_id)
+        ).order_by("sort_order", "code")
+
+
+class MemberActionForm(forms.Form):
+    pass
+
+
+class MemberLeftForm(forms.Form):
+    left_on = forms.DateField(
+        label=_("Left on"), widget=forms.DateInput(attrs={"type": "date"})
+    )
+
+
+class MemberReinstateForm(forms.Form):
+    reason = forms.CharField(label=_("Reason"), widget=forms.Textarea)
+
+
 class VolunteerRoleForm(forms.Form):
     name_en = forms.CharField(label=_("English name"), max_length=60)
     name_ur = forms.CharField(label=_("Urdu name"), max_length=60)

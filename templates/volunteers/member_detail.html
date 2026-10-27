@@ -14,4 +14,14 @@
     <dt>{% translate "Joined on" %}</dt><dd>{{ member.joined_on }}</dd>
     <dt>{% translate "Left on" %}</dt><dd>{{ member.left_on|default:"—" }}</dd>
   </dl>
+  <h2>{% translate "Notes" %}</h2><p class="application-note">{{ member.notes|default:"—" }}</p>
+  {% if can_edit %}<p><a href="{% url 'member-edit' member.pk %}">{% translate "Edit member" %}</a></p>{% endif %}
+  {% if action_errors %}<div role="alert" class="form-errors">{{ action_errors }}</div>{% endif %}
+  {% for action in actions %}
+    <form method="post" action="{% url action.route member.pk %}">
+      {% csrf_token %}{% include "accounts/_form_fields.html" with form=action.form %}
+      <button type="submit">{{ action.label }}</button>
+    </form>
+  {% endfor %}
+  {% if show_history %}{% include "partials/history.html" %}{% endif %}
 {% endblock %}

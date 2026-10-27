@@ -26,7 +26,11 @@ from apps.volunteers.forms import (
     ApplicationFilterForm,
     ApplicationForm,
     DeclineApplicationForm,
+    MemberActionForm,
+    MemberEditForm,
     MemberFilterForm,
+    MemberLeftForm,
+    MemberReinstateForm,
     ReassignApplicationForm,
     TeamForm,
     VolunteerRoleForm,
@@ -437,9 +441,155 @@ def reassign(request, pk):
 
 @method_decorator(cache_control(no_store=True, private=True), name="dispatch")
 class MemberDetailView(PermissionRequiredMixin, DetailView):
-    """Provide a scoped, read-only destination for matched-member links."""
+    """Show the existing member record, permitted actions and its audit history."""
 
     required_action = "member.view"
     queryset = selectors.members()
     template_name = "volunteers/member_detail.html"
     context_object_name = "member"
+
+    def get_context_data(self, **kwargs):
+        return {
+            **super().get_context_data(**kwargs),
+            **_member_context(self.request, self.object),
+        }
+
+
+MEMBER_ACTION_FORMS = {
+    "deactivate": MemberActionForm,
+    "reactivate": MemberActionForm,
+    "mark_left": MemberLeftForm,
+    "reinstate": MemberReinstateForm,
+}
+MEMBER_ACTION_LABELS = {
+    "deactivate": _("Deactivate member"),
+    "reactivate": _("Reactivate member"),
+    "mark_left": _("Mark member left"),
+    "reinstate": _("Reinstate member"),
+}
+
+
+def _member_context(request, member):
+    actions = []
+    for action, form_class in MEMBER_ACTION_FORMS.items():
+        permission = "member.reinstate" if action == "reinstate" else "member.update"
+        if (member.status, action) in services.MEMBER_TRANSITIONS and can(
+            request.user, permission, member
+        ):
+            form = form_class(initial={"left_on": clock.today()})
+            if action == "mark_left":
+                form.fields["left_on"].widget.attrs["min"] = (
+                    member.joined_on.isoformat()
+                )
+            actions.append(
+                {
+                    "route": "member-" + action.replace("_", "-"),
+                    "label": MEMBER_ACTION_LABELS[action],
+                    "form": form,
+                }
+            )
+    show_history = can(request.user, "audit.entity_history", member)
+    return {
+        "member": member,
+        "can_edit": can(request.user, "member.update", member),
+        "actions": actions,
+        "show_history": show_history,
+        "history": selectors.member_history(request.user, member)
+        if show_history
+        else [],
+    }
+
+
+@method_decorator(cache_control(no_store=True, private=True), name="dispatch")
+class MemberEditView(PermissionRequiredMixin, FormView):
+    required_action = "member.update"
+    template_name = "volunteers/management_form.html"
+    form_class = MemberEditForm
+    extra_context = {"page_title": _("Edit member"), "return_route": "member-list"}
+
+    def dispatch(self, request, *args, **kwargs):
+        require(request.user, self.required_action)
+        self.member = get_object_or_404(
+            scope_queryset(request.user, self.required_action, selectors.members()),
+            pk=kwargs["pk"],
+        )
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_form_kwargs(self):
+        return {**super().get_form_kwargs(), "member": self.member}
+
+    def get_initial(self):
+        return {
+            "team_id": self.member.team_id,
+            "role_id": self.member.volunteer_role_id,
+            "phone": self.member.phone,
+            "notes": self.member.notes,
+        }
+
+    def form_valid(self, form):
+        try:
+            services.update_member(
+                self.request.user,
+                self.member.pk,
+                team_id=form.cleaned_data["team_id"].pk
+                if form.cleaned_data["team_id"]
+                else None,
+                role_id=form.cleaned_data["role_id"].pk,
+                phone=form.cleaned_data["phone"],
+                notes=form.cleaned_data["notes"],
+            )
+        except ValidationError as error:
+            _management_errors(form, error)
+            return self.form_invalid(form)
+        messages.success(self.request, _("Member updated."))
+        return redirect("member-detail", pk=self.member.pk)
+
+
+def _member_transition(request, pk, action):
+    permission = "member.reinstate" if action == "reinstate" else "member.update"
+    require(request.user, permission)
+    member = get_object_or_404(
+        scope_queryset(request.user, permission, selectors.members()), pk=pk
+    )
+    form = MEMBER_ACTION_FORMS[action](request.POST)
+    error_status = 400
+    if form.is_valid():
+        try:
+            services.transition_member(request.user, pk, action, **form.cleaned_data)
+        except ValidationError as error:
+            _management_errors(form, error)
+        except InvalidTransition as error:
+            form.add_error(None, str(error))
+            error_status = 409
+        else:
+            messages.success(request, _("Member status updated."))
+            return redirect("member-detail", pk=pk)
+    context = _member_context(request, member)
+    context["action_errors"] = form.errors
+    return render(
+        request, "volunteers/member_detail.html", context, status=error_status
+    )
+
+
+@cache_control(no_store=True, private=True)
+@require_POST
+def member_deactivate(request, pk):
+    return _member_transition(request, pk, "deactivate")
+
+
+@cache_control(no_store=True, private=True)
+@require_POST
+def member_reactivate(request, pk):
+    return _member_transition(request, pk, "reactivate")
+
+
+@cache_control(no_store=True, private=True)
+@require_POST
+def member_mark_left(request, pk):
+    return _member_transition(request, pk, "mark_left")
+
+
+@cache_control(no_store=True, private=True)
+@require_POST
+def member_reinstate(request, pk):
+    return _member_transition(request, pk, "reinstate")

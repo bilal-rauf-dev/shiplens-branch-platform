@@ -3,6 +3,29 @@ from django.urls import path
 from apps.volunteers import views
 
 urlpatterns = [
+    path(
+        "app/members/<int:pk>/edit/", views.MemberEditView.as_view(), name="member-edit"
+    ),
+    path(
+        "app/members/<int:pk>/deactivate/",
+        views.member_deactivate,
+        name="member-deactivate",
+    ),
+    path(
+        "app/members/<int:pk>/reactivate/",
+        views.member_reactivate,
+        name="member-reactivate",
+    ),
+    path(
+        "app/members/<int:pk>/mark-left/",
+        views.member_mark_left,
+        name="member-mark-left",
+    ),
+    path(
+        "app/members/<int:pk>/reinstate/",
+        views.member_reinstate,
+        name="member-reinstate",
+    ),
     path("app/members/", views.MemberListView.as_view(), name="member-list"),
     path("app/teams/", views.TeamListView.as_view(), name="team-list"),
     path(

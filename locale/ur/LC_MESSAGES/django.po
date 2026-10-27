@@ -728,3 +728,57 @@ msgstr "کوئی رکن نہیں ملا۔"
 
 msgid "Member pages"
 msgstr "اراکین کے صفحات"
+
+msgid "Use the international format, for example +923001234567."
+msgstr "بین الاقوامی شکل استعمال کریں، مثلاً +923001234567۔"
+
+msgid "Choose an active team from this member's branch."
+msgstr "اس رکن کی شاخ سے فعال ٹیم منتخب کریں۔"
+
+msgid "Enter a Pakistani mobile number in international format."
+msgstr "پاکستانی موبائل نمبر بین الاقوامی شکل میں درج کریں۔"
+
+msgid "This action is not available for the member's current status."
+msgstr "رکن کی موجودہ حالت میں یہ کارروائی دستیاب نہیں ہے۔"
+
+msgid "The leaving date must be on or after the joining date."
+msgstr "رخصتی کی تاریخ شمولیت کی تاریخ سے پہلے نہیں ہو سکتی۔"
+
+msgid "Give a reason for reinstating this member."
+msgstr "اس رکن کی بحالی کی وجہ بتائیں۔"
+
+msgid "Member created"
+msgstr "رکن بنا دیا گیا"
+
+msgid "Member updated"
+msgstr "رکن کی ترمیم محفوظ ہو گئی"
+
+msgid "Member status changed"
+msgstr "رکن کی حالت تبدیل ہو گئی"
+
+msgid "Member reinstated"
+msgstr "رکن بحال کر دیا گیا"
+
+msgid "Deactivate member"
+msgstr "رکن غیر فعال کریں"
+
+msgid "Reactivate member"
+msgstr "رکن فعال کریں"
+
+msgid "Mark member left"
+msgstr "رکن کی رخصتی درج کریں"
+
+msgid "Reinstate member"
+msgstr "رکن بحال کریں"
+
+msgid "Edit member"
+msgstr "رکن میں ترمیم کریں"
+
+msgid "Member updated."
+msgstr "رکن کی ترمیم محفوظ ہو گئی۔"
+
+msgid "Member status updated."
+msgstr "رکن کی حالت تبدیل ہو گئی۔"
+
+msgid "Notes"
+msgstr "نوٹس"

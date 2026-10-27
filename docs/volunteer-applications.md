@@ -111,7 +111,7 @@ Detail pages show age instead of date of birth and include the shared audit-hist
 partial. Duplicate matches are looked up through the viewer's application/member
 scope; an inaccessible match never exposes its reference, name or link. A small
 read-only member detail route provides the matched-member link destination.
-Member editing remains in P5 Step 3.
+The member detail also provides permitted edits, lifecycle actions and history.
 
 Acceptance forms offer teams from the application's branch and existing roles.
 Decline reasons use the same configured bounds as the service. Reassignment offers
@@ -157,3 +157,21 @@ registers expression-index operator classes correctly; this adds no dependency.
 view with all filters. It enforces at most 8 queries and under 300ms. Fixture setup
 and authentication/session middleware are excluded from that view budget; separate
 HTTP tests cover the complete authenticated route and role/scope enforcement.
+
+## Member editing and lifecycle
+
+The existing detail page now shows notes and the shared audit history. Assigned
+HR Leads and Super Admins may edit team, volunteer role, E.164 Pakistani mobile
+number and notes. The form and service never accept member ID, branch, email or
+status as editable data. Existing inactive team/role choices may be retained;
+new assignments must be active and teams must belong to the member's branch.
+Branch Leads retain read-only access. Every edit records `member.updated` and
+sets `updated_by` and the clock-based `updated_at` in the same transaction.
+
+Services lock the member before applying the explicit state table: Active may
+deactivate or leave; Inactive may reactivate or leave; only Super Admin may
+reinstate a Left member, with a nonblank reason. Leaving requires a date at least
+the joining date; reinstatement clears it. BR-055's existing partial unique email
+index still applies, including concurrent reinstatements. Successful POSTs
+redirect to detail with translated messages; invalid input returns 400 and stale
+or unavailable state actions return 409. No domain rows are deleted.

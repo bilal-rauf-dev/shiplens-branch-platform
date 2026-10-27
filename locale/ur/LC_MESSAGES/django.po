@@ -1,3 +1,4 @@
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: ShipLens\n"
@@ -210,3 +211,267 @@ msgstr "رکی ہوئی"
 
 msgid "Closed"
 msgstr "بند"
+
+msgid "Accepted"
+msgstr "منظور شدہ"
+
+#, python-format
+msgid "Applicants must be between %(minimum)s and %(maximum)s years old."
+msgstr ""
+"درخواست گزار کی عمر %(minimum)s سے %(maximum)s سال کے درمیان ہونی چاہیے۔"
+
+msgid "Availability"
+msgstr "دستیابی"
+
+msgid "Choose an Active or Forming branch."
+msgstr "فعال یا تشکیل پاتی شاخ منتخب کریں۔"
+
+msgid "Choose at least one time when you can volunteer."
+msgstr "رضاکارانہ کام کے لیے کم از کم ایک وقت منتخب کریں۔"
+
+msgid "Choose between one and five interests."
+msgstr "ایک سے پانچ دلچسپیاں منتخب کریں۔"
+
+msgid "Choose the areas you are interested in."
+msgstr "اپنی دلچسپی کے شعبے منتخب کریں۔"
+
+msgid "Choose the language you prefer for communication."
+msgstr "رابطے کے لیے اپنی پسندیدہ زبان منتخب کریں۔"
+
+msgid "Date of birth"
+msgstr "تاریخ پیدائش"
+
+msgid "Declined"
+msgstr "مسترد شدہ"
+
+msgid "Education"
+msgstr "تعلیم"
+
+msgid "English"
+msgstr "انگریزی"
+
+msgid ""
+"Enter a name of 3–100 characters using letters, spaces, periods, apostrophes"
+" or hyphens."
+msgstr ""
+"حروف، وقفے، نقطے، اپاسٹراف یا ہائفن استعمال کرتے ہوئے 3 سے 100 حروف میں نام "
+"درج کریں۔"
+
+msgid "Enter a valid Pakistani mobile number."
+msgstr "درست پاکستانی موبائل نمبر درج کریں۔"
+
+msgid "Enter an email address where HR can contact you."
+msgstr "ای میل کا پتہ لکھیں جس پر عملہ آپ سے رابطہ کر سکے۔"
+
+msgid "Enter your date of birth."
+msgstr "اپنی تاریخ پیدائش درج کریں۔"
+
+msgid "Full name"
+msgstr "پورا نام"
+
+msgid "General volunteering"
+msgstr "عمومی رضاکارانہ کام"
+
+msgid "Get involved"
+msgstr "رضاکار بنیں"
+
+msgid "Health camps"
+msgstr "طبی کیمپ"
+
+msgid "I agree to the privacy notice"
+msgstr "میں رازداری کے نوٹس سے متفق ہوں"
+
+msgid "IP hash"
+msgstr "آئی پی ہیش"
+
+msgid "Inactive"
+msgstr "غیر فعال"
+
+msgid "Interests"
+msgstr "دلچسپیاں"
+
+msgid "Leave this field empty"
+msgstr "یہ خانہ خالی چھوڑیں"
+
+msgid "Left"
+msgstr "الگ ہو چکے"
+
+msgid "Mobile number"
+msgstr "موبائل نمبر"
+
+msgid "My parent or guardian agrees to my application"
+msgstr "میرے والدین یا سرپرست میری درخواست سے متفق ہیں"
+
+msgid "Pakistani mobile number, for example 0300 1234567."
+msgstr "پاکستانی موبائل نمبر، مثلاً 0300 1234567۔"
+
+msgid "Parent or guardian consent is required if you are under 18."
+msgstr ""
+"اگر آپ کی عمر 18 سال سے کم ہے تو والدین یا سرپرست کی رضامندی ضروری ہے۔"
+
+msgid "Pending"
+msgstr "زیر التوا"
+
+msgid "Please correct the following problems"
+msgstr "براہ کرم درج ذیل مسائل درست کریں"
+
+msgid "Please try again later"
+msgstr "براہ کرم کچھ دیر بعد دوبارہ کوشش کریں"
+
+msgid "Preferred branch"
+msgstr "ترجیحی شاخ"
+
+msgid "Preferred language"
+msgstr "ترجیحی زبان"
+
+msgid "Ration drive"
+msgstr "راشن کی تقسیم"
+
+msgid "Reference"
+msgstr "حوالہ نمبر"
+
+msgid "Required if you are under 18."
+msgstr "اگر آپ کی عمر 18 سال سے کم ہے تو یہ ضروری ہے۔"
+
+msgid "ShipLens"
+msgstr "ShipLens"
+
+msgid "Submit application"
+msgstr "درخواست جمع کریں"
+
+msgid "Thank you"
+msgstr "شکریہ"
+
+msgid "Thank you for your interest in volunteering."
+msgstr "رضاکارانہ کام میں دلچسپی لینے کا شکریہ۔"
+
+msgid "This branch is not accepting applications."
+msgstr "یہ شاخ درخواستیں قبول نہیں کر رہی۔"
+
+msgid ""
+"Too many applications have been submitted from this connection. Please try "
+"again later."
+msgstr ""
+"اس رابطے سے بہت زیادہ درخواستیں جمع ہو چکی ہیں۔ براہ کرم کچھ دیر بعد دوبارہ "
+"کوشش کریں۔"
+
+msgid "Urdu"
+msgstr "اردو"
+
+msgid "Use your name, including Urdu letters if preferred."
+msgstr "اپنا نام لکھیں، چاہیں تو اردو حروف استعمال کریں۔"
+
+msgid "Volunteers"
+msgstr "رضاکار"
+
+msgid "Weekday evenings"
+msgstr "ہفتے کے عام دنوں کی شام"
+
+msgid "Weekday mornings"
+msgstr "ہفتے کے عام دنوں کی صبح"
+
+msgid "Weekends"
+msgstr "ہفتہ اور اتوار"
+
+msgid "Why do you want to volunteer?"
+msgstr "آپ رضاکار کیوں بننا چاہتے ہیں؟"
+
+msgid "Write between 20 and 1000 characters."
+msgstr "20 سے 1000 حروف میں لکھیں۔"
+
+msgid "You must agree to the privacy notice."
+msgstr "آپ کا رازداری کے نوٹس سے متفق ہونا ضروری ہے۔"
+
+msgid ""
+"Your details are used by authorised staff to review your application and are"
+" not shown publicly."
+msgstr ""
+"آپ کی معلومات مجاز عملہ درخواست کا جائزہ لینے کے لیے استعمال کرتا ہے اور یہ "
+"عوام کو نہیں دکھائی جاتیں۔"
+
+msgid "active"
+msgstr "فعال"
+
+msgid "availability"
+msgstr "دستیابی"
+
+msgid "code"
+msgstr "کوڈ"
+
+msgid "consent at"
+msgstr "رضامندی کا وقت"
+
+msgid "created at"
+msgstr "تخلیق کا وقت"
+
+msgid "date of birth"
+msgstr "تاریخ پیدائش"
+
+msgid "decided at"
+msgstr "فیصلے کا وقت"
+
+msgid "decision note"
+msgstr "فیصلے کا نوٹ"
+
+msgid "email"
+msgstr "ای میل"
+
+msgid "full name"
+msgstr "پورا نام"
+
+msgid "guardian consent"
+msgstr "سرپرست کی رضامندی"
+
+msgid "interests"
+msgstr "دلچسپیاں"
+
+msgid "joined on"
+msgstr "شمولیت کی تاریخ"
+
+msgid "left on"
+msgstr "علیحدگی کی تاریخ"
+
+msgid "member ID"
+msgstr "رکن کا شناختی نمبر"
+
+msgid "motivation"
+msgstr "رضاکار بننے کی وجہ"
+
+msgid "name"
+msgstr "نام"
+
+msgid "notes"
+msgstr "نوٹس"
+
+msgid "phone"
+msgstr "فون"
+
+msgid "possible duplicate"
+msgstr "ممکنہ تکرار"
+
+msgid "preferred language"
+msgstr "ترجیحی زبان"
+
+msgid "reference"
+msgstr "حوالہ نمبر"
+
+msgid "sort order"
+msgstr "ترتیب"
+
+msgid "status"
+msgstr "حالت"
+
+msgid "updated at"
+msgstr "ترمیم کا وقت"
+
+msgid "This application has already been decided."
+msgstr "اس درخواست پر فیصلہ ہو چکا ہے۔"
+
+msgid "This branch is closed and cannot accept applicants."
+msgstr "یہ شاخ بند ہے اور درخواست گزار قبول نہیں کر سکتی۔"
+
+msgid "Choose a team from this application's branch."
+msgstr "اس درخواست کی شاخ سے ٹیم منتخب کریں۔"
+
+msgid "Choose an existing volunteer role."
+msgstr "موجود رضاکارانہ کردار منتخب کریں۔"

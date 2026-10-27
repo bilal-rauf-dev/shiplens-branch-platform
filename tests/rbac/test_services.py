@@ -9,8 +9,10 @@ from apps.accounts.models import Role
 from apps.accounts.permissions import PERMISSIONS
 from apps.branches import services as branch_services
 from apps.branches.models import City
+from apps.volunteers import services as volunteer_services
 from tests.rbac.registry import (
     NEW_PASSWORD,
+    application_object,
     assigned_user_object,
     assignment_payload,
     branch_object,
@@ -96,7 +98,36 @@ def update_city(scenario, fixture):
     )
 
 
+def accept_application(scenario, fixture):
+    return volunteer_services.accept_application(
+        scenario["actor"],
+        fixture["application"].pk,
+        role_id=fixture["volunteer_role"].pk,
+    )
+
+
+def decline_application(scenario, fixture):
+    return volunteer_services.decline_application(
+        scenario["actor"], fixture["application"].pk, "No capacity at present"
+    )
+
+
+def reassign_application(scenario, fixture):
+    return volunteer_services.reassign_branch(
+        scenario["actor"], fixture["application"].pk, fixture["target_branch"].pk
+    )
+
+
 SERVICE_CASES = {
+    "accept_application": ServiceCase(
+        "application.accept", accept_application, application_object
+    ),
+    "decline_application": ServiceCase(
+        "application.decline", decline_application, application_object
+    ),
+    "reassign_application": ServiceCase(
+        "application.reassign_branch", reassign_application, application_object
+    ),
     "create_branch": ServiceCase("branch.create", create_branch, create_branch_payload),
     "update_branch": ServiceCase("branch.update", update_branch, edit_branch_payload),
     "transition_branch": ServiceCase(

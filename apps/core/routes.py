@@ -29,4 +29,6 @@ ROUTE_ACTIONS = {
 }
 
 # Login handles signed-in visitors by redirecting them to their role's home.
-PUBLIC_ROUTES = frozenset({"home", "account-login", "health"})
+PUBLIC_ROUTES = frozenset(
+    {"home", "account-login", "health", "volunteer-apply", "volunteer-thanks"}
+)

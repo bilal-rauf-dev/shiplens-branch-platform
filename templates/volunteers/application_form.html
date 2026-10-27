@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Get involved" %} · {% translate "ShipLens" %}{% endblock %}
+{% block content %}
+  <h1>{% translate "Get involved" %}</h1>
+  {% if form.errors %}
+    <div class="form-errors" role="alert" tabindex="-1" autofocus>
+      <h2>{% translate "Please correct the following problems" %}</h2>
+      {{ form.non_field_errors }}
+      <ul>{% for field in form %}{% if field.errors %}<li><a href="#{{ field.auto_id }}">{{ field.label }}: {{ field.errors|striptags }}</a></li>{% endif %}{% endfor %}</ul>
+    </div>
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      {% if field.name == "render_token" %}
+        {{ field }}
+      {% elif field.name == "website" %}
+        <div class="honeypot" aria-hidden="true">{{ field.label_tag }} {{ field }}</div>
+      {% elif field.name == "interests" or field.name == "availability" or field.name == "preferred_language" %}
+        <fieldset class="application-group" id="{{ field.auto_id }}" tabindex="-1" aria-describedby="{{ field.auto_id }}_hint{% if field.errors %} {{ field.auto_id }}_errors{% endif %}">
+          <legend>{{ field.label }}</legend>
+          <p class="help-text" id="{{ field.auto_id }}_hint">{{ field.help_text }}</p>
+          {% for choice in field %}<div>{{ choice.tag }} <label for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label></div>{% endfor %}
+          {% if field.errors %}<div id="{{ field.auto_id }}_errors">{{ field.errors }}</div>{% endif %}
+        </fieldset>
+      {% else %}
+        <div class="form-field">
+          {{ field.label_tag }}
+          {{ field }}
+          <div class="help-text" id="{{ field.auto_id }}_hint">{{ field.help_text }}</div>
+          {% if field.errors %}<div id="{{ field.auto_id }}_errors">{{ field.errors }}</div>{% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+    <button type="submit">{% translate "Submit application" %}</button>
+  </form>
+{% endblock %}

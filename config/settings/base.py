@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "apps.accounts.apps.AccountsConfig",
     "apps.branches.apps.BranchesConfig",
     "apps.audit.apps.AuditConfig",
+    "apps.volunteers.apps.VolunteersConfig",
     "axes",
 ]
 AUTH_USER_MODEL = "accounts.User"
@@ -124,6 +125,17 @@ PASSWORD_HASHERS = ["django.contrib.auth.hashers.Argon2PasswordHasher"]
 
 # Defaults from docs/planning/07-business-rules.md; DB overrides arrive in P2.
 BUSINESS_RULES = {
+    "application_decline_reason_min_length": 5,
+    "application_decline_reason_max_length": 500,
+    "application_name_min_length": 3,
+    "application_name_max_length": 100,
+    "application_motivation_min_length": 20,
+    "application_motivation_max_length": 1000,
+    "application_max_interests": 5,
+    "volunteer_max_age": 100,
+    "guardian_consent_age": 18,
+    "form_max_seconds": 2 * 60 * 60,
+    "apply_rate_per_day": 20,
     "branch_reason_min_length": 5,
     "branch_reason_max_length": 300,
     "temporary_password_bytes": 24,

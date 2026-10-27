@@ -7,7 +7,10 @@ from django.urls import reverse
 
 from apps.accounts.models import Role, User
 from apps.accounts.services import assign_branch
-from apps.branches.models import City
+from apps.branches.models import Branch, City
+from apps.volunteers import services as volunteer_services
+from apps.volunteers.forms import ApplicationForm
+from apps.volunteers.models import VolunteerRole
 from tests.accounts.conftest import TEST_PASSWORD
 
 NEW_PASSWORD = "Spruce!Harbor-92-Lantern"  # noqa: S105 -- test-only credential.
@@ -31,6 +34,38 @@ def transition_url(name, fixture):
 
 def branch_object(scenario):
     return {"branch": scenario["branch"], "data": {}}
+
+
+def application_object(scenario):
+    """Use a valid Pending applicant in the actor's assigned branch."""
+    form = ApplicationForm(
+        {
+            "full_name": "Matrix Applicant",
+            "email": "matrix-applicant@example.com",
+            "phone": "03001234567",
+            "date_of_birth": "2000-01-01",
+            "preferred_branch": scenario["branch"].pk,
+            "interests": ["education"],
+            "availability": ["weekends"],
+            "motivation": "I would like to volunteer in my local community.",
+            "preferred_language": "en",
+            "privacy_consent": True,
+        }
+    )
+    assert form.is_valid(), form.errors
+    application = volunteer_services.submit_application(form.cleaned_data, None)
+    target = Branch.objects.create(
+        code="BR-LHE-01",
+        city=City.objects.get(code="LHE"),
+        name_en="Other branch",
+        name_ur="دوسری شاخ",
+    )
+    return {
+        "application": application,
+        "target_branch": target,
+        "volunteer_role": VolunteerRole.objects.get(code="VOLUNTEER"),
+        "data": {},
+    }
 
 
 def branch_url(name, fixture):

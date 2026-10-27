@@ -170,6 +170,25 @@ textarea {
 .record-details dd { margin-inline: 0; }
 .history { margin-block-start: var(--s-8); }
 
+.honeypot {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.application-group {
+  max-inline-size: 32rem;
+  margin-block-end: var(--s-5);
+  padding-block: var(--s-3);
+  padding-inline: var(--s-3);
+  border: 1px solid var(--c-border);
+}
+
+.application-group input { inline-size: auto; }
+
 button {
   color: var(--c-bg);
   background: var(--c-primary);

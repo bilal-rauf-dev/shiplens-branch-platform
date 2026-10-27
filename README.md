@@ -10,7 +10,8 @@ Docker packaging and CI. The central permission matrix and branch assignments ar
 implemented, with default-deny route enforcement, localized error pages and an
 append-only audit log. The branch and city register provides scoped lists,
 audited editing and lifecycle controls. Other domain screens and demo seed data
-arrive in later tasks.
+arrive in later tasks. The public volunteer form validates submissions, limits
+spam and stores applicant details for the upcoming HR review workflow.
 
 - Planning documents: [`docs/planning/`](docs/planning/00-executive-summary.md)
 - AI usage declaration: [`AI-USAGE.md`](AI-USAGE.md)
@@ -18,6 +19,7 @@ arrive in later tasks.
 - CI jobs and checks: [`docs/ci.md`](docs/ci.md)
 - Generated permission matrix and scope rules: [`docs/permissions.md`](docs/permissions.md)
 - Branch model, counters and migration notes: [`docs/branch-register.md`](docs/branch-register.md)
+- Public volunteer form and privacy controls: [`docs/volunteer-applications.md`](docs/volunteer-applications.md)
 
 ## Run locally
 

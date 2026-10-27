@@ -7,11 +7,14 @@ This repository is a solo entry for the ShipLens 1.0 build challenge. The human 
 - Key files: `05-rbac-matrix.md` (permissions), `06-state-machines.md`, `07-business-rules.md` (BR-xxx), `08-data-model.md`, `09-dashboard-and-seed-data.md`, `10-architecture-and-stack.md`, `11-security.md`, `17-test-strategy.md`.
 - Do not invent features that aren't in the plan. If something is ambiguous, pick the simplest option that fits the plan and list it under "Assumptions" in your summary.
 
-## 2. Git — strictly forbidden
-- **Do not run `git commit`, `git push`, `git merge`, `git rebase`, `git tag`, or create branches or pull requests.** The owner does all git operations.
-- Do not add AI attribution or co-author lines anywhere.
+## 2. Git — one commit per step, nothing else
+- Work through **all steps of the task in order without stopping**. A step is finished only when `ruff check .`, `ruff format --check .` and `pytest` all pass.
+- After each finished step, and only then: `git add -A` and `git commit -m "<the exact commit message given for that step>"`. Before committing, run `git status` and make sure no `.env`, secrets, caches, coverage files or other generated files are staged.
+- **Allowed git commands: `git status`, `git diff`, `git log`, `git add`, `git commit`. Everything else is forbidden**: no `push`, `pull`, `fetch`, `merge`, `rebase`, `reset`, `revert`, `checkout`/`switch`, `branch`, `tag`, `stash`, `cherry-pick`, `commit --amend`, no force options, no history rewriting, no pull requests. The owner creates branches, pushes and merges.
+- Use the repository's existing git identity. Do not set or change `user.name`/`user.email`. Do not add AI attribution or co-author lines anywhere, including commit messages.
+- If a step cannot be finished (tests fail and the fix is unclear, a plan conflict, a needed decision), **stop without committing that step**, leave its changes uncommitted, and explain why.
 - `AI-USAGE.md` is a dated log: never edit existing rows. Only the owner appends entries.
-- Work in **steps**. At the end of each step, stop and print the step summary (section 7) so the owner can review and commit. Don't start the next step until asked.
+- At the end of the whole task (or when stopping early), print the step summary (section 7) for **every** step, plus `git log --oneline` for the commits you made.
 
 ## 3. Stack (fixed — do not substitute)
 Python 3.12 · Django 5.2 LTS · PostgreSQL 16 · psycopg 3 · server-rendered Django templates (no SPA, no React, no HTMX, no Tailwind/Bootstrap) · hand-written CSS using **logical properties only** · gunicorn · WhiteNoise · django-axes · django-ratelimit · django-csp · argon2-cffi · dj-database-url · markdown + nh3 · WeasyPrint · openpyxl · Chart.js 4 (vendored file, dashboard only) · pytest, pytest-django, pytest-cov, factory-boy, time-machine, polib, pytest-playwright · ruff.
@@ -39,7 +42,7 @@ No `csrf_exempt`. No `|safe` except the one sanitised-CMS template filter. No ra
 - Time-based tests use the clock fixture. Concurrency tests use `TransactionTestCase` / `transaction=True` with threads.
 - Before ending a step, run `ruff check .`, `ruff format --check .` and `pytest` and paste the result counts and the coverage total.
 
-## 7. Step summary format (print at the end of every step)
+## 7. Step summary format (print one per step at the end of the task)
 ```
 STEP <n> DONE — <title>
 Files changed: <list>

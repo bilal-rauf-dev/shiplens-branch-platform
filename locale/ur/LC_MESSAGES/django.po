@@ -893,3 +893,72 @@ msgstr "اضافی معلومات"
 
 msgid "Back to audit log"
 msgstr "آڈٹ لاگ پر واپس جائیں"
+
+msgid "Finance"
+msgstr "مالیات"
+
+msgid "Cash"
+msgstr "نقد"
+
+msgid "Cheque"
+msgstr "چیک"
+
+msgid "Bank deposit"
+msgstr "بینک میں جمع"
+
+msgid "Collection"
+msgstr "وصولی"
+
+msgid "Adjustment"
+msgstr "ایڈجسٹمنٹ"
+
+msgid "Collection date"
+msgstr "وصولی کی تاریخ"
+
+msgid "Amount (PKR)"
+msgstr "رقم (روپے)"
+
+msgid "Method"
+msgstr "طریقہ"
+
+msgid "Receipt number"
+msgstr "رسید نمبر"
+
+msgid "Collected by"
+msgstr "وصول کرنے والا"
+
+msgid "Source note"
+msgstr "ماخذ کا نوٹ"
+
+msgid "Choose an amount within the allowed range."
+msgstr "مقررہ حد کے اندر رقم درج کریں۔"
+
+msgid "Choose a date within the allowed collection window."
+msgstr "وصولی کی اجازت یافتہ مدت میں تاریخ منتخب کریں۔"
+
+msgid ""
+"Enter a positive amount with at most two decimal places within the allowed "
+"maximum."
+msgstr ""
+"مقررہ حد میں مثبت رقم زیادہ سے زیادہ دو اعشاری ہندسوں کے ساتھ درج کریں۔"
+
+msgid "Choose an offline collection method."
+msgstr "آف لائن وصولی کا طریقہ منتخب کریں۔"
+
+msgid "Use 1–30 letters, numbers, slashes or dashes for the receipt."
+msgstr "رسید کے لیے 1 سے 30 حروف، ہندسے، سلیش یا ڈیش استعمال کریں۔"
+
+msgid "This collection week is closed."
+msgstr "وصولی کا یہ ہفتہ بند ہے۔"
+
+msgid "Choose a member from this branch."
+msgstr "اسی شاخ کا رکن منتخب کریں۔"
+
+msgid "Use at most 200 characters for the source note."
+msgstr "ماخذ کے نوٹ میں زیادہ سے زیادہ 200 حروف لکھیں۔"
+
+msgid "Collections can only be entered for an active branch."
+msgstr "وصولی صرف فعال شاخ کے لیے درج کی جا سکتی ہے۔"
+
+msgid "This receipt number already exists in this branch."
+msgstr "یہ رسید نمبر اس شاخ میں پہلے سے موجود ہے۔"

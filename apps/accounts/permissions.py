@@ -3,6 +3,7 @@
 from django.core.exceptions import PermissionDenied
 
 from apps.accounts.models import Role, UserBranchAssignment
+from apps.branches.models import Branch
 
 GLOBAL = "GLOBAL"
 ASSIGNED = "ASSIGNED"
@@ -180,7 +181,9 @@ def can(user, action, obj=None):
         return bool(entity_action and can(user, entity_action, obj))
     if scope == GLOBAL:
         return True
-    branch_id = getattr(obj, _branch_field(action), None)
+    branch_id = (
+        obj.pk if isinstance(obj, Branch) else getattr(obj, _branch_field(action), None)
+    )
     return branch_id is not None and branch_id in assigned_branch_ids(user)
 
 

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "apps.branches.apps.BranchesConfig",
     "apps.audit.apps.AuditConfig",
     "apps.volunteers.apps.VolunteersConfig",
+    "apps.finance.apps.FinanceConfig",
     "axes",
 ]
 AUTH_USER_MODEL = "accounts.User"

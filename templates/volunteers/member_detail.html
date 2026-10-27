@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ member.member_id }} · {% translate "ShipLens" %}{% endblock %}
+{% block content %}
+  <h1>{{ member.member_id }}</h1>
+  <dl class="record-details">
+    <dt>{% translate "Full name" %}</dt><dd>{{ member.full_name }}</dd>
+    <dt>{% translate "Email" %}</dt><dd>{{ member.email }}</dd>
+    <dt>{% translate "Mobile number" %}</dt><dd>{{ member.phone }}</dd>
+    <dt>{% translate "Branch" %}</dt><dd>{{ member.branch.code }}</dd>
+    <dt>{% translate "Team" %}</dt><dd>{{ member.team.name|default:"—" }}</dd>
+    <dt>{% translate "Volunteer role" %}</dt><dd>{% if LANGUAGE_CODE == "ur" %}{{ member.volunteer_role.name_ur }}{% else %}{{ member.volunteer_role.name_en }}{% endif %}</dd>
+    <dt>{% translate "Status" %}</dt><dd>{{ member.get_status_display }}</dd>
+    <dt>{% translate "Joined on" %}</dt><dd>{{ member.joined_on }}</dd>
+    <dt>{% translate "Left on" %}</dt><dd>{{ member.left_on|default:"—" }}</dd>
+  </dl>
+{% endblock %}

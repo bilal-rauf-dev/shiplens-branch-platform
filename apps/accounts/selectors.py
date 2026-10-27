@@ -17,7 +17,7 @@ ROLE_HOME_NAMES = {
 
 
 def role_home_name(user):
-    """Return the placeholder destination for this user's single role."""
+    """Return the landing page for this user's single role."""
     return ROLE_HOME_NAMES[user.role]
 
 

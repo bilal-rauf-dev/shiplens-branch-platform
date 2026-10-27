@@ -9,6 +9,7 @@ from apps.audit.models import AuditLog
 from apps.branches.models import Branch, City
 from apps.core.models import IdSequence, SystemSetting
 from apps.core.routes import ROUTE_ACTIONS
+from apps.volunteers.models import Application, Member, Team, VolunteerRole
 from tests.rbac.registry import ROUTE_CASES
 
 
@@ -24,6 +25,10 @@ def test_t_rbac_registry_covers_every_protected_route():
 def domain_snapshot():
     """Permission denials may be audited, but must not change business records."""
     return {
+        "applications": list(Application.objects.order_by("pk").values()),
+        "members": list(Member.objects.order_by("pk").values()),
+        "teams": list(Team.objects.order_by("pk").values()),
+        "volunteer_roles": list(VolunteerRole.objects.order_by("pk").values()),
         "cities": list(City.objects.order_by("pk").values()),
         "branches": list(Branch.objects.order_by("pk").values()),
         "id_sequences": list(IdSequence.objects.order_by("pk").values()),

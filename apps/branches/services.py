@@ -8,6 +8,7 @@ from apps import audit
 from apps.accounts.permissions import require, scope_queryset
 from apps.branches.models import Branch, BranchStatus, City
 from apps.core import clock, ids, rules
+from apps.core.exceptions import InvalidTransition
 
 EDITABLE_FIELDS = ("name_en", "name_ur", "address_en", "address_ur", "phone", "email")
 
@@ -53,10 +54,6 @@ def update_city(actor, city, *, name_en, name_ur):
             after={"name_en": city.name_en, "name_ur": city.name_ur},
         )
         return city
-
-
-class InvalidTransition(Exception):
-    """The requested state change is unavailable or blocked by business records."""
 
 
 def close_blockers(branch):

@@ -7,7 +7,10 @@ from django.urls import reverse
 
 from apps.accounts.models import Role, User
 from apps.accounts.services import assign_branch
-from apps.branches.models import City
+from apps.branches.models import Branch, City
+from apps.volunteers import services as volunteer_services
+from apps.volunteers.forms import ApplicationForm
+from apps.volunteers.models import VolunteerRole
 from tests.accounts.conftest import TEST_PASSWORD
 
 NEW_PASSWORD = "Spruce!Harbor-92-Lantern"  # noqa: S105 -- test-only credential.
@@ -31,6 +34,78 @@ def transition_url(name, fixture):
 
 def branch_object(scenario):
     return {"branch": scenario["branch"], "data": {}}
+
+
+def application_object(scenario):
+    """Use a valid Pending applicant in the actor's assigned branch."""
+    form = ApplicationForm(
+        {
+            "full_name": "Matrix Applicant",
+            "email": "matrix-applicant@example.com",
+            "phone": "03001234567",
+            "date_of_birth": "2000-01-01",
+            "preferred_branch": scenario["branch"].pk,
+            "interests": ["education"],
+            "availability": ["weekends"],
+            "motivation": "I would like to volunteer in my local community.",
+            "preferred_language": "en",
+            "privacy_consent": True,
+        }
+    )
+    assert form.is_valid(), form.errors
+    application = volunteer_services.submit_application(form.cleaned_data, None)
+    target = Branch.objects.create(
+        code="BR-LHE-01",
+        city=City.objects.get(code="LHE"),
+        name_en="Other branch",
+        name_ur="دوسری شاخ",
+    )
+    return {
+        "application": application,
+        "target_branch": target,
+        "volunteer_role": VolunteerRole.objects.get(code="VOLUNTEER"),
+        "data": {},
+    }
+
+
+def application_url(name, fixture):
+    return reverse(name, kwargs={"pk": fixture["application"].pk})
+
+
+def accept_payload(scenario):
+    fixture = application_object(scenario)
+    fixture["data"] = {"role_id": fixture["volunteer_role"].pk}
+    return fixture
+
+
+def decline_payload(scenario):
+    fixture = application_object(scenario)
+    fixture["data"] = {"reason": "No capacity at present"}
+    return fixture
+
+
+def reassign_payload(scenario):
+    fixture = application_object(scenario)
+    fixture["data"] = {"branch_id": fixture["target_branch"].pk}
+    return fixture
+
+
+def member_object(scenario):
+    fixture = application_object(scenario)
+    reviewer = User.objects.create_user(
+        email="matrix-reviewer@example.com",
+        full_name="Matrix Reviewer",
+        role=Role.HR_LEAD,
+    )
+    assign_branch(scenario["admin"], reviewer, scenario["branch"])
+    fixture["member"] = volunteer_services.accept_application(
+        reviewer, fixture["application"].pk, role_id=fixture["volunteer_role"].pk
+    )
+    return fixture
+
+
+def member_url(name, fixture):
+    return reverse(name, kwargs={"pk": fixture["member"].pk})
 
 
 def branch_url(name, fixture):
@@ -175,6 +250,11 @@ def settings_payload(scenario):
 # The four columns are method, URL builder, in-scope fixture factory and success
 # status. Payloads must be valid so a validation error cannot masquerade as denial.
 ROUTE_CASES = {
+    "application-detail": RouteCase("GET", application_url, application_object, 200),
+    "application-accept": RouteCase("POST", application_url, accept_payload, 302),
+    "application-decline": RouteCase("POST", application_url, decline_payload, 302),
+    "application-reassign": RouteCase("POST", application_url, reassign_payload, 302),
+    "member-detail": RouteCase("GET", member_url, member_object, 200),
     "branch-transition": RouteCase("POST", transition_url, branch_object, 302),
     "branch-list": RouteCase("GET", page_url, no_object, 200),
     "branch-detail": RouteCase("GET", branch_url, branch_object, 200),

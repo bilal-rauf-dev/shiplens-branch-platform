@@ -57,13 +57,6 @@ urlpatterns = [
         name="dashboard-branch",
     ),
     path(
-        "app/applications/",
-        RoleHomeView.as_view(
-            required_action="application.list", title=_("Applications")
-        ),
-        name="application-list",
-    ),
-    path(
         "app/content/",
         RoleHomeView.as_view(required_action="content.list", title=_("Content")),
         name="content-list",

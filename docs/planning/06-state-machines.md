@@ -55,7 +55,7 @@ stateDiagram-v2
 | Transition | Role | Preconditions | Side effects | Audit |
 |---|---|---|---|---|
 | submit | ANON | valid form, spam checks pass, branch Active/Forming | ref `APP-YYYY-NNNNN`; duplicate flag computed | `application.submitted` (actor = anonymous, IP hashed) |
-| reassign | HR (either branch in scope) / SA | PENDING; target branch Active/Forming | preferred_branch changed | `application.reassigned` |
+| reassign | HR (source application's branch in scope; target any Active/Forming branch) / SA | PENDING; target branch Active/Forming | preferred_branch changed | `application.reassigned` |
 | accept | HR | PENDING (re-checked under row lock); branch not Closed | **Member created** with `M-YYYY-NNNNN`, status ACTIVE, team/role from dialog; `application.member_id` set | `application.accepted` + `member.created` |
 | decline | HR | PENDING; reason 5–500 chars | none | `application.declined` |
 

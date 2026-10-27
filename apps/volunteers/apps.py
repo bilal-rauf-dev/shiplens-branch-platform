@@ -1,0 +1,8 @@
+from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
+
+
+class VolunteersConfig(AppConfig):
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "apps.volunteers"
+    verbose_name = _("Volunteers")

@@ -71,6 +71,38 @@ def collection_create_url(name, fixture):
     return reverse(name, kwargs={"branch_pk": fixture["branch"].pk})
 
 
+def transfer_payload(scenario):
+    fixture = collection_object(scenario)
+    fixture["data"] = {
+        "collections": [fixture["collection"].pk],
+        "transfer_date": clock.today(),
+        "bank_reference": "MATRIX-BANK",
+        "note": "",
+    }
+    return fixture
+
+
+def transfer_object(scenario):
+    fixture = collection_object(scenario)
+    lead = User.objects.get(email="finance-matrix@example.com")
+    fixture["transfer"] = finance_services.create_transfer(
+        lead,
+        fixture["branch"],
+        [fixture["collection"].pk],
+        clock.today(),
+        "MATRIX-BANK",
+    )
+    return fixture
+
+
+def transfer_url(name, fixture):
+    return reverse(name, kwargs={"pk": fixture["transfer"].pk})
+
+
+def transfer_prepare_url(name, fixture):
+    return reverse(name) + f"?collections={fixture['collection'].pk}"
+
+
 def collection_edit_payload(scenario):
     fixture = collection_object(scenario)
     fixture["data"] = {
@@ -390,6 +422,10 @@ def settings_payload(scenario):
 # The four columns are method, URL builder, in-scope fixture factory and success
 # status. Payloads must be valid so a validation error cannot masquerade as denial.
 ROUTE_CASES = {
+    "transfer-list": RouteCase("GET", page_url, transfer_object, 200),
+    "transfer-detail": RouteCase("GET", transfer_url, transfer_object, 200),
+    "transfer-create": RouteCase("POST", collection_create_url, transfer_payload, 302),
+    "transfer-prepare": RouteCase("GET", transfer_prepare_url, collection_object, 302),
     "collection-list": RouteCase("GET", page_url, collection_object, 200),
     "collection-detail": RouteCase("GET", collection_url, collection_object, 200),
     "collection-create": RouteCase("POST", collection_create_url, finance_payload, 302),

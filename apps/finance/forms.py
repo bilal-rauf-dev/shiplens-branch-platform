@@ -5,7 +5,8 @@ from django.core.validators import MaxLengthValidator, MinLengthValidator
 from django.utils.translation import gettext_lazy as _
 
 from apps.core import clock, rules
-from apps.finance.models import CollectionMethod, CollectionState
+from apps.finance import selectors
+from apps.finance.models import Collection, CollectionMethod, CollectionState
 from apps.volunteers.models import Member
 
 
@@ -27,7 +28,11 @@ class CollectionFilterForm(forms.Form):
     )
     state = forms.ChoiceField(
         label=_("State"),
-        choices=[("", _("All states")), *CollectionState.choices],
+        choices=[
+            ("", _("All states")),
+            ("UNSENT", _("Unsent")),
+            *CollectionState.choices,
+        ],
         required=False,
     )
 
@@ -40,6 +45,74 @@ class CollectionFilterForm(forms.Form):
         ):
             self.add_error(
                 "date_to", _("The end date must be on or after the start date.")
+            )
+        return cleaned
+
+
+class TransferSelectionForm(forms.Form):
+    collections = forms.ModelMultipleChoiceField(
+        label=_("Collections"),
+        queryset=Collection.objects.none(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+
+    def __init__(self, *args, user, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["collections"].queryset = selectors.unsent(user)
+
+    def clean_collections(self):
+        items = self.cleaned_data["collections"]
+        if len({item.branch_id for item in items}) != 1:
+            raise forms.ValidationError(_("Choose collections from one branch only."))
+        return items
+
+
+class TransferForm(forms.Form):
+    collections = forms.ModelMultipleChoiceField(
+        label=_("Collections"),
+        queryset=Collection.objects.none(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+    transfer_date = forms.DateField(
+        label=_("Transfer date"), widget=forms.DateInput(attrs={"type": "date"})
+    )
+    bank_reference = forms.CharField(label=_("Bank reference"), max_length=50)
+    note = forms.CharField(label=_("Note"), required=False, widget=forms.Textarea)
+
+    def __init__(self, *args, branch, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["collections"].queryset = Collection.objects.filter(
+            branch=branch, transfer__isnull=True, voided_at__isnull=True
+        ).order_by("collection_date", "pk")
+        self.fields["transfer_date"].widget.attrs["max"] = clock.today().isoformat()
+        minimum = rules.get("transfer_bank_reference_min_length")
+        maximum = rules.get("transfer_bank_reference_max_length")
+        self.fields["bank_reference"].validators.extend(
+            [MinLengthValidator(minimum), MaxLengthValidator(maximum)]
+        )
+        self.fields["bank_reference"].widget.attrs.update(
+            {"minlength": minimum, "maxlength": maximum}
+        )
+
+    def clean(self):
+        cleaned = super().clean()
+        selected, transfer_date = (
+            cleaned.get("collections"),
+            cleaned.get("transfer_date"),
+        )
+        if transfer_date and (
+            transfer_date > clock.today()
+            or (
+                selected
+                and transfer_date < max(item.collection_date for item in selected)
+            )
+        ):
+            self.add_error(
+                "transfer_date",
+                _(
+                    "Choose a transfer date between the latest "
+                    "collection date and today."
+                ),
             )
         return cleaned
 

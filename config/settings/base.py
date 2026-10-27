@@ -162,6 +162,8 @@ BUSINESS_RULES = {
     "collection_lock_days": 7,  # BR-064
     "collection_void_reason_min_length": 5,
     "collection_void_reason_max_length": 300,
+    "transfer_bank_reference_min_length": 3,
+    "transfer_bank_reference_max_length": 50,
     "week_start_day": "MON",  # BR-080
     "allow_submit_current_week": False,  # BR-085
 }

@@ -10,6 +10,7 @@ from apps.accounts.permissions import PERMISSIONS
 from apps.audit import services as audit_services
 from apps.branches import services as branch_services
 from apps.branches.models import City
+from apps.core import clock
 from apps.finance import services as finance_services
 from apps.volunteers import services as volunteer_services
 from tests.rbac.registry import (
@@ -36,6 +37,7 @@ from tests.rbac.registry import (
     settings_payload,
     team_create_payload,
     team_object,
+    transfer_payload,
     user_object,
     volunteer_role_payload,
 )
@@ -208,6 +210,17 @@ def verify_audit_chain(scenario, fixture):
 
 
 SERVICE_CASES = {
+    "create_transfer": ServiceCase(
+        "transfer.create",
+        lambda scenario, fixture: finance_services.create_transfer(
+            scenario["actor"],
+            fixture["branch"],
+            fixture["data"]["collections"],
+            clock.today(),
+            "BANK-MATRIX",
+        ),
+        transfer_payload,
+    ),
     "create_collection": ServiceCase(
         "collection.create",
         lambda scenario, fixture: finance_services.create_collection(

@@ -1058,3 +1058,69 @@ msgstr "مقفل ہونے کا وقت (پاکستانی وقت)"
 
 msgid "Give a void reason between %(minimum)s and %(maximum)s characters."
 msgstr "منسوخی کی وجہ %(minimum)s سے %(maximum)s حروف میں درج کریں۔"
+
+msgid "Choose at least one collection."
+msgstr "کم از کم ایک وصولی منتخب کریں۔"
+
+msgid "Choose only collections from this branch."
+msgstr "صرف اسی شاخ کی وصولیاں منتخب کریں۔"
+
+msgid "A selected collection is voided or already sent."
+msgstr "منتخب وصولی منسوخ ہو چکی ہے یا پہلے بھیجی جا چکی ہے۔"
+
+msgid "Choose a transfer date between the latest collection date and today."
+msgstr "تازہ ترین وصولی کی تاریخ سے آج تک منتقلی کی تاریخ منتخب کریں۔"
+
+msgid "Use 3–50 characters for the bank reference."
+msgstr "بینک حوالے کے لیے 3 سے 50 حروف استعمال کریں۔"
+
+msgid "Choose collections from one branch only."
+msgstr "صرف ایک شاخ کی وصولیاں منتخب کریں۔"
+
+msgid "Transfer date"
+msgstr "منتقلی کی تاریخ"
+
+msgid "Bank reference"
+msgstr "بینک حوالہ"
+
+msgid "Transfer created."
+msgstr "منتقلی درج کر دی گئی۔"
+
+msgid "Select unsent collections"
+msgstr "غیر ارسال شدہ وصولیاں منتخب کریں"
+
+msgid "Review selected entries"
+msgstr "منتخب اندراجات کا جائزہ لیں"
+
+msgid "Create transfer"
+msgstr "منتقلی درج کریں"
+
+msgid "Selected collections"
+msgstr "منتخب وصولیاں"
+
+msgid "PKR"
+msgstr "روپے"
+
+msgid "Selected total (PKR)"
+msgstr "منتخب کل رقم (روپے)"
+
+msgid "Mark sent"
+msgstr "بھیجا گیا درج کریں"
+
+msgid "Transfers"
+msgstr "منتقلیاں"
+
+msgid "Total (PKR)"
+msgstr "کل رقم (روپے)"
+
+msgid "No transfers found."
+msgstr "کوئی منتقلی نہیں ملی۔"
+
+msgid "Select"
+msgstr "منتخب کریں"
+
+msgid "Prepare transfer"
+msgstr "منتقلی تیار کریں"
+
+msgid "View transfer"
+msgstr "منتقلی دیکھیں"

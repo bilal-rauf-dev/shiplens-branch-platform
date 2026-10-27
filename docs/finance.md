@@ -32,3 +32,19 @@ money and remain unsent until transferred. Financial reads are scoped for Branch
 Leads and global for Finance Reviewer/Super Admin; only assigned Branch Leads
 can write. Date/method/state filters, 25-row pagination, lock countdowns and the
 shared history panel are server-rendered. Success uses POST-redirect-GET.
+
+## Sending to the main account
+
+Choose Unsent on the collection list, select whole entries, then review them in
+the transfer form. Selection and totals are computed on the server; there is no
+JavaScript or posted total. Entries must be from one assigned branch, non-voided
+and not sent. Transfer dates range from the latest collection date through today.
+The bank reference identifies an offline deposit, not a payment gateway.
+
+The service locks the branch then collections in primary-key order, allocates
+TRF references using a locked counter, stores the Decimal sum and marks each row
+sent. Transfer creation, collection links and all audit events commit together.
+A locked-but-unsent entry may still be sent. Stale selections return 409.
+PostgreSQL triggers reject changes to sent financial fields and all transfer
+updates/deletes; reverse migration SQL removes both guards. Transfer list and
+detail retain the same BL scope and global FR/SA read-only access.

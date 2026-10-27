@@ -15,7 +15,7 @@ from apps.accounts.permissions import require, scope_queryset
 from apps.branches.models import Branch, BranchStatus
 from apps.core import clock, ids, rules
 from apps.core.exceptions import InvalidTransition
-from apps.finance.models import Collection, CollectionMethod
+from apps.finance.models import Collection, CollectionMethod, Transfer
 from apps.volunteers.models import Member
 
 EDITABLE_FIELDS = (
@@ -26,6 +26,103 @@ EDITABLE_FIELDS = (
     "collected_by_member_id",
     "source_note",
 )
+
+
+def create_transfer(
+    actor, branch, collection_ids, transfer_date, bank_reference, note=""
+):
+    """Send whole unsent entries once; locking and approval are independent. BR-069."""
+    with transaction.atomic():
+        require(actor, "transfer.create")
+        branch = get_object_or_404(
+            scope_queryset(
+                actor,
+                "transfer.create",
+                Branch.objects.select_for_update(no_key=True),
+                branch_field="pk",
+            ),
+            pk=branch.pk,
+        )
+        require(actor, "transfer.create", branch)
+        selected_ids = sorted(set(collection_ids))
+        if not selected_ids:
+            raise ValidationError({"collections": _("Choose at least one collection.")})
+        items = list(
+            Collection.objects.select_for_update(no_key=True)
+            .filter(branch=branch, pk__in=selected_ids)
+            .order_by("pk")
+        )
+        if len(items) != len(selected_ids):
+            raise ValidationError(
+                {"collections": _("Choose only collections from this branch.")}
+            )
+        if any(
+            item.voided_at is not None or item.transfer_id is not None for item in items
+        ):
+            raise InvalidTransition(
+                _("A selected collection is voided or already sent.")
+            )
+        if (
+            not max(item.collection_date for item in items)
+            <= transfer_date
+            <= clock.today()
+        ):
+            raise ValidationError(
+                {
+                    "transfer_date": _(
+                        "Choose a transfer date between the latest "
+                        "collection date and today."
+                    )
+                }
+            )
+        bank_reference = bank_reference.strip()
+        if (
+            not rules.get("transfer_bank_reference_min_length")
+            <= len(bank_reference)
+            <= rules.get("transfer_bank_reference_max_length")
+        ):
+            raise ValidationError(
+                {"bank_reference": _("Use 3–50 characters for the bank reference.")}
+            )
+        number = ids.next_value(f"transfer:{branch.code}")
+        transfer = Transfer(
+            reference=f"TRF-{branch.code}-{number:04d}",
+            branch=branch,
+            transfer_date=transfer_date,
+            bank_reference=bank_reference,
+            total_amount=sum((item.amount for item in items), Decimal("0.00")),
+            note=note.strip(),
+            created_by=actor,
+            created_at=clock.now(),
+        )
+        transfer.full_clean()
+        transfer.save(force_insert=True)
+        audit.record(
+            actor,
+            "transfer.created",
+            entity=transfer,
+            branch_id=branch.pk,
+            after={
+                "transfer_date": transfer.transfer_date,
+                "bank_reference": transfer.bank_reference,
+                "total_amount": transfer.total_amount,
+                "collection_ids": selected_ids,
+                "note": transfer.note,
+            },
+        )
+        for item in items:
+            item.transfer, item.updated_at = transfer, clock.now()
+            # Deliberately bypass the edit guard: locked-but-unsent entries can be sent.
+            item.save(update_fields=["transfer", "updated_at"])
+            audit.record(
+                actor,
+                "collection.sent",
+                entity=item,
+                branch_id=branch.pk,
+                before={"transfer_id": None},
+                after={"transfer_id": transfer.pk},
+            )
+        return transfer
 
 
 def assert_editable(collection):

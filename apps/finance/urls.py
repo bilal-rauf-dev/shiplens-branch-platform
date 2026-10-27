@@ -3,6 +3,18 @@ from django.urls import path
 from apps.finance import views
 
 urlpatterns = [
+    path("app/transfers/", views.TransferListView.as_view(), name="transfer-list"),
+    path(
+        "app/transfers/<int:pk>/",
+        views.TransferDetailView.as_view(),
+        name="transfer-detail",
+    ),
+    path("app/transfers/prepare/", views.prepare_transfer, name="transfer-prepare"),
+    path(
+        "app/branches/<int:branch_pk>/transfers/new/",
+        views.TransferCreateView.as_view(),
+        name="transfer-create",
+    ),
     path(
         "app/collections/", views.CollectionListView.as_view(), name="collection-list"
     ),

@@ -1,6 +1,10 @@
 """Every reachable named route must be explicitly public or declare an action."""
 
 ROUTE_ACTIONS = {
+    "transfer-list": "transfer.list",
+    "transfer-detail": "transfer.view",
+    "transfer-create": "transfer.create",
+    "transfer-prepare": "transfer.create",
     "collection-list": "collection.list",
     "collection-detail": "collection.view",
     "collection-create": "collection.create",

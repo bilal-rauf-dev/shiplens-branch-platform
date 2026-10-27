@@ -13,7 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from apps.core import clock, rules
 from apps.volunteers import selectors
 from apps.volunteers.constants import AVAILABILITY, INTERESTS
-from apps.volunteers.models import ApplicationStatus, Team, VolunteerRole
+from apps.volunteers.models import ApplicationStatus, MemberStatus, Team, VolunteerRole
 
 
 def render_token():
@@ -58,6 +58,83 @@ class VolunteerRoleForm(forms.Form):
     name_en = forms.CharField(label=_("English name"), max_length=60)
     name_ur = forms.CharField(label=_("Urdu name"), max_length=60)
     sort_order = forms.IntegerField(label=_("Sort order"), min_value=0, initial=0)
+
+
+class MemberFilterForm(forms.Form):
+    q = forms.CharField(label=_("Search"), max_length=254, required=False)
+    branch = forms.TypedChoiceField(
+        label=_("Branch"), coerce=int, empty_value=None, required=False
+    )
+    team = forms.TypedChoiceField(
+        label=_("Team"), coerce=int, empty_value=None, required=False
+    )
+    role = forms.TypedChoiceField(
+        label=_("Volunteer role"), coerce=int, empty_value=None, required=False
+    )
+    status = forms.ChoiceField(
+        label=_("Status"),
+        choices=[("", _("All statuses")), *MemberStatus.choices],
+        required=False,
+    )
+    joined_from = forms.DateField(
+        label=_("Joined from"),
+        required=False,
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )
+    joined_to = forms.DateField(
+        label=_("Joined to"),
+        required=False,
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )
+    sort = forms.ChoiceField(
+        label=_("Sort by"),
+        required=False,
+        choices=[
+            ("", _("Newest first")),
+            ("name", _("Name (A–Z)")),
+            ("-name", _("Name (Z–A)")),
+            ("joined", _("Joined date (oldest first)")),
+            ("-joined", _("Joined date (newest first)")),
+        ],
+    )
+
+    def __init__(self, *args, user, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Materialize each choice list once: validation and rendering reuse it.
+        self.fields["branch"].choices = [
+            ("", _("All branches")),
+            *[
+                (
+                    branch.pk,
+                    f"{branch.code} · "
+                    + (branch.name_ur if get_language() == "ur" else branch.name_en),
+                )
+                for branch in selectors.member_branches(user)
+            ],
+        ]
+        self.fields["team"].choices = [
+            ("", _("All teams")),
+            *[
+                (team.pk, f"{team.branch.code} · {team.name}")
+                for team in selectors.member_teams(user)
+            ],
+        ]
+        self.fields["role"].choices = [
+            ("", _("All volunteer roles")),
+            *[
+                (role.pk, role.name_ur if get_language() == "ur" else role.name_en)
+                for role in selectors.volunteer_roles()
+            ],
+        ]
+
+    def clean(self):
+        cleaned = super().clean()
+        start, end = cleaned.get("joined_from"), cleaned.get("joined_to")
+        if start and end and start > end:
+            self.add_error(
+                "joined_to", _("The end date must be on or after the start date.")
+            )
+        return cleaned
 
 
 class ApplicationFilterForm(forms.Form):

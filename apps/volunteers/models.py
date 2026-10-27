@@ -2,8 +2,9 @@
 
 from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
+from django.contrib.postgres.indexes import GinIndex, OpClass
 from django.db import models
-from django.db.models.functions import Length, Lower, Trim
+from django.db.models.functions import Length, Lower, Trim, Upper
 from django.db.models.lookups import GreaterThanOrEqual, LessThanOrEqual
 from django.utils.translation import gettext_lazy as _
 
@@ -209,7 +210,20 @@ class Member(models.Model):
     class Meta:
         db_table = "members"
         indexes = [
-            models.Index(fields=["branch", "status"], name="members_branch_status")
+            models.Index(fields=["branch", "status"], name="members_branch_status"),
+            models.Index(fields=["branch", "joined_on"], name="members_branch_joined"),
+            models.Index(fields=["joined_on"], name="members_joined"),
+            models.Index(fields=["status"], name="members_status"),
+            models.Index(fields=["created_at"], name="members_created"),
+            models.Index(Lower("full_name"), name="members_name_lower"),
+            # Django's PostgreSQL icontains queries UPPER(field), not the bare column.
+            GinIndex(
+                OpClass(Upper("full_name"), name="gin_trgm_ops"),
+                name="members_name_trgm",
+            ),
+            GinIndex(
+                OpClass(Upper("email"), name="gin_trgm_ops"), name="members_email_trgm"
+            ),
         ]
         constraints = [
             models.UniqueConstraint(

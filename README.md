@@ -16,6 +16,8 @@ HR can manage teams in assigned branches; Super Admin can manage teams globally
 and create, edit or deactivate bilingual volunteer roles. Branch Leads have a
 scoped, read-only team list. Deactivated teams and roles keep existing member
 links and cannot be selected for new acceptances.
+The member register supports scoped search, combined filters, stable sorting and
+25-member pages, with CSS cards on mobile and PostgreSQL search indexes.
 
 - Planning documents: [`docs/planning/`](docs/planning/00-executive-summary.md)
 - AI usage declaration: [`AI-USAGE.md`](AI-USAGE.md)

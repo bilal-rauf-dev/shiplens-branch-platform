@@ -29,6 +29,7 @@
               {% endif %}
               {% if user.role == "SUPER_ADMIN" or user.role == "HR_LEAD" or user.role == "BRANCH_LEAD" %}
                 <a href="{% url 'team-list' %}">{% translate "Teams" %}</a>
+                <a href="{% url 'member-list' %}">{% translate "Members" %}</a>
               {% endif %}
               <a href="{% url 'account-change-password' %}">{% translate "Change password" %}</a>
               <form method="post" action="{% url 'account-logout' %}">

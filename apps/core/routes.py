@@ -1,6 +1,7 @@
 """Every reachable named route must be explicitly public or declare an action."""
 
 ROUTE_ACTIONS = {
+    "member-list": "member.list",
     "team-list": "team.list",
     "team-create": "team.manage",
     "team-edit": "team.manage",

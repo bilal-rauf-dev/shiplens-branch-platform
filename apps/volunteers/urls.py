@@ -3,6 +3,7 @@ from django.urls import path
 from apps.volunteers import views
 
 urlpatterns = [
+    path("app/members/", views.MemberListView.as_view(), name="member-list"),
     path("app/teams/", views.TeamListView.as_view(), name="team-list"),
     path(
         "app/branches/<int:branch_pk>/teams/new/",

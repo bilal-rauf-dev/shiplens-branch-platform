@@ -278,6 +278,7 @@ def settings_payload(scenario):
 # The four columns are method, URL builder, in-scope fixture factory and success
 # status. Payloads must be valid so a validation error cannot masquerade as denial.
 ROUTE_CASES = {
+    "member-list": RouteCase("GET", page_url, member_object, 200),
     "team-list": RouteCase("GET", page_url, no_object, 200),
     "team-create": RouteCase("POST", team_create_url, team_create_payload, 302),
     "team-edit": RouteCase("POST", team_url, team_object, 302),

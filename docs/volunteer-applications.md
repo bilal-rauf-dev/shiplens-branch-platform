@@ -111,7 +111,7 @@ Detail pages show age instead of date of birth and include the shared audit-hist
 partial. Duplicate matches are looked up through the viewer's application/member
 scope; an inaccessible match never exposes its reference, name or link. A small
 read-only member detail route provides the matched-member link destination.
-Member list/search and editing remain in P5.
+Member editing remains in P5 Step 3.
 
 Acceptance forms offer teams from the application's branch and existing roles.
 Decline reasons use the same configured bounds as the service. Reassignment offers
@@ -121,3 +121,39 @@ list. Invalid forms and business validation errors re-render detail with HTTP 40
 terminal decisions and closed-branch acceptance return HTTP 409. Acceptance also
 reports current-member email conflicts in plain language while retaining the
 database uniqueness constraint. Review pages use private, no-store responses.
+
+## Member register and search
+
+`/en/app/members/` and `/ur/app/members/` show a scoped register for Super Admin,
+Branch Lead and HR Lead. Finance and Content roles receive 403. The default is
+Active members, newest creation first. Choose All statuses to include Inactive and
+Left members. Name sorting is case-insensitive; name and joined-date sorts work in
+both directions and use the primary key to break ties consistently across pages.
+
+`MemberFilterForm` validates GET parameters before `selectors.search_members`
+applies them. The selector always scopes members before applying search and the
+AND-combined branch, team, role, status and inclusive joined-date filters. Invalid
+or inaccessible filter values show errors and no results. Branch and team choices
+are scoped too; inactive teams and roles remain selectable for historical records.
+Each choice list is loaded once for both validation and rendering.
+
+Search uses case-insensitive substring matches on name, email and member ID.
+Phone-shaped queries also match stored phone digits; spaces, dashes, parentheses
+and the leading local zero in `03…` are normalized for the search. Pagination keeps
+every GET parameter except the previous page number, and each page holds 25
+members. Below 640px, CSS turns each table row into a labelled card without
+JavaScript. Responses are private and no-store because members contain PII.
+
+Migration `0004_member_search_indexes` enables `pg_trgm` before adding GIN indexes
+on `UPPER(full_name)` and `UPPER(email)`, matching Django's PostgreSQL `icontains`
+SQL. A separate `LOWER(full_name)` B-tree supports name ordering. Branch/joined,
+joined, status and creation-time indexes cover filters and ordering. Existing team
+and role foreign-key indexes, the member-ID unique index and branch/status index
+are retained without duplicates. `django.contrib.postgres` is enabled so Django
+registers expression-index operator classes correctly; this adds no dependency.
+
+`pytest -m performance tests/volunteers/test_member_search.py` bulk-creates exactly
+5,000 members, warms template compilation, then measures a fully rendered scoped
+view with all filters. It enforces at most 8 queries and under 300ms. Fixture setup
+and authentication/session middleware are excluded from that view budget; separate
+HTTP tests cover the complete authenticated route and role/scope enforcement.

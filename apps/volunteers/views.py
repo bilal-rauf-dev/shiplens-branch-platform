@@ -26,12 +26,13 @@ from apps.volunteers.forms import (
     ApplicationFilterForm,
     ApplicationForm,
     DeclineApplicationForm,
+    MemberFilterForm,
     ReassignApplicationForm,
     TeamForm,
     VolunteerRoleForm,
     age_on,
 )
-from apps.volunteers.models import ApplicationStatus
+from apps.volunteers.models import ApplicationStatus, MemberStatus
 
 
 def _management_errors(form, error):
@@ -41,6 +42,33 @@ def _management_errors(form, error):
             form.add_error(field if field in form.fields else None, errors)
     else:
         form.add_error(None, error)
+
+
+@method_decorator(cache_control(no_store=True, private=True), name="dispatch")
+class MemberListView(PermissionRequiredMixin, ListView):
+    required_action = "member.list"
+    template_name = "volunteers/member_list.html"
+    context_object_name = "members"
+    paginate_by = 25
+
+    def get_queryset(self):
+        params = self.request.GET.copy()
+        params.setdefault("status", MemberStatus.ACTIVE)
+        self.filter_form = MemberFilterForm(params, user=self.request.user)
+        if not self.filter_form.is_valid():
+            return selectors.members().none()
+        return selectors.search_members(
+            self.request.user, self.filter_form.cleaned_data
+        )
+
+    def get_context_data(self, **kwargs):
+        params = self.request.GET.copy()
+        params.pop("page", None)
+        return {
+            **super().get_context_data(**kwargs),
+            "filter_form": self.filter_form,
+            "filter_query": params.urlencode(),
+        }
 
 
 class TeamListView(PermissionRequiredMixin, ListView):

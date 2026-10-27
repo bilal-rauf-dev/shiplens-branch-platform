@@ -71,3 +71,15 @@ run in the existing PostgreSQL pytest job with the current dependencies.
 For a focused run, use `pytest tests/rbac`. The frozen permission table, generated
 documentation sync, URL resolver coverage and object-scope tests remain separate
 checks so they can catch different classes of mistake.
+
+The member register performance check runs in the normal PostgreSQL pytest job.
+Find it with `pytest -m performance tests/volunteers/test_member_search.py`. It
+creates 5,000 members with `bulk_create`, then checks the rendered filtered view
+uses at most 8 queries and takes less than 300ms after template warm-up. Data setup
+and authentication middleware are outside the measurement. Query count and
+elapsed milliseconds are exposed as pytest `record_property` values for reports.
+
+Enabling `django.contrib.postgres` also installs connection type handlers. The
+isolated health-probe connection uses Django's `NO_DB_ALIAS` to skip that handler
+setup for its `SELECT 1`; it still copies the configured database name and keeps
+its connection/query timeouts. Real PostgreSQL health tests cover this integration.

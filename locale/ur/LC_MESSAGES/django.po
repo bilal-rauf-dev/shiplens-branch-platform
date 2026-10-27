@@ -677,3 +677,54 @@ msgstr "محفوظ کریں"
 
 msgid "Back to list"
 msgstr "فہرست پر واپس جائیں"
+
+msgid "Search"
+msgstr "تلاش"
+
+msgid "Joined from"
+msgstr "شمولیت کی ابتدائی تاریخ"
+
+msgid "Joined to"
+msgstr "شمولیت کی آخری تاریخ"
+
+msgid "Sort by"
+msgstr "ترتیب دیں"
+
+msgid "Newest first"
+msgstr "نئے پہلے"
+
+msgid "Name (A–Z)"
+msgstr "نام (الف سے ی)"
+
+msgid "Name (Z–A)"
+msgstr "نام (ی سے الف)"
+
+msgid "Joined date (oldest first)"
+msgstr "تاریخ شمولیت (پرانی پہلے)"
+
+msgid "Joined date (newest first)"
+msgstr "تاریخ شمولیت (نئی پہلے)"
+
+msgid "All teams"
+msgstr "تمام ٹیمیں"
+
+msgid "All volunteer roles"
+msgstr "تمام رضاکارانہ کردار"
+
+msgid "The end date must be on or after the start date."
+msgstr "آخری تاریخ ابتدائی تاریخ سے پہلے نہیں ہو سکتی۔"
+
+msgid "Reset filters"
+msgstr "فلٹر صاف کریں"
+
+msgid "Member register"
+msgstr "اراکین کا رجسٹر"
+
+msgid "Member ID"
+msgstr "رکن شناخت"
+
+msgid "No members found."
+msgstr "کوئی رکن نہیں ملا۔"
+
+msgid "Member pages"
+msgstr "اراکین کے صفحات"

@@ -1,4 +1,7 @@
+import re
+
 from django.db.models import Q
+from django.db.models.functions import Lower
 from django.utils.translation import gettext_lazy as _
 
 from apps.accounts.permissions import can, scope_queryset
@@ -37,6 +40,57 @@ def applications():
 
 def members():
     return Member.objects.select_related("branch", "team", "volunteer_role")
+
+
+def member_branches(user):
+    return scope_queryset(
+        user, "member.list", Branch.objects.order_by("code"), branch_field="pk"
+    )
+
+
+def member_teams(user):
+    return scope_queryset(user, "member.list", teams())
+
+
+def search_members(user, params):
+    """Apply validated GET filters with AND, inside the caller's scope. BR-059."""
+    queryset = scope_queryset(user, "member.list", members())
+    query = params.get("q", "").strip()
+    if query:
+        matches = (
+            Q(full_name__icontains=query)
+            | Q(email__icontains=query)
+            | Q(member_id__icontains=query)
+        )
+        # Only phone-shaped input adds a digits match; IDs containing digits do not.
+        if re.fullmatch(r"[+0-9\s()\-]+", query):
+            digits = re.sub(r"[^0-9]", "", query)
+            if digits.startswith("03"):
+                digits = digits[1:]
+            if digits:
+                matches |= Q(phone__contains=digits)
+        queryset = queryset.filter(matches)
+    for parameter, field in (
+        ("branch", "branch_id"),
+        ("team", "team_id"),
+        ("role", "volunteer_role_id"),
+    ):
+        if params.get(parameter):
+            queryset = queryset.filter(**{field: params[parameter]})
+    status = params.get("status", MemberStatus.ACTIVE)
+    if status:
+        queryset = queryset.filter(status=status)
+    if params.get("joined_from"):
+        queryset = queryset.filter(joined_on__gte=params["joined_from"])
+    if params.get("joined_to"):
+        queryset = queryset.filter(joined_on__lte=params["joined_to"])
+    orderings = {
+        "name": (Lower("full_name").asc(), "pk"),
+        "-name": (Lower("full_name").desc(), "pk"),
+        "joined": ("joined_on", "pk"),
+        "-joined": ("-joined_on", "-pk"),
+    }
+    return queryset.order_by(*orderings.get(params.get("sort"), ("-created_at", "-pk")))
 
 
 def review_branches(user):

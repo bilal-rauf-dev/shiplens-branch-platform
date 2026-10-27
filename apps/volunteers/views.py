@@ -12,7 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.http import require_GET, require_http_methods, require_POST
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, FormView, ListView
 
 from apps.accounts.permissions import can, require, scope_queryset
 from apps.core import clock
@@ -27,9 +27,165 @@ from apps.volunteers.forms import (
     ApplicationForm,
     DeclineApplicationForm,
     ReassignApplicationForm,
+    TeamForm,
+    VolunteerRoleForm,
     age_on,
 )
 from apps.volunteers.models import ApplicationStatus
+
+
+def _management_errors(form, error):
+    """Keep model-level errors visible without assuming they name a form field."""
+    if hasattr(error, "message_dict"):
+        for field, errors in error.message_dict.items():
+            form.add_error(field if field in form.fields else None, errors)
+    else:
+        form.add_error(None, error)
+
+
+class TeamListView(PermissionRequiredMixin, ListView):
+    required_action = "team.list"
+    queryset = selectors.teams()
+    template_name = "volunteers/team_list.html"
+    context_object_name = "teams"
+
+    def get_context_data(self, **kwargs):
+        return {
+            **super().get_context_data(**kwargs),
+            "can_manage": can(self.request.user, "team.manage"),
+            "managed_branches": selectors.team_management_branches(self.request.user),
+        }
+
+
+class TeamCreateView(PermissionRequiredMixin, FormView):
+    required_action = "team.manage"
+    form_class = TeamForm
+    template_name = "volunteers/management_form.html"
+    extra_context = {"page_title": _("Create team"), "return_route": "team-list"}
+
+    def dispatch(self, request, *args, **kwargs):
+        require(request.user, self.required_action)
+        self.branch = get_object_or_404(
+            selectors.team_management_branches(request.user), pk=kwargs["branch_pk"]
+        )
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        try:
+            services.create_team(self.request.user, self.branch.pk, **form.cleaned_data)
+        except ValidationError as error:
+            _management_errors(form, error)
+            return self.form_invalid(form)
+        messages.success(self.request, _("Team created."))
+        return redirect("team-list")
+
+    def get_context_data(self, **kwargs):
+        return {**super().get_context_data(**kwargs), "branch": self.branch}
+
+
+class TeamEditView(PermissionRequiredMixin, FormView):
+    required_action = "team.manage"
+    form_class = TeamForm
+    template_name = "volunteers/management_form.html"
+    extra_context = {"page_title": _("Rename team"), "return_route": "team-list"}
+
+    def dispatch(self, request, *args, **kwargs):
+        require(request.user, self.required_action)
+        self.team = get_object_or_404(
+            scope_queryset(request.user, self.required_action, selectors.teams()),
+            pk=kwargs["pk"],
+        )
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_initial(self):
+        return {"name": self.team.name}
+
+    def get_context_data(self, **kwargs):
+        return {**super().get_context_data(**kwargs), "branch": self.team.branch}
+
+    def form_valid(self, form):
+        try:
+            services.rename_team(self.request.user, self.team.pk, **form.cleaned_data)
+        except ValidationError as error:
+            _management_errors(form, error)
+            return self.form_invalid(form)
+        messages.success(self.request, _("Team renamed."))
+        return redirect("team-list")
+
+
+@require_POST
+def deactivate_team(request, pk):
+    services.deactivate_team(request.user, pk)
+    messages.success(request, _("Team deactivated."))
+    return redirect("team-list")
+
+
+class VolunteerRoleListView(PermissionRequiredMixin, ListView):
+    required_action = "volunteer_role.manage"
+    queryset = selectors.volunteer_roles()
+    template_name = "volunteers/volunteer_role_list.html"
+    context_object_name = "volunteer_roles"
+
+
+class VolunteerRoleCreateView(PermissionRequiredMixin, FormView):
+    required_action = "volunteer_role.manage"
+    form_class = VolunteerRoleForm
+    template_name = "volunteers/management_form.html"
+    extra_context = {
+        "page_title": _("Create volunteer role"),
+        "return_route": "volunteer-role-list",
+    }
+
+    def form_valid(self, form):
+        try:
+            services.create_volunteer_role(self.request.user, **form.cleaned_data)
+        except ValidationError as error:
+            _management_errors(form, error)
+            return self.form_invalid(form)
+        messages.success(self.request, _("Volunteer role created."))
+        return redirect("volunteer-role-list")
+
+
+class VolunteerRoleEditView(VolunteerRoleCreateView):
+    extra_context = {
+        "page_title": _("Edit volunteer role"),
+        "return_route": "volunteer-role-list",
+    }
+
+    def dispatch(self, request, *args, **kwargs):
+        require(request.user, self.required_action)
+        self.volunteer_role = get_object_or_404(
+            scope_queryset(
+                request.user, self.required_action, selectors.volunteer_roles()
+            ),
+            pk=kwargs["pk"],
+        )
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_initial(self):
+        return {
+            "name_en": self.volunteer_role.name_en,
+            "name_ur": self.volunteer_role.name_ur,
+            "sort_order": self.volunteer_role.sort_order,
+        }
+
+    def form_valid(self, form):
+        try:
+            services.update_volunteer_role(
+                self.request.user, self.volunteer_role.pk, **form.cleaned_data
+            )
+        except ValidationError as error:
+            _management_errors(form, error)
+            return self.form_invalid(form)
+        messages.success(self.request, _("Volunteer role updated."))
+        return redirect("volunteer-role-list")
+
+
+@require_POST
+def deactivate_volunteer_role(request, pk):
+    services.deactivate_volunteer_role(request.user, pk)
+    messages.success(request, _("Volunteer role deactivated."))
+    return redirect("volunteer-role-list")
 
 
 def _thanks(reference):

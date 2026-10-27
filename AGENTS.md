@@ -10,6 +10,7 @@ This repository is a solo entry for the ShipLens 1.0 build challenge. The human 
 ## 2. Git — strictly forbidden
 - **Do not run `git commit`, `git push`, `git merge`, `git rebase`, `git tag`, or create branches or pull requests.** The owner does all git operations.
 - Do not add AI attribution or co-author lines anywhere.
+- `AI-USAGE.md` is a dated log: never edit existing rows. Only the owner appends entries.
 - Work in **steps**. At the end of each step, stop and print the step summary (section 7) so the owner can review and commit. Don't start the next step until asked.
 
 ## 3. Stack (fixed — do not substitute)

@@ -45,13 +45,40 @@ length, team-name uniqueness, the team/branch composite foreign key, immutable
 member IDs, current-member email uniqueness and Left/date consistency. Four roles
 are seeded with Urdu names. There is no public access to stored personal data.
 
+## Teams and volunteer roles
+
+HR Leads create, rename and deactivate teams in their assigned branches through
+the Teams navigation. Super Admins can manage all teams. Branch Leads see assigned
+teams without write controls, following the permission matrix. The branch comes
+from a scoped URL lookup, never from a form field. Names remain unique within a
+branch after deactivation. Services lock branches before teams, matching acceptance
+and serializing competing creates and renames. Each write commits together with
+its `team.created` or `team.updated` audit event.
+
+Super Admins manage bilingual volunteer-role labels, ordering and deactivation
+through Volunteer roles. New codes use the existing locked counter to generate
+`ROLE-00001`, `ROLE-00002`, etc.; the four seeded codes remain unchanged. Forms
+never accept role codes or active state. Each role write records
+`volunteer_role.created` or `volunteer_role.updated` in the same transaction.
+Deactivation excludes teams and roles from new acceptance choices while existing
+members keep their links. Successful forms redirect to the list with a translated
+message.
+
+BR-056 already has a PostgreSQL composite foreign key in migration
+`0003_member_integrity`: `(members.team_id, members.branch_id)` references
+`(teams.id, teams.branch_id)`. It prevents cross-branch assignment even through
+direct SQL. Django's ordinary foreign key cannot express that pair, so the existing
+migration uses `RunSQL`; no replacement migration is needed. BR-057's
+case-insensitive unique constraint also already exists.
+
 ## HR decision services
 
 `accept_application` scopes and locks the application before checking it is still
 Pending. Only an assigned HR Lead can accept or decline; Super Admins retain
 read-only access to decisions. Acceptance locks the current branch and rejects a
-Closed branch. An optional team must exist in that branch, and the selected role
-must exist. The service reserves `M-YYYY-NNNNN` using the Karachi acceptance year,
+Closed branch. An optional team must be active and belong to that branch, and the
+selected role must be active. Both are rechecked under row locks. The service
+reserves `M-YYYY-NNNNN` using the Karachi acceptance year,
 creates an Active member, links the application and records the deciding actor
 and time. It returns the new member.
 

@@ -50,6 +50,16 @@ class BranchChoiceField(forms.ModelChoiceField):
         return f"{branch.code} · {name}"
 
 
+class TeamForm(forms.Form):
+    name = forms.CharField(label=_("Team name"), max_length=60)
+
+
+class VolunteerRoleForm(forms.Form):
+    name_en = forms.CharField(label=_("English name"), max_length=60)
+    name_ur = forms.CharField(label=_("Urdu name"), max_length=60)
+    sort_order = forms.IntegerField(label=_("Sort order"), min_value=0, initial=0)
+
+
 class ApplicationFilterForm(forms.Form):
     branch_id = BranchChoiceField(
         label=_("Branch"),
@@ -77,13 +87,15 @@ class AcceptApplicationForm(forms.Form):
     )
     role_id = VolunteerRoleChoiceField(
         label=_("Volunteer role"),
-        queryset=VolunteerRole.objects.order_by("sort_order", "code"),
+        queryset=VolunteerRole.objects.filter(is_active=True).order_by(
+            "sort_order", "code"
+        ),
     )
 
     def __init__(self, *args, application, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["team_id"].queryset = Team.objects.filter(
-            branch_id=application.preferred_branch_id
+            branch_id=application.preferred_branch_id, is_active=True
         ).order_by("name")
 
 

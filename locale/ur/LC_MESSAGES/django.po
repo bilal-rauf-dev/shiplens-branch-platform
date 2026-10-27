@@ -608,3 +608,72 @@ msgid "Too many login attempts from this connection. Please try again later."
 msgstr ""
 "اس کنکشن سے لاگ ان کی بہت زیادہ کوششیں کی گئی ہیں۔ براہ کرم بعد میں دوبارہ "
 "کوشش کریں۔"
+
+msgid "Teams"
+msgstr "ٹیمیں"
+
+msgid "Team name"
+msgstr "ٹیم کا نام"
+
+msgid "Sort order"
+msgstr "ترتیب"
+
+msgid "Create team"
+msgstr "ٹیم بنائیں"
+
+msgid "Rename team"
+msgstr "ٹیم کا نام بدلیں"
+
+msgid "Deactivate team"
+msgstr "ٹیم غیر فعال کریں"
+
+msgid "No teams found."
+msgstr "کوئی ٹیم نہیں ملی۔"
+
+msgid "Team created."
+msgstr "ٹیم بنا دی گئی۔"
+
+msgid "Team renamed."
+msgstr "ٹیم کا نام بدل دیا گیا۔"
+
+msgid "Team deactivated."
+msgstr "ٹیم غیر فعال کر دی گئی۔"
+
+msgid "Volunteer roles"
+msgstr "رضاکارانہ کردار"
+
+msgid "Create volunteer role"
+msgstr "رضاکارانہ کردار بنائیں"
+
+msgid "Edit volunteer role"
+msgstr "رضاکارانہ کردار میں ترمیم کریں"
+
+msgid "Deactivate volunteer role"
+msgstr "رضاکارانہ کردار غیر فعال کریں"
+
+msgid "No volunteer roles found."
+msgstr "کوئی رضاکارانہ کردار نہیں ملا۔"
+
+msgid "Volunteer role created."
+msgstr "رضاکارانہ کردار بنا دیا گیا۔"
+
+msgid "Volunteer role updated."
+msgstr "رضاکارانہ کردار کی ترمیم محفوظ ہو گئی۔"
+
+msgid "Volunteer role deactivated."
+msgstr "رضاکارانہ کردار غیر فعال کر دیا گیا۔"
+
+msgid "A team with this name already exists in this branch."
+msgstr "اس نام کی ٹیم اس شاخ میں پہلے سے موجود ہے۔"
+
+msgid "Choose an active team from this application's branch."
+msgstr "اس درخواست کی شاخ سے فعال ٹیم منتخب کریں۔"
+
+msgid "Choose an active volunteer role."
+msgstr "فعال رضاکارانہ کردار منتخب کریں۔"
+
+msgid "Save"
+msgstr "محفوظ کریں"
+
+msgid "Back to list"
+msgstr "فہرست پر واپس جائیں"

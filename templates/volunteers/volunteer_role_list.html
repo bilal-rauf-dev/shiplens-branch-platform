@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Volunteer roles" %} · {% translate "ShipLens" %}{% endblock %}
+{% block content %}
+  <h1>{% translate "Volunteer roles" %}</h1>
+  <p><a href="{% url 'volunteer-role-create' %}">{% translate "Create volunteer role" %}</a></p>
+  <div class="table-container"><table>
+    <thead><tr><th scope="col">{% translate "Code" %}</th><th scope="col">{% translate "English name" %}</th><th scope="col">{% translate "Urdu name" %}</th><th scope="col">{% translate "Sort order" %}</th><th scope="col">{% translate "Status" %}</th><th scope="col">{% translate "Actions" %}</th></tr></thead>
+    <tbody>{% for role in volunteer_roles %}<tr>
+      <td>{{ role.code }}</td><td>{{ role.name_en }}</td><td lang="ur" dir="rtl">{{ role.name_ur }}</td><td>{{ role.sort_order }}</td>
+      <td>{% if role.is_active %}{% translate "Active" %}{% else %}{% translate "Inactive" %}{% endif %}</td>
+      <td><a href="{% url 'volunteer-role-edit' role.pk %}">{% translate "Edit volunteer role" %}</a>
+        {% if role.is_active %}<form method="post" action="{% url 'volunteer-role-deactivate' role.pk %}">{% csrf_token %}<button type="submit">{% translate "Deactivate volunteer role" %}</button></form>{% endif %}
+      </td>
+    </tr>{% empty %}<tr><td colspan="6">{% translate "No volunteer roles found." %}</td></tr>{% endfor %}</tbody>
+  </table></div>
+{% endblock %}

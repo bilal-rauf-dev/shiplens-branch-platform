@@ -63,7 +63,7 @@ Primary list: **OWASP Top 10:2025**; 2021 IDs in brackets for judges who use the
 | settings | `settings.updated`, `demo.reset` |
 | branch | `branch.created`, `branch.updated`, `branch.activated`, `branch.paused`, `branch.resumed`, `branch.closed`, `city.created` |
 | application | `application.submitted`, `application.reassigned`, `application.accepted`, `application.declined`, `application.spam_blocked` (no PII) |
-| member | `member.created`, `member.updated`, `member.status_changed`, `member.reinstated`, `team.created`, `team.updated` |
+| member | `member.created`, `member.updated`, `member.status_changed`, `member.reinstated`, `team.created`, `team.updated`, `volunteer_role.created`, `volunteer_role.updated` |
 | collection | `collection.created`, `collection.updated`, `collection.voided`, `collection.adjusted`, `collection.edit_denied`, `collection.sent`, `transfer.created` |
 | report | `report.drafted`, `report.narrative_updated`, `report.submitted`, `report.returned`, `report.resubmitted`, `report.approved`, `report.locked` |
 | content | `content.created`, `content.updated`, `content.published`, `content.unpublished`, `content.archived`, `content.restored` |

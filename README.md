@@ -12,6 +12,10 @@ append-only audit log. The branch and city register provides scoped lists,
 audited editing and lifecycle controls. Other domain screens and demo seed data
 arrive in later tasks. The public volunteer form validates submissions, limits
 spam and stores applicant details for scoped HR review, decisions and audit history.
+HR can manage teams in assigned branches; Super Admin can manage teams globally
+and create, edit or deactivate bilingual volunteer roles. Branch Leads have a
+scoped, read-only team list. Deactivated teams and roles keep existing member
+links and cannot be selected for new acceptances.
 
 - Planning documents: [`docs/planning/`](docs/planning/00-executive-summary.md)
 - AI usage declaration: [`AI-USAGE.md`](AI-USAGE.md)

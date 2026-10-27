@@ -4,7 +4,28 @@ from django.utils.translation import gettext_lazy as _
 from apps.accounts.permissions import can, scope_queryset
 from apps.audit.models import AuditLog
 from apps.branches.models import Branch, BranchStatus
-from apps.volunteers.models import Application, ApplicationStatus, Member, MemberStatus
+from apps.volunteers.models import (
+    Application,
+    ApplicationStatus,
+    Member,
+    MemberStatus,
+    Team,
+    VolunteerRole,
+)
+
+
+def teams():
+    return Team.objects.select_related("branch").order_by("branch__code", "name", "pk")
+
+
+def team_management_branches(user):
+    return scope_queryset(
+        user, "team.manage", Branch.objects.order_by("code"), branch_field="pk"
+    )
+
+
+def volunteer_roles():
+    return VolunteerRole.objects.order_by("sort_order", "code")
 
 
 def applications():

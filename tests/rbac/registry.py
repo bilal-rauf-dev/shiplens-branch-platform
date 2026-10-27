@@ -10,7 +10,7 @@ from apps.accounts.services import assign_branch
 from apps.branches.models import Branch, City
 from apps.volunteers import services as volunteer_services
 from apps.volunteers.forms import ApplicationForm
-from apps.volunteers.models import VolunteerRole
+from apps.volunteers.models import Team, VolunteerRole
 from tests.accounts.conftest import TEST_PASSWORD
 
 NEW_PASSWORD = "Spruce!Harbor-92-Lantern"  # noqa: S105 -- test-only credential.
@@ -34,6 +34,34 @@ def transition_url(name, fixture):
 
 def branch_object(scenario):
     return {"branch": scenario["branch"], "data": {}}
+
+
+def team_object(scenario):
+    team = Team.objects.create(branch=scenario["branch"], name="Teaching")
+    return {"team": team, "data": {"name": "Community outreach"}}
+
+
+def team_url(name, fixture):
+    return reverse(name, kwargs={"pk": fixture["team"].pk})
+
+
+def team_create_url(name, fixture):
+    return reverse(name, kwargs={"branch_pk": fixture["branch"].pk})
+
+
+def team_create_payload(scenario):
+    return {"branch": scenario["branch"], "data": {"name": "Teaching"}}
+
+
+def volunteer_role_payload(scenario):
+    return {
+        "volunteer_role": VolunteerRole.objects.get(code="VOLUNTEER"),
+        "data": {"name_en": "Mentor", "name_ur": "رہنما", "sort_order": 4},
+    }
+
+
+def volunteer_role_url(name, fixture):
+    return reverse(name, kwargs={"pk": fixture["volunteer_role"].pk})
 
 
 def application_object(scenario):
@@ -250,6 +278,18 @@ def settings_payload(scenario):
 # The four columns are method, URL builder, in-scope fixture factory and success
 # status. Payloads must be valid so a validation error cannot masquerade as denial.
 ROUTE_CASES = {
+    "team-list": RouteCase("GET", page_url, no_object, 200),
+    "team-create": RouteCase("POST", team_create_url, team_create_payload, 302),
+    "team-edit": RouteCase("POST", team_url, team_object, 302),
+    "team-deactivate": RouteCase("POST", team_url, team_object, 302),
+    "volunteer-role-list": RouteCase("GET", page_url, no_object, 200),
+    "volunteer-role-create": RouteCase("POST", page_url, volunteer_role_payload, 302),
+    "volunteer-role-edit": RouteCase(
+        "POST", volunteer_role_url, volunteer_role_payload, 302
+    ),
+    "volunteer-role-deactivate": RouteCase(
+        "POST", volunteer_role_url, volunteer_role_payload, 302
+    ),
     "application-detail": RouteCase("GET", application_url, application_object, 200),
     "application-accept": RouteCase("POST", application_url, accept_payload, 302),
     "application-decline": RouteCase("POST", application_url, decline_payload, 302),

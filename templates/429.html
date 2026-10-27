@@ -3,5 +3,5 @@
 {% block title %}{% translate "Please try again later" %} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
   <h1>{% translate "Please try again later" %}</h1>
-  <p>{% translate "Too many applications have been submitted from this connection. Please try again later." %}</p>
+  <p>{% if rate_limit_message %}{{ rate_limit_message }}{% else %}{% translate "Too many applications have been submitted from this connection. Please try again later." %}{% endif %}</p>
 {% endblock %}

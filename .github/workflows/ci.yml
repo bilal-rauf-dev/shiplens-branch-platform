@@ -139,16 +139,16 @@ jobs:
       - name: Build production image
         run: docker build --build-arg GIT_SHA="$GITHUB_SHA" --tag shiplens:ci .
       - name: Start production stack and wait for health
-        run: docker compose -f compose.ci.yml up --detach --wait --wait-timeout 120
+        run: docker compose -f docker-compose.ci.yml up --detach --wait --wait-timeout 120
       - name: Check health endpoint and non-root user
         run: |
           curl --fail --silent --show-error http://localhost:8000/health
-          test "$(docker inspect --format '{{.State.Health.Status}}' "$(docker compose -f compose.ci.yml ps -q web)")" = healthy
+          test "$(docker inspect --format '{{.State.Health.Status}}' "$(docker compose -f docker-compose.ci.yml ps -q web)")" = healthy
           container_user=$(docker run --rm shiplens:ci id -u)
           test "$container_user" = 10001
       - name: Show container logs on failure
         if: failure()
-        run: docker compose -f compose.ci.yml logs --no-color
+        run: docker compose -f docker-compose.ci.yml logs --no-color
       - name: Remove CI containers and disposable database
         if: always()
-        run: docker compose -f compose.ci.yml down --volumes
+        run: docker compose -f docker-compose.ci.yml down --volumes

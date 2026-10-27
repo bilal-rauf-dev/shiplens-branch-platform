@@ -12,6 +12,15 @@ append-only audit log. The branch and city register provides scoped lists,
 audited editing and lifecycle controls. Other domain screens and demo seed data
 arrive in later tasks. The public volunteer form validates submissions, limits
 spam and stores applicant details for scoped HR review, decisions and audit history.
+HR can manage teams in assigned branches; Super Admin can manage teams globally
+and create, edit or deactivate bilingual volunteer roles. Branch Leads have a
+scoped, read-only team list. Deactivated teams and roles keep existing member
+links and cannot be selected for new acceptances.
+The member register supports scoped search, combined filters, stable sorting and
+25-member pages, with CSS cards on mobile and PostgreSQL search indexes.
+Member detail includes scoped editing, lifecycle actions and audit history.
+Super Admin can search the global audit log, inspect event diffs and verify the
+append-only hash chain from the Audit log navigation item.
 
 - Planning documents: [`docs/planning/`](docs/planning/00-executive-summary.md)
 - AI usage declaration: [`AI-USAGE.md`](AI-USAGE.md)
@@ -44,7 +53,7 @@ The example's PostgreSQL credentials are for local development. Keep the
 user or password, update both `DATABASE_URL` and the corresponding `POSTGRES_*`
 values. `.env` is ignored by Git and excluded from Docker builds.
 
-Start the stack:
+Start the stack (Compose discovers `docker-compose.yml` automatically):
 
 ```sh
 docker compose up --build
@@ -75,6 +84,9 @@ This creates our `SUPER_ADMIN` role; the application does not use Django's admin
 [staff login](http://localhost:8000/en/accounts/login/). Passwords require at least
 12 characters and must pass common-password, similarity and numeric-password
 checks. Five failed attempts lock that email/client-IP pair for 15 minutes.
+Login POSTs also share a limit across all emails from the same client IP:
+20 per minute and 200 per day. Excess requests return the translated 429 page
+and record `auth.rate_limited` without credentials in the audit event.
 Sessions expire after one hour idle or eight hours from login; activity does not
 extend the absolute deadline.
 

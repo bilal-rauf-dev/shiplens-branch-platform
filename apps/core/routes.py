@@ -1,6 +1,23 @@
 """Every reachable named route must be explicitly public or declare an action."""
 
 ROUTE_ACTIONS = {
+    "audit-list": "audit.list",
+    "audit-detail": "audit.view",
+    "audit-verify": "audit.verify_chain",
+    "member-edit": "member.update",
+    "member-deactivate": "member.update",
+    "member-reactivate": "member.update",
+    "member-mark-left": "member.update",
+    "member-reinstate": "member.reinstate",
+    "member-list": "member.list",
+    "team-list": "team.list",
+    "team-create": "team.manage",
+    "team-edit": "team.manage",
+    "team-deactivate": "team.manage",
+    "volunteer-role-list": "volunteer_role.manage",
+    "volunteer-role-create": "volunteer_role.manage",
+    "volunteer-role-edit": "volunteer_role.manage",
+    "volunteer-role-deactivate": "volunteer_role.manage",
     "application-detail": "application.view",
     "application-accept": "application.accept",
     "application-decline": "application.decline",

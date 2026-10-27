@@ -7,6 +7,7 @@ from django.core.exceptions import PermissionDenied
 from apps.accounts import services
 from apps.accounts.models import Role
 from apps.accounts.permissions import PERMISSIONS
+from apps.audit import services as audit_services
 from apps.branches import services as branch_services
 from apps.branches.models import City
 from apps.volunteers import services as volunteer_services
@@ -22,9 +23,17 @@ from tests.rbac.registry import (
     edit_branch_payload,
     edit_city_payload,
     edit_payload,
+    inactive_member_object,
     inactive_user_object,
+    left_member_object,
+    member_edit_payload,
+    member_left_payload,
+    member_object,
     settings_payload,
+    team_create_payload,
+    team_object,
     user_object,
+    volunteer_role_payload,
 )
 from tests.rbac.test_matrix import domain_snapshot
 
@@ -118,7 +127,109 @@ def reassign_application(scenario, fixture):
     )
 
 
+def create_team(scenario, fixture):
+    return volunteer_services.create_team(
+        scenario["actor"], fixture["branch"].pk, **fixture["data"]
+    )
+
+
+def rename_team(scenario, fixture):
+    return volunteer_services.rename_team(
+        scenario["actor"], fixture["team"].pk, **fixture["data"]
+    )
+
+
+def deactivate_team(scenario, fixture):
+    return volunteer_services.deactivate_team(scenario["actor"], fixture["team"].pk)
+
+
+def create_volunteer_role(scenario, fixture):
+    return volunteer_services.create_volunteer_role(
+        scenario["actor"], **fixture["data"]
+    )
+
+
+def update_volunteer_role(scenario, fixture):
+    return volunteer_services.update_volunteer_role(
+        scenario["actor"], fixture["volunteer_role"].pk, **fixture["data"]
+    )
+
+
+def deactivate_volunteer_role(scenario, fixture):
+    return volunteer_services.deactivate_volunteer_role(
+        scenario["actor"], fixture["volunteer_role"].pk
+    )
+
+
+def update_member(scenario, fixture):
+    data = fixture["data"].copy()
+    data["team_id"] = None
+    return volunteer_services.update_member(
+        scenario["actor"], fixture["member"].pk, **data
+    )
+
+
+def deactivate_member(scenario, fixture):
+    return volunteer_services.transition_member(
+        scenario["actor"], fixture["member"].pk, "deactivate"
+    )
+
+
+def reactivate_member(scenario, fixture):
+    return volunteer_services.transition_member(
+        scenario["actor"], fixture["member"].pk, "reactivate"
+    )
+
+
+def mark_member_left(scenario, fixture):
+    return volunteer_services.transition_member(
+        scenario["actor"],
+        fixture["member"].pk,
+        "mark_left",
+        left_on=fixture["member"].joined_on,
+    )
+
+
+def reinstate_member(scenario, fixture):
+    return volunteer_services.transition_member(
+        scenario["actor"],
+        fixture["member"].pk,
+        "reinstate",
+        reason=fixture["data"]["reason"],
+    )
+
+
+def verify_audit_chain(scenario, fixture):
+    return audit_services.verify_and_record(scenario["actor"])
+
+
 SERVICE_CASES = {
+    "verify_audit_chain": ServiceCase(
+        "audit.verify_chain", verify_audit_chain, branch_object
+    ),
+    "update_member": ServiceCase("member.update", update_member, member_edit_payload),
+    "deactivate_member": ServiceCase("member.update", deactivate_member, member_object),
+    "reactivate_member": ServiceCase(
+        "member.update", reactivate_member, inactive_member_object
+    ),
+    "mark_member_left": ServiceCase(
+        "member.update", mark_member_left, member_left_payload
+    ),
+    "reinstate_member": ServiceCase(
+        "member.reinstate", reinstate_member, left_member_object
+    ),
+    "create_team": ServiceCase("team.manage", create_team, team_create_payload),
+    "rename_team": ServiceCase("team.manage", rename_team, team_object),
+    "deactivate_team": ServiceCase("team.manage", deactivate_team, team_object),
+    "create_volunteer_role": ServiceCase(
+        "volunteer_role.manage", create_volunteer_role, volunteer_role_payload
+    ),
+    "update_volunteer_role": ServiceCase(
+        "volunteer_role.manage", update_volunteer_role, volunteer_role_payload
+    ),
+    "deactivate_volunteer_role": ServiceCase(
+        "volunteer_role.manage", deactivate_volunteer_role, volunteer_role_payload
+    ),
     "accept_application": ServiceCase(
         "application.accept", accept_application, application_object
     ),

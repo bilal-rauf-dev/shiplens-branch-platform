@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.postgres",
     "apps.core.apps.CoreConfig",
     "apps.accounts.apps.AccountsConfig",
     "apps.branches.apps.BranchesConfig",
@@ -125,6 +126,8 @@ PASSWORD_HASHERS = ["django.contrib.auth.hashers.Argon2PasswordHasher"]
 
 # Defaults from docs/planning/07-business-rules.md; DB overrides arrive in P2.
 BUSINESS_RULES = {
+    "login_rate_per_minute": 20,
+    "login_rate_per_day": 200,
     "application_decline_reason_min_length": 5,
     "application_decline_reason_max_length": 500,
     "application_name_min_length": 3,

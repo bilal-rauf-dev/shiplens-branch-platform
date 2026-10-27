@@ -603,3 +603,293 @@ msgstr "ہاں"
 
 msgid "A current member already uses this email address."
 msgstr "ایک موجودہ رکن پہلے ہی یہ ای میل پتہ استعمال کر رہا ہے۔"
+
+msgid "Too many login attempts from this connection. Please try again later."
+msgstr ""
+"اس کنکشن سے لاگ ان کی بہت زیادہ کوششیں کی گئی ہیں۔ براہ کرم بعد میں دوبارہ "
+"کوشش کریں۔"
+
+msgid "Teams"
+msgstr "ٹیمیں"
+
+msgid "Team name"
+msgstr "ٹیم کا نام"
+
+msgid "Sort order"
+msgstr "ترتیب"
+
+msgid "Create team"
+msgstr "ٹیم بنائیں"
+
+msgid "Rename team"
+msgstr "ٹیم کا نام بدلیں"
+
+msgid "Deactivate team"
+msgstr "ٹیم غیر فعال کریں"
+
+msgid "No teams found."
+msgstr "کوئی ٹیم نہیں ملی۔"
+
+msgid "Team created."
+msgstr "ٹیم بنا دی گئی۔"
+
+msgid "Team renamed."
+msgstr "ٹیم کا نام بدل دیا گیا۔"
+
+msgid "Team deactivated."
+msgstr "ٹیم غیر فعال کر دی گئی۔"
+
+msgid "Volunteer roles"
+msgstr "رضاکارانہ کردار"
+
+msgid "Create volunteer role"
+msgstr "رضاکارانہ کردار بنائیں"
+
+msgid "Edit volunteer role"
+msgstr "رضاکارانہ کردار میں ترمیم کریں"
+
+msgid "Deactivate volunteer role"
+msgstr "رضاکارانہ کردار غیر فعال کریں"
+
+msgid "No volunteer roles found."
+msgstr "کوئی رضاکارانہ کردار نہیں ملا۔"
+
+msgid "Volunteer role created."
+msgstr "رضاکارانہ کردار بنا دیا گیا۔"
+
+msgid "Volunteer role updated."
+msgstr "رضاکارانہ کردار کی ترمیم محفوظ ہو گئی۔"
+
+msgid "Volunteer role deactivated."
+msgstr "رضاکارانہ کردار غیر فعال کر دیا گیا۔"
+
+msgid "A team with this name already exists in this branch."
+msgstr "اس نام کی ٹیم اس شاخ میں پہلے سے موجود ہے۔"
+
+msgid "Choose an active team from this application's branch."
+msgstr "اس درخواست کی شاخ سے فعال ٹیم منتخب کریں۔"
+
+msgid "Choose an active volunteer role."
+msgstr "فعال رضاکارانہ کردار منتخب کریں۔"
+
+msgid "Save"
+msgstr "محفوظ کریں"
+
+msgid "Back to list"
+msgstr "فہرست پر واپس جائیں"
+
+msgid "Search"
+msgstr "تلاش"
+
+msgid "Joined from"
+msgstr "شمولیت کی ابتدائی تاریخ"
+
+msgid "Joined to"
+msgstr "شمولیت کی آخری تاریخ"
+
+msgid "Sort by"
+msgstr "ترتیب دیں"
+
+msgid "Newest first"
+msgstr "نئے پہلے"
+
+msgid "Name (A–Z)"
+msgstr "نام (الف سے ی)"
+
+msgid "Name (Z–A)"
+msgstr "نام (ی سے الف)"
+
+msgid "Joined date (oldest first)"
+msgstr "تاریخ شمولیت (پرانی پہلے)"
+
+msgid "Joined date (newest first)"
+msgstr "تاریخ شمولیت (نئی پہلے)"
+
+msgid "All teams"
+msgstr "تمام ٹیمیں"
+
+msgid "All volunteer roles"
+msgstr "تمام رضاکارانہ کردار"
+
+msgid "The end date must be on or after the start date."
+msgstr "آخری تاریخ ابتدائی تاریخ سے پہلے نہیں ہو سکتی۔"
+
+msgid "Reset filters"
+msgstr "فلٹر صاف کریں"
+
+msgid "Member register"
+msgstr "اراکین کا رجسٹر"
+
+msgid "Member ID"
+msgstr "رکن شناخت"
+
+msgid "No members found."
+msgstr "کوئی رکن نہیں ملا۔"
+
+msgid "Member pages"
+msgstr "اراکین کے صفحات"
+
+msgid "Use the international format, for example +923001234567."
+msgstr "بین الاقوامی شکل استعمال کریں، مثلاً +923001234567۔"
+
+msgid "Choose an active team from this member's branch."
+msgstr "اس رکن کی شاخ سے فعال ٹیم منتخب کریں۔"
+
+msgid "Enter a Pakistani mobile number in international format."
+msgstr "پاکستانی موبائل نمبر بین الاقوامی شکل میں درج کریں۔"
+
+msgid "This action is not available for the member's current status."
+msgstr "رکن کی موجودہ حالت میں یہ کارروائی دستیاب نہیں ہے۔"
+
+msgid "The leaving date must be on or after the joining date."
+msgstr "رخصتی کی تاریخ شمولیت کی تاریخ سے پہلے نہیں ہو سکتی۔"
+
+msgid "Give a reason for reinstating this member."
+msgstr "اس رکن کی بحالی کی وجہ بتائیں۔"
+
+msgid "Member created"
+msgstr "رکن بنا دیا گیا"
+
+msgid "Member updated"
+msgstr "رکن کی ترمیم محفوظ ہو گئی"
+
+msgid "Member status changed"
+msgstr "رکن کی حالت تبدیل ہو گئی"
+
+msgid "Member reinstated"
+msgstr "رکن بحال کر دیا گیا"
+
+msgid "Deactivate member"
+msgstr "رکن غیر فعال کریں"
+
+msgid "Reactivate member"
+msgstr "رکن فعال کریں"
+
+msgid "Mark member left"
+msgstr "رکن کی رخصتی درج کریں"
+
+msgid "Reinstate member"
+msgstr "رکن بحال کریں"
+
+msgid "Edit member"
+msgstr "رکن میں ترمیم کریں"
+
+msgid "Member updated."
+msgstr "رکن کی ترمیم محفوظ ہو گئی۔"
+
+msgid "Member status updated."
+msgstr "رکن کی حالت تبدیل ہو گئی۔"
+
+msgid "Notes"
+msgstr "نوٹس"
+
+msgid "From date (PKT)"
+msgstr "ابتدائی تاریخ (پاکستانی وقت)"
+
+msgid "To date (PKT)"
+msgstr "آخری تاریخ (پاکستانی وقت)"
+
+msgid "Actor email"
+msgstr "کارروائی کرنے والے کی ای میل"
+
+msgid "Actor role"
+msgstr "کارروائی کرنے والے کا کردار"
+
+msgid "All roles"
+msgstr "تمام کردار"
+
+msgid "Action"
+msgstr "کارروائی"
+
+msgid "Entity type"
+msgstr "ریکارڈ کی قسم"
+
+msgid "Entity ID or label"
+msgstr "ریکارڈ کی شناخت یا نام"
+
+msgid "All entity types"
+msgstr "تمام ریکارڈ کی قسمیں"
+
+msgid "Authentication"
+msgstr "توثیق"
+
+msgid "Audit"
+msgstr "آڈٹ"
+
+msgid "Permissions"
+msgstr "اجازتیں"
+
+msgid "Assignments"
+msgstr "ذمہ داریاں"
+
+msgid "All actions"
+msgstr "تمام کارروائیاں"
+
+msgid "System / anonymous"
+msgstr "نظام / گمنام"
+
+msgid "No field changes"
+msgstr "کوئی خانہ تبدیل نہیں ہوا"
+
+msgid "Chain intact (%(count)s events)"
+msgstr "سلسلہ درست ہے (%(count)s واقعات)"
+
+msgid "Chain broken at event #%(id)s"
+msgstr "واقعہ #%(id)s پر سلسلہ ٹوٹ گیا"
+
+msgid "Audit log"
+msgstr "آڈٹ لاگ"
+
+msgid "Verify chain"
+msgstr "سلسلے کی تصدیق کریں"
+
+msgid "Time (PKT)"
+msgstr "وقت (پاکستانی وقت)"
+
+msgid "Actor"
+msgstr "کارروائی کرنے والا"
+
+msgid "Entity"
+msgstr "ریکارڈ"
+
+msgid "Changed fields"
+msgstr "تبدیل شدہ خانے"
+
+msgid "No audit events found."
+msgstr "آڈٹ کا کوئی واقعہ نہیں ملا۔"
+
+msgid "Audit pages"
+msgstr "آڈٹ کے صفحات"
+
+msgid "Audit event"
+msgstr "آڈٹ واقعہ"
+
+msgid "IP address"
+msgstr "آئی پی پتہ"
+
+msgid "User agent"
+msgstr "صارف کا براؤزر"
+
+msgid "Request ID"
+msgstr "درخواست کی شناخت"
+
+msgid "Previous hash"
+msgstr "پچھلا ہیش"
+
+msgid "Hash"
+msgstr "ہیش"
+
+msgid "Field"
+msgstr "خانہ"
+
+msgid "Before"
+msgstr "پہلے"
+
+msgid "After"
+msgstr "بعد"
+
+msgid "Metadata"
+msgstr "اضافی معلومات"
+
+msgid "Back to audit log"
+msgstr "آڈٹ لاگ پر واپس جائیں"

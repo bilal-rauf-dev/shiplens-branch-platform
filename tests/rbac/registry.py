@@ -3,14 +3,16 @@
 from collections.abc import Callable
 from dataclasses import dataclass
 
+from django.db import transaction
 from django.urls import reverse
 
+from apps import audit
 from apps.accounts.models import Role, User
 from apps.accounts.services import assign_branch
 from apps.branches.models import Branch, City
 from apps.volunteers import services as volunteer_services
 from apps.volunteers.forms import ApplicationForm
-from apps.volunteers.models import VolunteerRole
+from apps.volunteers.models import MemberStatus, Team, VolunteerRole
 from tests.accounts.conftest import TEST_PASSWORD
 
 NEW_PASSWORD = "Spruce!Harbor-92-Lantern"  # noqa: S105 -- test-only credential.
@@ -28,12 +30,57 @@ def page_url(name, fixture):
     return reverse(name)
 
 
+def audit_object(scenario):
+    with transaction.atomic():
+        event = audit.record(
+            scenario["admin"],
+            "branch.updated",
+            entity=scenario["branch"],
+            branch_id=scenario["branch"].pk,
+            before={"name_en": "Before"},
+            after={"name_en": "After"},
+        )
+    return {"event": event, "data": {}}
+
+
+def audit_url(name, fixture):
+    return reverse(name, kwargs={"pk": fixture["event"].pk})
+
+
 def transition_url(name, fixture):
     return reverse(name, kwargs={"pk": fixture["branch"].pk, "action": "activate"})
 
 
 def branch_object(scenario):
     return {"branch": scenario["branch"], "data": {}}
+
+
+def team_object(scenario):
+    team = Team.objects.create(branch=scenario["branch"], name="Teaching")
+    return {"team": team, "data": {"name": "Community outreach"}}
+
+
+def team_url(name, fixture):
+    return reverse(name, kwargs={"pk": fixture["team"].pk})
+
+
+def team_create_url(name, fixture):
+    return reverse(name, kwargs={"branch_pk": fixture["branch"].pk})
+
+
+def team_create_payload(scenario):
+    return {"branch": scenario["branch"], "data": {"name": "Teaching"}}
+
+
+def volunteer_role_payload(scenario):
+    return {
+        "volunteer_role": VolunteerRole.objects.get(code="VOLUNTEER"),
+        "data": {"name_en": "Mentor", "name_ur": "رہنما", "sort_order": 4},
+    }
+
+
+def volunteer_role_url(name, fixture):
+    return reverse(name, kwargs={"pk": fixture["volunteer_role"].pk})
 
 
 def application_object(scenario):
@@ -106,6 +153,40 @@ def member_object(scenario):
 
 def member_url(name, fixture):
     return reverse(name, kwargs={"pk": fixture["member"].pk})
+
+
+def member_edit_payload(scenario):
+    fixture = member_object(scenario)
+    fixture["data"] = {
+        "team_id": "",
+        "role_id": fixture["volunteer_role"].pk,
+        "phone": "+923001234567",
+        "notes": "Updated matrix member",
+    }
+    return fixture
+
+
+def inactive_member_object(scenario):
+    fixture = member_object(scenario)
+    member = fixture["member"]
+    member.status = MemberStatus.INACTIVE
+    member.save(update_fields=["status"])
+    return fixture
+
+
+def left_member_object(scenario):
+    fixture = member_object(scenario)
+    member = fixture["member"]
+    member.status, member.left_on = MemberStatus.LEFT, member.joined_on
+    member.save(update_fields=["status", "left_on"])
+    fixture["data"] = {"reason": "Returning to volunteer"}
+    return fixture
+
+
+def member_left_payload(scenario):
+    fixture = member_object(scenario)
+    fixture["data"] = {"left_on": fixture["member"].joined_on.isoformat()}
+    return fixture
 
 
 def branch_url(name, fixture):
@@ -250,6 +331,27 @@ def settings_payload(scenario):
 # The four columns are method, URL builder, in-scope fixture factory and success
 # status. Payloads must be valid so a validation error cannot masquerade as denial.
 ROUTE_CASES = {
+    "audit-list": RouteCase("GET", page_url, audit_object, 200),
+    "audit-detail": RouteCase("GET", audit_url, audit_object, 200),
+    "audit-verify": RouteCase("POST", page_url, audit_object, 302),
+    "member-edit": RouteCase("POST", member_url, member_edit_payload, 302),
+    "member-deactivate": RouteCase("POST", member_url, member_object, 302),
+    "member-reactivate": RouteCase("POST", member_url, inactive_member_object, 302),
+    "member-mark-left": RouteCase("POST", member_url, member_left_payload, 302),
+    "member-reinstate": RouteCase("POST", member_url, left_member_object, 302),
+    "member-list": RouteCase("GET", page_url, member_object, 200),
+    "team-list": RouteCase("GET", page_url, no_object, 200),
+    "team-create": RouteCase("POST", team_create_url, team_create_payload, 302),
+    "team-edit": RouteCase("POST", team_url, team_object, 302),
+    "team-deactivate": RouteCase("POST", team_url, team_object, 302),
+    "volunteer-role-list": RouteCase("GET", page_url, no_object, 200),
+    "volunteer-role-create": RouteCase("POST", page_url, volunteer_role_payload, 302),
+    "volunteer-role-edit": RouteCase(
+        "POST", volunteer_role_url, volunteer_role_payload, 302
+    ),
+    "volunteer-role-deactivate": RouteCase(
+        "POST", volunteer_role_url, volunteer_role_payload, 302
+    ),
     "application-detail": RouteCase("GET", application_url, application_object, 200),
     "application-accept": RouteCase("POST", application_url, accept_payload, 302),
     "application-decline": RouteCase("POST", application_url, decline_payload, 302),

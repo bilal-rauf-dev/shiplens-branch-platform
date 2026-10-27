@@ -73,16 +73,15 @@ Purpose & users · system overview · environments · how to run locally · how 
 
 ## 5. Video plan (≤ 5:00, own voice; target 4:40)
 
+Follows the handbook's suggested outline (§07), which judges will expect.
+
 | Time | Scene | What to say / show | Gate/row |
 |---|---|---|---|
-| 0:00–0:20 | Intro | Name, solo entry, problem in one sentence; live URL + `/health` JSON with commit SHA | G4 |
-| 0:20–1:00 | Public site | Home → Programs → Branches (status badges) → switch to Urdu (RTL) → Get Involved submit (show a validation error, then success with reference) | CMS/bilingual, form |
-| 1:00–1:40 | Dashboard | Log in as Finance → period Oct 2026 → read K1 73,250.50, K2 43,250.50, unsent 35,250.50 (6) — "these match the hand-calculated table in docs" → unsent list, locked-but-unsent row | G1, HO features |
-| 1:40–2:50 | Report lifecycle | Split: Branch Lead submits R10 → Finance returns with comment → Branch Lead resubmits → Finance approves → Locked badge → Audit log filtered to this report shows 6 events with before/after | G2, audit |
-| 2:50–3:20 | Permissions | Branch Lead tries Lahore report URL → 404; Content Editor tries collections → 403; show permission table doc + CI test list (`T-RBAC-MATRIX` ~420 cases passing) | G3 |
-| 3:20–3:50 | Ops & quality | Collection 7-day lock (countdown + locked row); HR accept → member ID; PDF in Urdu; CSV | features |
-| 3:50–4:25 | Engineering | GitHub: CI green (jobs), coverage %, Dockerfile non-root + healthcheck, render.yaml, branch protection, PR history, Lighthouse scores | Testing, Docker, Arch |
-| 4:25–4:40 | Close | Security highlights (CSP, Argon2, lockout, audit hash chain), twist delivered, AI-USAGE honesty | Security, docs |
+| 0:00–0:30 | Problem, stack, link | Problem in one sentence; Django + PostgreSQL on Render with Docker and GitHub Actions; live URL and `/health` JSON with the deployed commit SHA | G4 |
+| 0:30–2:30 | Core flows | Public: submit an application (show one field error, then the reference) → HR Lead accepts → member `M-2026-…` created. Branch Lead logs a collection (lock countdown visible). Weekly report R10: Branch Lead submits → Finance returns with comment → Branch Lead resubmits → Finance approves → Locked. Dashboard (period Oct 2026): approved total moves when R9 is approved; read K1 73,250.50 and the unsent list | G1, G2, HO features |
+| 2:30–3:30 | Refusals + audit | Branch Lead opens a Lahore report URL → 404; Content Editor opens collections → 403; mention the matrix tests run every role × every route in CI. Audit viewer filtered to R10: six events in order with before/after, actor, IP | G3, roles/audit |
+| 3:30–4:30 | Urdu, CMS, exports | Switch to Urdu: public form, a table page and the dashboard mirrored RTL. Content Editor edits a program, publishes it, shows it live. Export collections CSV and the report PDF (Urdu) | CMS/bilingual, exports |
+| 4:30–5:00 | Engineering | GitHub: green CI on `main`, coverage %, Dockerfile (multi-stage, non-root, HEALTHCHECK), `/health`; one line on AI usage | Testing, Docker, docs |
 
 **Pre-recording checklist:** Render warmed (hit `/health` + pages 2 min before) · `Reset demo data` as SA · R10 in DRAFT · browser zoom 110 %, clean profile, no bookmarks bar · logins in a password-free notes window (not on screen) · two windows (BL / FR) side by side · mic test · OBS 1080p · close notifications · rehearse twice with stopwatch.
 **Fallback if Render is cold/down:** record with local Docker stack (same image, same seed), say so, and show the live `/health` separately; keep a 30-second backup clip of the live site recorded on 1 Nov.
@@ -121,4 +120,6 @@ Purpose & users · system overview · environments · how to run locally · how 
 | | How do you know Urdu is complete? | Parity test: 100 % translated, no fuzzy, placeholders match. |
 | CMS | What if an editor changes a published page? | Edits go to the working copy; the live site serves the published snapshot until "Publish changes". |
 | Twist | How quickly could you add a new role? | Add enum value + matrix column; tests and docs regenerate; ~1–2 h. |
-| AI | Which parts used AI? | Listed in AI-USAGE.md by date and file; I reviewed and tested all of it — ask me about any file. |
+| AI | Which parts did AI help with, and how did you check them? | Listed in AI-USAGE.md by date and file. Codex wrote code in small steps from my planning prompts; I reviewed every step before committing, ran the tests, and sent fixes back (examples in the log: request-ID validation, proxy-aware IP, removing an unneeded migration backfill). Ask me about any file. |
+| Scale | What would you change to support 500 branches? | The data model already scales: every table is keyed by branch with indexes on (branch, date) and (branch, status); codes come from per-city counters. I'd add: dashboard aggregates computed once per request into a small summary table or materialised view, pagination on every list (already there), a paid Render instance with more workers, Postgres connection pooling, and a background job for weekly drafts instead of lazy creation. The 50-branch growth test would move to 500. |
+| Lock | Show me the test that proves the 7-day lock. | `tests/finance/…`: `test_collection_editable_on_day_7` and `test_collection_locked_on_day_8` freeze the clock; plus exact-boundary tests at 7 days minus one second and exactly 7 days, and one that changes the setting to 3 days. |

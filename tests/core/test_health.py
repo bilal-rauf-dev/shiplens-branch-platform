@@ -3,6 +3,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 from django.db import InterfaceError, OperationalError, connection
+from django.db.backends.base.base import NO_DB_ALIAS
 from django.urls import reverse
 
 from apps.core import selectors
@@ -72,8 +73,10 @@ def test_health_probe_timeouts_and_cleanup():
     cursor = probe.cursor.return_value.__enter__.return_value
     cursor.fetchone.return_value = (1,)
 
-    with patch.object(connection, "copy", return_value=probe):
+    with patch.object(connection, "copy", return_value=probe) as copy_connection:
         assert selectors.check_database() is True
+
+    copy_connection.assert_called_once_with(alias=NO_DB_ALIAS)
 
     assert probe.settings_dict["OPTIONS"] == {
         "connect_timeout": 2,

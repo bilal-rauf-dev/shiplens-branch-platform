@@ -181,7 +181,7 @@ id · branch_id FK · name varchar(60) · is_active · UNIQUE(branch_id, lower(n
 | left_on | date | CHECK (status='LEFT') = (left_on IS NOT NULL); left_on ≥ joined_on |
 | notes | varchar(1000) | |
 | timestamps, created_by/updated_by | | |
-Indexes: `(branch_id, status)`, `lower(full_name)` trigram optional (OPT), partial unique `lower(email) WHERE status <> 'LEFT'`.
+Indexes: `(branch_id, status)`, `(branch_id, joined_on)`, `(joined_on)`, `(status)`, `(created_at)`, B-tree `lower(full_name)`, GIN trigrams on `upper(full_name)` / `upper(email)` (H-04; match Django's `icontains` SQL), existing team/role FK indexes, unique `member_id`, partial unique `lower(email) WHERE status <> 'LEFT'`.
 
 ### 3.10 `collections`
 | Column | Type | Constraints |

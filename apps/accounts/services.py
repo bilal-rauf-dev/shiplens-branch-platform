@@ -10,6 +10,7 @@ from django.core.exceptions import PermissionDenied, ValidationError
 from django.db import transaction
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.debug import sensitive_variables
+from django_ratelimit.core import is_ratelimited
 
 from apps import audit
 from apps.accounts import selectors
@@ -18,7 +19,39 @@ from apps.accounts.permissions import require
 from apps.accounts.signals import password_changed
 from apps.branches.models import Branch, BranchStatus
 from apps.core import clock, rules
-from apps.core.models import SystemSetting
+from apps.core.models import IdSequence, SystemSetting
+from apps.core.net import client_ip_key
+
+
+def login_rate_limited(request):
+    """Limit all login POSTs from one resolved IP, independently of email."""
+    with transaction.atomic():
+        # DatabaseCache.incr is not atomic. Hold this fixed mutex row around
+        # both django-ratelimit calls, then release it before password hashing.
+        IdSequence.objects.get_or_create(key="auth:rate-limit")
+        IdSequence.objects.select_for_update().get(pk="auth:rate-limit")
+        minute = is_ratelimited(
+            request,
+            group="login-minute",
+            key=client_ip_key,
+            rate=f"{rules.get('login_rate_per_minute')}/m",
+            method="POST",
+            increment=True,
+        )
+        day = is_ratelimited(
+            request,
+            group="login-day",
+            key=client_ip_key,
+            rate=f"{rules.get('login_rate_per_day')}/d",
+            method="POST",
+            increment=True,
+        )
+        limited = minute or day
+        if limited:
+            audit.record(
+                None, "auth.rate_limited", metadata={"reason": "client_ip_limit"}
+            )
+        return limited
 
 
 def authenticate_user(request, email, password):

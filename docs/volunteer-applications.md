@@ -14,6 +14,14 @@ Only Active or Forming branches are selectable. The submission service locks and
 re-checks the branch, so a pause/close after form validation still prevents a write.
 Interests are a fixed list until P10 supplies published programs.
 
+The browser checks email type, mobile-number pattern, name and motivation lengths,
+inclusive birth-date bounds and required privacy consent using HTML attributes.
+Date bounds use the same completed-birthday rules and Karachi clock as the server,
+including leap days. No JavaScript is needed. Conditional guardian consent and
+choosing at least one item from a checkbox group remain server checks; marking
+each checkbox required would incorrectly require every choice. All submitted
+values are still validated on the server, including direct POSTs.
+
 The signed `apply-form` timestamp must be between the configured minimum fill
 time and two hours old. A filled honeypot or invalid timestamp receives the same
 thanks-page shape with a random reference; neither allocates an application ID.
@@ -37,13 +45,40 @@ length, team-name uniqueness, the team/branch composite foreign key, immutable
 member IDs, current-member email uniqueness and Left/date consistency. Four roles
 are seeded with Urdu names. There is no public access to stored personal data.
 
+## Teams and volunteer roles
+
+HR Leads create, rename and deactivate teams in their assigned branches through
+the Teams navigation. Super Admins can manage all teams. Branch Leads see assigned
+teams without write controls, following the permission matrix. The branch comes
+from a scoped URL lookup, never from a form field. Names remain unique within a
+branch after deactivation. Services lock branches before teams, matching acceptance
+and serializing competing creates and renames. Each write commits together with
+its `team.created` or `team.updated` audit event.
+
+Super Admins manage bilingual volunteer-role labels, ordering and deactivation
+through Volunteer roles. New codes use the existing locked counter to generate
+`ROLE-00001`, `ROLE-00002`, etc.; the four seeded codes remain unchanged. Forms
+never accept role codes or active state. Each role write records
+`volunteer_role.created` or `volunteer_role.updated` in the same transaction.
+Deactivation excludes teams and roles from new acceptance choices while existing
+members keep their links. Successful forms redirect to the list with a translated
+message.
+
+BR-056 already has a PostgreSQL composite foreign key in migration
+`0003_member_integrity`: `(members.team_id, members.branch_id)` references
+`(teams.id, teams.branch_id)`. It prevents cross-branch assignment even through
+direct SQL. Django's ordinary foreign key cannot express that pair, so the existing
+migration uses `RunSQL`; no replacement migration is needed. BR-057's
+case-insensitive unique constraint also already exists.
+
 ## HR decision services
 
 `accept_application` scopes and locks the application before checking it is still
 Pending. Only an assigned HR Lead can accept or decline; Super Admins retain
 read-only access to decisions. Acceptance locks the current branch and rejects a
-Closed branch. An optional team must exist in that branch, and the selected role
-must exist. The service reserves `M-YYYY-NNNNN` using the Karachi acceptance year,
+Closed branch. An optional team must be active and belong to that branch, and the
+selected role must be active. Both are rechecked under row locks. The service
+reserves `M-YYYY-NNNNN` using the Karachi acceptance year,
 creates an Active member, links the application and records the deciding actor
 and time. It returns the new member.
 
@@ -76,7 +111,7 @@ Detail pages show age instead of date of birth and include the shared audit-hist
 partial. Duplicate matches are looked up through the viewer's application/member
 scope; an inaccessible match never exposes its reference, name or link. A small
 read-only member detail route provides the matched-member link destination.
-Member list/search and editing remain in P5.
+The member detail also provides permitted edits, lifecycle actions and history.
 
 Acceptance forms offer teams from the application's branch and existing roles.
 Decline reasons use the same configured bounds as the service. Reassignment offers
@@ -86,3 +121,57 @@ list. Invalid forms and business validation errors re-render detail with HTTP 40
 terminal decisions and closed-branch acceptance return HTTP 409. Acceptance also
 reports current-member email conflicts in plain language while retaining the
 database uniqueness constraint. Review pages use private, no-store responses.
+
+## Member register and search
+
+`/en/app/members/` and `/ur/app/members/` show a scoped register for Super Admin,
+Branch Lead and HR Lead. Finance and Content roles receive 403. The default is
+Active members, newest creation first. Choose All statuses to include Inactive and
+Left members. Name sorting is case-insensitive; name and joined-date sorts work in
+both directions and use the primary key to break ties consistently across pages.
+
+`MemberFilterForm` validates GET parameters before `selectors.search_members`
+applies them. The selector always scopes members before applying search and the
+AND-combined branch, team, role, status and inclusive joined-date filters. Invalid
+or inaccessible filter values show errors and no results. Branch and team choices
+are scoped too; inactive teams and roles remain selectable for historical records.
+Each choice list is loaded once for both validation and rendering.
+
+Search uses case-insensitive substring matches on name, email and member ID.
+Phone-shaped queries also match stored phone digits; spaces, dashes, parentheses
+and the leading local zero in `03…` are normalized for the search. Pagination keeps
+every GET parameter except the previous page number, and each page holds 25
+members. Below 640px, CSS turns each table row into a labelled card without
+JavaScript. Responses are private and no-store because members contain PII.
+
+Migration `0004_member_search_indexes` enables `pg_trgm` before adding GIN indexes
+on `UPPER(full_name)` and `UPPER(email)`, matching Django's PostgreSQL `icontains`
+SQL. A separate `LOWER(full_name)` B-tree supports name ordering. Branch/joined,
+joined, status and creation-time indexes cover filters and ordering. Existing team
+and role foreign-key indexes, the member-ID unique index and branch/status index
+are retained without duplicates. `django.contrib.postgres` is enabled so Django
+registers expression-index operator classes correctly; this adds no dependency.
+
+`pytest -m performance tests/volunteers/test_member_search.py` bulk-creates exactly
+5,000 members, warms template compilation, then measures a fully rendered scoped
+view with all filters. It enforces at most 8 queries and under 300ms. Fixture setup
+and authentication/session middleware are excluded from that view budget; separate
+HTTP tests cover the complete authenticated route and role/scope enforcement.
+
+## Member editing and lifecycle
+
+The existing detail page now shows notes and the shared audit history. Assigned
+HR Leads and Super Admins may edit team, volunteer role, E.164 Pakistani mobile
+number and notes. The form and service never accept member ID, branch, email or
+status as editable data. Existing inactive team/role choices may be retained;
+new assignments must be active and teams must belong to the member's branch.
+Branch Leads retain read-only access. Every edit records `member.updated` and
+sets `updated_by` and the clock-based `updated_at` in the same transaction.
+
+Services lock the member before applying the explicit state table: Active may
+deactivate or leave; Inactive may reactivate or leave; only Super Admin may
+reinstate a Left member, with a nonblank reason. Leaving requires a date at least
+the joining date; reinstatement clears it. BR-055's existing partial unique email
+index still applies, including concurrent reinstatements. Successful POSTs
+redirect to detail with translated messages; invalid input returns 400 and stale
+or unavailable state actions return 409. No domain rows are deleted.

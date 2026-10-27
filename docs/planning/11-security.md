@@ -45,7 +45,7 @@ Primary list: **OWASP Top 10:2025**; 2021 IDs in brackets for judges who use the
 | Branch Lead inflates/deflates past figures | collections, reports | 7-day lock, week-closed rule, snapshots, audit |
 | Finance approves own fabricated numbers | reports | FR can't create/edit collections |
 | Insider deletes evidence | audit | append-only triggers, hash chain |
-| Credential stuffing on staff login | accounts | axes lockout, Argon2, generic errors |
+| Credential stuffing on staff login | accounts | axes lockout, Argon2, generic errors, login POST limits of 20/minute and 200/day per resolved client IP across all emails (H-05) |
 | Bot floods application form | DB, HR time | honeypot, timing, rate limits |
 | XSS via CMS or applicant motivation | users' sessions | escaping, nh3, CSP |
 | Enumeration of applicants/members | PII | identical responses, 404 for out-of-scope |
@@ -57,13 +57,13 @@ Primary list: **OWASP Top 10:2025**; 2021 IDs in brackets for judges who use the
 
 | Domain | Events |
 |---|---|
-| auth | `auth.login_succeeded`, `auth.login_failed`, `auth.locked_out`, `auth.logout`, `auth.password_changed`, `auth.password_reset_issued` |
+| auth | `auth.login_succeeded`, `auth.login_failed`, `auth.locked_out`, `auth.rate_limited`, `auth.logout`, `auth.password_changed`, `auth.password_reset_issued` |
 | access | `permission.denied` (throttled: max 1 per user+route per minute) |
 | user | `user.created`, `user.updated`, `user.deactivated`, `user.reactivated`, `assignment.added`, `assignment.removed` |
 | settings | `settings.updated`, `demo.reset` |
 | branch | `branch.created`, `branch.updated`, `branch.activated`, `branch.paused`, `branch.resumed`, `branch.closed`, `city.created` |
 | application | `application.submitted`, `application.reassigned`, `application.accepted`, `application.declined`, `application.spam_blocked` (no PII) |
-| member | `member.created`, `member.updated`, `member.status_changed`, `member.reinstated`, `team.created`, `team.updated` |
+| member | `member.created`, `member.updated`, `member.status_changed`, `member.reinstated`, `team.created`, `team.updated`, `volunteer_role.created`, `volunteer_role.updated` |
 | collection | `collection.created`, `collection.updated`, `collection.voided`, `collection.adjusted`, `collection.edit_denied`, `collection.sent`, `transfer.created` |
 | report | `report.drafted`, `report.narrative_updated`, `report.submitted`, `report.returned`, `report.resubmitted`, `report.approved`, `report.locked` |
 | content | `content.created`, `content.updated`, `content.published`, `content.unpublished`, `content.archived`, `content.restored` |
@@ -87,3 +87,19 @@ See `08-data-model.md` §3.16: actor id/label/role, occurred_at (UTC), action, e
 ### 4.5 Viewer UI (Super Admin)
 Filters: date range, actor, role, action (grouped), entity type, entity id/label search, branch. Table: time (PKT), actor, action badge, entity link, summary. Detail drawer: before/after diff table, IP, UA, request id, hash. Buttons: Export CSV (audited), Verify chain. Pagination 50/page, newest first; index-backed.
 Per-entity "History" panel on branch/member/collection/report/content detail pages.
+
+P5 implements the global viewer at `/<lang>/app/audit/` and event detail at
+`/<lang>/app/audit/<id>/`, restricted to Super Admin. GET filters include inclusive
+Karachi dates, captured actor email and role, recorded action (grouped by prefix),
+entity type, entity ID or label, and branch. Pages contain 50 events, ordered by
+time and ID descending, and retain filters in pagination links. Entity links are
+checked against the central permissions and scoped querysets; unknown or missing
+records remain plain text. Structured before/after values are escaped JSON.
+
+The POST-only verification service takes the existing audit-chain advisory lock,
+runs `verify_chain()` and counts the same stable chain, then records
+`audit.chain_verified` with its result. The displayed count excludes this new
+verification event. A broken chain is reported, never repaired or hidden. Existing
+time, actor FK, action, entity/time and branch/time indexes cover the required
+columns; no duplicate index or migration is added. Audit rows have no edit/delete
+views or services. CSV export is not part of this step.

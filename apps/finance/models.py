@@ -1,18 +1,27 @@
 """Offline collection records; entry state is derived rather than stored."""
 
+from datetime import timedelta
+
 from django.conf import settings
 from django.db import models
 from django.db.models.functions import Length, Trim
 from django.db.models.lookups import GreaterThanOrEqual
 from django.utils.translation import gettext_lazy as _
 
-from apps.core import clock
+from apps.core import clock, rules
 
 
 class CollectionMethod(models.TextChoices):
     CASH = "CASH", _("Cash")
     CHEQUE = "CHEQUE", _("Cheque")
     BANK_DEPOSIT = "BANK_DEPOSIT", _("Bank deposit")
+
+
+class CollectionState(models.TextChoices):
+    OPEN = "OPEN", _("Open")
+    LOCKED = "LOCKED", _("Locked")
+    SENT = "SENT", _("Sent")
+    VOIDED = "VOIDED", _("Voided")
 
 
 class EntryType(models.TextChoices):
@@ -166,3 +175,44 @@ class Collection(models.Model):
 
     def __str__(self):
         return self.reference
+
+    def save(self, *args, **kwargs):
+        # Services own writes; this guard also stops accidental direct model saves.
+        # Marking sent updates only transfer/updated_at and is allowed after locking.
+        from apps.finance.services import EDITABLE_FIELDS, assert_editable
+
+        fields = kwargs.get("update_fields")
+        guarded = {
+            *EDITABLE_FIELDS,
+            "collected_by_member",
+            "voided_at",
+            "voided_by",
+            "void_reason",
+            "branch",
+            "branch_id",
+        }
+        if (
+            self.pk
+            and not kwargs.get("force_insert")
+            and (fields is None or guarded.intersection(fields))
+        ):
+            previous = Collection.objects.filter(pk=self.pk).first()
+            if previous is not None:
+                assert_editable(previous)
+        return super().save(*args, **kwargs)
+
+    @property
+    def lock_at(self):
+        return self.created_at + timedelta(days=rules.get("collection_lock_days"))
+
+    @property
+    def is_locked(self):
+        return clock.now() >= self.lock_at
+
+    @property
+    def state(self):
+        if self.voided_at is not None:
+            return CollectionState.VOIDED
+        if self.transfer_id is not None:
+            return CollectionState.SENT
+        return CollectionState.LOCKED if self.is_locked else CollectionState.OPEN

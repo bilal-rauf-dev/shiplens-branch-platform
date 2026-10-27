@@ -1,11 +1,62 @@
 from datetime import timedelta
 
 from django import forms
+from django.core.validators import MaxLengthValidator, MinLengthValidator
 from django.utils.translation import gettext_lazy as _
 
 from apps.core import clock, rules
-from apps.finance.models import CollectionMethod
+from apps.finance.models import CollectionMethod, CollectionState
 from apps.volunteers.models import Member
+
+
+class CollectionFilterForm(forms.Form):
+    date_from = forms.DateField(
+        label=_("From date"),
+        required=False,
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )
+    date_to = forms.DateField(
+        label=_("To date"),
+        required=False,
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )
+    method = forms.ChoiceField(
+        label=_("Method"),
+        choices=[("", _("All methods")), *CollectionMethod.choices],
+        required=False,
+    )
+    state = forms.ChoiceField(
+        label=_("State"),
+        choices=[("", _("All states")), *CollectionState.choices],
+        required=False,
+    )
+
+    def clean(self):
+        cleaned = super().clean()
+        if (
+            cleaned.get("date_from")
+            and cleaned.get("date_to")
+            and cleaned["date_from"] > cleaned["date_to"]
+        ):
+            self.add_error(
+                "date_to", _("The end date must be on or after the start date.")
+            )
+        return cleaned
+
+
+class VoidCollectionForm(forms.Form):
+    reason = forms.CharField(label=_("Void reason"), widget=forms.Textarea)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        minimum = rules.get("collection_void_reason_min_length")
+        maximum = rules.get("collection_void_reason_max_length")
+        self.fields["reason"].validators.extend(
+            [MinLengthValidator(minimum), MaxLengthValidator(maximum)]
+        )
+        self.fields["reason"].widget.attrs.update(
+            {"minlength": minimum, "maxlength": maximum}
+        )
 
 
 class CollectionForm(forms.Form):

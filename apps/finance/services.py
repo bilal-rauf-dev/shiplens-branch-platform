@@ -7,6 +7,7 @@ from decimal import Decimal, InvalidOperation
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.shortcuts import get_object_or_404
+from django.utils.formats import date_format
 from django.utils.translation import gettext_lazy as _
 
 from apps import audit
@@ -25,6 +26,148 @@ EDITABLE_FIELDS = (
     "collected_by_member_id",
     "source_note",
 )
+
+
+def assert_editable(collection):
+    """The one edit/void state guard, shared with model saves. BR-064, BR-065."""
+    if collection.voided_at is not None:
+        raise InvalidTransition(_("This entry has been voided."))
+    if collection.transfer_id is not None:
+        raise InvalidTransition(_("This entry has already been sent."))
+    lock_at = collection.lock_at
+    if clock.now() >= lock_at:
+        raise InvalidTransition(
+            _("This entry locked on %(when)s (PKT).")
+            % {"when": date_format(lock_at.astimezone(clock.KARACHI), "d M Y, H:i")}
+        )
+    if week_is_closed(collection.branch, collection.collection_date):
+        raise InvalidTransition(_("This collection week is closed."))
+
+
+def _change_collection(actor, collection, action, data=None, reason=""):
+    """Commit a refused-attempt audit before raising its state conflict."""
+    permission = "collection.update" if action == "update" else "collection.void"
+    denied = None
+    with transaction.atomic():
+        require(actor, permission)
+        scoped = scope_queryset(actor, permission, Collection.objects.all())
+        item = get_object_or_404(scoped, pk=collection.pk)
+        Branch.objects.select_for_update(no_key=True).get(pk=item.branch_id)
+        item = get_object_or_404(scoped.select_for_update(no_key=True), pk=item.pk)
+        try:
+            assert_editable(item)
+            if action == "update":
+                values = validated_values(item.branch, data)
+                if (
+                    Collection.objects.filter(
+                        branch_id=item.branch_id, receipt_no=values["receipt_no"]
+                    )
+                    .exclude(pk=item.pk)
+                    .exists()
+                ):
+                    raise ValidationError(
+                        {
+                            "receipt_no": _(
+                                "This receipt number already exists in this branch."
+                            )
+                        }
+                    )
+                before = {field: getattr(item, field) for field in EDITABLE_FIELDS}
+                for field, value in values.items():
+                    setattr(item, field, value)
+                item.updated_at = clock.now()
+                item.full_clean()
+                item.save(
+                    update_fields=[
+                        "collection_date",
+                        "amount",
+                        "method",
+                        "receipt_no",
+                        "collected_by_member",
+                        "source_note",
+                        "updated_at",
+                    ]
+                )
+                audit.record(
+                    actor,
+                    "collection.updated",
+                    entity=item,
+                    branch_id=item.branch_id,
+                    before=before,
+                    after={field: getattr(item, field) for field in EDITABLE_FIELDS},
+                )
+            else:
+                reason = reason.strip()
+                if (
+                    not rules.get("collection_void_reason_min_length")
+                    <= len(reason)
+                    <= rules.get("collection_void_reason_max_length")
+                ):
+                    raise ValidationError(
+                        {
+                            "reason": _(
+                                "Give a void reason between %(minimum)s "
+                                "and %(maximum)s characters."
+                            )
+                            % {
+                                "minimum": rules.get(
+                                    "collection_void_reason_min_length"
+                                ),
+                                "maximum": rules.get(
+                                    "collection_void_reason_max_length"
+                                ),
+                            }
+                        }
+                    )
+                item.voided_at, item.voided_by, item.void_reason = (
+                    clock.now(),
+                    actor,
+                    reason,
+                )
+                item.updated_at = clock.now()
+                item.full_clean()
+                item.save(
+                    update_fields=[
+                        "voided_at",
+                        "voided_by",
+                        "void_reason",
+                        "updated_at",
+                    ]
+                )
+                audit.record(
+                    actor,
+                    "collection.voided",
+                    entity=item,
+                    branch_id=item.branch_id,
+                    before={"voided_at": None},
+                    after={
+                        "voided_at": item.voided_at,
+                        "voided_by_id": actor.pk,
+                        "void_reason": reason,
+                    },
+                )
+        except InvalidTransition as error:
+            denied = error
+            audit.record(
+                actor,
+                "collection.edit_denied",
+                entity=item,
+                branch_id=item.branch_id,
+                metadata={"action": action, "reason": str(error)},
+            )
+    if denied is not None:
+        raise denied
+    return item
+
+
+def update_collection(actor, collection, data):
+    """Update mutable collection fields under the shared state guard."""
+    return _change_collection(actor, collection, "update", data=data)
+
+
+def void_collection(actor, collection, reason):
+    """Retain a receipt while excluding it from every live total. BR-068."""
+    return _change_collection(actor, collection, "void", reason=reason)
 
 
 def week_is_closed(branch, collection_date):

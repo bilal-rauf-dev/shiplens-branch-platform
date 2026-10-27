@@ -34,7 +34,6 @@ def collection_data():
         "amount": Decimal("100.00"),
         "method": "CASH",
         "receipt_no": "R-001",
-        "collected_by": None,
         "source_note": "Friday box",
     }
 

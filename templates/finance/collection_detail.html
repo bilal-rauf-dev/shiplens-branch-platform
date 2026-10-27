@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% load i18n tz %}
+{% block title %}{{ collection.reference }} · {% translate "ShipLens" %}{% endblock %}
+{% block content %}<h1>{{ collection.reference }}</h1>
+<dl class="record-details"><dt>{% translate "Branch" %}</dt><dd>{{ collection.branch.code }}</dd><dt>{% translate "Collection date" %}</dt><dd>{{ collection.collection_date }}</dd><dt>{% translate "Amount (PKR)" %}</dt><dd>{{ collection.amount|floatformat:2 }}</dd><dt>{% translate "Method" %}</dt><dd>{{ collection.get_method_display }}</dd><dt>{% translate "Receipt number" %}</dt><dd>{{ collection.receipt_no }}</dd><dt>{% translate "Source note" %}</dt><dd>{{ collection.source_note|default:"—" }}</dd><dt>{% translate "State" %}</dt><dd>{{ collection.state.label }}</dd><dt>{% translate "Locks at (PKT)" %}</dt><dd>{{ collection.lock_at|timezone:"Asia/Karachi" }}</dd><dt>{% translate "Void reason" %}</dt><dd>{{ collection.void_reason|default:"—" }}</dd></dl>
+{% if can_edit %}<p><a href="{% url 'collection-edit' collection.pk %}">{% translate "Edit collection" %}</a></p>{% endif %}
+{% if can_void %}<form method="post" action="{% url 'collection-void' collection.pk %}">{% csrf_token %}{% include "accounts/_form_fields.html" with form=void_form %}<button type="submit">{% translate "Void collection" %}</button></form>{% endif %}
+{% if show_history %}{% include "partials/history.html" %}{% endif %}
+{% endblock %}

@@ -10,6 +10,7 @@ from apps.accounts.permissions import PERMISSIONS
 from apps.audit import services as audit_services
 from apps.branches import services as branch_services
 from apps.branches.models import City
+from apps.finance import services as finance_services
 from apps.volunteers import services as volunteer_services
 from tests.rbac.registry import (
     NEW_PASSWORD,
@@ -17,12 +18,15 @@ from tests.rbac.registry import (
     assigned_user_object,
     assignment_payload,
     branch_object,
+    collection_edit_payload,
+    collection_void_payload,
     create_branch_payload,
     create_city_payload,
     create_payload,
     edit_branch_payload,
     edit_city_payload,
     edit_payload,
+    finance_payload,
     inactive_member_object,
     inactive_user_object,
     left_member_object,
@@ -204,6 +208,27 @@ def verify_audit_chain(scenario, fixture):
 
 
 SERVICE_CASES = {
+    "create_collection": ServiceCase(
+        "collection.create",
+        lambda scenario, fixture: finance_services.create_collection(
+            scenario["actor"], fixture["branch"], fixture["data"]
+        ),
+        finance_payload,
+    ),
+    "update_collection": ServiceCase(
+        "collection.update",
+        lambda scenario, fixture: finance_services.update_collection(
+            scenario["actor"], fixture["collection"], fixture["data"]
+        ),
+        collection_edit_payload,
+    ),
+    "void_collection": ServiceCase(
+        "collection.void",
+        lambda scenario, fixture: finance_services.void_collection(
+            scenario["actor"], fixture["collection"], fixture["data"]["reason"]
+        ),
+        collection_void_payload,
+    ),
     "verify_audit_chain": ServiceCase(
         "audit.verify_chain", verify_audit_chain, branch_object
     ),

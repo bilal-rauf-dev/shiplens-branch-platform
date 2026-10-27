@@ -160,6 +160,8 @@ BUSINESS_RULES = {
     "apply_rate_per_hour": 5,  # BR-051
     "max_collection": Decimal("10000000.00"),  # BR-060
     "collection_lock_days": 7,  # BR-064
+    "collection_void_reason_min_length": 5,
+    "collection_void_reason_max_length": 300,
     "week_start_day": "MON",  # BR-080
     "allow_submit_current_week": False,  # BR-085
 }

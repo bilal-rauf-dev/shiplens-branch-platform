@@ -962,3 +962,99 @@ msgstr "وصولی صرف فعال شاخ کے لیے درج کی جا سکتی 
 
 msgid "This receipt number already exists in this branch."
 msgstr "یہ رسید نمبر اس شاخ میں پہلے سے موجود ہے۔"
+
+msgid "Open"
+msgstr "کھلا"
+
+msgid "Locked"
+msgstr "مقفل"
+
+msgid "Sent"
+msgstr "بھیجا گیا"
+
+msgid "Voided"
+msgstr "منسوخ"
+
+msgid "This entry has been voided."
+msgstr "یہ اندراج منسوخ ہو چکا ہے۔"
+
+msgid "This entry has already been sent."
+msgstr "یہ اندراج پہلے بھیجا جا چکا ہے۔"
+
+msgid "This entry locked on %(when)s (PKT)."
+msgstr "یہ اندراج %(when)s (پاکستانی وقت) پر مقفل ہوا۔"
+
+msgid "Give a void reason between 5 and 300 characters."
+msgstr "منسوخی کی وجہ 5 سے 300 حروف میں درج کریں۔"
+
+msgid "From date"
+msgstr "ابتدائی تاریخ"
+
+msgid "To date"
+msgstr "آخری تاریخ"
+
+msgid "All methods"
+msgstr "تمام طریقے"
+
+msgid "State"
+msgstr "حالت"
+
+msgid "All states"
+msgstr "تمام حالتیں"
+
+msgid "Void reason"
+msgstr "منسوخی کی وجہ"
+
+msgid "Collection created"
+msgstr "وصولی درج ہوئی"
+
+msgid "Collection updated"
+msgstr "وصولی کی ترمیم ہوئی"
+
+msgid "Collection voided"
+msgstr "وصولی منسوخ ہوئی"
+
+msgid "Collection edit refused"
+msgstr "وصولی میں ترمیم مسترد ہوئی"
+
+msgid "Collection sent"
+msgstr "وصولی بھیج دی گئی"
+
+msgid "Collections"
+msgstr "وصولیاں"
+
+msgid "Create collection"
+msgstr "وصولی درج کریں"
+
+msgid "Edit collection"
+msgstr "وصولی میں ترمیم کریں"
+
+msgid "Void collection"
+msgstr "وصولی منسوخ کریں"
+
+msgid "Collection created."
+msgstr "وصولی درج کر دی گئی۔"
+
+msgid "Collection updated."
+msgstr "وصولی کی ترمیم محفوظ ہو گئی۔"
+
+msgid "Collection voided."
+msgstr "وصولی منسوخ کر دی گئی۔"
+
+msgid "Lock"
+msgstr "قفل"
+
+msgid "Locks in %(duration)s"
+msgstr "%(duration)s میں مقفل ہوگا"
+
+msgid "No collections found."
+msgstr "کوئی وصولی نہیں ملی۔"
+
+msgid "Non-voided total (PKR)"
+msgstr "غیر منسوخ کل رقم (روپے)"
+
+msgid "Locks at (PKT)"
+msgstr "مقفل ہونے کا وقت (پاکستانی وقت)"
+
+msgid "Give a void reason between %(minimum)s and %(maximum)s characters."
+msgstr "منسوخی کی وجہ %(minimum)s سے %(maximum)s حروف میں درج کریں۔"

@@ -45,7 +45,7 @@ Primary list: **OWASP Top 10:2025**; 2021 IDs in brackets for judges who use the
 | Branch Lead inflates/deflates past figures | collections, reports | 7-day lock, week-closed rule, snapshots, audit |
 | Finance approves own fabricated numbers | reports | FR can't create/edit collections |
 | Insider deletes evidence | audit | append-only triggers, hash chain |
-| Credential stuffing on staff login | accounts | axes lockout, Argon2, generic errors |
+| Credential stuffing on staff login | accounts | axes lockout, Argon2, generic errors, login POST limits of 20/minute and 200/day per resolved client IP across all emails (H-05) |
 | Bot floods application form | DB, HR time | honeypot, timing, rate limits |
 | XSS via CMS or applicant motivation | users' sessions | escaping, nh3, CSP |
 | Enumeration of applicants/members | PII | identical responses, 404 for out-of-scope |
@@ -57,7 +57,7 @@ Primary list: **OWASP Top 10:2025**; 2021 IDs in brackets for judges who use the
 
 | Domain | Events |
 |---|---|
-| auth | `auth.login_succeeded`, `auth.login_failed`, `auth.locked_out`, `auth.logout`, `auth.password_changed`, `auth.password_reset_issued` |
+| auth | `auth.login_succeeded`, `auth.login_failed`, `auth.locked_out`, `auth.rate_limited`, `auth.logout`, `auth.password_changed`, `auth.password_reset_issued` |
 | access | `permission.denied` (throttled: max 1 per user+route per minute) |
 | user | `user.created`, `user.updated`, `user.deactivated`, `user.reactivated`, `assignment.added`, `assignment.removed` |
 | settings | `settings.updated`, `demo.reset` |

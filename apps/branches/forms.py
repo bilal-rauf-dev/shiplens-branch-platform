@@ -30,7 +30,13 @@ class BranchCreateForm(forms.Form):
         label=_("Urdu address"), max_length=250, required=False
     )
     phone = forms.RegexField(
-        label=_("Phone"), regex=r"\A\+[1-9][0-9]{1,14}\Z", max_length=16, required=False
+        label=_("Phone"),
+        regex=r"\A\+[1-9][0-9]{1,14}\Z",
+        max_length=16,
+        required=False,
+        widget=forms.TextInput(
+            attrs={"type": "tel", "inputmode": "tel", "pattern": r"\+[1-9][0-9]{1,14}"}
+        ),
     )
     email = forms.EmailField(label=_("Email"), max_length=254, required=False)
 
@@ -45,13 +51,24 @@ class BranchEditForm(forms.Form):
         label=_("Urdu address"), max_length=250, required=False
     )
     phone = forms.RegexField(
-        label=_("Phone"), regex=r"\A\+[1-9][0-9]{1,14}\Z", max_length=16, required=False
+        label=_("Phone"),
+        regex=r"\A\+[1-9][0-9]{1,14}\Z",
+        max_length=16,
+        required=False,
+        widget=forms.TextInput(
+            attrs={"type": "tel", "inputmode": "tel", "pattern": r"\+[1-9][0-9]{1,14}"}
+        ),
     )
     email = forms.EmailField(label=_("Email"), max_length=254, required=False)
 
 
 class CityCreateForm(forms.Form):
-    code = forms.RegexField(label=_("Code"), regex=r"\A[A-Z]{3}\Z", max_length=3)
+    code = forms.RegexField(
+        label=_("Code"),
+        regex=r"\A[A-Z]{3}\Z",
+        max_length=3,
+        widget=forms.TextInput(attrs={"minlength": 3, "pattern": "[A-Z]{3}"}),
+    )
     name_en = forms.CharField(label=_("English name"), max_length=60)
     name_ur = forms.CharField(label=_("Urdu name"), max_length=60)
 

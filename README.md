@@ -44,7 +44,7 @@ The example's PostgreSQL credentials are for local development. Keep the
 user or password, update both `DATABASE_URL` and the corresponding `POSTGRES_*`
 values. `.env` is ignored by Git and excluded from Docker builds.
 
-Start the stack:
+Start the stack (Compose discovers `docker-compose.yml` automatically):
 
 ```sh
 docker compose up --build
@@ -75,6 +75,9 @@ This creates our `SUPER_ADMIN` role; the application does not use Django's admin
 [staff login](http://localhost:8000/en/accounts/login/). Passwords require at least
 12 characters and must pass common-password, similarity and numeric-password
 checks. Five failed attempts lock that email/client-IP pair for 15 minutes.
+Login POSTs also share a limit across all emails from the same client IP:
+20 per minute and 200 per day. Excess requests return the translated 429 page
+and record `auth.rate_limited` without credentials in the audit event.
 Sessions expire after one hour idle or eight hours from login; activity does not
 extend the absolute deadline.
 

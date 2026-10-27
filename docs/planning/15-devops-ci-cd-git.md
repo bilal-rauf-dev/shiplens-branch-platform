@@ -38,7 +38,7 @@ Services: `db` (postgres:16-alpine, healthcheck `pg_isready`, volume), `web` (bu
 | `lint` | checkout → setup-python 3.12 (pip cache) → `ruff check` → `ruff format --check` → CSS logical-property grep → `csrf_exempt`/`.save(` in views grep | ✓ |
 | `test` | service `postgres:16` (health-cmd pg_isready) → install → `manage.py check --deploy --fail-level WARNING` (prod settings w/ dummy env) → `makemigrations --check --dry-run` → i18n check → `pytest -n auto --cov=apps --cov-report=xml --cov-report=term-missing --cov-fail-under=60` (raise to 70 on 31 Oct) → upload coverage artifact → coverage summary to job summary | ✓ |
 | `security` | `pip-audit -r requirements.txt` → `gitleaks/gitleaks-action` | ✓ |
-| `docker` | `docker build --build-arg GIT_SHA=$GITHUB_SHA` → `docker compose -f compose.ci.yml up -d` → wait for healthy → `curl -fsS localhost:8000/health` → `docker run --rm image id -u` ≠ 0 | ✓ |
+| `docker` | `docker build --build-arg GIT_SHA=$GITHUB_SHA` → `docker compose -f docker-compose.ci.yml up -d` → wait for healthy → `curl -fsS localhost:8000/health` → `docker run --rm image id -u` ≠ 0 | ✓ |
 | `e2e` (needs docker) | start stack with seed → `pytest tests/e2e --browser chromium` (4 smoke journeys + axe) | ✓ (main + PRs labelled `e2e`; required from 30 Oct) |
 | `lighthouse` (needs docker) | LHCI per `14-…` §6 | advisory until 31 Oct, then required |
 

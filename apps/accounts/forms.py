@@ -40,6 +40,12 @@ class LoginForm(forms.Form):
 class ChangePasswordForm(PasswordChangeForm):
     """Use Django's password validation; persistence stays in the account service."""
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        minimum = rules.get("password_min_length")
+        for name in ("new_password1", "new_password2"):
+            self.fields[name].widget.attrs["minlength"] = minimum
+
 
 class UserCreateForm(forms.Form):
     email = forms.EmailField(label=_("Email"), max_length=254)

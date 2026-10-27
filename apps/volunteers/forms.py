@@ -2,6 +2,7 @@
 
 import re
 import unicodedata
+from datetime import timedelta
 
 from django import forms
 from django.core import signing
@@ -26,6 +27,21 @@ def age_on(date_of_birth, today):
         - date_of_birth.year
         - ((today.month, today.day) < (date_of_birth.month, date_of_birth.day))
     )
+
+
+def _years_before(today, years):
+    """Use February 28 when a leap-day anniversary falls in a non-leap year."""
+    try:
+        return today.replace(year=today.year - years)
+    except ValueError:
+        return today.replace(year=today.year - years, day=28)
+
+
+def birth_date_bounds(today, minimum_age, maximum_age):
+    """Return inclusive dates matching the completed-birthday age check."""
+    earliest = _years_before(today, maximum_age + 1) + timedelta(days=1)
+    latest = _years_before(today, minimum_age)
+    return earliest, latest
 
 
 class BranchChoiceField(forms.ModelChoiceField):
@@ -115,6 +131,17 @@ class ApplicationForm(forms.Form):
     phone = forms.CharField(
         label=_("Mobile number"),
         max_length=64,
+        widget=forms.TextInput(
+            attrs={
+                "type": "tel",
+                "inputmode": "tel",
+                "autocomplete": "tel",
+                "pattern": (
+                    r"[\s\-]*(?:0|(?:\+[\s\-]*)?9[\s\-]*2)"
+                    r"[\s\-]*3(?:[\s\-]*[0-9]){9}[\s\-]*"
+                ),
+            }
+        ),
         help_text=_("Pakistani mobile number, for example 0300 1234567."),
     )
     date_of_birth = forms.DateField(
@@ -177,6 +204,26 @@ class ApplicationForm(forms.Form):
             "preferred_language", "ur" if get_language() == "ur" else "en"
         )
         self.initial.setdefault("render_token", render_token())
+        self.fields["full_name"].widget.attrs.update(
+            {
+                "minlength": rules.get("application_name_min_length"),
+                "maxlength": rules.get("application_name_max_length"),
+            }
+        )
+        self.fields["motivation"].widget.attrs.update(
+            {
+                "minlength": rules.get("application_motivation_min_length"),
+                "maxlength": rules.get("application_motivation_max_length"),
+            }
+        )
+        earliest, latest = birth_date_bounds(
+            clock.today(),
+            rules.get("min_volunteer_age"),
+            rules.get("volunteer_max_age"),
+        )
+        self.fields["date_of_birth"].widget.attrs.update(
+            {"min": earliest.isoformat(), "max": latest.isoformat()}
+        )
         for name, field in self.fields.items():
             if name in {"website", "render_token"}:
                 continue

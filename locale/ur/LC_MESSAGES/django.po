@@ -603,3 +603,8 @@ msgstr "ہاں"
 
 msgid "A current member already uses this email address."
 msgstr "ایک موجودہ رکن پہلے ہی یہ ای میل پتہ استعمال کر رہا ہے۔"
+
+msgid "Too many login attempts from this connection. Please try again later."
+msgstr ""
+"اس کنکشن سے لاگ ان کی بہت زیادہ کوششیں کی گئی ہیں۔ براہ کرم بعد میں دوبارہ "
+"کوشش کریں۔"

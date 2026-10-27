@@ -39,7 +39,7 @@ pytest --cov=apps --cov-report=xml --cov-report=term-missing --cov-fail-under=60
 pip-audit -r requirements.txt
 ```
 
-`compose.ci.yml` is a disposable production stack without a source bind mount or
+`docker-compose.ci.yml` is a disposable production stack without a source bind mount or
 `.env` file. Use a separate Compose project name when testing it locally, and set
 `CI_WEB_PORT` to a free port if development already occupies port 8000. Its database
 is disposable; the workflow removes its containers and volumes on completion.

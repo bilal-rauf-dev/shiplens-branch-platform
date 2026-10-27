@@ -14,6 +14,14 @@ Only Active or Forming branches are selectable. The submission service locks and
 re-checks the branch, so a pause/close after form validation still prevents a write.
 Interests are a fixed list until P10 supplies published programs.
 
+The browser checks email type, mobile-number pattern, name and motivation lengths,
+inclusive birth-date bounds and required privacy consent using HTML attributes.
+Date bounds use the same completed-birthday rules and Karachi clock as the server,
+including leap days. No JavaScript is needed. Conditional guardian consent and
+choosing at least one item from a checkbox group remain server checks; marking
+each checkbox required would incorrectly require every choice. All submitted
+values are still validated on the server, including direct POSTs.
+
 The signed `apply-form` timestamp must be between the configured minimum fill
 time and two hours old. A filled honeypot or invalid timestamp receives the same
 thanks-page shape with a random reference; neither allocates an application ID.

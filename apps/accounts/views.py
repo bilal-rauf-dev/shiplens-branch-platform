@@ -31,6 +31,18 @@ class LoginView(FormView):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect(selectors.role_home_name(request.user))
+        if request.method == "POST" and services.login_rate_limited(request):
+            return render(
+                request,
+                "429.html",
+                {
+                    "rate_limit_message": _(
+                        "Too many login attempts from this connection. "
+                        "Please try again later."
+                    )
+                },
+                status=429,
+            )
         return super().dispatch(request, *args, **kwargs)
 
     def get_form_kwargs(self):

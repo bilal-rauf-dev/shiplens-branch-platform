@@ -1,0 +1,28 @@
+# 23 — Participant Handbook Reconciliation (2026-10-27)
+
+The official *ShipLens Challenge #01 Participant Handbook* and the organisers' email (deadline **Mon 2 Nov 2026**, late submissions refused) were received on 27 Oct. This file records how the plan lines up with the handbook and what changed. Where the handbook and earlier plan files disagree, **the handbook wins**.
+
+## 1. Confirmed (no change needed)
+Five roles with a documented permission table and tests · deny by default · scoped branch access (a changed URL id never reveals another branch) · branch codes from a locked counter, never reused · accept + member creation in one transaction · NUMERIC money · 7-day lock enforced on the server · weekly boundary documented (Mon–Sun PKT) · report as a state machine, figures frozen on approval · approved vs pending made clear on the dashboard · CSV formula-injection guard · only published content public, rich text sanitised · audit entry in the same transaction, append-only, no edit/delete even for Super Admin · translation files from day one, `dir="rtl"`, `lang="ur"`, logical CSS, proper Urdu web font · Argon2 · HttpOnly/Secure/SameSite cookies · CSRF · CSP/HSTS/nosniff · secrets only in env · dependency audit in CI · no stack traces · failed logins and denials logged · controllable clock in tests · CI on every push and PR with a Postgres service, coverage gate, Docker build · `main` protected by PRs with a green pipeline · multi-stage non-root Docker, config from env, `/health` with DB check · migrations on deploy · Lighthouse in mobile mode · no online payments · fake data only.
+
+## 2. Gaps found and where they are fixed
+
+| # | Handbook says | Gap in our build/plan | Fix | Where |
+|---|---|---|---|---|
+| H-01 | "Give Super Admin a searchable, filterable audit view." | The audit viewer (planned W-14) was missing from the Codex prompts. | Audit log viewer + per-entity history already exists → add the global viewer with filters. | **P5 Step 4** |
+| H-02 | Repository layout lists `docker-compose.yml`. | We use `compose.yaml`. | Rename to `docker-compose.yml` (Compose reads both); update README/docs/CI references. | **P5 Step 0** |
+| H-03 | "Validate on both client and server, with clear field-level errors in both languages." | Server validation complete; client side relies on Django's default `required`/`maxlength` only. | Add HTML5 constraints mirroring each rule (`type="email"`, `type="tel"` + `pattern`, `minlength`, `min`/`max` dates, `required` on checkbox groups where possible). Keep server as source of truth. | **P5 Step 0** |
+| H-04 | Members: "paginate and add database indexes for the fields you filter on. Search should still feel instant with thousands of members." | Only `(branch, status)` index. | Indexes for every filter/sort field; a 5,000-member performance test with a query-count and timing budget. | **P5 Step 2** |
+| H-05 | "Rate limiting on login and the public application form." | Login has axes lockout per (email, IP) but no per-IP rate limit across many emails (password spraying). | django-ratelimit on the login POST per client IP (e.g. 20/min, 200/day). | **P5 Step 0** |
+| H-06 | "When the official sample data is loaded… Make loading data a single, documented step." Submission form asks "How to load the sample data". | Planned (`seed_demo` / `import_sample_data`), but README must state the single command. | README "Load the sample data" section with one command, local and on Render. | **P8, P14** |
+| H-07 | "Credit [open-source libraries] in the README." | Plan put credits in `docs/credits.md` only. | README "Credits" section (summary + link to the full generated list). | **P14** |
+| H-08 | Test "day 7, still editable" and "day 8, locked"; defense question "Show me the test that proves the 7-day lock." | Boundary tests are exact-instant only. | Add two plainly named tests: `test_collection_editable_on_day_7` and `test_collection_locked_on_day_8`, alongside the exact-boundary ones. | **P6 Step 2** |
+| H-09 | Video outline: 0:00–0:30 problem/stack/link · 0:30–2:30 core flows (application → accept → member; collection logged; full report cycle; dashboard updating) · 2:30–3:30 a role refused + audit trail of the report · 3:30–4:30 Urdu RTL, CMS publish, CSV/PDF · 4:30–5:00 CI, coverage, Docker, health. | Our script used a different order. | `18-…` §5 rewritten to follow the handbook outline. | done (below) |
+| H-10 | Defense questions incl. "What would you change to support 500 branches?" and "Which parts did AI help with, and how did you check them?" | Not in the Q&A sheet. | Added to `18-…` §6. | done |
+| H-11 | Twist is announced "in the official ShipLens channel". | — | Owner monitors the official channel daily. | process |
+| H-12 | Rule 13: the repo is judged at the last commit before the deadline; rewriting history afterwards disqualifies. Rule 14: link, repo, video and logins stay public and working until results. | — | No force-pushes ever; keep Render web + DB alive until results (16 Nov per sidebar); DB expiry reminder 20 Nov stays. | process |
+| H-13 | "Test forms, tables and the dashboard in Urdu, not only the home page." | E2E planned only for home RTL. | E2E-03 extended to the form, a table page and the dashboard in Urdu. | **P12** |
+
+## 3. Notes
+- The handbook's 14-day plan matches our walking-skeleton order; we are on track (P1–P4 merged by 27 Oct).
+- "Official sample data" is still referenced, but none was published (confirmed 24 Oct, question posted on the Discussion tab). Our authored CSV dataset + single load command satisfies the documented-step requirement; if official data appears, it loads through the same importer.

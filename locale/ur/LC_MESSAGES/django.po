@@ -32,6 +32,7 @@ msgstr "شاخ کی موجودہ حالت میں اس کارروائی کی اج
 msgid "This branch cannot be closed: %(blockers)s"
 msgstr "یہ شاخ بند نہیں کی جا سکتی: %(blockers)s"
 
+#, python-format
 msgid "Give a reason between %(minimum)s and %(maximum)s characters."
 msgstr "%(minimum)s سے %(maximum)s حروف میں وجہ لکھیں۔"
 
@@ -475,3 +476,130 @@ msgstr "اس درخواست کی شاخ سے ٹیم منتخب کریں۔"
 
 msgid "Choose an existing volunteer role."
 msgstr "موجود رضاکارانہ کردار منتخب کریں۔"
+
+msgid "A matched record is outside your access."
+msgstr "مماثل ریکارڈ تک آپ کو رسائی نہیں ہے۔"
+
+msgid "Accept application"
+msgstr "درخواست منظور کریں"
+
+msgid "Age"
+msgstr "عمر"
+
+msgid "All branches"
+msgstr "تمام شاخیں"
+
+msgid "Application accepted"
+msgstr "درخواست منظور ہوئی"
+
+msgid "Application declined"
+msgstr "درخواست مسترد کی گئی"
+
+msgid "Application declined."
+msgstr "درخواست مسترد کر دی گئی۔"
+
+msgid "Application pages"
+msgstr "درخواستوں کے صفحات"
+
+msgid "Application reassigned"
+msgstr "درخواست کی شاخ تبدیل ہوئی"
+
+msgid "Application reassigned."
+msgstr "درخواست کی شاخ تبدیل کر دی گئی۔"
+
+msgid "Application status"
+msgstr "درخواست کی حالت"
+
+msgid "Application submitted"
+msgstr "درخواست جمع ہوئی"
+
+msgid "Applications"
+msgstr "درخواستیں"
+
+msgid "Back to applications"
+msgstr "درخواستوں کی فہرست پر واپس"
+
+msgid "Branch"
+msgstr "شاخ"
+
+msgid "Confirm accept"
+msgstr "منظوری کی تصدیق کریں"
+
+msgid "Confirm decline"
+msgstr "مسترد کرنے کی تصدیق کریں"
+
+msgid "Created at"
+msgstr "تخلیق کا وقت"
+
+msgid "Decided at"
+msgstr "فیصلے کا وقت"
+
+msgid "Decided by"
+msgstr "فیصلہ کرنے والا"
+
+msgid "Decision note"
+msgstr "فیصلے کا نوٹ"
+
+msgid "Decline application"
+msgstr "درخواست مسترد کریں"
+
+msgid "Guardian consent"
+msgstr "سرپرست کی رضامندی"
+
+msgid "Joined on"
+msgstr "شمولیت کی تاریخ"
+
+msgid "Left on"
+msgstr "علیحدگی کی تاریخ"
+
+msgid "Member"
+msgstr "رکن"
+
+#, python-format
+msgid "Member %(member_id)s created."
+msgstr "رکن %(member_id)s بنا دیا گیا۔"
+
+msgid "Motivation"
+msgstr "رضاکار بننے کی وجہ"
+
+msgid "No"
+msgstr "نہیں"
+
+msgid "No applications found."
+msgstr "کوئی درخواست نہیں ملی۔"
+
+msgid "Please correct the errors below."
+msgstr "براہ کرم درج ذیل غلطیاں درست کریں۔"
+
+msgid "Possible duplicate"
+msgstr "ممکنہ تکرار"
+
+msgid "Privacy consent recorded"
+msgstr "رازداری کی رضامندی کا وقت"
+
+msgid "Reassign branch"
+msgstr "شاخ تبدیل کریں"
+
+msgid "Submitted (PKT)"
+msgstr "جمع کرنے کا وقت (پاکستانی وقت)"
+
+msgid "Target branch"
+msgstr "منزل کی شاخ"
+
+msgid "Team"
+msgstr "ٹیم"
+
+msgid "Updated at"
+msgstr "ترمیم کا وقت"
+
+msgid "Volunteer applications"
+msgstr "رضاکاروں کی درخواستیں"
+
+msgid "Volunteer role"
+msgstr "رضاکارانہ کردار"
+
+msgid "Yes"
+msgstr "ہاں"
+
+msgid "A current member already uses this email address."
+msgstr "ایک موجودہ رکن پہلے ہی یہ ای میل پتہ استعمال کر رہا ہے۔"

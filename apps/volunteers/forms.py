@@ -5,12 +5,14 @@ import unicodedata
 
 from django import forms
 from django.core import signing
+from django.core.validators import MaxLengthValidator, MinLengthValidator
 from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 
 from apps.core import clock, rules
 from apps.volunteers import selectors
 from apps.volunteers.constants import AVAILABILITY, INTERESTS
+from apps.volunteers.models import ApplicationStatus, Team, VolunteerRole
 
 
 def render_token():
@@ -30,6 +32,74 @@ class BranchChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, branch):
         name = branch.name_ur if get_language() == "ur" else branch.name_en
         return f"{branch.code} · {name}"
+
+
+class ApplicationFilterForm(forms.Form):
+    branch_id = BranchChoiceField(
+        label=_("Branch"),
+        queryset=selectors.accepting_branches().none(),
+        required=False,
+        empty_label=_("All branches"),
+    )
+    status = forms.ChoiceField(
+        label=_("Status"), choices=ApplicationStatus.choices, required=False
+    )
+
+    def __init__(self, *args, user, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["branch_id"].queryset = selectors.review_branches(user)
+
+
+class VolunteerRoleChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, role):
+        return role.name_ur if get_language() == "ur" else role.name_en
+
+
+class AcceptApplicationForm(forms.Form):
+    team_id = forms.ModelChoiceField(
+        label=_("Team"), queryset=Team.objects.none(), required=False
+    )
+    role_id = VolunteerRoleChoiceField(
+        label=_("Volunteer role"),
+        queryset=VolunteerRole.objects.order_by("sort_order", "code"),
+    )
+
+    def __init__(self, *args, application, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["team_id"].queryset = Team.objects.filter(
+            branch_id=application.preferred_branch_id
+        ).order_by("name")
+
+
+class DeclineApplicationForm(forms.Form):
+    reason = forms.CharField(label=_("Reason"), widget=forms.Textarea)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["reason"].min_length = rules.get(
+            "application_decline_reason_min_length"
+        )
+        self.fields["reason"].max_length = rules.get(
+            "application_decline_reason_max_length"
+        )
+        self.fields["reason"].widget.attrs.update(
+            {
+                "minlength": self.fields["reason"].min_length,
+                "maxlength": self.fields["reason"].max_length,
+            }
+        )
+        self.fields["reason"].validators.extend(
+            [
+                MinLengthValidator(self.fields["reason"].min_length),
+                MaxLengthValidator(self.fields["reason"].max_length),
+            ]
+        )
+
+
+class ReassignApplicationForm(forms.Form):
+    branch_id = BranchChoiceField(
+        label=_("Target branch"), queryset=selectors.accepting_branches()
+    )
 
 
 class ApplicationForm(forms.Form):

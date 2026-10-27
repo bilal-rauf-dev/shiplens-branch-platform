@@ -68,6 +68,46 @@ def application_object(scenario):
     }
 
 
+def application_url(name, fixture):
+    return reverse(name, kwargs={"pk": fixture["application"].pk})
+
+
+def accept_payload(scenario):
+    fixture = application_object(scenario)
+    fixture["data"] = {"role_id": fixture["volunteer_role"].pk}
+    return fixture
+
+
+def decline_payload(scenario):
+    fixture = application_object(scenario)
+    fixture["data"] = {"reason": "No capacity at present"}
+    return fixture
+
+
+def reassign_payload(scenario):
+    fixture = application_object(scenario)
+    fixture["data"] = {"branch_id": fixture["target_branch"].pk}
+    return fixture
+
+
+def member_object(scenario):
+    fixture = application_object(scenario)
+    reviewer = User.objects.create_user(
+        email="matrix-reviewer@example.com",
+        full_name="Matrix Reviewer",
+        role=Role.HR_LEAD,
+    )
+    assign_branch(scenario["admin"], reviewer, scenario["branch"])
+    fixture["member"] = volunteer_services.accept_application(
+        reviewer, fixture["application"].pk, role_id=fixture["volunteer_role"].pk
+    )
+    return fixture
+
+
+def member_url(name, fixture):
+    return reverse(name, kwargs={"pk": fixture["member"].pk})
+
+
 def branch_url(name, fixture):
     return reverse(name, kwargs={"pk": fixture["branch"].pk})
 
@@ -210,6 +250,11 @@ def settings_payload(scenario):
 # The four columns are method, URL builder, in-scope fixture factory and success
 # status. Payloads must be valid so a validation error cannot masquerade as denial.
 ROUTE_CASES = {
+    "application-detail": RouteCase("GET", application_url, application_object, 200),
+    "application-accept": RouteCase("POST", application_url, accept_payload, 302),
+    "application-decline": RouteCase("POST", application_url, decline_payload, 302),
+    "application-reassign": RouteCase("POST", application_url, reassign_payload, 302),
+    "member-detail": RouteCase("GET", member_url, member_object, 200),
     "branch-transition": RouteCase("POST", transition_url, branch_object, 302),
     "branch-list": RouteCase("GET", page_url, no_object, 200),
     "branch-detail": RouteCase("GET", branch_url, branch_object, 200),

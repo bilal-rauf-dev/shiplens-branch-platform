@@ -62,5 +62,27 @@ Both services update the timestamp and audit the change in their transaction.
 Accepted and Declined applications reject further decisions or reassignment.
 
 `InvalidTransition` is shared with branch services through `core.exceptions`.
-HR review pages and their HTTP responses follow in P4 Step 3. Member list/search
-and member editing remain in P5.
+
+## HR review pages
+
+HR lands at `/en/app/applications/` after login (with the equivalent Urdu route).
+The list defaults to Pending, with Accepted/Declined tabs, a scoped branch filter,
+newest-first ordering and pages of 25. Every lookup applies the central queryset
+scope before resolving a record ID. Finance, Content and Branch Leads cannot open
+application pages. Super Admins can read every application and reassign Pending
+ones as granted by the matrix; only scoped HR Leads can accept or decline.
+
+Detail pages show age instead of date of birth and include the shared audit-history
+partial. Duplicate matches are looked up through the viewer's application/member
+scope; an inaccessible match never exposes its reference, name or link. A small
+read-only member detail route provides the matched-member link destination.
+Member list/search and editing remain in P5.
+
+Acceptance forms offer teams from the application's branch and existing roles.
+Decline reasons use the same configured bounds as the service. Reassignment offers
+Active/Forming targets. Successful POSTs redirect with a translated one-time
+message. If an HR Lead reassigns outside their scope, the redirect goes back to the
+list. Invalid forms and business validation errors re-render detail with HTTP 400;
+terminal decisions and closed-branch acceptance return HTTP 409. Acceptance also
+reports current-member email conflicts in plain language while retaining the
+database uniqueness constraint. Review pages use private, no-store responses.

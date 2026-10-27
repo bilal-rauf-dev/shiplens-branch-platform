@@ -1,6 +1,11 @@
 """Every reachable named route must be explicitly public or declare an action."""
 
 ROUTE_ACTIONS = {
+    "application-detail": "application.view",
+    "application-accept": "application.accept",
+    "application-decline": "application.decline",
+    "application-reassign": "application.reassign_branch",
+    "member-detail": "member.view",
     "branch-list": "branch.list",
     "branch-detail": "branch.view",
     "branch-create": "branch.create",

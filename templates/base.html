@@ -23,6 +23,9 @@
               {% if user.role == "SUPER_ADMIN" or user.role == "FINANCE_REVIEWER" or user.role == "BRANCH_LEAD" or user.role == "HR_LEAD" %}
                 <a href="{% url 'branch-list' %}">{% translate "Branches" %}</a>
               {% endif %}
+              {% if user.role == "SUPER_ADMIN" or user.role == "HR_LEAD" %}
+                <a href="{% url 'application-list' %}">{% translate "Applications" %}</a>
+              {% endif %}
               <a href="{% url 'account-change-password' %}">{% translate "Change password" %}</a>
               <form method="post" action="{% url 'account-logout' %}">
                 {% csrf_token %}

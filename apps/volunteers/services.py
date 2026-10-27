@@ -205,6 +205,15 @@ def accept_application(actor, application_id, *, team_id=None, role_id):
         current = clock.now()
         today = clock.today()
         number = ids.next_value(f"member:{today.year}")
+        # BR-055: give reviewers a useful error before the database constraint.
+        if (
+            Member.objects.exclude(status=MemberStatus.LEFT)
+            .filter(email__iexact=application.email)
+            .exists()
+        ):
+            raise ValidationError(
+                {"email": _("A current member already uses this email address.")}
+            )
         member = Member(
             member_id=f"M-{today.year}-{number:05d}",
             application=application,

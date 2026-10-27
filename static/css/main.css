@@ -167,7 +167,8 @@ textarea {
 .form-errors { color: var(--c-danger); }
 .record-details { display: grid; grid-template-columns: max-content 1fr; gap: var(--s-2) var(--s-4); }
 .record-details dt { font-weight: 700; }
-.record-details dd { margin-inline: 0; }
+.record-details dd { margin-inline: 0; min-inline-size: 0; overflow-wrap: anywhere; }
+.application-note { white-space: pre-wrap; }
 .history { margin-block-start: var(--s-8); }
 
 .honeypot {

@@ -9,6 +9,7 @@ from uuid import UUID
 from django.core.cache import cache
 from django.db import connection, transaction
 
+from apps.accounts.permissions import require
 from apps.audit.context import request_context
 from apps.audit.models import AuditLog
 from apps.core import clock, rules
@@ -151,6 +152,27 @@ def record(
     event.hash = _hash(event)
     event.save(force_insert=True)
     return event
+
+
+def verify_and_record(actor):
+    """Verify and count one stable chain, then audit the result in that transaction."""
+    from apps.audit.selectors import verify_chain
+
+    with transaction.atomic():
+        require(actor, "audit.verify_chain")
+        _lock_chain()
+        intact, broken_id = verify_chain()
+        count = AuditLog.objects.count()
+        record(
+            actor,
+            "audit.chain_verified",
+            metadata={
+                "intact": intact,
+                "broken_event_id": broken_id,
+                "event_count": count,
+            },
+        )
+        return intact, broken_id, count
 
 
 def record_denial(actor, route_name, action):

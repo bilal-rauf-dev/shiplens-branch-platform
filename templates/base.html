@@ -20,6 +20,7 @@
                 <a href="{% url 'user-list' %}">{% translate "Users" %}</a>
                 <a href="{% url 'settings-view' %}">{% translate "System settings" %}</a>
                 <a href="{% url 'volunteer-role-list' %}">{% translate "Volunteer roles" %}</a>
+                <a href="{% url 'audit-list' %}">{% translate "Audit log" %}</a>
               {% endif %}
               {% if user.role == "SUPER_ADMIN" or user.role == "FINANCE_REVIEWER" or user.role == "BRANCH_LEAD" or user.role == "HR_LEAD" %}
                 <a href="{% url 'branch-list' %}">{% translate "Branches" %}</a>

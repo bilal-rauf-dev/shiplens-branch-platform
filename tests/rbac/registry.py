@@ -3,8 +3,10 @@
 from collections.abc import Callable
 from dataclasses import dataclass
 
+from django.db import transaction
 from django.urls import reverse
 
+from apps import audit
 from apps.accounts.models import Role, User
 from apps.accounts.services import assign_branch
 from apps.branches.models import Branch, City
@@ -26,6 +28,23 @@ class RouteCase:
 
 def page_url(name, fixture):
     return reverse(name)
+
+
+def audit_object(scenario):
+    with transaction.atomic():
+        event = audit.record(
+            scenario["admin"],
+            "branch.updated",
+            entity=scenario["branch"],
+            branch_id=scenario["branch"].pk,
+            before={"name_en": "Before"},
+            after={"name_en": "After"},
+        )
+    return {"event": event, "data": {}}
+
+
+def audit_url(name, fixture):
+    return reverse(name, kwargs={"pk": fixture["event"].pk})
 
 
 def transition_url(name, fixture):
@@ -312,6 +331,9 @@ def settings_payload(scenario):
 # The four columns are method, URL builder, in-scope fixture factory and success
 # status. Payloads must be valid so a validation error cannot masquerade as denial.
 ROUTE_CASES = {
+    "audit-list": RouteCase("GET", page_url, audit_object, 200),
+    "audit-detail": RouteCase("GET", audit_url, audit_object, 200),
+    "audit-verify": RouteCase("POST", page_url, audit_object, 302),
     "member-edit": RouteCase("POST", member_url, member_edit_payload, 302),
     "member-deactivate": RouteCase("POST", member_url, member_object, 302),
     "member-reactivate": RouteCase("POST", member_url, inactive_member_object, 302),

@@ -87,3 +87,19 @@ See `08-data-model.md` §3.16: actor id/label/role, occurred_at (UTC), action, e
 ### 4.5 Viewer UI (Super Admin)
 Filters: date range, actor, role, action (grouped), entity type, entity id/label search, branch. Table: time (PKT), actor, action badge, entity link, summary. Detail drawer: before/after diff table, IP, UA, request id, hash. Buttons: Export CSV (audited), Verify chain. Pagination 50/page, newest first; index-backed.
 Per-entity "History" panel on branch/member/collection/report/content detail pages.
+
+P5 implements the global viewer at `/<lang>/app/audit/` and event detail at
+`/<lang>/app/audit/<id>/`, restricted to Super Admin. GET filters include inclusive
+Karachi dates, captured actor email and role, recorded action (grouped by prefix),
+entity type, entity ID or label, and branch. Pages contain 50 events, ordered by
+time and ID descending, and retain filters in pagination links. Entity links are
+checked against the central permissions and scoped querysets; unknown or missing
+records remain plain text. Structured before/after values are escaped JSON.
+
+The POST-only verification service takes the existing audit-chain advisory lock,
+runs `verify_chain()` and counts the same stable chain, then records
+`audit.chain_verified` with its result. The displayed count excludes this new
+verification event. A broken chain is reported, never repaired or hidden. Existing
+time, actor FK, action, entity/time and branch/time indexes cover the required
+columns; no duplicate index or migration is added. Audit rows have no edit/delete
+views or services. CSV export is not part of this step.

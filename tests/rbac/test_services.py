@@ -7,6 +7,7 @@ from django.core.exceptions import PermissionDenied
 from apps.accounts import services
 from apps.accounts.models import Role
 from apps.accounts.permissions import PERMISSIONS
+from apps.audit import services as audit_services
 from apps.branches import services as branch_services
 from apps.branches.models import City
 from apps.volunteers import services as volunteer_services
@@ -198,7 +199,14 @@ def reinstate_member(scenario, fixture):
     )
 
 
+def verify_audit_chain(scenario, fixture):
+    return audit_services.verify_and_record(scenario["actor"])
+
+
 SERVICE_CASES = {
+    "verify_audit_chain": ServiceCase(
+        "audit.verify_chain", verify_audit_chain, branch_object
+    ),
     "update_member": ServiceCase("member.update", update_member, member_edit_payload),
     "deactivate_member": ServiceCase("member.update", deactivate_member, member_object),
     "reactivate_member": ServiceCase(

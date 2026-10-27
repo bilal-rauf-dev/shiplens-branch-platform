@@ -244,6 +244,8 @@ td {
 
 .member-table td { overflow-wrap: anywhere; }
 
+.audit-hash { overflow-wrap: anywhere; }
+
 @media (width < 640px) {
   .member-table thead {
     position: absolute;

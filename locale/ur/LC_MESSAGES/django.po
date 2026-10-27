@@ -782,3 +782,114 @@ msgstr "رکن کی حالت تبدیل ہو گئی۔"
 
 msgid "Notes"
 msgstr "نوٹس"
+
+msgid "From date (PKT)"
+msgstr "ابتدائی تاریخ (پاکستانی وقت)"
+
+msgid "To date (PKT)"
+msgstr "آخری تاریخ (پاکستانی وقت)"
+
+msgid "Actor email"
+msgstr "کارروائی کرنے والے کی ای میل"
+
+msgid "Actor role"
+msgstr "کارروائی کرنے والے کا کردار"
+
+msgid "All roles"
+msgstr "تمام کردار"
+
+msgid "Action"
+msgstr "کارروائی"
+
+msgid "Entity type"
+msgstr "ریکارڈ کی قسم"
+
+msgid "Entity ID or label"
+msgstr "ریکارڈ کی شناخت یا نام"
+
+msgid "All entity types"
+msgstr "تمام ریکارڈ کی قسمیں"
+
+msgid "Authentication"
+msgstr "توثیق"
+
+msgid "Audit"
+msgstr "آڈٹ"
+
+msgid "Permissions"
+msgstr "اجازتیں"
+
+msgid "Assignments"
+msgstr "ذمہ داریاں"
+
+msgid "All actions"
+msgstr "تمام کارروائیاں"
+
+msgid "System / anonymous"
+msgstr "نظام / گمنام"
+
+msgid "No field changes"
+msgstr "کوئی خانہ تبدیل نہیں ہوا"
+
+msgid "Chain intact (%(count)s events)"
+msgstr "سلسلہ درست ہے (%(count)s واقعات)"
+
+msgid "Chain broken at event #%(id)s"
+msgstr "واقعہ #%(id)s پر سلسلہ ٹوٹ گیا"
+
+msgid "Audit log"
+msgstr "آڈٹ لاگ"
+
+msgid "Verify chain"
+msgstr "سلسلے کی تصدیق کریں"
+
+msgid "Time (PKT)"
+msgstr "وقت (پاکستانی وقت)"
+
+msgid "Actor"
+msgstr "کارروائی کرنے والا"
+
+msgid "Entity"
+msgstr "ریکارڈ"
+
+msgid "Changed fields"
+msgstr "تبدیل شدہ خانے"
+
+msgid "No audit events found."
+msgstr "آڈٹ کا کوئی واقعہ نہیں ملا۔"
+
+msgid "Audit pages"
+msgstr "آڈٹ کے صفحات"
+
+msgid "Audit event"
+msgstr "آڈٹ واقعہ"
+
+msgid "IP address"
+msgstr "آئی پی پتہ"
+
+msgid "User agent"
+msgstr "صارف کا براؤزر"
+
+msgid "Request ID"
+msgstr "درخواست کی شناخت"
+
+msgid "Previous hash"
+msgstr "پچھلا ہیش"
+
+msgid "Hash"
+msgstr "ہیش"
+
+msgid "Field"
+msgstr "خانہ"
+
+msgid "Before"
+msgstr "پہلے"
+
+msgid "After"
+msgstr "بعد"
+
+msgid "Metadata"
+msgstr "اضافی معلومات"
+
+msgid "Back to audit log"
+msgstr "آڈٹ لاگ پر واپس جائیں"

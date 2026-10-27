@@ -18,6 +18,9 @@ scoped, read-only team list. Deactivated teams and roles keep existing member
 links and cannot be selected for new acceptances.
 The member register supports scoped search, combined filters, stable sorting and
 25-member pages, with CSS cards on mobile and PostgreSQL search indexes.
+Member detail includes scoped editing, lifecycle actions and audit history.
+Super Admin can search the global audit log, inspect event diffs and verify the
+append-only hash chain from the Audit log navigation item.
 
 - Planning documents: [`docs/planning/`](docs/planning/00-executive-summary.md)
 - AI usage declaration: [`AI-USAGE.md`](AI-USAGE.md)

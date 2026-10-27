@@ -1,6 +1,9 @@
 """Every reachable named route must be explicitly public or declare an action."""
 
 ROUTE_ACTIONS = {
+    "audit-list": "audit.list",
+    "audit-detail": "audit.view",
+    "audit-verify": "audit.verify_chain",
     "member-edit": "member.update",
     "member-deactivate": "member.update",
     "member-reactivate": "member.update",

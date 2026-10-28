@@ -1,6 +1,7 @@
 body { display: flex; flex-direction: column; }
 .container { inline-size: 100%; max-inline-size: 72rem; margin-inline: auto; padding-inline: var(--md-s4); }
-.site-header, .site-footer { padding-block: var(--md-s4); background: var(--md-surface-container); }
+.site-header, .site-footer { padding-block: var(--md-s4); }
+.site-footer { background: var(--md-surface-container); }
 .site-header { border-block-end: 1px solid var(--md-outline-variant); }
 .site-footer { border-block-start: 1px solid var(--md-outline-variant); }
 .brand { font-weight: 700; }

@@ -44,19 +44,6 @@ urlpatterns = [
         name="account-change-password",
     ),
     path(
-        "app/dashboard/",
-        RoleHomeView.as_view(
-            required_action="dashboard.head_office",
-            title=_("Dashboard"),
-        ),
-        name="dashboard-head-office",
-    ),
-    path(
-        "app/my-branch/",
-        RoleHomeView.as_view(required_action="dashboard.branch", title=_("My branch")),
-        name="dashboard-branch",
-    ),
-    path(
         "app/content/",
         RoleHomeView.as_view(required_action="content.list", title=_("Content")),
         name="content-list",

@@ -1,6 +1,7 @@
 """Every reachable named route must be explicitly public or declare an action."""
 
 ROUTE_ACTIONS = {
+    "dashboard-hr": "dashboard.hr",
     "demo-reset": "demo.reset",
     "report-list": "report.list",
     "report-detail": "report.view",

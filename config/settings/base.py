@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "apps.volunteers.apps.VolunteersConfig",
     "apps.finance.apps.FinanceConfig",
     "apps.seed.apps.SeedConfig",
+    "apps.dashboard.apps.DashboardConfig",
     "axes",
 ]
 AUTH_USER_MODEL = "accounts.User"

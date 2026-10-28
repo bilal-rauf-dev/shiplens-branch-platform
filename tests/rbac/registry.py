@@ -490,6 +490,7 @@ def demo_reset_payload(scenario):
 
 
 ROUTE_CASES = {
+    "dashboard-hr": RouteCase("GET", page_url, no_object, 200),
     "demo-reset": RouteCase("POST", page_url, demo_reset_payload, 302),
     "report-list": RouteCase("GET", page_url, report_object, 200),
     "report-detail": RouteCase("GET", report_url, report_object, 200),

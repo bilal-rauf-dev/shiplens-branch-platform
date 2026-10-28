@@ -1,4 +1,11 @@
 {% load i18n %}
+{% if user.role == "SUPER_ADMIN" or user.role == "FINANCE_REVIEWER" %}
+  <a class="nav-link" href="{% url 'dashboard-head-office' %}"{% if request.resolver_match.url_name == 'dashboard-head-office' %} aria-current="page"{% endif %}>{% translate "Dashboard" %}</a>
+{% elif user.role == "BRANCH_LEAD" %}
+  <a class="nav-link" href="{% url 'dashboard-branch' %}"{% if request.resolver_match.url_name == 'dashboard-branch' %} aria-current="page"{% endif %}>{% translate "My branch" %}</a>
+{% elif user.role == "HR_LEAD" %}
+  <a class="nav-link" href="{% url 'dashboard-hr' %}"{% if request.resolver_match.url_name == 'dashboard-hr' %} aria-current="page"{% endif %}>{% translate "HR overview" %}</a>
+{% endif %}
 {% if user.role == "SUPER_ADMIN" %}
   <a class="nav-link" href="{% url 'user-list' %}"{% if request.resolver_match.url_name == 'user-list' %} aria-current="page"{% endif %}>{% translate "Users" %}</a>
   <a class="nav-link" href="{% url 'settings-view' %}"{% if request.resolver_match.url_name == 'settings-view' %} aria-current="page"{% endif %}>{% translate "System settings" %}</a>

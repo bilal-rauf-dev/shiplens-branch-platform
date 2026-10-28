@@ -1316,3 +1316,150 @@ msgstr ""
 
 msgid "Import members at their historical joining date."
 msgstr ""
+
+msgid "Acceptance in period"
+msgstr ""
+
+msgid "Age (days)"
+msgstr ""
+
+msgid "Amount"
+msgstr ""
+
+msgid "As of"
+msgstr ""
+
+msgid "Awaiting review"
+msgstr ""
+
+msgid "Branch summary"
+msgstr ""
+
+msgid "Chart values"
+msgstr ""
+
+msgid "Collected"
+msgstr ""
+
+msgid ""
+"Collected and approved money over 12 months; values follow in the table."
+msgstr ""
+
+msgid "Collected and approved: 12 months"
+msgstr ""
+
+msgid "Collected, awaiting approval"
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "From locked report revisions"
+msgstr ""
+
+msgid "HR overview"
+msgstr ""
+
+msgid "Head-office dashboard"
+msgstr ""
+
+msgid "Key indicators"
+msgstr ""
+
+msgid "Latest report"
+msgstr ""
+
+msgid "Lock state"
+msgstr ""
+
+msgid "Month"
+msgstr ""
+
+msgid "My branch"
+msgstr ""
+
+msgid "New in period"
+msgstr ""
+
+msgid "New members over 12 months; values follow in the table."
+msgstr ""
+
+msgid "New members: 12 months"
+msgstr ""
+
+msgid "No assigned branches."
+msgstr ""
+
+msgid ""
+"No collections in this period. Period totals are zero; unsent totals include"
+" earlier periods."
+msgstr ""
+
+msgid "No report"
+msgstr ""
+
+msgid "No unsent collections."
+msgstr ""
+
+msgid "Pending applications"
+msgstr ""
+
+msgid "Pending approval"
+msgstr ""
+
+msgid "Pending by assigned branch"
+msgstr ""
+
+msgid "Period"
+msgstr ""
+
+msgid "Report compliance"
+msgstr ""
+
+msgid "Reports"
+msgstr ""
+
+msgid "Review applications"
+msgstr ""
+
+msgid "Rs"
+msgstr ""
+
+msgid "Sent in period"
+msgstr ""
+
+msgid "Show period"
+msgstr ""
+
+msgid "Showing %(period_label)s"
+msgstr ""
+
+msgid "Showing %(period_label)s (latest month with data)"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Trends"
+msgstr ""
+
+msgid "Unsent (all time)"
+msgstr ""
+
+msgid "Unsent collections, oldest first"
+msgstr ""
+
+msgid "Week report"
+msgstr ""
+
+msgid "Week starting"
+msgstr ""
+
+msgid "entries"
+msgstr ""
+
+msgid "entries; oldest age in days:"
+msgstr ""

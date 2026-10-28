@@ -118,13 +118,12 @@ def test_sa_reads_all_but_cannot_accept_or_decline(
     )
 
 
-def test_hr_home_is_the_real_review_list(hr_client, reviewer, application):
+def test_hr_home_is_the_pipeline_overview(hr_client, reviewer, application):
     response = hr_client.get(reverse(role_home_name(reviewer)))
     assert response.status_code == 200
-    assert application.reference in response.text
-    assert "volunteers/application_list.html" in [
-        template.name for template in response.templates
-    ]
+    assert response.context["applications"]["pending"] == 1
+    assert reverse("application-list") in response.text
+    assert "dashboard/hr.html" in [template.name for template in response.templates]
 
 
 def test_list_tabs_filters_newest_first_and_pagination(

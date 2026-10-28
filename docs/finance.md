@@ -48,3 +48,17 @@ A locked-but-unsent entry may still be sent. Stale selections return 409.
 PostgreSQL triggers reject changes to sent financial fields and all transfer
 updates/deletes; reverse migration SQL removes both guards. Transfer list and
 detail retain the same BL scope and global FR/SA read-only access.
+
+## Branch closure and scope
+
+Unsent collections block closing a branch, with their count and Decimal total in
+PKR. This is an all-time check and includes locked receipts. Sending or voiding
+removes an entry from that blocker. Branch close and finance writes take the
+branch lock first, so a collection cannot slip into a branch during its closure.
+The open-report check remains an explicit P7 integration comment.
+
+Scope tests cover foreign collections, transfers and selection options, global
+Finance Reviewer reads, rejected finance writes, and HR/Content Editor denials.
+The close workflow is tested through HTTP: 409 while money is unsent, then a
+successful redirect after it is transferred. No exports, adjustments or weekly
+reports are implemented here.

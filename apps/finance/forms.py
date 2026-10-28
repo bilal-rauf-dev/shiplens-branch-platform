@@ -147,7 +147,7 @@ class CollectionForm(forms.Form):
         label=_("Receipt number"),
         regex=r"\A[A-Za-z0-9\-/]{1,30}\Z",
         max_length=30,
-        widget=forms.TextInput(attrs={"pattern": r"[A-Za-z0-9\-/]{1,30}"}),
+        widget=forms.TextInput(attrs={"pattern": r"[A-Za-z0-9\-\/]{1,30}"}),
     )
     collected_by = forms.ModelChoiceField(
         label=_("Collected by"), queryset=Member.objects.none(), required=False

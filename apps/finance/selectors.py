@@ -77,6 +77,11 @@ def totals(queryset):
     )
 
 
+def branch_unsent_totals(branch):
+    """All-time unsent money; locking never removes it from the close guard."""
+    return totals(Collection.objects.filter(branch=branch, transfer__isnull=True))
+
+
 def history(user, collection):
     if not can(user, "audit.entity_history", collection):
         return []

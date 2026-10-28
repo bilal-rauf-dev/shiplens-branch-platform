@@ -21,6 +21,9 @@ The member register supports scoped search, combined filters, stable sorting and
 Member detail includes scoped editing, lifecycle actions and audit history.
 Super Admin can search the global audit log, inspect event diffs and verify the
 append-only hash chain from the Audit log navigation item.
+Offline collection entry now includes an exact seven-day lock, audited edits and
+voids, and immutable transfers to the main account. Unsent money blocks branch
+closure. See [finance documentation](docs/finance.md) for the rules and tests.
 
 - Planning documents: [`docs/planning/`](docs/planning/00-executive-summary.md)
 - AI usage declaration: [`AI-USAGE.md`](AI-USAGE.md)

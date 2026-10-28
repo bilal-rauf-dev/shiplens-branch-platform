@@ -52,3 +52,18 @@ approver and Karachi time. The shared history partial shows each report's audit
 events and review comments. All successful form posts redirect back to detail
 with a translated message; validation errors return 400 and state conflicts 409.
 Navigation, forms, headings and feedback have English/Urdu translations.
+
+## Acceptance checks
+
+test_t_rpt_lifecycle drives the six-event draft/submit/return/resubmit/approve/lock
+sequence through HTTP with real request UUIDs, checks actor roles and verifies the
+audit chain. Other acceptance tests check old and new revision amounts, direct SQL
+update/delete guards, exactly one winner during concurrent approval, closed-week
+collection create/edit/void refusals and branch-close blockers.
+
+P7's explicit requirements resolve three older wording differences in the plan:
+revision lines are retained in their own rows (rather than kept only in audit
+before data), return comments go in audit metadata, and the lifecycle's sample
+comment is longer than "fix" to satisfy BR-087's five-character minimum. System
+draft and lock events use the existing null user/blank role and "system" label;
+HTTP-triggered system events keep the same request UUID as the triggering request.

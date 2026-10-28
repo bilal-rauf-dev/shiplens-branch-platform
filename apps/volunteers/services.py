@@ -39,6 +39,50 @@ MEMBER_TRANSITIONS = {
 }
 
 
+def import_member(
+    actor=None, *, branch, team, volunteer_role, full_name, email, phone, joined_on
+):
+    """Import a spreadsheet member with the shared yearly counter and system audit.
+
+    This service is for the historical importer, not an HTTP creation endpoint.
+    Subsequent status changes still use transition_member. BR-054, BR-055.
+    """
+    with transaction.atomic():
+        if actor is not None:
+            require(actor, "member.update", branch)
+        Branch.objects.select_for_update(no_key=True).get(pk=branch.pk)
+        if team is not None and team.branch_id != branch.pk:
+            raise ValidationError(_("Choose a team from this member's branch."))
+        if joined_on != clock.today():
+            raise ValidationError(_("Import members at their historical joining date."))
+        number = ids.next_value(f"member:{joined_on.year}")
+        member = Member(
+            member_id=f"M-{joined_on.year}-{number:05d}",
+            branch=branch,
+            team=team,
+            volunteer_role=volunteer_role,
+            full_name=full_name,
+            email=email.strip().lower(),
+            phone=phone,
+            joined_on=joined_on,
+            created_by=actor,
+            updated_by=actor,
+            created_at=clock.now(),
+            updated_at=clock.now(),
+        )
+        member.full_clean()
+        member.save(force_insert=True)
+        audit.record(
+            actor,
+            "member.created",
+            entity=member,
+            branch_id=branch.pk,
+            after={"member_id": member.member_id, "branch_id": branch.pk},
+            metadata={"source": "spreadsheet import"},
+        )
+        return member
+
+
 def _locked_member(actor, member_id, action):
     require(actor, action)
     return get_object_or_404(

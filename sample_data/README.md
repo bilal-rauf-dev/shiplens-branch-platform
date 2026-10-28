@@ -21,3 +21,21 @@ All files are UTF-8 CSV with one header row. Dates use `YYYY-MM-DD`; timestamps 
 - **events.csv (102):** `timestamp` is an aware historical instant; `actor_email` selects a real staff actor or is empty for public/system events; `action` names the service operation; `arguments` is a JSON object containing only natural keys and action parameters. Equal timestamps execute in file order, so bootstrap users precede their actions. The first Super Admin is bootstrapped with an unusable password; subsequent users use the account creation service. The importer uses `clock.frozen_at` for each event and commits the whole history atomically.
 
 Target-status columns document expected outcomes; they never bypass services or bind protected status fields. The importer validates all headers before making changes. Load this directory with `python manage.py import_sample_data sample_data/`; demo password setup is handled separately by `seed_demo`.
+
+## Alternative column names
+
+Use `python manage.py import_sample_data path/to/csvs --mapping path/to/mapping.yaml`
+to rename incoming headers before validation. The YAML maps filenames to
+`incoming_name: canonical_name` pairs; headers not listed retain their names:
+
+```yaml
+users.csv:
+  login_email: email
+branches.csv:
+  branch_name: name_en
+```
+
+PyYAML's safe loader reads the mapping; executable YAML tags are not accepted.
+Missing and unknown columns are reported together for every file before any write.
+The importer expects an empty user table and a first system event bootstrapping the
+Super Admin. Import and reset restore the same reference rows as the data migrations.

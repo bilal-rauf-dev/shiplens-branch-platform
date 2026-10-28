@@ -14,7 +14,9 @@ def matrix_password_hash():
 
 
 @pytest.fixture
-def scenario(db, role, matrix_password_hash, clock, branch_factory):
+def scenario(
+    db, role, matrix_password_hash, clock, branch_factory, settings, monkeypatch
+):
     admin = User.objects.create(
         email="rbac-admin@example.com",
         full_name="Matrix Admin",
@@ -35,4 +37,10 @@ def scenario(db, role, matrix_password_hash, clock, branch_factory):
     branch = branch_factory()
     if role in {Role.BRANCH_LEAD, Role.HR_LEAD}:
         assign_branch(admin, actor, branch)
-    return {"actor": actor, "admin": admin, "branch": branch}
+    return {
+        "actor": actor,
+        "admin": admin,
+        "branch": branch,
+        "settings": settings,
+        "monkeypatch": monkeypatch,
+    }

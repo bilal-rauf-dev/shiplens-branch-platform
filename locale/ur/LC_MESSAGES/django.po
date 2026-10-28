@@ -1298,3 +1298,21 @@ msgstr ""
 
 msgid "Apply to volunteer with ShipLens and support your local community."
 msgstr ""
+
+msgid "Reset demo data"
+msgstr ""
+
+msgid "This replaces all demo changes with the sample data and logs everyone out."
+msgstr ""
+
+msgid "Demo data reset. Please log in again."
+msgstr ""
+
+msgid "Choose a reporting week since opening."
+msgstr ""
+
+msgid "Choose a team from this member's branch."
+msgstr ""
+
+msgid "Import members at their historical joining date."
+msgstr ""

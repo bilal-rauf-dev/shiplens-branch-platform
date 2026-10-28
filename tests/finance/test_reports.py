@@ -3,6 +3,7 @@ from decimal import Decimal
 from io import StringIO
 
 import pytest
+from django.core.exceptions import ValidationError
 from django.core.management import call_command
 from django.db import IntegrityError, transaction
 
@@ -55,6 +56,23 @@ def test_t_rpt_autodraft_idempotent(branch):
     assert set(events.values_list("actor_label", flat=True)) == {"system"}
     call_command("generate_weekly_drafts", stdout=StringIO())
     assert WeeklyReport.objects.count() == 4 and events.count() == 4
+
+
+def test_historical_draft_targets_only_the_requested_week(branch):
+    open_on(branch)
+    reports = ensure_drafts(branch, week_start=date(2026, 10, 5))
+    assert [item.week_start for item in reports] == [date(2026, 10, 5)]
+    assert WeeklyReport.objects.count() == 1
+    assert ensure_drafts(branch, week_start=date(2026, 10, 5))[0].pk == reports[0].pk
+
+
+@pytest.mark.parametrize(
+    "week", [date(2026, 9, 21), date(2026, 10, 6), date(2026, 10, 26)]
+)
+def test_historical_draft_rejects_week_outside_branch_history(branch, week):
+    with pytest.raises(ValidationError):
+        ensure_drafts(open_on(branch), week_start=week)
+    assert not WeeklyReport.objects.exists()
 
 
 @pytest.mark.parametrize(

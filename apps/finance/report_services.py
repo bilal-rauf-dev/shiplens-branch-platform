@@ -211,15 +211,22 @@ def transition(
         return item
 
 
-def ensure_drafts(branch):
+def ensure_drafts(branch, *, week_start=None):
     """Lazily create missing weeks once, with system audit events. BR-081, BR-082."""
     reports = []
     with transaction.atomic():
         branch = Branch.objects.select_for_update(no_key=True).get(pk=branch.pk)
         if branch.status != BranchStatus.ACTIVE or branch.opened_on is None:
             return reports
-        week, _ = week_bounds(branch.opened_on)
-        current, _ = week_bounds(clock.today())
+        week = week_bounds(branch.opened_on)[0]
+        current = week_bounds(clock.today())[0]
+        if week_start is not None:
+            if (
+                week_start != week_bounds(week_start)[0]
+                or not week <= week_start <= current
+            ):
+                raise ValidationError(_("Choose a reporting week since opening."))
+            week = current = week_start
         while week <= current:
             report, created = WeeklyReport.objects.get_or_create(
                 branch=branch,

@@ -36,3 +36,19 @@ An audit failure at either stage rolls everything back. Submitted/Resubmitted/
 Approved/Locked weeks block collection writes; Returned weeks reopen, subject to
 the original seven-day lock. Submitted/Resubmitted/Returned reports block closing
 the branch. Current-week submission is configurable; future weeks remain blocked.
+
+## Screens and permissions
+
+The scoped report list lazily creates drafts only for a Branch Lead's Active
+branches. Finance and Super Admin read all reports. Branch, status and week-start
+date filters preserve their values when moving between pages of 25 reports.
+Finance's review queue contains Submitted/Resubmitted reports, oldest submission
+first. Super Admin has read access through the list, with no review controls.
+
+Draft/Returned details show live figures and an editable narrative for the assigned
+lead. Submitted/Resubmitted details show pending snapshot figures and a finance
+review panel carrying expected_revision. Locked details show approved figures,
+approver and Karachi time. The shared history partial shows each report's audit
+events and review comments. All successful form posts redirect back to detail
+with a translated message; validation errors return 400 and state conflicts 409.
+Navigation, forms, headings and feedback have English/Urdu translations.

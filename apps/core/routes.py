@@ -1,6 +1,14 @@
 """Every reachable named route must be explicitly public or declare an action."""
 
 ROUTE_ACTIONS = {
+    "report-list": "report.list",
+    "report-detail": "report.view",
+    "report-review-queue": "report.approve",
+    "report-save": "report.edit_narrative",
+    "report-submit": "report.submit",
+    "report-resubmit": "report.resubmit",
+    "report-return": "report.return",
+    "report-approve": "report.approve",
     "transfer-list": "transfer.list",
     "transfer-detail": "transfer.view",
     "transfer-create": "transfer.create",

@@ -13,7 +13,7 @@ from apps.audit.models import AuditLog
 from apps.audit.services import GENESIS_HASH, _hash
 from apps.branches.models import Branch, City
 from apps.core import clock
-from apps.finance.models import Collection, Transfer
+from apps.finance.models import Collection, Transfer, WeeklyReport
 from apps.volunteers.models import Application, Member, Team, VolunteerRole
 
 
@@ -94,6 +94,7 @@ def search_events(user, params):
 
 
 ENTITY_ROUTES = {
+    "weeklyreport": (WeeklyReport, "report.view", "report-detail"),
     "collection": (Collection, "collection.view", "collection-detail"),
     "transfer": (Transfer, "transfer.view", "transfer-detail"),
     "branch": (Branch, "branch.view", "branch-detail"),

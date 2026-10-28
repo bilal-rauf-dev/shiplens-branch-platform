@@ -1172,3 +1172,114 @@ msgstr "واپسی کا تبصرہ %(minimum)s سے %(maximum)s حروف میں 
 
 msgid "Open weekly reports: %(count)s."
 msgstr "نامکمل ہفتہ وار رپورٹیں: %(count)s۔"
+
+msgid "Weekly reports"
+msgstr "ہفتہ وار رپورٹیں"
+
+msgid "Review queue"
+msgstr "جائزے کی قطار"
+
+msgid "Week from"
+msgstr "ہفتے کی ابتدا"
+
+msgid "Week to"
+msgstr "ہفتے کا اختتام"
+
+msgid "Review comment"
+msgstr "جائزے کا تبصرہ"
+
+msgid "Report drafted"
+msgstr "رپورٹ کا مسودہ بنایا گیا"
+
+msgid "Report submitted"
+msgstr "رپورٹ جمع کرائی گئی"
+
+msgid "Report returned"
+msgstr "رپورٹ واپس کی گئی"
+
+msgid "Report resubmitted"
+msgstr "رپورٹ دوبارہ جمع کرائی گئی"
+
+msgid "Report approved"
+msgstr "رپورٹ منظور ہوئی"
+
+msgid "Report locked"
+msgstr "رپورٹ مقفل ہوئی"
+
+msgid "Narrative updated"
+msgstr "تفصیل تبدیل ہوئی"
+
+msgid "Report saved."
+msgstr "رپورٹ محفوظ ہو گئی۔"
+
+msgid "Report submitted for review."
+msgstr "رپورٹ جائزے کے لیے جمع ہو گئی۔"
+
+msgid "Report returned to the branch."
+msgstr "رپورٹ شاخ کو واپس کر دی گئی۔"
+
+msgid "Report approved and locked."
+msgstr "رپورٹ منظور اور مقفل ہو گئی۔"
+
+msgid "Week"
+msgstr "ہفتہ"
+
+msgid "Revision"
+msgstr "نسخہ"
+
+msgid "No reports found."
+msgstr "کوئی رپورٹ نہیں ملی۔"
+
+msgid "Returned comment"
+msgstr "واپسی کا تبصرہ"
+
+msgid "Locked — approved by"
+msgstr "مقفل — منظور کرنے والا"
+
+msgid "Approved figures"
+msgstr "منظور شدہ اعداد"
+
+msgid "Live figures"
+msgstr "موجودہ اعداد"
+
+msgid "Entry count"
+msgstr "اندراجات کی تعداد"
+
+msgid "Unsent at week end (PKR)"
+msgstr "ہفتے کے اختتام پر غیر منتقل رقم (روپے)"
+
+msgid "New members"
+msgstr "نئے اراکین"
+
+msgid "Active members at week end"
+msgstr "ہفتے کے اختتام پر فعال اراکین"
+
+msgid "Applications received"
+msgstr "موصولہ درخواستیں"
+
+msgid "Applications accepted"
+msgstr "قبول شدہ درخواستیں"
+
+msgid "Applications declined"
+msgstr "مسترد شدہ درخواستیں"
+
+msgid "Save narrative"
+msgstr "تفصیل محفوظ کریں"
+
+msgid "Resubmit"
+msgstr "دوبارہ جمع کرائیں"
+
+msgid "Submit for review"
+msgstr "جائزے کے لیے جمع کرائیں"
+
+msgid "Return to branch"
+msgstr "شاخ کو واپس کریں"
+
+msgid "Approve and lock"
+msgstr "منظور اور مقفل کریں"
+
+msgid "Snapshot hash"
+msgstr "محفوظ اعداد کا ہیش"
+
+msgid "Locked at"
+msgstr "مقفل ہونے کا وقت"

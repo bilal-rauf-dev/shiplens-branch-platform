@@ -2,6 +2,7 @@
 
 from collections.abc import Callable
 from dataclasses import dataclass
+from datetime import timedelta
 
 from django.db import transaction
 from django.urls import reverse
@@ -11,7 +12,9 @@ from apps.accounts.models import Role, User
 from apps.accounts.services import assign_branch
 from apps.branches.models import Branch, City
 from apps.core import clock
+from apps.finance import report_services
 from apps.finance import services as finance_services
+from apps.finance.report_selectors import week_bounds
 from apps.volunteers import services as volunteer_services
 from apps.volunteers.forms import ApplicationForm
 from apps.volunteers.models import MemberStatus, Team, VolunteerRole
@@ -30,6 +33,58 @@ class RouteCase:
 
 def page_url(name, fixture):
     return reverse(name)
+
+
+REPORT_NARRATIVE = {
+    "activities": "Community teaching and support sessions.",
+    "volunteer_hours": 12,
+    "issues": "",
+}
+
+
+def report_object(scenario):
+    fixture = collection_object(scenario)
+    branch = fixture["branch"]
+    start, _ = week_bounds(clock.today())
+    branch.opened_on = start - timedelta(days=7)
+    branch.save(update_fields=["opened_on"])
+    fixture["report"] = report_services.ensure_drafts(branch)[0]
+    fixture["report_lead"] = User.objects.get(email="finance-matrix@example.com")
+    fixture["report_reviewer"] = User.objects.create_user(
+        email="report-matrix-reviewer@example.com",
+        full_name="Report Reviewer",
+        role=Role.FINANCE_REVIEWER,
+    )
+    fixture["data"] = {}
+    return fixture
+
+
+def report_narrative_payload(scenario):
+    fixture = report_object(scenario)
+    fixture["data"] = REPORT_NARRATIVE
+    return fixture
+
+
+def submitted_report_object(scenario):
+    fixture = report_object(scenario)
+    report_services.transition(
+        fixture["report_lead"], fixture["report"], "submit", narrative=REPORT_NARRATIVE
+    )
+    fixture["data"] = {"expected_revision": 1, "comment": "Please correct this report"}
+    return fixture
+
+
+def returned_report_object(scenario):
+    fixture = submitted_report_object(scenario)
+    report_services.transition(
+        fixture["report_reviewer"], fixture["report"], "return", **fixture["data"]
+    )
+    fixture["data"] = REPORT_NARRATIVE
+    return fixture
+
+
+def report_url(name, fixture):
+    return reverse(name, kwargs={"pk": fixture["report"].pk})
 
 
 def finance_payload(scenario):
@@ -422,6 +477,14 @@ def settings_payload(scenario):
 # The four columns are method, URL builder, in-scope fixture factory and success
 # status. Payloads must be valid so a validation error cannot masquerade as denial.
 ROUTE_CASES = {
+    "report-list": RouteCase("GET", page_url, report_object, 200),
+    "report-detail": RouteCase("GET", report_url, report_object, 200),
+    "report-review-queue": RouteCase("GET", page_url, report_object, 200),
+    "report-save": RouteCase("POST", report_url, report_narrative_payload, 302),
+    "report-submit": RouteCase("POST", report_url, report_narrative_payload, 302),
+    "report-resubmit": RouteCase("POST", report_url, returned_report_object, 302),
+    "report-return": RouteCase("POST", report_url, submitted_report_object, 302),
+    "report-approve": RouteCase("POST", report_url, submitted_report_object, 302),
     "transfer-list": RouteCase("GET", page_url, transfer_object, 200),
     "transfer-detail": RouteCase("GET", transfer_url, transfer_object, 200),
     "transfer-create": RouteCase("POST", collection_create_url, transfer_payload, 302),

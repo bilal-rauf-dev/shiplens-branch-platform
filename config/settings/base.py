@@ -166,6 +166,8 @@ BUSINESS_RULES = {
     "transfer_bank_reference_max_length": 50,
     "week_start_day": "MON",  # BR-080
     "allow_submit_current_week": False,  # BR-085
+    "report_return_comment_min_length": 5,
+    "report_return_comment_max_length": 1000,
 }
 
 AUTH_PASSWORD_VALIDATORS = [

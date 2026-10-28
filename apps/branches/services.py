@@ -67,7 +67,11 @@ def close_blockers(branch):
             _("Unsent collections: %(count)s, total PKR %(total)s.")
             % {"count": summary["count"], "total": f"{summary['total']:.2f}"}
         )
-    # P7 adds open reports to this guard.
+    from apps.finance.report_selectors import open_report_count
+
+    count = open_report_count(branch)
+    if count:
+        blockers.append(_("Open weekly reports: %(count)s.") % {"count": count})
     return blockers
 
 

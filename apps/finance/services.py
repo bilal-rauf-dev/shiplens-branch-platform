@@ -268,8 +268,10 @@ def void_collection(actor, collection, reason):
 
 
 def week_is_closed(branch, collection_date):
-    """P7 will check submitted, resubmitted and locked weekly reports here. BR-065."""
-    return False
+    """Submitted and approved report weeks block finance edits. BR-065."""
+    from apps.finance.report_selectors import week_is_closed as report_week_is_closed
+
+    return report_week_is_closed(branch, collection_date)
 
 
 def validated_values(branch, data):

@@ -11,6 +11,7 @@ from apps.audit import services as audit_services
 from apps.branches import services as branch_services
 from apps.branches.models import City
 from apps.core import clock
+from apps.finance import report_services
 from apps.finance import services as finance_services
 from apps.volunteers import services as volunteer_services
 from tests.rbac.registry import (
@@ -34,7 +35,10 @@ from tests.rbac.registry import (
     member_edit_payload,
     member_left_payload,
     member_object,
+    report_narrative_payload,
+    returned_report_object,
     settings_payload,
+    submitted_report_object,
     team_create_payload,
     team_object,
     transfer_payload,
@@ -210,6 +214,41 @@ def verify_audit_chain(scenario, fixture):
 
 
 SERVICE_CASES = {
+    "save_report": ServiceCase(
+        "report.edit_narrative",
+        lambda scenario, fixture: report_services.save_narrative(
+            scenario["actor"], fixture["report"], fixture["data"]
+        ),
+        report_narrative_payload,
+    ),
+    "submit_report": ServiceCase(
+        "report.submit",
+        lambda scenario, fixture: report_services.transition(
+            scenario["actor"], fixture["report"], "submit", narrative=fixture["data"]
+        ),
+        report_narrative_payload,
+    ),
+    "resubmit_report": ServiceCase(
+        "report.resubmit",
+        lambda scenario, fixture: report_services.transition(
+            scenario["actor"], fixture["report"], "resubmit", narrative=fixture["data"]
+        ),
+        returned_report_object,
+    ),
+    "return_report": ServiceCase(
+        "report.return",
+        lambda scenario, fixture: report_services.transition(
+            scenario["actor"], fixture["report"], "return", **fixture["data"]
+        ),
+        submitted_report_object,
+    ),
+    "approve_report": ServiceCase(
+        "report.approve",
+        lambda scenario, fixture: report_services.transition(
+            scenario["actor"], fixture["report"], "approve", **fixture["data"]
+        ),
+        submitted_report_object,
+    ),
     "create_transfer": ServiceCase(
         "transfer.create",
         lambda scenario, fixture: finance_services.create_transfer(

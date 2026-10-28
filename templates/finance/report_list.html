@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}
+{% translate "Weekly reports" %} · {% translate "ShipLens" %}
+{% endblock %}
+{% block content %}<h1>{% if queue %}
+{% translate "Review queue" %}
+{% else %}
+{% translate "Weekly reports" %}
+{% endif %}</h1>
+<form method="get" class="member-filters">{% include "accounts/_form_fields.html" with form=filter_form %}<button type="submit">{% translate "Apply filters" %}</button>
+</form>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>{% translate "Branch" %}</th>
+<th>{% translate "Week" %}</th>
+<th>{% translate "Status" %}</th>
+<th>{% translate "Revision" %}</th>
+</tr>
+</thead>
+<tbody>
+{% for report in reports %}<tr>
+<td>{{ report.branch.code }}</td>
+<td>
+<a href="{% url 'report-detail' report.pk %}">{{ report.week_start }} – {{ report.week_end }}</a>
+</td>
+<td>
+<span class="status-badge">{{ report.get_status_display }}</span>
+</td>
+<td>{{ report.revision }}</td>
+</tr>
+{% empty %}<tr>
+<td colspan="4">{% translate "No reports found." %}</td>
+</tr>{% endfor %}</tbody>
+</table>
+</div>
+{% if is_paginated %}<nav class="pagination">{% if page_obj.has_previous %}<a href="?{{ filter_query }}&amp;page={{ page_obj.previous_page_number }}">{% translate "Previous" %}</a>{% endif %}
+{% if page_obj.has_next %}<a href="?{{ filter_query }}&amp;page={{ page_obj.next_page_number }}">{% translate "Next" %}</a>{% endif %}</nav>{% endif %}
+{% endblock %}

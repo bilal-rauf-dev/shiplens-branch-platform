@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% translate "ShipLens" %}{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{% translate 'ShipLens helps volunteers and branches serve their communities.' %}{% endblock %}">
     <link rel="preload" href="{% static 'fonts/roboto-400-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
     {% if LANGUAGE_CODE == 'ur' %}<link rel="preload" href="{% static 'fonts/noto-naskh-arabic-400-urdu.woff2' %}" as="font" type="font/woff2" crossorigin>{% endif %}
     <link rel="stylesheet" href="{% static 'css/tokens.css' %}">

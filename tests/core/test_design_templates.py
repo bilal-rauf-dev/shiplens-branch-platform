@@ -30,6 +30,14 @@ def test_design_templates_have_no_inline_styles():
         assert not re.search(r"\bstyle\s*=", path.read_text(encoding="utf-8")), path
 
 
+@pytest.mark.django_db
+@pytest.mark.parametrize("path", ["/en/", "/ur/", "/en/get-involved/"])
+def test_design_public_pages_have_meta_descriptions(client, path):
+    response = client.get(path)
+    assert response.status_code == 200
+    assert re.search(r'<meta name="description" content="[^"]+">', response.text)
+
+
 def test_design_css_uses_logical_properties():
     assert CHECKER["find_violations"](ROOT) == []
 

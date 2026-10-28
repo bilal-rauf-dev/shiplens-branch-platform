@@ -1,0 +1,46 @@
+/* Baseline controls and tables; Step 2 adds the complete MD3 component set. */
+.form-field { display: grid; gap: var(--md-s2); margin-block-end: var(--md-s5); max-inline-size: 32rem; }
+input, select, textarea {
+  min-inline-size: 0;
+  padding-block: var(--md-s2);
+  padding-inline: var(--md-s3);
+  border: 1px solid var(--md-outline);
+  border-radius: var(--md-radius-sm);
+  background: var(--md-surface-container-low);
+  color: var(--md-on-surface);
+}
+input, textarea { inline-size: 100%; }
+input[type="checkbox"], input[type="radio"] { inline-size: auto; }
+button {
+  padding-block: var(--md-s2);
+  padding-inline: var(--md-s5);
+  border: 0;
+  border-radius: var(--md-radius-full);
+  color: var(--md-on-primary);
+  background: var(--md-primary);
+  cursor: pointer;
+}
+.status-badge, .notice {
+  display: inline-block;
+  padding-block: var(--md-s1);
+  padding-inline: var(--md-s3);
+  border-radius: var(--md-radius-full);
+  background: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+}
+.status-badge[data-status="ACTIVE"] { background: var(--md-success-container); color: var(--md-on-success-container); }
+.status-badge[data-status="PAUSED"] { background: var(--md-warning-container); color: var(--md-on-warning-container); }
+.status-badge[data-status="CLOSED"] { background: var(--md-error-container); color: var(--md-on-error-container); }
+.form-errors, .errorlist { color: var(--md-error); }
+.help-text { color: var(--md-on-surface-variant); }
+.application-group { max-inline-size: 32rem; margin-block-end: var(--md-s5); padding-block: var(--md-s3); padding-inline: var(--md-s3); border: 1px solid var(--md-outline); border-radius: var(--md-radius-md); }
+.application-group input { inline-size: auto; }
+.application-note { white-space: pre-wrap; }
+.record-details { display: grid; grid-template-columns: max-content 1fr; gap: var(--md-s2) var(--md-s4); }
+.record-details dt { font-weight: 700; }
+.record-details dd { margin-inline: 0; min-inline-size: 0; overflow-wrap: anywhere; }
+.history { margin-block-start: var(--md-s8); }
+.audit-hash, .member-table td { overflow-wrap: anywhere; }
+.table-container { overflow: auto; }
+table { border-collapse: collapse; inline-size: 100%; }
+th, td { padding-block: var(--md-s3); padding-inline: var(--md-s3); border-block-end: 1px solid var(--md-outline-variant); text-align: start; }

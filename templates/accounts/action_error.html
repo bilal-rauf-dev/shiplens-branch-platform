@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block title %}{% translate "Change could not be completed" %} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
-  <h1>{% translate "Change could not be completed" %}</h1>
+  <h1 class="page-title">{% translate "Change could not be completed" %}</h1>
   <ul>{% for error in errors %}<li>{{ error }}</li>{% endfor %}</ul>
   <p><a href="{% url 'user-list' %}">{% translate "Back to users" %}</a></p>
 {% endblock %}

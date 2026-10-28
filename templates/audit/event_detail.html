@@ -2,22 +2,22 @@
 {% load i18n tz %}
 {% block title %}{% translate "Audit event" %} #{{ event.pk }} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
-  <h1>{% translate "Audit event" %} #{{ event.pk }}</h1>
-  <dl class="record-details">
+  <h1 class="page-title">{% translate "Audit event" %} #{{ event.pk }}</h1>
+  <dl class="record-details card">
     <dt>{% translate "Time (PKT)" %}</dt><dd>{{ event.occurred_at|timezone:"Asia/Karachi"|date:"DATETIME_FORMAT" }}</dd>
     <dt>{% translate "Actor" %}</dt><dd>{{ event.actor_label }} · {{ row.actor_role }}</dd>
     <dt>{% translate "Action" %}</dt><dd>{{ event.action }}</dd>
     <dt>{% translate "Entity" %}</dt><dd>{{ event.entity_type }} #{{ event.entity_id|default:"—" }} · {% if row.entity_url %}<a href="{{ row.entity_url }}">{{ event.entity_label }}</a>{% else %}{{ event.entity_label }}{% endif %}</dd>
-    <dt>{% translate "Branch" %}</dt><dd>{{ row.branch_code }}</dd>
+    <dt>{% translate "Branch" %}</dt><dd><bdi>{{ row.branch_code }}</bdi></dd>
     <dt>{% translate "IP address" %}</dt><dd>{{ event.ip|default:"—" }}</dd>
     <dt>{% translate "User agent" %}</dt><dd>{{ event.user_agent|default:"—" }}</dd>
     <dt>{% translate "Request ID" %}</dt><dd>{{ event.request_id|default:"—" }}</dd>
     <dt>{% translate "Previous hash" %}</dt><dd class="audit-hash">{{ event.prev_hash }}</dd>
     <dt>{% translate "Hash" %}</dt><dd class="audit-hash">{{ event.hash }}</dd>
   </dl>
-  <div class="table-container"><table>
+  <div class="table-container card"><table class="data-table"><caption class="visually-hidden">{% translate "Audit log" %}</caption>
     <thead><tr><th scope="col">{% translate "Field" %}</th><th scope="col">{% translate "Before" %}</th><th scope="col">{% translate "After" %}</th></tr></thead>
-    <tbody>{% for change in changes %}<tr><th scope="row">{{ change.field }}</th><td><pre>{{ change.before }}</pre></td><td><pre>{{ change.after }}</pre></td></tr>{% empty %}<tr><td colspan="3">{% translate "No field changes" %}</td></tr>{% endfor %}</tbody>
+    <tbody>{% for change in changes %}<tr><th scope="row">{{ change.field }}</th><td data-label="{% translate 'Field' %}"><pre>{{ change.before }}</pre></td><td data-label="{% translate 'Before' %}"><pre>{{ change.after }}</pre></td></tr>{% empty %}<tr><td colspan="3">{% translate "No field changes" %}</td></tr>{% endfor %}</tbody>
   </table></div>
   <h2>{% translate "Metadata" %}</h2><pre>{{ metadata }}</pre>
   <p><a href="{% url 'audit-list' %}">{% translate "Back to audit log" %}</a></p>

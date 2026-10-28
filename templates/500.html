@@ -2,6 +2,9 @@
 {% load i18n %}
 {% block title %}{% translate "Something went wrong" %} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
-  <h1>{% translate "Something went wrong" %}</h1>
+  <section class="card empty-state">
+  <h1 class="page-title">{% translate "Something went wrong" %}</h1>
   <p>{% translate "Please try again later." %}</p>
+  <a class="btn btn--tonal" href="{% url 'home' %}">{% translate "Return home" %}</a>
+  </section>
 {% endblock %}

@@ -1,0 +1,60 @@
+:root {
+  /* Light Material You colour roles, seeded from #6750A4. */
+  --md-surface: #FFFBFE;
+  --md-on-surface: #1C1B1F;
+  --md-on-surface-variant: #49454F;
+  --md-surface-container: #F3EDF7;
+  --md-surface-container-low: #E7E0EC;
+  --md-primary: #6750A4;
+  --md-on-primary: #FFFFFF;
+  --md-secondary-container: #E8DEF8;
+  --md-on-secondary-container: #1D192B;
+  --md-tertiary: #7D5260;
+  --md-on-tertiary: #FFFFFF;
+  --md-outline: #79747E;
+  --md-outline-variant: #CAC4D0;
+  --md-error: #B3261E;
+  --md-error-container: #F9DEDC;
+  --md-on-error-container: #410E0B;
+  --md-success: #1E6B3A;
+  --md-success-container: #D4EDDA;
+  --md-on-success-container: #0B2E17;
+  --md-warning: #7A5300;
+  --md-warning-container: #FBE7C2;
+  --md-on-warning-container: #2B1D00;
+  --md-info: #1F4E99;
+  --md-info-container: #DCE6F7;
+  --md-on-info-container: #0A1F44;
+
+  --md-radius-xs: 8px;
+  --md-radius-sm: 12px;
+  --md-radius-md: 16px;
+  --md-radius-lg: 24px;
+  --md-radius-xl: 28px;
+  --md-radius-2xl: 32px;
+  --md-radius-3xl: 48px;
+  --md-radius-full: 9999px;
+
+  --md-elev-1: 0 1px 2px rgb(0 0 0 / .08), 0 1px 3px rgb(0 0 0 / .06);
+  --md-elev-2: 0 2px 6px rgb(0 0 0 / .10), 0 1px 3px rgb(0 0 0 / .06);
+  --md-elev-3: 0 6px 16px rgb(0 0 0 / .12), 0 2px 6px rgb(0 0 0 / .08);
+
+  --md-ease: cubic-bezier(0.2, 0, 0, 1);
+  --md-dur-fast: 200ms;
+  --md-dur: 300ms;
+  --md-dur-slow: 400ms;
+
+  --md-s1: 4px;
+  --md-s2: 8px;
+  --md-s3: 12px;
+  --md-s4: 16px;
+  --md-s5: 24px;
+  --md-s6: 32px;
+  --md-s8: 48px;
+  --md-s12: 96px;
+
+  --md-font: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --md-font-ur: "Noto Naskh Arabic", "Roboto", serif;
+}
+
+[lang="ur"] { --md-font: var(--md-font-ur); }

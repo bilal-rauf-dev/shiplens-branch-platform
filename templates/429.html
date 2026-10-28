@@ -2,6 +2,9 @@
 {% load i18n %}
 {% block title %}{% translate "Please try again later" %} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
-  <h1>{% translate "Please try again later" %}</h1>
+  <section class="card empty-state">
+  <h1 class="page-title">{% translate "Please try again later" %}</h1>
   <p>{% if rate_limit_message %}{{ rate_limit_message }}{% else %}{% translate "Too many applications have been submitted from this connection. Please try again later." %}{% endif %}</p>
+  <a class="btn btn--tonal" href="{% url 'home' %}">{% translate "Return home" %}</a>
+  </section>
 {% endblock %}

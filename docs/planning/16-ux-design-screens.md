@@ -35,6 +35,8 @@ Role home after login: SA/FR → Dashboard; BL → My branch; HR → Application
 
 ## 2. Design system
 
+> **Superseded 2026-10-28:** the visual language is now **Material You (MD3)**, purple seed `#6750A4`. See `24-design-system.md` for tokens, components and rules. The palette and component notes below are kept only for history; screens, wireframes and page structure in §3–§5 still apply.
+
 **Brand direction:** pending brand pack (Q-02). Placeholder: calm, trustworthy, civic — "lamp/light" motif for "Ujala".
 
 | Token | Value | Use | Contrast |

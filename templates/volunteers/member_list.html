@@ -2,27 +2,27 @@
 {% load i18n %}
 {% block title %}{% translate "Members" %} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
-  <h1>{% translate "Members" %}</h1>
-  <form method="get" class="member-filters">
+  <h1 class="page-title">{% translate "Members" %}</h1>
+  <form method="get" class="filter-panel member-filters">
     {% include "accounts/_form_fields.html" with form=filter_form %}
-    <div class="actions"><button type="submit">{% translate "Apply filters" %}</button><a href="{% url 'member-list' %}">{% translate "Reset filters" %}</a></div>
+    <div class="actions"><button type="submit" class="btn btn--filled">{% translate "Apply filters" %}</button><a href="{% url 'member-list' %}" class="btn btn--text">{% translate "Reset filters" %}</a></div>
   </form>
-  <div class="table-container"><table class="member-table">
+  <div class="table-container card"><table class="data-table member-table">
     <caption>{% translate "Member register" %}</caption>
     <thead><tr><th scope="col">{% translate "Member ID" %}</th><th scope="col">{% translate "Full name" %}</th><th scope="col">{% translate "Branch" %}</th><th scope="col">{% translate "Team" %}</th><th scope="col">{% translate "Volunteer role" %}</th><th scope="col">{% translate "Status" %}</th><th scope="col">{% translate "Joined on" %}</th></tr></thead>
     <tbody>{% for member in members %}<tr>
-      <td data-label="{% translate 'Member ID' %}"><a href="{% url 'member-detail' member.pk %}">{{ member.member_id }}</a></td>
+      <td data-label="{% translate 'Member ID' %}"><a href="{% url 'member-detail' member.pk %}"><bdi>{{ member.member_id }}</bdi></a></td>
       <td data-label="{% translate 'Full name' %}">{{ member.full_name }}</td>
-      <td data-label="{% translate 'Branch' %}">{{ member.branch.code }}</td>
+      <td data-label="{% translate 'Branch' %}"><bdi>{{ member.branch.code }}</bdi></td>
       <td data-label="{% translate 'Team' %}">{{ member.team.name|default:"—" }}</td>
       <td data-label="{% translate 'Volunteer role' %}">{% if LANGUAGE_CODE == 'ur' %}{{ member.volunteer_role.name_ur }}{% else %}{{ member.volunteer_role.name_en }}{% endif %}</td>
-      <td data-label="{% translate 'Status' %}">{{ member.get_status_display }}</td>
-      <td data-label="{% translate 'Joined on' %}">{{ member.joined_on|date:"DATE_FORMAT" }}</td>
+      <td data-label="{% translate 'Status' %}"><span class="chip status-badge" data-status="{{ member.status }}">{{ member.get_status_display }}</span></td>
+      <td data-label="{% translate 'Joined on' %}"><bdi>{{ member.joined_on|date:"DATE_FORMAT" }}</bdi></td>
     </tr>{% empty %}<tr><td colspan="7">{% translate "No members found." %}</td></tr>{% endfor %}</tbody>
   </table></div>
   {% if is_paginated %}<nav class="pagination" aria-label="{% translate 'Member pages' %}">
     {% if page_obj.has_previous %}<a href="?{{ filter_query }}&amp;page={{ page_obj.previous_page_number }}">{% translate "Previous" %}</a>{% endif %}
-    <span>{% blocktranslate with current=page_obj.number total=page_obj.paginator.num_pages %}Page {{ current }} of {{ total }}{% endblocktranslate %}</span>
+    <span>{% blocktranslate with current=page_obj.number total=page_obj.paginator.num_pages %}Page {{ current }} of <bdi>{{ total }}</bdi>{% endblocktranslate %}</span>
     {% if page_obj.has_next %}<a href="?{{ filter_query }}&amp;page={{ page_obj.next_page_number }}">{% translate "Next" %}</a>{% endif %}
   </nav>{% endif %}
 {% endblock %}

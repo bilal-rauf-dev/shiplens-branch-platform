@@ -2,12 +2,12 @@
 {% load i18n %}
 {% block title %}{{ page_title }} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
-  <h1>{{ page_title }}</h1>
-  {% if branch %}<p>{{ branch.code }} · {{ branch }}</p>{% endif %}
-  <form method="post">
+  <h1 class="page-title">{{ page_title }}</h1>
+  {% if branch %}<p><bdi>{{ branch.code }}</bdi> · {{ branch }}</p>{% endif %}
+  <form method="post" class="form-card card">
     {% csrf_token %}
     {% include "accounts/_form_fields.html" %}
-    <button type="submit">{% translate "Save" %}</button>
+    <button type="submit" class="btn btn--filled">{% translate "Save" %}</button>
   </form>
   <p><a href="{% url return_route %}">{% translate "Back to list" %}</a></p>
 {% endblock %}

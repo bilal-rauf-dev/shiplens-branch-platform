@@ -104,7 +104,7 @@ def test_public_routes_remain_public(client, language):
     assert client.get(f"/{language}/accounts/login/").status_code == 200
 
 
-@pytest.mark.parametrize("path", ["/health", "/static/css/main.css"])
+@pytest.mark.parametrize("path", ["/health", "/static/css/tokens.css"])
 def test_registry_exemptions(rf, path):
     # Exemptions must work even when no resolver/auth state is available.
     middleware = RouteRegistryMiddleware(lambda request: None)

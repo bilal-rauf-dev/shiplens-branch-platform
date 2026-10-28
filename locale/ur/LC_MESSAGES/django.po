@@ -1283,3 +1283,18 @@ msgstr "محفوظ اعداد کا ہیش"
 
 msgid "Locked at"
 msgstr "مقفل ہونے کا وقت"
+
+msgid "Menu"
+msgstr "فہرست"
+
+msgid "Return home"
+msgstr "ابتدائی صفحے پر جائیں"
+
+msgid "ShipLens helps volunteers and branches serve their communities."
+msgstr ""
+
+msgid "Explore ShipLens and local volunteer opportunities."
+msgstr ""
+
+msgid "Apply to volunteer with ShipLens and support your local community."
+msgstr ""

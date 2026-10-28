@@ -3,33 +3,33 @@
 {% block title %}
 {% translate "Weekly reports" %} · {% translate "ShipLens" %}
 {% endblock %}
-{% block content %}<h1>{% if queue %}
+{% block content %}<h1 class="page-title">{% if queue %}
 {% translate "Review queue" %}
 {% else %}
 {% translate "Weekly reports" %}
 {% endif %}</h1>
-<form method="get" class="member-filters">{% include "accounts/_form_fields.html" with form=filter_form %}<button type="submit">{% translate "Apply filters" %}</button>
+<form method="get" class="filter-panel member-filters">{% include "accounts/_form_fields.html" with form=filter_form %}<button type="submit" class="btn btn--filled">{% translate "Apply filters" %}</button>
 </form>
-<div class="table-container">
-<table>
+<div class="table-container card">
+<table class="data-table"><caption class="visually-hidden">{% translate "Weekly reports" %}</caption>
 <thead>
 <tr>
-<th>{% translate "Branch" %}</th>
-<th>{% translate "Week" %}</th>
-<th>{% translate "Status" %}</th>
-<th>{% translate "Revision" %}</th>
+<th scope="col">{% translate "Branch" %}</th>
+<th scope="col">{% translate "Week" %}</th>
+<th scope="col">{% translate "Status" %}</th>
+<th scope="col">{% translate "Revision" %}</th>
 </tr>
 </thead>
 <tbody>
 {% for report in reports %}<tr>
-<td>{{ report.branch.code }}</td>
-<td>
-<a href="{% url 'report-detail' report.pk %}">{{ report.week_start }} – {{ report.week_end }}</a>
+<td data-label="{% translate 'Branch' %}"><bdi>{{ report.branch.code }}</bdi></td>
+<td data-label="{% translate 'Week' %}">
+<a href="{% url 'report-detail' report.pk %}"><bdi>{{ report.week_start }}</bdi> – <bdi>{{ report.week_end }}</bdi></a>
 </td>
-<td>
-<span class="status-badge">{{ report.get_status_display }}</span>
+<td data-label="{% translate 'Status' %}">
+<span class="chip status-badge" data-status="{{ report.status }}">{{ report.get_status_display }}</span>
 </td>
-<td>{{ report.revision }}</td>
+<td class="numeric" data-label="{% translate 'Revision' %}"><bdi>{{ report.revision }}</bdi></td>
 </tr>
 {% empty %}<tr>
 <td colspan="4">{% translate "No reports found." %}</td>

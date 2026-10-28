@@ -1,0 +1,27 @@
+{% load i18n %}
+{% if user.role == "SUPER_ADMIN" %}
+  <a class="nav-link" href="{% url 'user-list' %}"{% if request.resolver_match.url_name == 'user-list' %} aria-current="page"{% endif %}>{% translate "Users" %}</a>
+  <a class="nav-link" href="{% url 'settings-view' %}"{% if request.resolver_match.url_name == 'settings-view' %} aria-current="page"{% endif %}>{% translate "System settings" %}</a>
+  <a class="nav-link" href="{% url 'volunteer-role-list' %}"{% if request.resolver_match.url_name == 'volunteer-role-list' %} aria-current="page"{% endif %}>{% translate "Volunteer roles" %}</a>
+  <a class="nav-link" href="{% url 'audit-list' %}"{% if request.resolver_match.url_name == 'audit-list' %} aria-current="page"{% endif %}>{% translate "Audit log" %}</a>
+{% endif %}
+{% if user.role == "SUPER_ADMIN" or user.role == "FINANCE_REVIEWER" or user.role == "BRANCH_LEAD" or user.role == "HR_LEAD" %}
+  <a class="nav-link" href="{% url 'branch-list' %}"{% if request.resolver_match.url_name == 'branch-list' %} aria-current="page"{% endif %}>{% translate "Branches" %}</a>
+{% endif %}
+{% if user.role == "SUPER_ADMIN" or user.role == "HR_LEAD" %}
+  <a class="nav-link" href="{% url 'application-list' %}"{% if request.resolver_match.url_name == 'application-list' %} aria-current="page"{% endif %}>{% translate "Applications" %}</a>
+{% endif %}
+{% if user.role == "SUPER_ADMIN" or user.role == "HR_LEAD" or user.role == "BRANCH_LEAD" %}
+  <a class="nav-link" href="{% url 'team-list' %}"{% if request.resolver_match.url_name == 'team-list' %} aria-current="page"{% endif %}>{% translate "Teams" %}</a>
+  <a class="nav-link" href="{% url 'member-list' %}"{% if request.resolver_match.url_name == 'member-list' %} aria-current="page"{% endif %}>{% translate "Members" %}</a>
+{% endif %}
+{% if user.role == "BRANCH_LEAD" or user.role == "FINANCE_REVIEWER" or user.role == "SUPER_ADMIN" %}
+  <a class="nav-link" href="{% url 'report-list' %}"{% if request.resolver_match.url_name == 'report-list' %} aria-current="page"{% endif %}>{% translate "Weekly reports" %}</a>
+  <a class="nav-link" href="{% url 'collection-list' %}"{% if request.resolver_match.url_name == 'collection-list' %} aria-current="page"{% endif %}>{% translate "Collections" %}</a>
+  <a class="nav-link" href="{% url 'transfer-list' %}"{% if request.resolver_match.url_name == 'transfer-list' %} aria-current="page"{% endif %}>{% translate "Transfers" %}</a>
+{% endif %}
+{% if user.role == "FINANCE_REVIEWER" %}
+  <a class="nav-link" href="{% url 'report-review-queue' %}"{% if request.resolver_match.url_name == 'report-review-queue' %} aria-current="page"{% endif %}>{% translate "Review queue" %}</a>
+{% endif %}
+<a class="nav-link" href="{% url 'account-change-password' %}"{% if request.resolver_match.url_name == 'account-change-password' %} aria-current="page"{% endif %}>{% translate "Change password" %}</a>
+<form method="post" action="{% url 'account-logout' %}">{% csrf_token %}<button class="btn btn--text" type="submit">{% translate "Log out" %}</button></form>

@@ -1,0 +1,15 @@
+@font-face {
+  font-family: "Noto Naskh Arabic";
+  src: url("../fonts/noto-naskh-arabic-400-urdu.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Naskh Arabic";
+  src: url("../fonts/noto-naskh-arabic-700-urdu.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}

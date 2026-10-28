@@ -19,3 +19,20 @@ Database constraints enforce week boundaries, uniqueness, status and lock fields
 Locked report rows reject updates/deletes. Line triggers also reject inserts into
 a locked report and moving lines to or from one, and take a parent share lock to
 serialize against approval.
+
+## Transitions and snapshots
+
+One transition function checks permissions, state and expected review revision.
+It locks the branch before the report, matching collection writes and branch close.
+Submit/resubmit validates the shared narrative form, increments revision, inserts
+new revision lines and hashes canonical JSON containing the aggregates, narrative
+and copied lines. Old revision rows remain unchanged. Narrative-only saves are
+allowed in Draft/Returned and audited separately without increasing revision.
+
+Return needs a configured-length comment. Approve first records Approved, then
+sets Locked and records the automatic system lock, in the same transaction.
+The system event keeps the HTTP request context when approval came from a view.
+An audit failure at either stage rolls everything back. Submitted/Resubmitted/
+Approved/Locked weeks block collection writes; Returned weeks reopen, subject to
+the original seven-day lock. Submitted/Resubmitted/Returned reports block closing
+the branch. Current-week submission is configurable; future weeks remain blocked.

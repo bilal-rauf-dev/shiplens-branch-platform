@@ -7,7 +7,7 @@ from django.db.models import Count, Q, Sum
 
 from apps.branches.models import Branch, BranchStatus
 from apps.core import clock
-from apps.finance.models import Collection, CollectionMethod
+from apps.finance.models import Collection, CollectionMethod, ReportStatus, WeeklyReport
 from apps.volunteers.models import Application, ApplicationStatus, Member, MemberStatus
 
 
@@ -23,6 +23,31 @@ def week_bounds(value):
 
 def active_report_branches():
     return Branch.objects.filter(status=BranchStatus.ACTIVE).order_by("pk")
+
+
+def week_is_closed(branch, collection_date):
+    start, _ = week_bounds(collection_date)
+    return WeeklyReport.objects.filter(
+        branch=branch,
+        week_start=start,
+        status__in=[
+            ReportStatus.SUBMITTED,
+            ReportStatus.RESUBMITTED,
+            ReportStatus.APPROVED,
+            ReportStatus.LOCKED,
+        ],
+    ).exists()
+
+
+def open_report_count(branch):
+    return WeeklyReport.objects.filter(
+        branch=branch,
+        status__in=[
+            ReportStatus.SUBMITTED,
+            ReportStatus.RESUBMITTED,
+            ReportStatus.RETURNED,
+        ],
+    ).count()
 
 
 def week_collections(branch, week_start):

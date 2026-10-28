@@ -1154,3 +1154,21 @@ msgstr "مسائل"
 
 msgid "Generate missing weekly report drafts for active branches."
 msgstr "فعال شاخوں کے لیے گمشدہ ہفتہ وار مسودے بنائیں۔"
+
+msgid "Narrative can only be edited in Draft or Returned reports."
+msgstr "تفصیل صرف مسودہ یا واپس شدہ رپورٹ میں بدلی جا سکتی ہے۔"
+
+msgid "This action is not available for the report's current status."
+msgstr "رپورٹ کی موجودہ حالت میں یہ کارروائی دستیاب نہیں ہے۔"
+
+msgid "The reporting week has not ended yet."
+msgstr "رپورٹ کا ہفتہ ابھی ختم نہیں ہوا۔"
+
+msgid "This report revision has changed. Reload before reviewing."
+msgstr "رپورٹ کا نسخہ بدل گیا ہے۔ جائزے سے پہلے دوبارہ کھولیں۔"
+
+msgid "Give a return comment between %(minimum)s and %(maximum)s characters."
+msgstr "واپسی کا تبصرہ %(minimum)s سے %(maximum)s حروف میں درج کریں۔"
+
+msgid "Open weekly reports: %(count)s."
+msgstr "نامکمل ہفتہ وار رپورٹیں: %(count)s۔"

@@ -2,12 +2,12 @@
 {% load i18n tz %}
 {% block title %}{{ report.branch.code }} · {{ report.week_start }} · {% translate "ShipLens" %}
 {% endblock %}
-{% block content %}<h1>{{ report.branch.code }} · {{ report.week_start }} – {{ report.week_end }}</h1>
+{% block content %}<h1 class="page-title"><bdi>{{ report.branch.code }}</bdi> · <bdi>{{ report.week_start }}</bdi> – <bdi>{{ report.week_end }}</bdi></h1>
 <p>
-<span class="status-badge">{{ report.get_status_display }}</span> · {% translate "Revision" %} {{ report.revision }}</p>
+<span class="chip status-badge" data-status="{{ report.status }}">{{ report.get_status_display }}</span> · {% translate "Revision" %} <bdi>{{ report.revision }}</bdi></p>
 {% for error in error_messages %}<p class="form-errors" role="alert">{{ error }}</p>{% endfor %}
-{% if report.status == "RETURNED" %}<p class="notice application-note">{% translate "Returned comment" %}: {{ report.review_comment }}</p>{% endif %}
-{% if report.status == "LOCKED" %}<p class="notice">{% translate "Locked — approved by" %} {{ report.approved_by.email }} · {{ report.locked_at|timezone:"Asia/Karachi" }}</p>{% endif %}
+{% if report.status == "RETURNED" %}<p class="notice notice--warning application-note">{% translate "Returned comment" %}: {{ report.review_comment }}</p>{% endif %}
+{% if report.status == "LOCKED" %}<p class="notice notice--success">{% translate "Locked — approved by" %} <bdi>{{ report.approved_by.email }}</bdi> · <bdi>{{ report.locked_at|timezone:"Asia/Karachi" }}</bdi></p>{% endif %}
 <h2>{% if report.status == "LOCKED" or report.status == "APPROVED" %}
 {% translate "Approved figures" %}
 {% else %}
@@ -15,15 +15,15 @@
 {% endif %}
 {% if live %} · {% translate "Live figures" %}
 {% endif %}</h2>
-<dl class="record-details">
+<dl class="record-details card">
 <dt>{% translate "Total (PKR)" %}</dt>
-<dd>{{ figures.total_amount|floatformat:2 }}</dd>
+<dd><bdi>{{ figures.total_amount|floatformat:2 }}</bdi></dd>
 <dt>{% translate "Entry count" %}</dt>
 <dd>{{ figures.entry_count }}</dd>
 {% for method in method_totals %}<dt>{{ method.label }}</dt>
-<dd>{{ method.amount|floatformat:2 }}</dd>{% endfor %}
+<dd><bdi>{{ method.amount|floatformat:2 }}</bdi></dd>{% endfor %}
 <dt>{% translate "Unsent at week end (PKR)" %}</dt>
-<dd>{{ figures.unsent_amount_at_week_end|floatformat:2 }}</dd>
+<dd><bdi>{{ figures.unsent_amount_at_week_end|floatformat:2 }}</bdi></dd>
 <dt>{% translate "New members" %}</dt>
 <dd>{{ figures.new_members }}</dd>
 <dt>{% translate "Active members at week end" %}</dt>
@@ -35,31 +35,31 @@
 <dt>{% translate "Applications declined" %}</dt>
 <dd>{{ figures.applications_declined }}</dd>
 </dl>
-<div class="table-container">
-<table>
+<div class="table-container card">
+<table class="data-table"><caption class="visually-hidden">{% translate "Collections" %}</caption>
 <thead>
 <tr>
-<th>{% translate "Reference" %}</th>
-<th>{% translate "Collection date" %}</th>
-<th>{% translate "Method" %}</th>
-<th>{% translate "Amount (PKR)" %}</th>
+<th scope="col">{% translate "Reference" %}</th>
+<th scope="col">{% translate "Collection date" %}</th>
+<th scope="col">{% translate "Method" %}</th>
+<th scope="col">{% translate "Amount (PKR)" %}</th>
 </tr>
 </thead>
 <tbody>{% for line in lines %}<tr>
-<td>
-<a href="{% url 'collection-detail' line.collection_id %}">{{ line.reference }}</a>
+<td data-label="{% translate 'Reference' %}">
+<a href="{% url 'collection-detail' line.collection_id %}"><bdi>{{ line.reference }}</bdi></a>
 </td>
-<td>{{ line.collection_date }}</td>
-<td>{{ line.method }}</td>
-<td>{{ line.amount|floatformat:2 }}</td>
+<td data-label="{% translate 'Collection date' %}"><bdi>{{ line.collection_date }}</bdi></td>
+<td data-label="{% translate 'Method' %}">{{ line.method }}</td>
+<td class="numeric" data-label="{% translate 'Amount (PKR)' %}"><bdi>{{ line.amount|floatformat:2 }}</bdi></td>
 </tr>{% empty %}<tr>
 <td colspan="4">{% translate "No collections found." %}</td>
 </tr>{% endfor %}</tbody>
 </table>
 </div>
-{% if can_edit %}<form method="post">{% csrf_token %}
-{% include "accounts/_form_fields.html" with form=narrative_form %}<button type="submit" formaction="{% url 'report-save' report.pk %}">{% translate "Save narrative" %}</button>
-<button type="submit" formaction="{% url submit_route report.pk %}">{% if report.status == "RETURNED" %}
+{% if can_edit %}<form method="post" class="form-card card">{% csrf_token %}
+{% include "accounts/_form_fields.html" with form=narrative_form %}<button type="submit" formaction="{% url 'report-save' report.pk %}" class="btn btn--filled">{% translate "Save narrative" %}</button>
+<button type="submit" formaction="{% url submit_route report.pk %}" class="btn btn--filled">{% if report.status == "RETURNED" %}
 {% translate "Resubmit" %}
 {% else %}
 {% translate "Submit for review" %}
@@ -67,16 +67,16 @@
 </form>
 {% else %}<dl>{% for item in narrative_items %}<dt>{{ item.label }}</dt>
 <dd class="application-note">{{ item.value }}</dd>{% endfor %}</dl>{% endif %}
-{% if can_review %}<form method="post">{% csrf_token %}
+{% if can_review %}<form method="post" class="form-card card">{% csrf_token %}
 {{ review_form.non_field_errors }}
-{{ review_form.expected_revision }}
+<bdi>{{ review_form.expected_revision }}</bdi>
 <div class="form-field">
   {{ review_form.comment.label_tag }}
   {{ review_form.comment }}
   {{ review_form.comment.errors }}
 </div>
-<button type="submit" formaction="{% url 'report-return' report.pk %}">{% translate "Return to branch" %}</button>
-<button type="submit" formaction="{% url 'report-approve' report.pk %}">{% translate "Approve and lock" %}</button>
+<button type="submit" formaction="{% url 'report-return' report.pk %}" class="btn btn--filled btn--error">{% translate "Return to branch" %}</button>
+<button type="submit" formaction="{% url 'report-approve' report.pk %}" class="btn btn--filled">{% translate "Approve and lock" %}</button>
 </form>{% endif %}
 {% if not live %}<p class="audit-hash">{% translate "Snapshot hash" %}: {{ report.snapshot_hash }}</p>{% endif %}
 {% if show_history %}

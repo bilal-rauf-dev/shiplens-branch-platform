@@ -2,25 +2,25 @@
 {% load i18n %}
 {% block title %}{{ member.member_id }} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
-  <h1>{{ member.member_id }}</h1>
-  <dl class="record-details">
+  <h1 class="page-title"><bdi>{{ member.member_id }}</bdi></h1>
+  <dl class="record-details card">
     <dt>{% translate "Full name" %}</dt><dd>{{ member.full_name }}</dd>
-    <dt>{% translate "Email" %}</dt><dd>{{ member.email }}</dd>
-    <dt>{% translate "Mobile number" %}</dt><dd>{{ member.phone }}</dd>
-    <dt>{% translate "Branch" %}</dt><dd>{{ member.branch.code }}</dd>
+    <dt>{% translate "Email" %}</dt><dd><bdi>{{ member.email }}</bdi></dd>
+    <dt>{% translate "Mobile number" %}</dt><dd><bdi>{{ member.phone }}</bdi></dd>
+    <dt>{% translate "Branch" %}</dt><dd><bdi>{{ member.branch.code }}</bdi></dd>
     <dt>{% translate "Team" %}</dt><dd>{{ member.team.name|default:"—" }}</dd>
     <dt>{% translate "Volunteer role" %}</dt><dd>{% if LANGUAGE_CODE == "ur" %}{{ member.volunteer_role.name_ur }}{% else %}{{ member.volunteer_role.name_en }}{% endif %}</dd>
-    <dt>{% translate "Status" %}</dt><dd>{{ member.get_status_display }}</dd>
-    <dt>{% translate "Joined on" %}</dt><dd>{{ member.joined_on }}</dd>
+    <dt>{% translate "Status" %}</dt><dd><span class="chip status-badge" data-status="{{ member.status }}">{{ member.get_status_display }}</span></dd>
+    <dt>{% translate "Joined on" %}</dt><dd><bdi>{{ member.joined_on }}</bdi></dd>
     <dt>{% translate "Left on" %}</dt><dd>{{ member.left_on|default:"—" }}</dd>
   </dl>
   <h2>{% translate "Notes" %}</h2><p class="application-note">{{ member.notes|default:"—" }}</p>
   {% if can_edit %}<p><a href="{% url 'member-edit' member.pk %}">{% translate "Edit member" %}</a></p>{% endif %}
   {% if action_errors %}<div role="alert" class="form-errors">{{ action_errors }}</div>{% endif %}
   {% for action in actions %}
-    <form method="post" action="{% url action.route member.pk %}">
+    <form method="post" action="{% url action.route member.pk %}" class="form-card card">
       {% csrf_token %}{% include "accounts/_form_fields.html" with form=action.form %}
-      <button type="submit">{{ action.label }}</button>
+      <button type="submit" class="btn btn--filled">{{ action.label }}</button>
     </form>
   {% endfor %}
   {% if show_history %}{% include "partials/history.html" %}{% endif %}

@@ -3,51 +3,51 @@
 {% block title %}{{ application.reference }} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
   <p><a href="{% url 'application-list' %}">{% translate "Back to applications" %}</a></p>
-  <h1>{{ application.reference }}</h1>
+  <h1 class="page-title"><bdi>{{ application.reference }}</bdi></h1>
   {% if errors %}<div class="form-errors" role="alert"><ul>{% for error in errors %}<li>{{ error }}</li>{% endfor %}</ul></div>{% endif %}
-  <p><span class="status-badge">{{ application.get_status_display }}</span></p>
-  <dl class="record-details">
+  <p><span class="chip status-badge" data-status="{{ application.status }}">{{ application.get_status_display }}</span></p>
+  <dl class="record-details card">
     <dt>{% translate "Full name" %}</dt><dd>{{ application.full_name }}</dd>
-    <dt>{% translate "Email" %}</dt><dd>{{ application.email }}</dd>
-    <dt>{% translate "Mobile number" %}</dt><dd>{{ application.phone }}</dd>
+    <dt>{% translate "Email" %}</dt><dd><bdi>{{ application.email }}</bdi></dd>
+    <dt>{% translate "Mobile number" %}</dt><dd><bdi>{{ application.phone }}</bdi></dd>
     <dt>{% translate "Age" %}</dt><dd>{{ age }}</dd>
     <dt>{% translate "Guardian consent" %}</dt><dd>{% if application.guardian_consent %}{% translate "Yes" %}{% else %}{% translate "No" %}{% endif %}</dd>
-    <dt>{% translate "Preferred branch" %}</dt><dd>{{ application.preferred_branch.code }} · {% if LANGUAGE_CODE == "ur" %}{{ application.preferred_branch.name_ur }}{% else %}{{ application.preferred_branch.name_en }}{% endif %}</dd>
+    <dt>{% translate "Preferred branch" %}</dt><dd><bdi>{{ application.preferred_branch.code }}</bdi> · {% if LANGUAGE_CODE == "ur" %}{{ application.preferred_branch.name_ur }}{% else %}{{ application.preferred_branch.name_en }}{% endif %}</dd>
     <dt>{% translate "Interests" %}</dt><dd>{{ interests|join:", " }}</dd>
     <dt>{% translate "Availability" %}</dt><dd>{{ availability|join:", " }}</dd>
     <dt>{% translate "Motivation" %}</dt><dd class="application-note">{{ application.motivation }}</dd>
     <dt>{% translate "Preferred language" %}</dt><dd>{{ application.get_preferred_language_display }}</dd>
     <dt>{% translate "Privacy consent recorded" %}</dt><dd>{{ application.consent_at|date:"DATETIME_FORMAT" }}</dd>
-    <dt>{% translate "Created at" %}</dt><dd>{{ application.created_at|date:"DATETIME_FORMAT" }}</dd>
+    <dt>{% translate "Created at" %}</dt><dd><bdi>{{ application.created_at|date:"DATETIME_FORMAT" }}</bdi></dd>
     <dt>{% translate "Updated at" %}</dt><dd>{{ application.updated_at|date:"DATETIME_FORMAT" }}</dd>
     {% if application.decided_at %}
       <dt>{% translate "Decided by" %}</dt><dd>{{ application.decided_by.full_name }}</dd>
       <dt>{% translate "Decided at" %}</dt><dd>{{ application.decided_at|date:"DATETIME_FORMAT" }}</dd>
     {% endif %}
     {% if application.decision_note %}<dt>{% translate "Decision note" %}</dt><dd>{{ application.decision_note }}</dd>{% endif %}
-    {% if created_member %}<dt>{% translate "Member" %}</dt><dd><a href="{% url 'member-detail' created_member.pk %}">{{ created_member.member_id }}</a></dd>{% endif %}
+    {% if created_member %}<dt>{% translate "Member" %}</dt><dd><a href="{% url 'member-detail' created_member.pk %}"><bdi>{{ created_member.member_id }}</bdi></a></dd>{% endif %}
   </dl>
   {% if application.possible_duplicate %}
     <section aria-label="{% translate 'Possible duplicate' %}">
       <h2>{% translate "Possible duplicate" %}</h2>
-      {% if duplicates.application %}<p><a href="{% url 'application-detail' duplicates.application.pk %}">{{ duplicates.application.reference }}</a></p>{% endif %}
-      {% if duplicates.member %}<p><a href="{% url 'member-detail' duplicates.member.pk %}">{{ duplicates.member.member_id }}</a></p>{% endif %}
+      {% if duplicates.application %}<p><a href="{% url 'application-detail' duplicates.application.pk %}"><bdi>{{ duplicates.application.reference }}</bdi></a></p>{% endif %}
+      {% if duplicates.member %}<p><a href="{% url 'member-detail' duplicates.member.pk %}"><bdi>{{ duplicates.member.member_id }}</bdi></a></p>{% endif %}
       {% if duplicates.hidden %}<p>{% translate "A matched record is outside your access." %}</p>{% endif %}
     </section>
   {% endif %}
   {% if accept_form %}
     <section><h2>{% translate "Accept application" %}</h2>
-      <form method="post" action="{% url 'application-accept' application.pk %}">{% csrf_token %}{% include "accounts/_form_fields.html" with form=accept_form %}<button type="submit">{% translate "Confirm accept" %}</button></form>
+      <form method="post" action="{% url 'application-accept' application.pk %}" class="form-card card">{% csrf_token %}{% include "accounts/_form_fields.html" with form=accept_form %}<button type="submit" class="btn btn--filled">{% translate "Confirm accept" %}</button></form>
     </section>
   {% endif %}
   {% if decline_form %}
     <section><h2>{% translate "Decline application" %}</h2>
-      <form method="post" action="{% url 'application-decline' application.pk %}">{% csrf_token %}{% include "accounts/_form_fields.html" with form=decline_form %}<button type="submit">{% translate "Confirm decline" %}</button></form>
+      <form method="post" action="{% url 'application-decline' application.pk %}" class="form-card card">{% csrf_token %}{% include "accounts/_form_fields.html" with form=decline_form %}<button type="submit" class="btn btn--filled btn--error">{% translate "Confirm decline" %}</button></form>
     </section>
   {% endif %}
   {% if reassign_form %}
     <section><h2>{% translate "Reassign branch" %}</h2>
-      <form method="post" action="{% url 'application-reassign' application.pk %}">{% csrf_token %}{% include "accounts/_form_fields.html" with form=reassign_form %}<button type="submit">{% translate "Reassign branch" %}</button></form>
+      <form method="post" action="{% url 'application-reassign' application.pk %}" class="form-card card">{% csrf_token %}{% include "accounts/_form_fields.html" with form=reassign_form %}<button type="submit" class="btn btn--filled">{% translate "Reassign branch" %}</button></form>
     </section>
   {% endif %}
   {% if show_history %}{% include "partials/history.html" %}{% endif %}

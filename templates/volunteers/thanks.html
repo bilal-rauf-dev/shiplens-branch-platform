@@ -2,7 +2,9 @@
 {% load i18n %}
 {% block title %}{% translate "Thank you" %} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
-  <h1>{% translate "Thank you" %}</h1>
+  <section class="public-form-card card">
+  <h1 class="page-title">{% translate "Thank you" %}</h1>
   <p>{% translate "Thank you for your interest in volunteering." %}</p>
-  {% if reference %}<p>{% translate "Reference" %}: {{ reference }}</p>{% endif %}
+  {% if reference %}<p>{% translate "Reference" %}: <bdi>{{ reference }}</bdi></p>{% endif %}
+  </section>
 {% endblock %}

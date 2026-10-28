@@ -3,10 +3,10 @@
 {% block title %}{{ page_title }} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
   <p><a href="{% url 'branch-list' %}">{% translate "Back to branches" %}</a></p>
-  <h1>{{ page_title }}</h1>
-  <form method="post">
+  <h1 class="page-title">{{ page_title }}</h1>
+  <form method="post" class="form-card card">
     {% csrf_token %}
     {% include "accounts/_form_fields.html" %}
-    <button type="submit">{% translate "Save branch" %}</button>
+    <button type="submit" class="btn btn--filled">{% translate "Save branch" %}</button>
   </form>
 {% endblock %}

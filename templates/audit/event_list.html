@@ -2,25 +2,25 @@
 {% load i18n tz %}
 {% block title %}{% translate "Audit log" %} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
-  <h1>{% translate "Audit log" %}</h1>
-  <form method="post" action="{% url 'audit-verify' %}">{% csrf_token %}<button type="submit">{% translate "Verify chain" %}</button></form>
-  <form method="get" class="member-filters">
+  <h1 class="page-title">{% translate "Audit log" %}</h1>
+  <form method="post" action="{% url 'audit-verify' %}" class="inline-action">{% csrf_token %}<button type="submit" class="btn btn--tonal">{% translate "Verify chain" %}</button></form>
+  <form method="get" class="filter-panel member-filters">
     {% include "accounts/_form_fields.html" with form=filter_form %}
-    <div class="actions"><button type="submit">{% translate "Apply filters" %}</button><a href="{% url 'audit-list' %}">{% translate "Reset filters" %}</a></div>
+    <div class="actions"><button type="submit" class="btn btn--filled">{% translate "Apply filters" %}</button><a href="{% url 'audit-list' %}" class="btn btn--text">{% translate "Reset filters" %}</a></div>
   </form>
-  <div class="table-container"><table>
+  <div class="table-container card"><table class="data-table"><caption class="visually-hidden">{% translate "Audit log" %}</caption>
     <thead><tr><th scope="col">{% translate "Time (PKT)" %}</th><th scope="col">{% translate "Actor" %}</th><th scope="col">{% translate "Action" %}</th><th scope="col">{% translate "Entity" %}</th><th scope="col">{% translate "Branch" %}</th><th scope="col">{% translate "Changed fields" %}</th></tr></thead>
     <tbody>{% for row in rows %}<tr>
-      <td><a href="{% url 'audit-detail' row.event.pk %}">{{ row.event.occurred_at|timezone:"Asia/Karachi"|date:"DATETIME_FORMAT" }}</a></td>
-      <td>{{ row.event.actor_label }} · {{ row.actor_role }}</td>
-      <td><span class="status-badge">{{ row.event.action }}</span></td>
-      <td>{% if row.entity_url %}<a href="{{ row.entity_url }}">{{ row.event.entity_label }}</a>{% else %}{{ row.event.entity_label|default:"—" }}{% endif %}</td>
-      <td>{{ row.branch_code }}</td><td>{{ row.summary }}</td>
+      <td data-label="{% translate 'Time (PKT)' %}"><a href="{% url 'audit-detail' row.event.pk %}">{{ row.event.occurred_at|timezone:"Asia/Karachi"|date:"DATETIME_FORMAT" }}</a></td>
+      <td data-label="{% translate 'Actor' %}">{{ row.event.actor_label }} · {{ row.actor_role }}</td>
+      <td data-label="{% translate 'Action' %}"><span class="chip status-badge">{{ row.event.action }}</span></td>
+      <td data-label="{% translate 'Entity' %}">{% if row.entity_url %}<a href="{{ row.entity_url }}">{{ row.event.entity_label }}</a>{% else %}{{ row.event.entity_label|default:"—" }}{% endif %}</td>
+      <td data-label="{% translate 'Branch' %}"><bdi>{{ row.branch_code }}</bdi></td><td data-label="{% translate 'Changed fields' %}">{{ row.summary }}</td>
     </tr>{% empty %}<tr><td colspan="6">{% translate "No audit events found." %}</td></tr>{% endfor %}</tbody>
   </table></div>
   {% if is_paginated %}<nav class="pagination" aria-label="{% translate 'Audit pages' %}">
     {% if page_obj.has_previous %}<a href="?{{ filter_query }}&amp;page={{ page_obj.previous_page_number }}">{% translate "Previous" %}</a>{% endif %}
-    <span>{% blocktranslate with current=page_obj.number total=page_obj.paginator.num_pages %}Page {{ current }} of {{ total }}{% endblocktranslate %}</span>
+    <span>{% blocktranslate with current=page_obj.number total=page_obj.paginator.num_pages %}Page {{ current }} of <bdi>{{ total }}</bdi>{% endblocktranslate %}</span>
     {% if page_obj.has_next %}<a href="?{{ filter_query }}&amp;page={{ page_obj.next_page_number }}">{% translate "Next" %}</a>{% endif %}
   </nav>{% endif %}
 {% endblock %}

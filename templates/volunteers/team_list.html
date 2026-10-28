@@ -2,15 +2,15 @@
 {% load i18n %}
 {% block title %}{% translate "Teams" %} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
-  <h1>{% translate "Teams" %}</h1>
-  {% for branch in managed_branches %}<p><a href="{% url 'team-create' branch.pk %}">{% translate "Create team" %} · {{ branch.code }}</a></p>{% endfor %}
-  <div class="table-container"><table>
+  <h1 class="page-title">{% translate "Teams" %}</h1>
+  {% for branch in managed_branches %}<p><a href="{% url 'team-create' branch.pk %}" class="btn btn--tonal">{% translate "Create team" %} · <bdi>{{ branch.code }}</bdi></a></p>{% endfor %}
+  <div class="table-container card"><table class="data-table"><caption class="visually-hidden">{% translate "Teams" %}</caption>
     <thead><tr><th scope="col">{% translate "Branch" %}</th><th scope="col">{% translate "Team name" %}</th><th scope="col">{% translate "Status" %}</th>{% if can_manage %}<th scope="col">{% translate "Actions" %}</th>{% endif %}</tr></thead>
     <tbody>{% for team in teams %}<tr>
-      <td>{{ team.branch.code }}</td><td>{{ team.name }}</td>
-      <td>{% if team.is_active %}{% translate "Active" %}{% else %}{% translate "Inactive" %}{% endif %}</td>
-      {% if can_manage %}<td><a href="{% url 'team-edit' team.pk %}">{% translate "Rename team" %}</a>
-        {% if team.is_active %}<form method="post" action="{% url 'team-deactivate' team.pk %}">{% csrf_token %}<button type="submit">{% translate "Deactivate team" %}</button></form>{% endif %}
+      <td data-label="{% translate 'Branch' %}"><bdi>{{ team.branch.code }}</bdi></td><td data-label="{% translate 'Team name' %}">{{ team.name }}</td>
+      <td data-label="{% translate 'Status' %}">{% if team.is_active %}<span class="chip status-badge" data-status="ACTIVE">{% translate "Active" %}</span>{% else %}<span class="chip status-badge" data-status="INACTIVE">{% translate "Inactive" %}</span>{% endif %}</td>
+      {% if can_manage %}<td data-label="{% translate 'Actions' %}"><a href="{% url 'team-edit' team.pk %}">{% translate "Rename team" %}</a>
+        {% if team.is_active %}<form method="post" action="{% url 'team-deactivate' team.pk %}" class="inline-action">{% csrf_token %}<button type="submit" class="btn btn--filled btn--error btn--sm">{% translate "Deactivate team" %}</button></form>{% endif %}
       </td>{% endif %}
     </tr>{% empty %}<tr><td colspan="4">{% translate "No teams found." %}</td></tr>{% endfor %}</tbody>
   </table></div>

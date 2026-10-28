@@ -2,32 +2,32 @@
 {% load i18n %}
 {% block title %}{% translate "Applications" %} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
-  <h1>{% translate "Applications" %}</h1>
+  <h1 class="page-title">{% translate "Applications" %}</h1>
   <nav class="filter-bar" aria-label="{% translate 'Application status' %}">
     {% for value, label in status_choices %}
       <a href="?status={{ value }}&amp;branch_id={{ request.GET.branch_id|urlencode }}"{% if value == selected_status %} aria-current="page"{% endif %}>{{ label }}</a>
     {% endfor %}
   </nav>
-  <form method="get" class="filter-bar">
+  <form method="get" class="filter-panel filter-bar">
     <input type="hidden" name="status" value="{{ selected_status }}">
     {{ filter_form.branch_id.label_tag }} {{ filter_form.branch_id }}
-    <button type="submit">{% translate "Apply filters" %}</button>
+    <button type="submit" class="btn btn--filled">{% translate "Apply filters" %}</button>
     {{ filter_form.errors }}
   </form>
-  <div class="table-container"><table>
+  <div class="table-container card"><table class="data-table">
     <caption>{% translate "Volunteer applications" %}</caption>
     <thead><tr><th scope="col">{% translate "Reference" %}</th><th scope="col">{% translate "Full name" %}</th><th scope="col">{% translate "Branch" %}</th><th scope="col">{% translate "Status" %}</th><th scope="col">{% translate "Submitted (PKT)" %}</th></tr></thead>
     <tbody>{% for application in applications %}
       <tr>
-        <td><a href="{% url 'application-detail' application.pk %}">{{ application.reference }}</a>{% if application.possible_duplicate %} <span class="status-badge">{% translate "Possible duplicate" %}</span>{% endif %}</td>
-        <td>{{ application.full_name }}</td><td>{{ application.preferred_branch.code }}</td>
-        <td>{{ application.get_status_display }}</td><td>{{ application.created_at|date:"DATETIME_FORMAT" }}</td>
+        <td data-label="{% translate 'Reference' %}"><a href="{% url 'application-detail' application.pk %}"><bdi>{{ application.reference }}</bdi></a>{% if application.possible_duplicate %} <span class="chip status-badge">{% translate "Possible duplicate" %}</span>{% endif %}</td>
+        <td data-label="{% translate 'Full name' %}">{{ application.full_name }}</td><td data-label="{% translate 'Branch' %}"><bdi>{{ application.preferred_branch.code }}</bdi></td>
+        <td data-label="{% translate 'Status' %}"><span class="chip status-badge" data-status="{{ application.status }}">{{ application.get_status_display }}</span></td><td data-label="{% translate 'Submitted (PKT)' %}"><bdi>{{ application.created_at|date:"DATETIME_FORMAT" }}</bdi></td>
       </tr>
     {% empty %}<tr><td colspan="5">{% translate "No applications found." %}</td></tr>{% endfor %}</tbody>
   </table></div>
   {% if is_paginated %}<nav class="pagination" aria-label="{% translate 'Application pages' %}">
     {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}&amp;status={{ selected_status }}&amp;branch_id={{ request.GET.branch_id|urlencode }}">{% translate "Previous" %}</a>{% endif %}
-    <span>{% blocktranslate with current=page_obj.number total=page_obj.paginator.num_pages %}Page {{ current }} of {{ total }}{% endblocktranslate %}</span>
+    <span>{% blocktranslate with current=page_obj.number total=page_obj.paginator.num_pages %}Page {{ current }} of <bdi>{{ total }}</bdi>{% endblocktranslate %}</span>
     {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}&amp;status={{ selected_status }}&amp;branch_id={{ request.GET.branch_id|urlencode }}">{% translate "Next" %}</a>{% endif %}
   </nav>{% endif %}
 {% endblock %}

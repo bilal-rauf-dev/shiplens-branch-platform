@@ -1283,3 +1283,9 @@ msgstr "محفوظ اعداد کا ہیش"
 
 msgid "Locked at"
 msgstr "مقفل ہونے کا وقت"
+
+msgid "Menu"
+msgstr "فہرست"
+
+msgid "Return home"
+msgstr "ابتدائی صفحے پر جائیں"

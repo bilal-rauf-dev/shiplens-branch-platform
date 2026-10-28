@@ -2,10 +2,10 @@
 {% load i18n %}
 {% block title %}{% translate "Cities" %} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
-  <h1>{% translate "Cities" %}</h1>
-  <p><a href="{% url 'city-create' %}">{% translate "New city" %}</a></p>
-  <div class="table-container"><table>
+  <h1 class="page-title">{% translate "Cities" %}</h1>
+  <p><a href="{% url 'city-create' %}" class="btn btn--tonal">{% translate "New city" %}</a></p>
+  <div class="table-container card"><table class="data-table"><caption class="visually-hidden">{% translate "Cities" %}</caption>
     <thead><tr><th scope="col">{% translate "Code" %}</th><th scope="col">{% translate "English name" %}</th><th scope="col">{% translate "Urdu name" %}</th><th scope="col">{% translate "Actions" %}</th></tr></thead>
-    <tbody>{% for city in cities %}<tr><td>{{ city.code }}</td><td>{{ city.name_en }}</td><td>{{ city.name_ur }}</td><td><a href="{% url 'city-edit' city.pk %}">{% translate "Edit city" %}</a></td></tr>{% empty %}<tr><td colspan="4">{% translate "No cities found." %}</td></tr>{% endfor %}</tbody>
+    <tbody>{% for city in cities %}<tr><td data-label="{% translate 'Code' %}"><bdi>{{ city.code }}</bdi></td><td data-label="{% translate 'English name' %}">{{ city.name_en }}</td><td data-label="{% translate 'Urdu name' %}">{{ city.name_ur }}</td><td data-label="{% translate 'Actions' %}"><a href="{% url 'city-edit' city.pk %}">{% translate "Edit city" %}</a></td></tr>{% empty %}<tr><td colspan="4">{% translate "No cities found." %}</td></tr>{% endfor %}</tbody>
   </table></div>
 {% endblock %}

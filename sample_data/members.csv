@@ -1,0 +1,10 @@
+member_order,full_name,email,phone,branch_code,team_name,role_code,target_status,joined_on,left_on
+1,Kamran Baloch,kamran.baloch@example.org,+923000000001,BR-QTA-01,,VOLUNTEER,LEFT,2026-07-05,2026-08-31
+2,Hamza Siddiqui,hamza.siddiqui@example.org,+923000000002,BR-KHI-01,Teaching,VOLUNTEER,ACTIVE,2026-08-15,
+3,Mariam Shah,mariam.shah@example.org,+923000000003,BR-KHI-01,Ration Drive,TEAM_LEAD,ACTIVE,2026-08-20,
+4,Sara Malik,sara.malik@example.org,+923000000004,BR-LHE-01,Health Camp,COORDINATOR,ACTIVE,2026-08-25,
+5,Ahmed Raza,ahmed.raza@example.org,+923000000005,BR-LHE-01,Health Camp,VOLUNTEER,LEFT,2026-08-25,2026-09-30
+6,Iqra Hussain,iqra.hussain@example.org,+923000000006,BR-ISB-01,,VOLUNTEER,ACTIVE,2026-08-30,
+7,Faisal Ahmed,faisal.ahmed@example.org,+923000000007,BR-KHI-01,Teaching,VOLUNTEER,INACTIVE,2026-09-05,
+8,Noor Fatima,noor.fatima@example.org,+923000000008,BR-LHE-01,Health Camp,VOLUNTEER,ACTIVE,2026-09-10,
+9,Zainab Ali,zainab.ali@example.org,+923000000009,BR-KHI-01,Ration Drive,VOLUNTEER,ACTIVE,2026-09-18,

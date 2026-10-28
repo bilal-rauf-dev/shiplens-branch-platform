@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% translate "Create transfer" %} · {% translate "ShipLens" %}{% endblock %}
+{% block content %}<h1>{% translate "Create transfer" %} · {{ branch.code }}</h1>
+{{ form.errors }}
+<form method="get">{{ form.collections.label_tag }} {{ form.collections }}<button type="submit">{% translate "Review selected entries" %}</button></form>
+{% if selected %}<h2>{% translate "Selected collections" %}</h2><ul>{% for item in selected %}<li>{{ item.reference }} · {{ item.amount|floatformat:2 }} {% translate "PKR" %}</li>{% endfor %}</ul><p>{% translate "Selected total (PKR)" %}: {{ selected_total|floatformat:2 }}</p>
+<form method="post">{% csrf_token %}{% for item in selected %}<input type="hidden" name="collections" value="{{ item.pk }}">{% endfor %}
+<div class="form-field">{{ form.transfer_date.label_tag }}{{ form.transfer_date }}{{ form.transfer_date.errors }}</div>
+<div class="form-field">{{ form.bank_reference.label_tag }}{{ form.bank_reference }}{{ form.bank_reference.errors }}</div>
+<div class="form-field">{{ form.note.label_tag }}{{ form.note }}{{ form.note.errors }}</div>
+<button type="submit">{% translate "Mark sent" %}</button></form>{% endif %}
+{% endblock %}

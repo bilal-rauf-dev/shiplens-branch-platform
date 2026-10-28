@@ -58,8 +58,17 @@ def update_city(actor, city, *, name_en, name_ur):
 
 def close_blockers(branch):
     """Return the reasons a branch cannot close. BR-011."""
-    # P6 adds unsent collections; P7 adds open reports to this guard.
-    return []
+    from apps.finance.selectors import branch_unsent_totals
+
+    summary = branch_unsent_totals(branch)
+    blockers = []
+    if summary["count"]:
+        blockers.append(
+            _("Unsent collections: %(count)s, total PKR %(total)s.")
+            % {"count": summary["count"], "total": f"{summary['total']:.2f}"}
+        )
+    # P7 adds open reports to this guard.
+    return blockers
 
 
 def _require_reason(branch, reason):

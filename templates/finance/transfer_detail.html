@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{{ transfer.reference }} · {% translate "ShipLens" %}{% endblock %}
+{% block content %}<h1>{{ transfer.reference }}</h1><dl class="record-details">
+<dt>{% translate "Branch" %}</dt><dd>{{ transfer.branch.code }}</dd><dt>{% translate "Transfer date" %}</dt><dd>{{ transfer.transfer_date }}</dd>
+<dt>{% translate "Bank reference" %}</dt><dd>{{ transfer.bank_reference }}</dd><dt>{% translate "Total (PKR)" %}</dt><dd>{{ transfer.total_amount|floatformat:2 }}</dd><dt>{% translate "Note" %}</dt><dd>{{ transfer.note|default:"—" }}</dd></dl>
+<ul>{% for item in collections %}<li><a href="{% url 'collection-detail' item.pk %}">{{ item.reference }}</a> · {{ item.amount|floatformat:2 }}</li>{% endfor %}</ul>
+{% endblock %}

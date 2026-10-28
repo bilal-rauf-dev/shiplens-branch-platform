@@ -33,6 +33,8 @@
                 <a href="{% url 'member-list' %}">{% translate "Members" %}</a>
               {% endif %}
               <a href="{% url 'account-change-password' %}">{% translate "Change password" %}</a>
+              {% if user.role == "SUPER_ADMIN" or user.role == "FINANCE_REVIEWER" or user.role == "BRANCH_LEAD" %}<a href="{% url 'collection-list' %}">{% translate "Collections" %}</a>{% endif %}
+              {% if user.role == "SUPER_ADMIN" or user.role == "FINANCE_REVIEWER" or user.role == "BRANCH_LEAD" %}<a href="{% url 'transfer-list' %}">{% translate "Transfers" %}</a>{% endif %}
               <form method="post" action="{% url 'account-logout' %}">
                 {% csrf_token %}
                 <button type="submit">{% translate "Log out" %}</button>

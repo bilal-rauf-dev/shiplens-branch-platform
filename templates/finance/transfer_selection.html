@@ -1,0 +1,3 @@
+{% extends "base.html" %}{% load i18n %}
+{% block content %}<h1>{% translate "Select unsent collections" %}</h1>
+<form method="get">{% include "accounts/_form_fields.html" %}<button type="submit">{% translate "Review selected entries" %}</button></form>{% endblock %}

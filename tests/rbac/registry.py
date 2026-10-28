@@ -10,6 +10,8 @@ from apps import audit
 from apps.accounts.models import Role, User
 from apps.accounts.services import assign_branch
 from apps.branches.models import Branch, City
+from apps.core import clock
+from apps.finance import services as finance_services
 from apps.volunteers import services as volunteer_services
 from apps.volunteers.forms import ApplicationForm
 from apps.volunteers.models import MemberStatus, Team, VolunteerRole
@@ -28,6 +30,95 @@ class RouteCase:
 
 def page_url(name, fixture):
     return reverse(name)
+
+
+def finance_payload(scenario):
+    branch = scenario["branch"]
+    branch.status = "ACTIVE"
+    branch.save(update_fields=["status"])
+    return {
+        "branch": branch,
+        "data": {
+            "collection_date": clock.today(),
+            "amount": "100.00",
+            "method": "CASH",
+            "receipt_no": "MATRIX-1",
+            "source_note": "Matrix receipt",
+        },
+    }
+
+
+def collection_object(scenario):
+    fixture = finance_payload(scenario)
+    lead = User.objects.create_user(
+        email="finance-matrix@example.com",
+        full_name="Finance matrix",
+        role=Role.BRANCH_LEAD,
+    )
+    assign_branch(scenario["admin"], lead, fixture["branch"])
+    fixture["collection"] = finance_services.create_collection(
+        lead, fixture["branch"], fixture["data"]
+    )
+    fixture["data"] = {}
+    return fixture
+
+
+def collection_url(name, fixture):
+    return reverse(name, kwargs={"pk": fixture["collection"].pk})
+
+
+def collection_create_url(name, fixture):
+    return reverse(name, kwargs={"branch_pk": fixture["branch"].pk})
+
+
+def transfer_payload(scenario):
+    fixture = collection_object(scenario)
+    fixture["data"] = {
+        "collections": [fixture["collection"].pk],
+        "transfer_date": clock.today(),
+        "bank_reference": "MATRIX-BANK",
+        "note": "",
+    }
+    return fixture
+
+
+def transfer_object(scenario):
+    fixture = collection_object(scenario)
+    lead = User.objects.get(email="finance-matrix@example.com")
+    fixture["transfer"] = finance_services.create_transfer(
+        lead,
+        fixture["branch"],
+        [fixture["collection"].pk],
+        clock.today(),
+        "MATRIX-BANK",
+    )
+    return fixture
+
+
+def transfer_url(name, fixture):
+    return reverse(name, kwargs={"pk": fixture["transfer"].pk})
+
+
+def transfer_prepare_url(name, fixture):
+    return reverse(name) + f"?collections={fixture['collection'].pk}"
+
+
+def collection_edit_payload(scenario):
+    fixture = collection_object(scenario)
+    fixture["data"] = {
+        "collection_date": clock.today(),
+        "amount": "101.00",
+        "method": "CASH",
+        "receipt_no": "MATRIX-1",
+        "source_note": "Edited",
+    }
+    return fixture
+
+
+def collection_void_payload(scenario):
+    fixture = collection_object(scenario)
+    fixture["data"] = {"reason": "Duplicate receipt"}
+    return fixture
 
 
 def audit_object(scenario):
@@ -331,6 +422,15 @@ def settings_payload(scenario):
 # The four columns are method, URL builder, in-scope fixture factory and success
 # status. Payloads must be valid so a validation error cannot masquerade as denial.
 ROUTE_CASES = {
+    "transfer-list": RouteCase("GET", page_url, transfer_object, 200),
+    "transfer-detail": RouteCase("GET", transfer_url, transfer_object, 200),
+    "transfer-create": RouteCase("POST", collection_create_url, transfer_payload, 302),
+    "transfer-prepare": RouteCase("GET", transfer_prepare_url, collection_object, 302),
+    "collection-list": RouteCase("GET", page_url, collection_object, 200),
+    "collection-detail": RouteCase("GET", collection_url, collection_object, 200),
+    "collection-create": RouteCase("POST", collection_create_url, finance_payload, 302),
+    "collection-edit": RouteCase("POST", collection_url, collection_edit_payload, 302),
+    "collection-void": RouteCase("POST", collection_url, collection_void_payload, 302),
     "audit-list": RouteCase("GET", page_url, audit_object, 200),
     "audit-detail": RouteCase("GET", audit_url, audit_object, 200),
     "audit-verify": RouteCase("POST", page_url, audit_object, 302),

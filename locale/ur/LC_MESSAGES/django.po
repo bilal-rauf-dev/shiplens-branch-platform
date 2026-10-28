@@ -1127,3 +1127,30 @@ msgstr "منتقلی دیکھیں"
 
 msgid "Unsent collections: %(count)s, total PKR %(total)s."
 msgstr "غیر ارسال شدہ وصولیاں: %(count)s، کل رقم %(total)s روپے۔"
+
+msgid "Draft"
+msgstr "مسودہ"
+
+msgid "Submitted"
+msgstr "جمع شدہ"
+
+msgid "Returned"
+msgstr "واپس شدہ"
+
+msgid "Resubmitted"
+msgstr "دوبارہ جمع شدہ"
+
+msgid "Approved"
+msgstr "منظور شدہ"
+
+msgid "Activities"
+msgstr "سرگرمیاں"
+
+msgid "Volunteer hours"
+msgstr "رضاکارانہ گھنٹے"
+
+msgid "Issues"
+msgstr "مسائل"
+
+msgid "Generate missing weekly report drafts for active branches."
+msgstr "فعال شاخوں کے لیے گمشدہ ہفتہ وار مسودے بنائیں۔"

@@ -24,6 +24,126 @@ class CollectionState(models.TextChoices):
     VOIDED = "VOIDED", _("Voided")
 
 
+class ReportStatus(models.TextChoices):
+    DRAFT = "DRAFT", _("Draft")
+    SUBMITTED = "SUBMITTED", _("Submitted")
+    RETURNED = "RETURNED", _("Returned")
+    RESUBMITTED = "RESUBMITTED", _("Resubmitted")
+    APPROVED = "APPROVED", _("Approved")
+    LOCKED = "LOCKED", _("Locked")
+
+
+class WeeklyReport(models.Model):
+    branch = models.ForeignKey(
+        "branches.Branch", on_delete=models.RESTRICT, related_name="weekly_reports"
+    )
+    week_start = models.DateField(_("week start"), db_index=True)
+    week_end = models.DateField(_("week end"))
+    status = models.CharField(
+        _("status"),
+        max_length=12,
+        choices=ReportStatus.choices,
+        default=ReportStatus.DRAFT,
+        db_index=True,
+    )
+    revision = models.IntegerField(_("revision"), default=0)
+    narrative = models.JSONField(_("narrative"), default=dict, blank=True)
+    snapshot = models.JSONField(_("snapshot"), default=dict, blank=True)
+    snapshot_hash = models.CharField(_("snapshot hash"), max_length=64, blank=True)
+    submitted_at = models.DateTimeField(_("submitted at"), null=True, blank=True)
+    submitted_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
+        related_name="submitted_reports",
+    )
+    reviewed_at = models.DateTimeField(_("reviewed at"), null=True, blank=True)
+    reviewed_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
+        related_name="reviewed_reports",
+    )
+    review_comment = models.CharField(_("review comment"), max_length=1000, blank=True)
+    approved_at = models.DateTimeField(_("approved at"), null=True, blank=True)
+    approved_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
+        related_name="approved_reports",
+    )
+    locked_at = models.DateTimeField(_("locked at"), null=True, blank=True)
+    created_at = models.DateTimeField(_("created at"), default=clock.now)
+    updated_at = models.DateTimeField(_("updated at"), default=clock.now)
+
+    class Meta:
+        db_table = "weekly_reports"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["branch", "week_start"], name="reports_branch_week_unique"
+            ),
+            models.CheckConstraint(
+                condition=models.Q(week_start__iso_week_day=1),
+                name="reports_start_monday",
+            ),
+            models.CheckConstraint(
+                condition=models.Q(week_end=models.F("week_start") + timedelta(days=6)),
+                name="reports_end_sunday",
+            ),
+            models.CheckConstraint(
+                condition=models.Q(status__in=ReportStatus.values),
+                name="reports_status_valid",
+            ),
+            models.CheckConstraint(
+                condition=models.Q(revision__gte=0), name="reports_revision_valid"
+            ),
+            models.CheckConstraint(
+                condition=(
+                    models.Q(status=ReportStatus.LOCKED, locked_at__isnull=False)
+                    | (
+                        ~models.Q(status=ReportStatus.LOCKED)
+                        & models.Q(locked_at__isnull=True)
+                    )
+                ),
+                name="reports_locked_timestamp",
+            ),
+        ]
+
+    def __str__(self):
+        return f"{self.branch.code} · {self.week_start.isoformat()}"
+
+
+class WeeklyReportLine(models.Model):
+    report = models.ForeignKey(
+        WeeklyReport, on_delete=models.RESTRICT, related_name="lines"
+    )
+    revision = models.PositiveIntegerField(_("revision"))
+    collection = models.ForeignKey(
+        "Collection", on_delete=models.RESTRICT, related_name="report_lines"
+    )
+    reference = models.CharField(_("reference"), max_length=40)
+    collection_date = models.DateField(_("collection date"))
+    method = models.CharField(
+        _("method"), max_length=14, choices=CollectionMethod.choices
+    )
+    amount = models.DecimalField(_("amount"), max_digits=12, decimal_places=2)
+
+    class Meta:
+        db_table = "weekly_report_lines"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["report", "revision", "collection"],
+                name="report_lines_revision_unique",
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.reference} · {self.revision}"
+
+
 class EntryType(models.TextChoices):
     COLLECTION = "COLLECTION", _("Collection")
     ADJUSTMENT = "ADJUSTMENT", _("Adjustment")

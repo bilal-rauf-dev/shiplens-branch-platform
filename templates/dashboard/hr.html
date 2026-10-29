@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "HR overview" %} · {% translate "ShipLens" %}{% endblock %}
+{% block content %}
+<h1 class="page-title">{% translate "HR overview" %}</h1>
+{% include "dashboard/_period.html" %}
+<section class="dashboard-kpis" aria-label="{% translate 'Key indicators' %}">
+  <article class="card"><h2>{% translate "Pending applications" %}</h2><p class="kpi-value"><bdi>{{ applications.pending }}</bdi></p></article>
+  <article class="card"><h2>{% translate "Acceptance in period" %}</h2><p>{% if applications.rate is None %}—{% else %}<bdi>{{ applications.rate|floatformat:"2" }}%</bdi>{% endif %}</p></article>
+  <article class="card"><h2>{% translate "Members" %}</h2><p>{% translate "Active" %}: <bdi>{{ members.active }}</bdi> · {% translate "New in period" %}: <bdi>{{ members.new }}</bdi></p></article>
+</section>
+<section><h2>{% translate "Pending by assigned branch" %}</h2><div class="table-container card"><table class="data-table"><caption class="visually-hidden">{% translate "Pending by assigned branch" %}</caption><thead><tr><th scope="col">{% translate "Branch" %}</th><th scope="col">{% translate "Pending applications" %}</th></tr></thead><tbody>{% for branch in branch_rows %}<tr><td data-label="{% translate 'Branch' %}"><a href="{% url 'application-list' %}?branch={{ branch.pk }}"><bdi>{{ branch.code }}</bdi></a></td><td class="numeric" data-label="{% translate 'Pending applications' %}"><bdi>{{ branch.pending }}</bdi></td></tr>{% empty %}<tr><td colspan="2">{% translate "No assigned branches." %}</td></tr>{% endfor %}</tbody></table></div></section>
+<p><a class="btn btn--tonal" href="{% url 'application-list' %}">{% translate "Review applications" %}</a></p>
+{% endblock %}

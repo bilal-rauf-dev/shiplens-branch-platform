@@ -5,12 +5,12 @@ A bilingual (English/Urdu) platform that connects volunteer branches to head off
 Solo entry for **ShipLens 1.0** by EchoLens Digital. Work in progress; the full README comes with the release.
 
 The current build includes English and Urdu home pages, secure email login and
-password changes, role-specific placeholder pages, a database health endpoint,
+password changes, role-specific dashboards, a database health endpoint,
 Docker packaging and CI. The central permission matrix and branch assignments are
 implemented, with default-deny route enforcement, localized error pages and an
 append-only audit log. The branch and city register provides scoped lists,
-audited editing and lifecycle controls. Other domain screens and demo seed data
-arrive in later tasks. The public volunteer form validates submissions, limits
+audited editing and lifecycle controls. The authored sample data can be loaded
+with one command (below). The public volunteer form validates submissions, limits
 spam and stores applicant details for scoped HR review, decisions and audit history.
 HR can manage teams in assigned branches; Super Admin can manage teams globally
 and create, edit or deactivate bilingual volunteer roles. Branch Leads have a
@@ -155,6 +155,67 @@ Verify the stored chain with:
 docker compose exec web python manage.py verify_audit_chain
 ```
 
+## Load the sample data
+
+No official sample data was published; this fictional dataset was authored for the
+ShipLens 1.0 submission. All names, emails and phone numbers are fictional.
+The versioned [CSV files and column guide](sample_data/README.md) implement the
+[sample-data specification](docs/planning/09-dashboard-and-seed-data.md).
+
+With the Compose stack running and `DEMO_MODE=true` plus a `DEMO_PASSWORD` of at
+least 12 characters configured in `.env`, load or restore the sample in one command:
+
+```sh
+docker compose exec web python manage.py seed_demo --reset
+```
+
+Reset replaces all demo domain data, settings overrides and audit history, restores
+the authored history, and logs everyone out. It is refused when `DEMO_MODE=false`.
+Super Admin can also use **Reset demo data** on System settings in demo mode.
+To import CSV history without demo passwords into an empty user database, run
+`python manage.py import_sample_data sample_data/`; alternative CSV headers can be
+mapped with `--mapping path/to/mapping.yaml` as documented in the column guide.
+
+On Render, `bin/start.sh` invokes `python manage.py startup`. That single Python
+process runs migrations, creates the cache table, and calls `seed_demo --if-empty`
+when `DEMO_MODE=true`, before gunicorn starts. The `demo_seeded` marker prevents
+subsequent deploys from replacing demo changes. No password is stored in the CSVs.
+If a pre-P8 demo database already contains staff accounts, run `seed_demo --reset`
+once before relying on automatic startup seeding; plain history import requires an
+empty user table and never replaces an existing unmarked history.
+
+| Role | Test login | Password |
+| --- | --- | --- |
+| Super Admin | `superadmin.demo@shiplens.test` | value of DEMO_PASSWORD (see submission notes) |
+| Finance Reviewer | `finance.demo@shiplens.test` | value of DEMO_PASSWORD (see submission notes) |
+| Content Editor | `content.demo@shiplens.test` | value of DEMO_PASSWORD (see submission notes) |
+| Branch Lead (Karachi) | `branchlead.demo@shiplens.test` | value of DEMO_PASSWORD (see submission notes) |
+| HR Lead | `hr.demo@shiplens.test` | value of DEMO_PASSWORD (see submission notes) |
+
+### Expected dashboard values — October 2026
+
+Reference time: **31 October 2026, 23:00 PKT**. Select October 2026 to compare these
+figures. In a later month without collections, the dashboard defaults to the latest
+month with data and labels that fallback. Unsent ages grow with today's date;
+report compliance always uses the last completed week at the time of the request.
+
+| KPI | Expected |
+| --- | --- |
+| K1 Collected | **Rs 73,250.50**, **8** entries |
+| K2 Approved | **Rs 43,250.50** |
+| K3 Awaiting approval | **Rs 30,000.00** |
+| K4 Unsent, all time | **Rs 35,250.50**, **6** entries, oldest **26 days** |
+| K5 Branches | Active **2**, Paused **1**, Forming **1**, Closed **1**, Total **5** |
+| K6 Members | Active **9**, new in October **3** |
+| K7 Applications | Pending **3**, October acceptance **75%** (3 accepted / 4 decided) |
+| K8 Reports | Awaiting review **1** (R9), Returned **1** (R8) |
+| K9 Compliance, week 19–25 October | **0%** (0 / 2 active branches) |
+| K10 Sent in October | **Rs 38,000.00** |
+
+`tests/dashboard/test_t_dash_seed.py` checks every expected value in specification
+§4.1–§4.7, all twelve trend points, live approval updates, scope boundaries and the
+50-branch query budget. CSV/PDF exports arrive in P9; public content arrives in P10.
+
 ## Deploy
 
 The root [`render.yaml`](render.yaml) defines a Docker web service and a PostgreSQL
@@ -168,9 +229,8 @@ Render builds the existing Dockerfile and checks `/health`.
 3. Review the `shiplens-web` and `shiplens-db` resources. Enter `DEMO_PASSWORD` when
    prompted; keep it in Render's environment settings and out of the repository.
 4. Create the Blueprint and wait for the web service to become healthy. The
-   production entrypoint runs migrations and creates the cache table before
-   starting gunicorn. It runs `seed_demo --if-empty` only when demo mode is enabled
-   and that command exists; seeding is skipped until that command is implemented.
+   production entrypoint runs the single-process `startup` command before
+   gunicorn, including `seed_demo --if-empty` when demo mode is enabled.
 5. Open the actual HTTPS service URL shown by Render and check `/health`, `/en/`
    and `/ur/`. Health reports the first seven characters of `RENDER_GIT_COMMIT`.
 6. Confirm auto-deploy is **After CI Checks Pass**. Subsequent `main` commits deploy
@@ -193,8 +253,8 @@ and secret behavior is described in the [Render Blueprint reference](https://ren
 | `CSRF_TRUSTED_ORIGINS` | Comma-separated origins including their scheme. Blueprint default: `https://shiplens-web.onrender.com`. Add custom HTTPS origins here. |
 | `RENDER_EXTERNAL_HOSTNAME` | Supplied automatically by Render and appended to the host/origin settings. Leave empty locally. |
 | `TRUSTED_PROXY_HOPS` | Trusted forwarded entries counted from the right; default `1` for Render. Set `0` to ignore forwarding headers when running without a trusted reverse proxy. The same client-IP helper is used for login lockout and rate-limit keys. |
-| `DEMO_MODE` | `false` in the local example; `true` in the Blueprint. Enables guarded demo seeding once the command exists. |
-| `DEMO_PASSWORD` | Set manually during Blueprint creation (`sync: false`). Used when demo accounts are implemented. Manage later changes in Render's environment settings. |
+| `DEMO_MODE` | `false` in the local example; `true` in the Blueprint. Enables guarded demo seeding and Super Admin reset. |
+| `DEMO_PASSWORD` | Set manually during Blueprint creation (`sync: false`); at least 12 characters. Sets every demo user's password on import/reset. Manage later changes in Render's environment settings. |
 | `WEB_CONCURRENCY` | Production gunicorn worker count; Blueprint value: `2`. |
 | `LOG_LEVEL` | Python logging level; Blueprint value: `INFO`. |
 | `PORT` | Render supplies the listening port. Local default: `8000`; gunicorn and the Docker healthcheck use this value. |

@@ -6,12 +6,7 @@ if [ "$#" -gt 0 ]; then
     exec "$@"
 fi
 
-python manage.py migrate --noinput
-python manage.py createcachetable
-
-if [ "${DEMO_MODE:-false}" = "true" ] && python manage.py help seed_demo >/dev/null 2>&1; then
-    python manage.py seed_demo --if-empty
-fi
+python manage.py startup
 
 exec gunicorn config.wsgi \
     --no-control-socket \

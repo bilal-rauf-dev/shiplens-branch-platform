@@ -54,8 +54,12 @@ Implementation: each KPI is a pure function in `apps/dashboard/kpis.py` taking `
 | finance.demo@shiplens.test | Farah Naz | FINANCE_REVIEWER | — |
 | content.demo@shiplens.test | Hina Baig | CONTENT_EDITOR | — |
 | branchlead.demo@shiplens.test | Ayesha Khan | BRANCH_LEAD | BR-KHI-01 |
-| hr.demo@shiplens.test | Usman Tariq | HR_LEAD | BR-KHI-01, BR-LHE-01 |
+| hr.demo@shiplens.test | Usman Tariq | HR_LEAD | BR-KHI-01, BR-LHE-01, BR-ISB-01 |
 | lahore.lead.demo@shiplens.test | Imran Sheikh | BRANCH_LEAD | BR-LHE-01 (used for scope tests/demo) |
+| islamabad.lead.demo@shiplens.test | Rabia Anwar | BRANCH_LEAD | BR-ISB-01 (history only) |
+| quetta.lead.demo@shiplens.test | Naveed Khan | BRANCH_LEAD | BR-QTA-01 (assigned until the branch closed; history only) |
+
+All demo users have `is_demo = true`. The first five are the published test logins (one per role). The extra Branch Leads exist so every historical submission has a real, correctly scoped actor. Hina Baig (Content Editor) has no historical actions.
 
 ### 3.3 Collections (created_at = collection_date 18:00 PKT unless noted)
 
@@ -142,6 +146,63 @@ Members 1–9 are "migrated from spreadsheets" (no application). Next ID issued:
 | APP-2026-00008 | KHI | 2026-10-23 | PENDING | | **possible duplicate** of M-2026-00009 (same email) |
 
 Next ref: **APP-2026-00009**.
+
+### 3.9 Historical timeline (the importer sorts these by time and replays them)
+
+All times are Asia/Karachi. The importer freezes `core.clock` at each event's time and calls the **real services**, so every row and audit event is genuine and the audit chain is in chronological order. "SA" = superadmin.demo, "FR" = finance.demo, "HR" = hr.demo, BL-KHI/LHE/ISB/QTA = the matching Branch Lead.
+
+| When | Actor | Event |
+|---|---|---|
+| 2026-07-01 09:00 | SA | Create users and assignments; create branches QTA, KHI, LHE, ISB, PEW (in that order → BR-QTA-01, BR-KHI-01, BR-LHE-01, BR-ISB-01, BR-PEW-01); activate QTA; create teams (KHI: Teaching, Ration Drive; LHE: Health Camp) |
+| 2026-07-05 10:00 | system import | Member 00001 (QTA) |
+| 2026-08-01 09:00 | SA | Activate KHI, LHE, ISB |
+| 2026-08-10 18:00 | BL-QTA | C14 |
+| 2026-08-15 … 08-30 | system import | Members 00002–00006 on their joined dates |
+| 2026-08-17 10:00 / 08-18 11:00 | BL-QTA / FR | R1 submit / approve (→ locked) |
+| 2026-08-18 15:00 | BL-QTA | T7 |
+| 2026-08-31 12:00 | SA | Member 00001 marked LEFT (2026-08-31; SA because QTA is outside the HR Lead's scope); close QTA ("Merged into regional programme") |
+| 2026-09-03 18:00 | BL-ISB | C12 |
+| 2026-09-05 … 09-18 | system import | Members 00007–00009 |
+| 2026-09-07 10:00 / 09-08 11:00 | BL-ISB / FR | R2 submit / approve |
+| 2026-09-08 15:00 | BL-ISB | T6 |
+| 2026-09-07 18:00, 09-09 18:00 | BL-KHI | C01, C02 |
+| 2026-09-14 10:00 / 09-15 11:00 | BL-KHI / FR | R3 submit / approve |
+| 2026-09-14 15:00 | BL-KHI | T1 |
+| 2026-09-15 18:00 | BL-LHE | C08 |
+| 2026-09-20 11:00 / 09-22 12:00 | public / HR | APP-00001 submitted (LHE) / declined "Outside service area" |
+| 2026-09-21 10:00 / 09-22 11:00 | BL-LHE / FR | R4 submit / approve |
+| 2026-09-21 15:00 | BL-LHE | T4 |
+| 2026-09-22 18:00 | BL-KHI | C03 |
+| 2026-09-28 10:00 | BL-KHI | R5 submit |
+| 2026-09-28 15:00 | BL-KHI | T2 |
+| 2026-09-29 11:00 | FR | R5 return "Cheque number missing from the activities note" |
+| 2026-09-30 10:00 | BL-KHI | R5 resubmit (revision 2) |
+| 2026-09-30 12:00 | HR | Member 00005 marked LEFT (2026-09-30) |
+| 2026-10-01 11:00 | FR | R5 approve |
+| 2026-10-01 12:00 | HR | Member 00007 deactivated (INACTIVE) |
+| 2026-10-02 18:00 | BL-LHE | C09 |
+| 2026-10-02, 10-03, 10-10 11:00 | public | APP-00002 (KHI), APP-00003 (ISB), APP-00004 (LHE) |
+| 2026-10-05 10:00 / 10-06 11:00 | BL-LHE / FR | R6 submit / approve |
+| 2026-10-05 18:00 | BL-ISB | C13 |
+| 2026-10-06 18:00, 10-08 18:00 | BL-KHI | C04, C05 |
+| 2026-10-06 12:00, 10-07 12:00, 10-14 12:00 | HR | Accept APP-00002 → M-2026-00010 (Teaching), APP-00003 → 00011, APP-00004 → 00012 |
+| 2026-10-06 15:00 | BL-LHE | T5 |
+| 2026-10-10 09:00 | SA | Pause ISB ("Lead on leave") |
+| 2026-10-12 10:00 / 10-13 11:00 | BL-KHI / FR | R7 submit / approve |
+| 2026-10-12 15:00 | BL-KHI | T3 |
+| 2026-10-13 18:00, 10-15 18:00 | BL-LHE | C10, C11 |
+| 2026-10-14 18:00 | BL-KHI | C06 |
+| 2026-10-15 11:00 / 10-17 12:00 | public / HR | APP-00005 (KHI) / declined "Under minimum availability" |
+| 2026-10-19 10:00 | BL-KHI, BL-LHE | R8 submit, R9 submit |
+| 2026-10-20 11:00 | FR | R8 return "Attach the deposit slip for C06" |
+| 2026-10-20 18:00 / 19:00 | BL-KHI | C07 created / voided "Duplicate entry" |
+| 2026-10-20, 10-22, 10-23 11:00 | public | APP-00006 (KHI), APP-00007 (LHE), APP-00008 (KHI, same email as M-2026-00009 → flagged) |
+| 2026-10-21 18:00 | BL-KHI | C15 |
+| 2026-10-26 09:00 | system | ensure_drafts → R10 (KHI, week 10-19) exists as DRAFT |
+
+Before each historical submit, the importer creates that week's draft with the same drafting function the app uses. Weeks without a submitted report stay as empty DRAFTs; they don't affect any KPI.
+
+Narrative fields for every submitted report: short fictional text (e.g. "Weekend tutoring for 18 children; ration packing day") and volunteer hours 20–60.
 
 ### 3.8 CMS seed
 3 Programs (Education Support, Ration Drive, Community Health Camps), 3 Events (one past, two upcoming — dates relative to seeding day so they stay "upcoming"; they don't feed KPIs), page sections for Home/About/Get Involved/Contact — all EN + UR, PUBLISHED; one Program DRAFT ("Tree Plantation") to demo draft vs publish.

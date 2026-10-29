@@ -1,0 +1,9 @@
+email,full_name,role
+superadmin.demo@shiplens.test,Sana Mirza,SUPER_ADMIN
+finance.demo@shiplens.test,Farah Naz,FINANCE_REVIEWER
+content.demo@shiplens.test,Hina Baig,CONTENT_EDITOR
+branchlead.demo@shiplens.test,Ayesha Khan,BRANCH_LEAD
+hr.demo@shiplens.test,Usman Tariq,HR_LEAD
+lahore.lead.demo@shiplens.test,Imran Sheikh,BRANCH_LEAD
+islamabad.lead.demo@shiplens.test,Rabia Anwar,BRANCH_LEAD
+quetta.lead.demo@shiplens.test,Naveed Khan,BRANCH_LEAD

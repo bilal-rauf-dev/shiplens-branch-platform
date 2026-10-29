@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     "apps.audit.apps.AuditConfig",
     "apps.volunteers.apps.VolunteersConfig",
     "apps.finance.apps.FinanceConfig",
+    "apps.seed.apps.SeedConfig",
+    "apps.dashboard.apps.DashboardConfig",
     "axes",
 ]
 AUTH_USER_MODEL = "accounts.User"
@@ -92,6 +94,7 @@ TEMPLATES = [
                 "django.template.context_processors.i18n",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "apps.seed.context_processors.demo_mode",
             ]
         },
     }

@@ -47,7 +47,7 @@ verification fails. Verification does not itself append a row.
 ## Immutability and limitations
 
 PostgreSQL triggers reject UPDATE, DELETE and TRUNCATE (BR-131), including ORM and
-raw SQL attempts. No production bypass or mutation endpoint exists. The database
+raw SQL attempts. Outside the explicitly configured demo reset, no bypass or mutation endpoint exists. The database
 owner can still disable/drop triggers and rewrite history; this is tamper
 resistance, not protection against a malicious database owner. The hash chain
 detects altered rows/links, but needs an independently retained tip to detect
@@ -62,3 +62,22 @@ Tests deliberately disable the change guard to prove tamper detection. The test
 database's flush helper disables only the TRUNCATE guard during Django cleanup and
 re-enables it in the same transaction. This exception exists only in test fixtures;
 ordinary test and application operations still encounter all guards.
+
+## Demo reset exception (P8)
+
+`apps.seed.services._reset_tables()` is the one additional raw-SQL exception,
+**unreachable when DEMO_MODE=false**. `seed_demo --reset` and the Super Admin-only
+POST route call it only after checking `DEMO_MODE` and a `DEMO_PASSWORD` of at least
+12 characters. It disables USER triggers on a fixed list of application tables,
+truncates domain data, audit history, counters, settings overrides, sessions, Axes
+records and the database cache with `RESTART IDENTITY CASCADE`, and re-enables the
+triggers before importing history. All of this, including the re-import and demo
+password setup, runs inside one PostgreSQL transaction. A failure restores the old
+data, sequences and enabled triggers. Foreign-key system triggers are never disabled.
+
+The importer restores the migration-seeded cities and volunteer roles as its
+reference baseline, then runs each CSV event through the real service at its
+historical business-clock instant. Spreadsheet members have a null system actor
+and an audited `source: spreadsheet import` marker. Reset deliberately starts a
+new fictional audit history; it is unsuitable for a deployment containing real
+operational data. Truncating settings overrides restores the defaults in settings.

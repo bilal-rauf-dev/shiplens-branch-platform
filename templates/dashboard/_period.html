@@ -1,0 +1,7 @@
+{% load i18n %}
+<form method="get" class="filter-panel">
+  {% include "accounts/_form_fields.html" %}
+  <button class="btn btn--filled" type="submit">{% translate "Show period" %}</button>
+</form>
+<p>{% if latest_month %}{% blocktranslate %}Showing {{ period_label }} (latest month with data){% endblocktranslate %}{% else %}{% blocktranslate %}Showing {{ period_label }}{% endblocktranslate %}{% endif %}</p>
+<p>{% translate "As of" %} <bdi>{{ as_of|date:"d M Y, H:i" }}</bdi> {% translate "PKT" %}</p>

@@ -9,4 +9,14 @@
     {% include "accounts/_form_fields.html" %}
     <button type="submit" class="btn btn--filled">{% translate "Save settings" %}</button>
   </form>
+  {% if demo_mode and user.role == "SUPER_ADMIN" %}
+    <section class="confirm-panel card">
+      <h2>{% translate "Reset demo data" %}</h2>
+      <p>{% translate "This replaces all demo changes with the sample data and logs everyone out." %}</p>
+      <form method="post" action="{% url 'demo-reset' %}">
+        {% csrf_token %}
+        <button class="btn btn--filled btn--error" type="submit">{% translate "Reset demo data" %}</button>
+      </form>
+    </section>
+  {% endif %}
 {% endblock %}

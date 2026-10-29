@@ -23,7 +23,7 @@ NEW_PASSWORD = "Cobalt!Harbor-83-Pine"  # noqa: S105 -- test-only credential.
         (Role.SUPER_ADMIN, "/ur/app/dashboard/"),
         (Role.FINANCE_REVIEWER, "/ur/app/dashboard/"),
         (Role.BRANCH_LEAD, "/ur/app/my-branch/"),
-        (Role.HR_LEAD, "/ur/app/applications/"),
+        (Role.HR_LEAD, "/ur/app/hr/"),
         (Role.CONTENT_EDITOR, "/ur/app/content/"),
     ],
 )

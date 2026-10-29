@@ -1,0 +1,6 @@
+branch_code,city_code,name_en,name_ur,address_en,address_ur,phone,email,target_status
+BR-QTA-01,QTA,Quetta Jinnah Road,کوئٹہ جناح روڈ,"Fictional community office, QTA",فرضی سماجی دفتر,+923000000200,branch.qta@example.org,CLOSED
+BR-KHI-01,KHI,Karachi Central,کراچی مرکزی,"Fictional community office, KHI",فرضی سماجی دفتر,+923000000201,branch.khi@example.org,ACTIVE
+BR-LHE-01,LHE,Lahore Gulberg,لاہور گلبرگ,"Fictional community office, LHE",فرضی سماجی دفتر,+923000000202,branch.lhe@example.org,ACTIVE
+BR-ISB-01,ISB,Islamabad G-9,اسلام آباد جی نائن,"Fictional community office, ISB",فرضی سماجی دفتر,+923000000203,branch.isb@example.org,PAUSED
+BR-PEW-01,PEW,Peshawar University Road,پشاور یونیورسٹی روڈ,"Fictional community office, PEW",فرضی سماجی دفتر,+923000000204,branch.pew@example.org,FORMING

@@ -12,7 +12,7 @@ ROLE_HOME_NAMES = {
     Role.FINANCE_REVIEWER: "dashboard-head-office",
     Role.CONTENT_EDITOR: "content-list",
     Role.BRANCH_LEAD: "dashboard-branch",
-    Role.HR_LEAD: "application-list",
+    Role.HR_LEAD: "dashboard-hr",
 }
 
 

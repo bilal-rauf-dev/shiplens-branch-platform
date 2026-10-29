@@ -30,7 +30,7 @@ Approve, reject or amend each line. Rejected items change the referenced docs.
 | ASSUMPTION-24 | Placeholder org name "Ujala Volunteer Network" until brand pack | 16 | Use brand pack |
 | ASSUMPTION-25 | Paid Render (~$13 for one month) during judging window recommended; otherwise free + keep-warm | 15 | Free tier with documented caveats |
 | ASSUMPTION-26 | Django admin disabled in production | 05, 11 | — |
-| ASSUMPTION-27 | Dashboard default period = current month; judges/video use October 2026 via selector | 09 | Default to "latest month with data" |
+| ASSUMPTION-27 | **Changed 2026-10-29:** dashboard default period = the current month if it has any collections, otherwise the latest month that has collections; the page states which month is shown and why. Judges opening the live site in November see October 2026 (the sample data) instead of an empty month | 09 | Default to the current month only |
 | ASSUMPTION-28 | Merge-commit strategy (no squash) to preserve commit count | 15 | — |
 | ASSUMPTION-29 | Planning docs committed to the public repo (shows originality) and declared in AI-USAGE | 01 | Keep them private: exclude `docs/planning` |
 | ASSUMPTION-30 | Exports audited and rate-limited | 13 | — |

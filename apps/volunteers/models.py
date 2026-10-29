@@ -197,11 +197,15 @@ class Member(models.Model):
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
         related_name="created_members",
     )
     updated_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.RESTRICT,
+        null=True,
+        blank=True,
         related_name="updated_members",
     )
     created_at = models.DateTimeField(_("created at"), default=clock.now)

@@ -5,11 +5,12 @@ from django.utils.translation import gettext_lazy as _
 from apps.accounts.permissions import scope_queryset
 from apps.branches.models import Branch
 from apps.core import rules
+from apps.core.forms import Form
 from apps.finance.models import ReportStatus
 from apps.finance.report_fields import REPORT_FIELDS
 
 
-class ReportFilterForm(forms.Form):
+class ReportFilterForm(Form):
     branch = forms.ModelChoiceField(
         label=_("Branch"),
         queryset=Branch.objects.none(),
@@ -51,7 +52,7 @@ class ReportFilterForm(forms.Form):
         return values
 
 
-class ReportReviewForm(forms.Form):
+class ReportReviewForm(Form):
     expected_revision = forms.IntegerField(min_value=0, widget=forms.HiddenInput)
     comment = forms.CharField(
         label=_("Review comment"), required=False, widget=forms.Textarea
@@ -64,7 +65,7 @@ class ReportReviewForm(forms.Form):
         self.fields["comment"].widget.attrs["maxlength"] = maximum
 
 
-class ReportNarrativeForm(forms.Form):
+class ReportNarrativeForm(Form):
     """Build only the explicitly registered narrative fields. BR-084."""
 
     def __init__(self, *args, **kwargs):

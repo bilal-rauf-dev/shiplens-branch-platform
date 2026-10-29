@@ -4,9 +4,10 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 
 from apps.branches.models import BranchStatus, City
+from apps.core.forms import Form
 
 
-class BranchFilterForm(forms.Form):
+class BranchFilterForm(Form):
     city = forms.ModelChoiceField(
         label=_("City"), queryset=City.objects.order_by("code"), required=False
     )
@@ -17,7 +18,7 @@ class BranchFilterForm(forms.Form):
     )
 
 
-class BranchCreateForm(forms.Form):
+class BranchCreateForm(Form):
     city = forms.ModelChoiceField(
         label=_("City"), queryset=City.objects.order_by("code")
     )
@@ -41,7 +42,7 @@ class BranchCreateForm(forms.Form):
     email = forms.EmailField(label=_("Email"), max_length=254, required=False)
 
 
-class BranchEditForm(forms.Form):
+class BranchEditForm(Form):
     name_en = forms.CharField(label=_("English name"), max_length=100)
     name_ur = forms.CharField(label=_("Urdu name"), max_length=100)
     address_en = forms.CharField(
@@ -62,7 +63,7 @@ class BranchEditForm(forms.Form):
     email = forms.EmailField(label=_("Email"), max_length=254, required=False)
 
 
-class CityCreateForm(forms.Form):
+class CityCreateForm(Form):
     code = forms.RegexField(
         label=_("Code"),
         regex=r"\A[A-Z]{3}\Z",
@@ -73,6 +74,6 @@ class CityCreateForm(forms.Form):
     name_ur = forms.CharField(label=_("Urdu name"), max_length=60)
 
 
-class CityEditForm(forms.Form):
+class CityEditForm(Form):
     name_en = forms.CharField(label=_("English name"), max_length=60)
     name_ur = forms.CharField(label=_("Urdu name"), max_length=60)

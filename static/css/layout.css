@@ -4,9 +4,10 @@ body { display: flex; flex-direction: column; }
 .site-footer { background: var(--md-surface-container); }
 .site-header { border-block-end: 1px solid var(--md-outline-variant); }
 .site-footer { border-block-start: 1px solid var(--md-outline-variant); }
-.brand { font-weight: 700; }
-.top-app-bar__inner { position: relative; display: flex; align-items: center; justify-content: space-between; gap: var(--md-s4); }
-.public-navigation { margin-inline-start: auto; }
+.brand { font-size: 1.5rem; line-height: 1.3; font-weight: 500; color: var(--md-on-surface); }
+.top-app-bar__inner { position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--md-s4); }
+.public-navigation { margin-inline-start: auto; gap: var(--md-s2); }
+@media (width < 480px) { .public-navigation { margin-inline-start: 0; } }
 .staff-shell { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--md-s6); }
 .staff-main { min-inline-size: 0; }
 .staff-rail nav, .staff-menu nav { display: flex; flex-direction: column; align-items: stretch; gap: var(--md-s2); }
@@ -22,19 +23,12 @@ body { display: flex; flex-direction: column; }
   }
 }
 .staff-app .page-title { font-size: 2rem; }
-.form-card { max-inline-size: 48rem; margin-block: var(--md-s5); }
+.form-card { max-inline-size: 40rem; margin-block: var(--md-s5); margin-inline: auto; }
 .inline-action { display: inline-flex; align-items: center; margin-block: 0; margin-inline: 0; }
 .filter-panel { padding-block: var(--md-s4); padding-inline: var(--md-s4); border-radius: var(--md-radius-lg); background: var(--md-surface-container); }
-.form-card .form-field, .filter-panel .form-field { max-inline-size: none; }
-.public-form-card, .login-card { position: relative; isolation: isolate; overflow: hidden; max-inline-size: 48rem; margin-inline: auto; }
-.login-card { max-inline-size: 32rem; }
-.public-form-card::before, .login-card::before {
-  content: ""; position: absolute; z-index: 0; pointer-events: none;
-  inset-block-start: -25%; inset-inline-end: -20%; inline-size: 70%; block-size: 80%;
-  border-radius: 100px 20px 100px 100px;
-  background: radial-gradient(circle, rgb(103 80 164 / .20), transparent 70%);
-}
-.public-form-card > *, .login-card > * { position: relative; z-index: 1; }
+.card .form-field, .filter-panel .form-field { max-inline-size: none; }
+.public-form-card { max-inline-size: 40rem; margin-inline: auto; }
+.login-card { max-inline-size: 28rem; margin-inline: auto; }
 main { flex: 1; padding-block: var(--md-s8); }
 main h1 { margin-block: 0 var(--md-s5); }
 nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--md-s4); }

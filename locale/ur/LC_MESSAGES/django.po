@@ -1463,3 +1463,9 @@ msgstr ""
 
 msgid "entries; oldest age in days:"
 msgstr ""
+
+msgid "required"
+msgstr "ضروری"
+
+msgid "Read notice"
+msgstr "نوٹس پڑھیں"

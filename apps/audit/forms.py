@@ -5,9 +5,10 @@ from apps.accounts.models import Role
 from apps.accounts.permissions import scope_queryset
 from apps.audit import selectors
 from apps.branches.models import Branch
+from apps.core.forms import Form
 
 
-class AuditFilterForm(forms.Form):
+class AuditFilterForm(Form):
     date_from = forms.DateField(
         label=_("From date (PKT)"),
         required=False,

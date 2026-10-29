@@ -19,20 +19,8 @@
         {{ field }}
       {% elif field.name == "website" %}
         <div class="honeypot" aria-hidden="true">{{ field.label_tag }} {{ field }}</div>
-      {% elif field.name == "interests" or field.name == "availability" or field.name == "preferred_language" %}
-        <fieldset class="application-group" id="{{ field.auto_id }}" tabindex="-1" aria-describedby="{{ field.auto_id }}_hint{% if field.errors %} {{ field.auto_id }}_errors{% endif %}">
-          <legend>{{ field.label }}</legend>
-          <p class="help-text" id="{{ field.auto_id }}_hint">{{ field.help_text }}</p>
-          {% for choice in field %}<div>{{ choice.tag }} <label for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label></div>{% endfor %}
-          {% if field.errors %}<div id="{{ field.auto_id }}_errors">{{ field.errors }}</div>{% endif %}
-        </fieldset>
       {% else %}
-        <div class="form-field{% if field.errors %} form-field--error{% endif %}">
-          {{ field.label_tag }}
-          {{ field }}
-          <div class="help-text" id="{{ field.auto_id }}_hint">{{ field.help_text }}</div>
-          {% if field.errors %}<div id="{{ field.auto_id }}_errors">{{ field.errors }}</div>{% endif %}
-        </div>
+        {% include "partials/form_field.html" with help_id=field.auto_id|add:"_hint" %}
       {% endif %}
     {% endfor %}
     <button type="submit" class="btn btn--filled">{% translate "Submit application" %}</button>

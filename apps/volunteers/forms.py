@@ -11,6 +11,7 @@ from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 
 from apps.core import clock, rules
+from apps.core.forms import Form
 from apps.volunteers import selectors
 from apps.volunteers.constants import AVAILABILITY, INTERESTS
 from apps.volunteers.models import ApplicationStatus, MemberStatus, Team, VolunteerRole
@@ -50,11 +51,11 @@ class BranchChoiceField(forms.ModelChoiceField):
         return f"{branch.code} · {name}"
 
 
-class TeamForm(forms.Form):
+class TeamForm(Form):
     name = forms.CharField(label=_("Team name"), max_length=60)
 
 
-class MemberEditForm(forms.Form):
+class MemberEditForm(Form):
     team_id = forms.ModelChoiceField(
         label=_("Team"), queryset=Team.objects.none(), required=False
     )
@@ -88,27 +89,27 @@ class MemberEditForm(forms.Form):
         ).order_by("sort_order", "code")
 
 
-class MemberActionForm(forms.Form):
+class MemberActionForm(Form):
     pass
 
 
-class MemberLeftForm(forms.Form):
+class MemberLeftForm(Form):
     left_on = forms.DateField(
         label=_("Left on"), widget=forms.DateInput(attrs={"type": "date"})
     )
 
 
-class MemberReinstateForm(forms.Form):
+class MemberReinstateForm(Form):
     reason = forms.CharField(label=_("Reason"), widget=forms.Textarea)
 
 
-class VolunteerRoleForm(forms.Form):
+class VolunteerRoleForm(Form):
     name_en = forms.CharField(label=_("English name"), max_length=60)
     name_ur = forms.CharField(label=_("Urdu name"), max_length=60)
     sort_order = forms.IntegerField(label=_("Sort order"), min_value=0, initial=0)
 
 
-class MemberFilterForm(forms.Form):
+class MemberFilterForm(Form):
     q = forms.CharField(label=_("Search"), max_length=254, required=False)
     branch = forms.TypedChoiceField(
         label=_("Branch"), coerce=int, empty_value=None, required=False
@@ -185,7 +186,7 @@ class MemberFilterForm(forms.Form):
         return cleaned
 
 
-class ApplicationFilterForm(forms.Form):
+class ApplicationFilterForm(Form):
     branch_id = BranchChoiceField(
         label=_("Branch"),
         queryset=selectors.accepting_branches().none(),
@@ -206,7 +207,7 @@ class VolunteerRoleChoiceField(forms.ModelChoiceField):
         return role.name_ur if get_language() == "ur" else role.name_en
 
 
-class AcceptApplicationForm(forms.Form):
+class AcceptApplicationForm(Form):
     team_id = forms.ModelChoiceField(
         label=_("Team"), queryset=Team.objects.none(), required=False
     )
@@ -224,7 +225,7 @@ class AcceptApplicationForm(forms.Form):
         ).order_by("name")
 
 
-class DeclineApplicationForm(forms.Form):
+class DeclineApplicationForm(Form):
     reason = forms.CharField(label=_("Reason"), widget=forms.Textarea)
 
     def __init__(self, *args, **kwargs):
@@ -249,13 +250,13 @@ class DeclineApplicationForm(forms.Form):
         )
 
 
-class ReassignApplicationForm(forms.Form):
+class ReassignApplicationForm(Form):
     branch_id = BranchChoiceField(
         label=_("Target branch"), queryset=selectors.accepting_branches()
     )
 
 
-class ApplicationForm(forms.Form):
+class ApplicationForm(Form):
     full_name = forms.CharField(
         label=_("Full name"),
         help_text=_("Use your name, including Urdu letters if preferred."),

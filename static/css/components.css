@@ -1,6 +1,6 @@
 /* MD3 controls share state layers so each colour variant behaves alike. */
 .btn, button {
-  position: relative; isolation: isolate; display: inline-flex; align-items: center;
+  position: relative; isolation: isolate; overflow: hidden; display: inline-flex; align-items: center;
   justify-content: center; gap: var(--md-s2); min-block-size: 40px;
   padding-block: var(--md-s2); padding-inline: var(--md-s5); border: 0;
   border-radius: var(--md-radius-full); color: var(--md-on-primary);
@@ -69,21 +69,21 @@
 .hero > *, .section--primary > * { position: relative; z-index: 1; }
 .hero::before, .hero::after, .section--primary::before {
   content: ""; position: absolute; z-index: 0; pointer-events: none;
-  border-radius: 100px 20px 100px 100px;
+  border-radius: 50%;
 }
 .hero::before {
   inset-block-start: -25%; inset-inline-end: -10%; inline-size: 55%; block-size: 125%;
-  background: radial-gradient(circle, rgb(103 80 164 / .24), transparent 70%);
+  background: radial-gradient(closest-side, rgb(103 80 164 / .24), transparent);
   mix-blend-mode: multiply;
 }
 .hero::after {
   inset-block-end: -35%; inset-inline-start: 25%; inline-size: 45%; block-size: 80%;
-  background: radial-gradient(circle, rgb(125 82 96 / .18), transparent 72%);
+  background: radial-gradient(closest-side, rgb(125 82 96 / .18), transparent);
   mix-blend-mode: multiply;
 }
 .section--primary::before {
   inset-block-end: -35%; inset-inline-end: -10%; inline-size: 60%; block-size: 130%;
-  background: radial-gradient(circle, rgb(232 222 248 / .25), transparent 70%);
+  background: radial-gradient(closest-side, rgb(232 222 248 / .25), transparent);
 }
 .section--primary .card--glass {
   color: var(--md-on-primary); background: rgb(255 255 255 / .12);
@@ -98,6 +98,7 @@
 
 .form-field { display: grid; gap: var(--md-s2); margin-block-end: var(--md-s5); max-inline-size: 32rem; }
 .form-field label { font-size: .875rem; font-weight: 500; }
+.required-indicator { color: var(--md-on-surface-variant); font-weight: 400; }
 :is(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), select, textarea) {
   inline-size: 100%; min-inline-size: 0; min-block-size: 56px;
   padding-block: var(--md-s3); padding-inline: var(--md-s4);
@@ -119,15 +120,32 @@ textarea { min-block-size: 112px; resize: block; }
 .errorlist::before { content: "!"; margin-inline-end: var(--md-s2); font-weight: 700; }
 .help-text { color: var(--md-on-surface-variant); font-size: .875rem; }
 input[type="checkbox"], input[type="radio"] {
-  inline-size: 44px; block-size: 44px; margin-block: 0; margin-inline: 0;
+  inline-size: 1.25rem; block-size: 1.25rem; flex: 0 0 1.25rem;
+  margin-block: 0; margin-inline: 0;
   accent-color: var(--md-primary); cursor: pointer;
 }
-.application-group {
-  max-inline-size: 32rem; margin-block-end: var(--md-s5);
-  padding-block: var(--md-s4); padding-inline: var(--md-s4);
-  border: 1px solid var(--md-outline); border-radius: var(--md-radius-md);
+.choice-row, label:has(> input[type="checkbox"]), label:has(> input[type="radio"]) {
+  display: flex; align-items: center; gap: var(--md-s3); min-block-size: 44px; min-inline-size: 44px;
+  padding-inline: var(--md-s1); border-radius: var(--md-radius-xs);
+  font-size: 1rem; font-weight: 400; cursor: pointer;
+  transition: background-color var(--md-dur-fast) var(--md-ease);
 }
-.application-group legend { font-weight: 500; }
+.choice-row > span { min-inline-size: 0; }
+.consent-row { display: flex; align-items: center; gap: var(--md-s3); }
+.consent-row .choice-row { flex: 1; min-inline-size: 0; }
+.consent-row > a { flex-shrink: 0; }
+.choice-options { display: grid; gap: var(--md-s1); }
+@media (hover: hover) {
+  .choice-row:hover, label:has(> input[type="checkbox"]):hover,
+  label:has(> input[type="radio"]):hover { background: rgb(28 27 31 / .08); }
+}
+.application-group {
+  inline-size: 100%; min-inline-size: 0; max-inline-size: none;
+  margin-block: 0 var(--md-s5); margin-inline: 0;
+  padding-block: 0; padding-inline: 0; border: 0;
+}
+.application-group legend { padding-inline: 0; font-size: 1rem; font-weight: 500; }
+.application-group .help-text { margin-block: var(--md-s2); }
 .application-note { white-space: pre-wrap; }
 
 .chip, .status-badge {
@@ -201,11 +219,21 @@ input[type="checkbox"], input[type="radio"] {
   background: rgb(255 251 254 / .85); backdrop-filter: blur(12px);
   border-block-end: 1px solid var(--md-outline-variant);
 }
-.top-app-bar .nav-link, .staff-rail .nav-link {
+.brand, .nav-link {
+  position: relative; isolation: isolate; overflow: hidden;
   display: inline-flex; align-items: center; min-block-size: 40px;
   padding-inline: var(--md-s4); border-radius: var(--md-radius-full); text-decoration: none;
 }
-.top-app-bar .nav-link[aria-current="page"], .staff-rail .nav-link[aria-current="page"] {
+.nav-link { font-size: .875rem; line-height: 1.4; font-weight: 500; }
+.brand::before, .nav-link::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background: currentColor; opacity: 0; pointer-events: none;
+  transition: opacity var(--md-dur-fast) var(--md-ease);
+}
+.brand:focus-visible::before, .nav-link:focus-visible::before { opacity: .10; }
+.brand:active::before, .nav-link:active::before { opacity: .12; }
+.brand[aria-current="page"] { background: var(--md-secondary-container); }
+.nav-link[aria-current="page"] {
   color: var(--md-on-secondary-container); background: var(--md-secondary-container);
 }
 .staff-rail { display: none; }
@@ -225,9 +253,7 @@ input[type="checkbox"], input[type="radio"] {
   .staff-menu { display: none; }
 }
 @media (hover: hover) {
-  .top-app-bar .nav-link:hover, .staff-rail .nav-link:hover {
-    background: var(--md-secondary-container);
-  }
+  .brand:hover::before, .nav-link:hover::before { opacity: .08; }
 }
 
 .snackbar, .notice {
@@ -251,8 +277,8 @@ input[type="checkbox"], input[type="radio"] {
 .empty-state::before {
   content: ""; position: absolute; z-index: 0;
   inset-block-start: -50%; inset-inline-end: -10%;
-  inline-size: 60%; block-size: 150%; border-radius: 100px 20px 100px 100px;
-  background: radial-gradient(circle, rgb(103 80 164 / .15), transparent 70%);
+  inline-size: 60%; block-size: 150%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(103 80 164 / .15), transparent);
   pointer-events: none;
 }
 .empty-state > * { position: relative; z-index: 1; }

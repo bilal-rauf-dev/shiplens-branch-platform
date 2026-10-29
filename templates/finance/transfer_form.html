@@ -2,7 +2,7 @@
 {% block title %}{% translate "Create transfer" %} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}<h1 class="page-title">{% translate "Create transfer" %} · <bdi>{{ branch.code }}</bdi></h1>
 {{ form.errors }}
-<form method="get">{{ form.collections.label_tag }} {{ form.collections }}<button type="submit" class="btn btn--filled">{% translate "Review selected entries" %}</button></form>
+<form method="get">{% include "partials/form_field.html" with field=form.collections help_id="id_collections_helptext" %}<button type="submit" class="btn btn--filled">{% translate "Review selected entries" %}</button></form>
 {% if selected %}<h2>{% translate "Selected collections" %}</h2><ul>{% for item in selected %}<li><bdi>{{ item.reference }}</bdi> · <bdi>{{ item.amount|floatformat:2 }}</bdi> {% translate "PKR" %}</li>{% endfor %}</ul><p>{% translate "Selected total (PKR)" %}: <bdi>{{ selected_total|floatformat:2 }}</bdi></p>
 <form method="post" class="form-card card">{% csrf_token %}{% for item in selected %}<input type="hidden" name="collections" value="{{ item.pk }}">{% endfor %}
 <div class="form-field"><bdi>{{ form.transfer_date.label_tag }}</bdi><bdi>{{ form.transfer_date }}</bdi><bdi>{{ form.transfer_date.errors }}</bdi></div>

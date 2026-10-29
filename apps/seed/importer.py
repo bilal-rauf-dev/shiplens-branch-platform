@@ -17,6 +17,8 @@ from apps.accounts.models import Role, User
 from apps.audit.context import request_context
 from apps.branches import services as branches
 from apps.branches.models import Branch, City
+from apps.cms import services as cms
+from apps.cms.models import ContentStatus
 from apps.core import clock
 from apps.finance import report_services
 from apps.finance import services as finance
@@ -26,6 +28,10 @@ from apps.volunteers import services as volunteers
 from apps.volunteers.models import Application, Member, Team, VolunteerRole
 
 HEADERS = {
+    "content": (
+        "type,slug,status,sort_order,image,event_start,event_end,location_en,location_ur,"
+        "title_en,summary_en,body_en,title_ur,summary_ur,body_ur"
+    ),
     "cities": "code,name_en,name_ur",
     "branches": (
         "branch_code,city_code,name_en,name_ur,address_en,address_ur,phone,email,"
@@ -361,6 +367,39 @@ def import_sample_data(directory, mapping_path=None):
                     raise ValidationError(
                         f"events.csv:{line} {row['action']}: {error}"
                     ) from error
+            actor = User.objects.get(role=Role.CONTENT_EDITOR)
+            # Keep imported audit timestamps chronological after the authored timeline.
+            with clock.frozen_at(max(event[0] for event in events)):
+                for row in tables["content"]:
+                    item = cms.create(
+                        actor,
+                        type=row["type"],
+                        slug=row["slug"],
+                        sort_order=int(row["sort_order"]),
+                        image_path=row["image"],
+                        event_start=datetime.fromisoformat(row["event_start"])
+                        if row["event_start"]
+                        else None,
+                        event_end=datetime.fromisoformat(row["event_end"])
+                        if row["event_end"]
+                        else None,
+                        location_en=row["location_en"],
+                        location_ur=row["location_ur"],
+                        translations={
+                            locale: {
+                                "title": row[f"title_{locale}"],
+                                "summary": row[f"summary_{locale}"],
+                                "body_md": row[f"body_{locale}"],
+                            }
+                            for locale in ("en", "ur")
+                        },
+                    )
+                    if row["status"] == ContentStatus.PUBLISHED:
+                        cms.transition(actor, item.pk, "publish")
+                    elif row["status"] == ContentStatus.ARCHIVED:
+                        cms.transition(actor, item.pk, "archive")
+                    elif row["status"] != ContentStatus.DRAFT:
+                        raise ValidationError("Unknown content target status")
     finally:
         request_context.reset(token)
     return {name: len(rows) for name, rows in tables.items()}

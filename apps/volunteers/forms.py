@@ -342,22 +342,32 @@ class ApplicationForm(Form):
             "preferred_language", "ur" if get_language() == "ur" else "en"
         )
         self.initial.setdefault("render_token", render_token())
+        limits = rules.get_many(
+            [
+                "application_name_min_length",
+                "application_name_max_length",
+                "application_motivation_min_length",
+                "application_motivation_max_length",
+                "min_volunteer_age",
+                "volunteer_max_age",
+            ]
+        )
         self.fields["full_name"].widget.attrs.update(
             {
-                "minlength": rules.get("application_name_min_length"),
-                "maxlength": rules.get("application_name_max_length"),
+                "minlength": limits["application_name_min_length"],
+                "maxlength": limits["application_name_max_length"],
             }
         )
         self.fields["motivation"].widget.attrs.update(
             {
-                "minlength": rules.get("application_motivation_min_length"),
-                "maxlength": rules.get("application_motivation_max_length"),
+                "minlength": limits["application_motivation_min_length"],
+                "maxlength": limits["application_motivation_max_length"],
             }
         )
         earliest, latest = birth_date_bounds(
             clock.today(),
-            rules.get("min_volunteer_age"),
-            rules.get("volunteer_max_age"),
+            limits["min_volunteer_age"],
+            limits["volunteer_max_age"],
         )
         self.fields["date_of_birth"].widget.attrs.update(
             {"min": earliest.isoformat(), "max": latest.isoformat()}

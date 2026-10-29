@@ -1,0 +1,7 @@
+{% load i18n navigation %}
+{% nav_current 'home' as current %}<a class="nav-link" href="{% url 'home' %}"{% if current %} aria-current="page"{% endif %}>{% translate "Home" %}</a>
+{% nav_current 'public-about' as current %}<a class="nav-link" href="{% url 'public-about' %}"{% if current %} aria-current="page"{% endif %}>{% translate "About" %}</a>
+{% nav_current 'public-programs' as current %}<a class="nav-link" href="{% url 'public-programs' %}"{% if current %} aria-current="page"{% endif %}>{% translate "Programs" %}</a>
+{% nav_current 'public-branches' as current %}<a class="nav-link" href="{% url 'public-branches' %}"{% if current %} aria-current="page"{% endif %}>{% translate "Branches" %}</a>
+{% nav_current 'public-events' as current %}<a class="nav-link" href="{% url 'public-events' %}"{% if current %} aria-current="page"{% endif %}>{% translate "Events" %}</a>
+{% nav_current 'volunteer-apply' as current %}<a class="nav-link" href="{% url 'volunteer-apply' %}"{% if current %} aria-current="page"{% endif %}>{% translate "Get involved" %}</a>

@@ -1,0 +1,1 @@
+{% load cms %}{% if content.english_only %}<p class="notice">{{ content.fallback_note }}</p>{% endif %}<div class="cms-prose"{% if content.english_only %} lang="en" dir="ltr"{% endif %}>{{ content.body_html|render_cms }}</div>

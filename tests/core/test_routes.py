@@ -99,6 +99,7 @@ def test_registered_route_denies_wrong_role(staff_client):
 
 
 @pytest.mark.parametrize("language", ["en", "ur"])
+@pytest.mark.django_db
 def test_public_routes_remain_public(client, language):
     assert client.get(f"/{language}/").status_code == 200
     assert client.get(f"/{language}/accounts/login/").status_code == 200

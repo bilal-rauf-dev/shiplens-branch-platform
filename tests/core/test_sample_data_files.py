@@ -26,6 +26,7 @@ def test_sample_dataset_row_counts_and_natural_keys():
         "transfers": 7,
         "reports": 10,
         "events": 102,
+        "content": 12,
     }
     for name, count in expected.items():
         records = rows(name)

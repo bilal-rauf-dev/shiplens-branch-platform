@@ -97,6 +97,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "apps.seed.context_processors.demo_mode",
+                "apps.publicsite.context_processors.public_context",
             ]
         },
     }

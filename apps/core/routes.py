@@ -86,5 +86,21 @@ ROUTE_ACTIONS = {
 
 # Login handles signed-in visitors by redirecting them to their role's home.
 PUBLIC_ROUTES = frozenset(
-    {"home", "account-login", "health", "volunteer-apply", "volunteer-thanks"}
+    {
+        "home",
+        "account-login",
+        "health",
+        "volunteer-apply",
+        "volunteer-thanks",
+        "set_language",
+        "public-about",
+        "public-programs",
+        "public-program-detail",
+        "public-branches",
+        "public-branch-detail",
+        "public-events",
+        "public-event-detail",
+        "public-contact",
+        "public-privacy",
+    }
 )

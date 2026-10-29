@@ -1,5 +1,7 @@
 import pytest
 from django.db import connection
+from django.utils import translation
+from django.utils.translation import gettext
 
 
 @pytest.mark.django_db
@@ -14,7 +16,8 @@ def test_t_i18n_dir(client, language, direction):
 
     assert response.status_code == 200
     assert f'<html lang="{language}" dir="{direction}">' in response.text
-    assert "ShipLens" in response.text
+    with translation.override(language):
+        assert gettext("Ujala Volunteer Network") in response.text
     assert response["Content-Language"] == language
 
 

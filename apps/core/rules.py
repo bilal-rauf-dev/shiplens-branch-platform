@@ -11,3 +11,12 @@ def get(name):
     if override is not None:
         return override.value
     return settings.BUSINESS_RULES[name]
+
+
+def get_many(names):
+    """Read a form's deployment defaults and current overrides in one query."""
+    values = {name: settings.BUSINESS_RULES[name] for name in names}
+    values.update(
+        SystemSetting.objects.filter(key__in=names).values_list("key", "value")
+    )
+    return values

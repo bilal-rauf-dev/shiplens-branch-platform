@@ -134,9 +134,16 @@ def test_t_app_dup_flag_and_no_enum(client, post_data):
     assert urlsplit(fresh.url).path == urlsplit(duplicate.url).path
     first_page, second_page = client.get(fresh.url), client.get(duplicate.url)
     assert first_page.templates[0].name == second_page.templates[0].name
-    assert first_page.text.replace(
-        first.reference, "REFERENCE"
-    ) == second_page.text.replace(second.reference, "REFERENCE")
+
+    def comparable(page, reference):
+        # Language-switch forms mask their CSRF token afresh on each response.
+        return re.sub(
+            r'(name="csrfmiddlewaretoken" value=")[^"]+', r"\1CSRF", page.text
+        ).replace(reference, "REFERENCE")
+
+    assert comparable(first_page, first.reference) == comparable(
+        second_page, second.reference
+    )
     assert "duplicate" not in second_page.text.lower()
 
 

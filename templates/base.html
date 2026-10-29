@@ -15,37 +15,36 @@
     {% if LANGUAGE_CODE == 'ur' %}<link rel="stylesheet" href="{% static 'css/urdu.css' %}">{% endif %}
     {% block extra_head %}{% endblock %}
   </head>
-  <body class="{% if user.is_authenticated %}staff-app{% else %}public-app{% endif %}">
+  <body class="{% if user.is_authenticated and not public_page %}staff-app{% else %}public-app{% endif %}">
     <a class="skip-link" href="#main">{% translate "Skip to main content" %}</a>
     <header class="site-header top-app-bar">
       <div class="container top-app-bar__inner">
-        {% nav_current 'home' as is_home %}<a class="brand" href="{% url 'home' %}"{% if is_home %} aria-current="page"{% endif %}>{% translate "ShipLens" %}</a>
-        {% if user.is_authenticated %}
-          <details class="staff-menu">
-            <summary>{% translate "Menu" %}</summary>
-            <nav aria-label="{% translate 'Main navigation' %}">{% include "partials/staff_navigation.html" %}</nav>
-          </details>
+        <a class="brand" href="{% url 'home' %}" aria-label="{% translate 'Ujala Volunteer Network' %}"><span class="brand-full">{% translate "Ujala Volunteer Network" %}</span><span class="brand-short" aria-hidden="true">{% translate "Ujala" %}</span></a>
+        {% if user.is_authenticated and not public_page %}
+          <details class="staff-menu"><summary>{% translate "Menu" %}</summary><nav aria-label="{% translate 'Main navigation' %}">{% include "partials/staff_navigation.html" %}</nav></details>
         {% else %}
-          <nav class="public-navigation" aria-label="{% translate 'Main navigation' %}">
-            {% nav_current 'volunteer-apply' as is_apply %}<a class="nav-link" href="{% url 'volunteer-apply' %}"{% if is_apply %} aria-current="page"{% endif %}>{% translate "Get involved" %}</a>
-            {% nav_current 'account-login' as is_login %}<a class="nav-link" href="{% url 'account-login' %}"{% if is_login %} aria-current="page"{% endif %}>{% translate "Log in" %}</a>
-          </nav>
+          <div class="public-header-actions">
+            {% include "public/language_switcher.html" %}
+            {% nav_current 'account-login' as is_login %}<a class="btn btn--text" href="{% url 'account-login' %}"{% if is_login %} aria-current="page"{% endif %}>{% translate "Log in" %}</a>
+            <details class="public-menu"><summary class="btn btn--text">{% translate "Menu" %}</summary><nav aria-label="{% translate 'Mobile navigation' %}">{% include "public/navigation.html" %}</nav></details>
+          </div>
+          <nav class="public-navigation" aria-label="{% translate 'Main navigation' %}">{% include "public/navigation.html" %}</nav>
         {% endif %}
       </div>
     </header>
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and not public_page %}
       <div class="staff-shell container">
         <aside class="staff-rail" aria-label="{% translate 'Main navigation' %}">
           <nav>{% include "partials/staff_navigation.html" %}</nav>
         </aside>
     {% endif %}
-    <main id="main" class="{% if user.is_authenticated %}staff-main{% else %}container public-main{% endif %}" tabindex="-1">
+    <main id="main" class="{% if user.is_authenticated and not public_page %}staff-main{% else %}container public-main{% endif %}" tabindex="-1">
       {% for message in messages %}
         <p class="snackbar{% if 'error' in message.tags %} snackbar--error{% endif %}" role="status">{{ message }}</p>
       {% endfor %}
       {% block content %}{% endblock %}
     </main>
-    {% if user.is_authenticated %}</div>{% endif %}
-    <footer class="site-footer"><div class="container">{% translate "ShipLens" %}</div></footer>
+    {% if user.is_authenticated and not public_page %}</div>{% endif %}
+    <footer class="site-footer"><div class="container footer-grid"><div><p class="type-title-l">{% translate "Ujala Volunteer Network" %}</p><p>{% translate "Light up your city" %}</p>{% if demo_mode %}<p class="chip">{% translate "Demo data" %}</p>{% endif %}</div><div>{% include "public/contact_details.html" %}</div><nav aria-label="{% translate 'Footer navigation' %}"><a href="{% url 'public-contact' %}">{% translate "Contact" %}</a><a href="{% url 'public-privacy' %}">{% translate "Privacy" %}</a>{% include "public/language_switcher.html" %}</nav></div></footer>
   </body>
 </html>

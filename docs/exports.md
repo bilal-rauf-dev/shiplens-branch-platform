@@ -50,3 +50,9 @@ On Windows without Pango, run PDF tests in Linux using the production image's
 libraries and the locked development dependencies. Run `pytest tests/exports`
 against PostgreSQL; the normal full suite also covers every export route in the
 role matrix. `pypdf` is a development-only dependency for PDF assertions.
+
+Scope checks cover foreign branch IDs and branch text in CSV queries, foreign
+report PDF IDs, HR assignment revocation, and Finance Reviewer denial for member
+exports. HR filenames identify assigned scope too. The review queue deliberately
+does not offer the general report-list CSV button: its implicit review-status
+filter is different from the general list.

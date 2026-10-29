@@ -73,7 +73,11 @@ def events(user, params):
 
 
 def branch_ids(user):
-    return list(assigned_branch_ids(user)) if user.role == "BRANCH_LEAD" else None
+    return (
+        list(assigned_branch_ids(user))
+        if user.role in {"BRANCH_LEAD", "HR_LEAD"}
+        else None
+    )
 
 
 def unsent(user, params):

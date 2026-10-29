@@ -9,14 +9,7 @@
   {% endif %}
   <form method="post">
     {% csrf_token %}
-    {{ form.non_field_errors }}
-    {% for field in form %}
-      <div class="form-field{% if field.errors %} form-field--error{% endif %}">
-        {{ field.label_tag }}
-        {{ field }}
-        {{ field.errors }}
-      </div>
-    {% endfor %}
+    {% include "accounts/_form_fields.html" %}
     <button type="submit" class="btn btn--filled">{% translate "Log in" %}</button>
   </form>
   </section>

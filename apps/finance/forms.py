@@ -5,12 +5,13 @@ from django.core.validators import MaxLengthValidator, MinLengthValidator
 from django.utils.translation import gettext_lazy as _
 
 from apps.core import clock, rules
+from apps.core.forms import Form
 from apps.finance import selectors
 from apps.finance.models import Collection, CollectionMethod, CollectionState
 from apps.volunteers.models import Member
 
 
-class CollectionFilterForm(forms.Form):
+class CollectionFilterForm(Form):
     date_from = forms.DateField(
         label=_("From date"),
         required=False,
@@ -49,7 +50,7 @@ class CollectionFilterForm(forms.Form):
         return cleaned
 
 
-class TransferSelectionForm(forms.Form):
+class TransferSelectionForm(Form):
     collections = forms.ModelMultipleChoiceField(
         label=_("Collections"),
         queryset=Collection.objects.none(),
@@ -67,7 +68,7 @@ class TransferSelectionForm(forms.Form):
         return items
 
 
-class TransferForm(forms.Form):
+class TransferForm(Form):
     collections = forms.ModelMultipleChoiceField(
         label=_("Collections"),
         queryset=Collection.objects.none(),
@@ -117,7 +118,7 @@ class TransferForm(forms.Form):
         return cleaned
 
 
-class VoidCollectionForm(forms.Form):
+class VoidCollectionForm(Form):
     reason = forms.CharField(label=_("Void reason"), widget=forms.Textarea)
 
     def __init__(self, *args, **kwargs):
@@ -132,7 +133,7 @@ class VoidCollectionForm(forms.Form):
         )
 
 
-class CollectionForm(forms.Form):
+class CollectionForm(Form):
     collection_date = forms.DateField(
         label=_("Collection date"), widget=forms.DateInput(attrs={"type": "date"})
     )

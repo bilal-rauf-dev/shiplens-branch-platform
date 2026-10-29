@@ -6,9 +6,10 @@ from django.utils.translation import gettext_lazy as _
 from apps.accounts import selectors, services
 from apps.accounts.models import Role, User
 from apps.core import rules
+from apps.core.forms import Form
 
 
-class LoginForm(forms.Form):
+class LoginForm(Form):
     email = forms.EmailField(
         label=_("Email"),
         max_length=254,
@@ -40,25 +41,28 @@ class LoginForm(forms.Form):
 class ChangePasswordForm(PasswordChangeForm):
     """Use Django's password validation; persistence stays in the account service."""
 
+    template_name_label = "core/forms/label.html"
+
     def __init__(self, *args, **kwargs):
+        kwargs["label_suffix"] = ""
         super().__init__(*args, **kwargs)
         minimum = rules.get("password_min_length")
         for name in ("new_password1", "new_password2"):
             self.fields[name].widget.attrs["minlength"] = minimum
 
 
-class UserCreateForm(forms.Form):
+class UserCreateForm(Form):
     email = forms.EmailField(label=_("Email"), max_length=254)
     full_name = forms.CharField(label=_("Full name"), max_length=100)
     role = forms.ChoiceField(label=_("Role"), choices=Role.choices)
 
 
-class UserEditForm(forms.Form):
+class UserEditForm(Form):
     full_name = forms.CharField(label=_("Full name"), max_length=100)
     role = forms.ChoiceField(label=_("Role"), choices=Role.choices)
 
 
-class BranchAssignmentForm(forms.Form):
+class BranchAssignmentForm(Form):
     branch_id = forms.TypedChoiceField(label=_("Branch"), coerce=int)
 
     def __init__(self, *args, **kwargs):
@@ -69,7 +73,7 @@ class BranchAssignmentForm(forms.Form):
         ]
 
 
-class SystemSettingsForm(forms.Form):
+class SystemSettingsForm(Form):
     collection_lock_days = forms.IntegerField(label=_("Collection lock days"))
     allow_submit_current_week = forms.BooleanField(
         label=_("Allow submission during the current week"),

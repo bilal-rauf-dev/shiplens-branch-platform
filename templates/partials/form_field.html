@@ -1,0 +1,27 @@
+{% load i18n %}
+{% if field.is_hidden %}
+  {{ field }}
+{% elif field.use_fieldset %}
+  <fieldset class="application-group{% if field.errors %} form-field--error{% endif %}" id="{{ field.auto_id }}" tabindex="-1"{% if field.help_text or field.errors %} aria-describedby="{% if field.help_text %}{{ help_id }}{% endif %}{% if field.errors %} {{ field.auto_id }}_errors{% endif %}"{% endif %}>
+    {{ field.legend_tag }}
+    {% if field.help_text %}<div class="help-text" id="{{ help_id }}">{{ field.help_text }}</div>{% endif %}
+    <div class="choice-options">
+      {% for choice in field %}<label class="choice-row" for="{{ choice.id_for_label }}">{{ choice.tag }}<span>{{ choice.choice_label }}</span></label>{% endfor %}
+    </div>
+    {% if field.errors %}<div id="{{ field.auto_id }}_errors">{{ field.errors }}</div>{% endif %}
+  </fieldset>
+{% else %}
+  <div class="form-field{% if field.errors %} form-field--error{% endif %}">
+    {% if field.field.widget.input_type == "checkbox" %}
+      <div{% if field.name == "privacy_consent" %} class="consent-row"{% endif %}>
+        <label class="choice-row" for="{{ field.id_for_label }}">{{ field }}<span>{{ field.label }}{% include "core/forms/required.html" %}</span></label>
+        {% if field.name == "privacy_consent" %}<a href="#{{ help_id }}">{% translate "Read notice" %}</a>{% endif %}
+      </div>
+    {% else %}
+      {{ field.label_tag }}
+      {{ field }}
+    {% endif %}
+    {% if field.help_text %}<div class="help-text" id="{{ help_id }}"{% if field.name == "privacy_consent" %} tabindex="-1"{% endif %}>{{ field.help_text }}</div>{% endif %}
+    {% if field.errors %}<div id="{{ field.auto_id }}_errors">{{ field.errors }}</div>{% endif %}
+  </div>
+{% endif %}

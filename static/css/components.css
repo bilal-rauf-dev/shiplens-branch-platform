@@ -98,6 +98,7 @@
 
 .form-field { display: grid; gap: var(--md-s2); margin-block-end: var(--md-s5); max-inline-size: 32rem; }
 .form-field label { font-size: .875rem; font-weight: 500; }
+.required-indicator { color: var(--md-on-surface-variant); font-weight: 400; }
 :is(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), select, textarea) {
   inline-size: 100%; min-inline-size: 0; min-block-size: 56px;
   padding-block: var(--md-s3); padding-inline: var(--md-s4);
@@ -119,15 +120,32 @@ textarea { min-block-size: 112px; resize: block; }
 .errorlist::before { content: "!"; margin-inline-end: var(--md-s2); font-weight: 700; }
 .help-text { color: var(--md-on-surface-variant); font-size: .875rem; }
 input[type="checkbox"], input[type="radio"] {
-  inline-size: 44px; block-size: 44px; margin-block: 0; margin-inline: 0;
+  inline-size: 1.25rem; block-size: 1.25rem; flex: 0 0 1.25rem;
+  margin-block: 0; margin-inline: 0;
   accent-color: var(--md-primary); cursor: pointer;
 }
-.application-group {
-  max-inline-size: 32rem; margin-block-end: var(--md-s5);
-  padding-block: var(--md-s4); padding-inline: var(--md-s4);
-  border: 1px solid var(--md-outline); border-radius: var(--md-radius-md);
+.choice-row, label:has(> input[type="checkbox"]), label:has(> input[type="radio"]) {
+  display: flex; align-items: center; gap: var(--md-s3); min-block-size: 44px; min-inline-size: 44px;
+  padding-inline: var(--md-s1); border-radius: var(--md-radius-xs);
+  font-size: 1rem; font-weight: 400; cursor: pointer;
+  transition: background-color var(--md-dur-fast) var(--md-ease);
 }
-.application-group legend { font-weight: 500; }
+.choice-row > span { min-inline-size: 0; }
+.consent-row { display: flex; align-items: center; gap: var(--md-s3); }
+.consent-row .choice-row { flex: 1; min-inline-size: 0; }
+.consent-row > a { flex-shrink: 0; }
+.choice-options { display: grid; gap: var(--md-s1); }
+@media (hover: hover) {
+  .choice-row:hover, label:has(> input[type="checkbox"]):hover,
+  label:has(> input[type="radio"]):hover { background: rgb(28 27 31 / .08); }
+}
+.application-group {
+  inline-size: 100%; min-inline-size: 0; max-inline-size: none;
+  margin-block: 0 var(--md-s5); margin-inline: 0;
+  padding-block: 0; padding-inline: 0; border: 0;
+}
+.application-group legend { padding-inline: 0; font-size: 1rem; font-weight: 500; }
+.application-group .help-text { margin-block: var(--md-s2); }
 .application-note { white-space: pre-wrap; }
 
 .chip, .status-badge {

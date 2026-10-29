@@ -22,12 +22,12 @@ body { display: flex; flex-direction: column; }
   }
 }
 .staff-app .page-title { font-size: 2rem; }
-.form-card { max-inline-size: 48rem; margin-block: var(--md-s5); }
+.form-card { max-inline-size: 40rem; margin-block: var(--md-s5); margin-inline: auto; }
 .inline-action { display: inline-flex; align-items: center; margin-block: 0; margin-inline: 0; }
 .filter-panel { padding-block: var(--md-s4); padding-inline: var(--md-s4); border-radius: var(--md-radius-lg); background: var(--md-surface-container); }
-.form-card .form-field, .filter-panel .form-field { max-inline-size: none; }
-.public-form-card, .login-card { max-inline-size: 48rem; margin-inline: auto; }
-.login-card { max-inline-size: 32rem; }
+.card .form-field, .filter-panel .form-field { max-inline-size: none; }
+.public-form-card { max-inline-size: 40rem; margin-inline: auto; }
+.login-card { max-inline-size: 28rem; margin-inline: auto; }
 main { flex: 1; padding-block: var(--md-s8); }
 main h1 { margin-block: 0 var(--md-s5); }
 nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--md-s4); }

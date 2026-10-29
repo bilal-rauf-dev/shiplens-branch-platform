@@ -1,0 +1,59 @@
+@import url("tokens.css");
+@import url("urdu.css");
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/roboto-400-latin.woff2") format("woff2");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/roboto-500-latin.woff2") format("woff2");
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/roboto-700-latin.woff2") format("woff2");
+  font-weight: 700;
+}
+@page {
+  size: A4;
+  font-family: "Roboto", sans-serif;
+  font-size: 8pt;
+  margin-block: 18mm;
+  margin-inline: 18mm;
+  @bottom-center { content: "page " counter(page) " / " counter(pages); }
+}
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 9pt;
+  line-height: 1.45;
+  color: var(--md-on-surface);
+  background: var(--md-surface);
+  margin-block: 0;
+  margin-inline: 0;
+}
+html[lang="ur"] body { font-family: "Noto Naskh Arabic", "Roboto", serif; }
+header { border-block-end: 2pt solid var(--md-primary); padding-block-end: 3mm; }
+.organization { font-size: 12pt; font-weight: 500; color: var(--md-primary); }
+h1 { font-size: 21pt; font-weight: 500; margin-block: 2mm; }
+h2 { font-size: 13pt; font-weight: 500; margin-block: 6mm 2mm; }
+h3 { font-size: 10pt; font-weight: 500; margin-block: 2mm 1mm; }
+p { margin-block: 1mm 2mm; }
+table { inline-size: 100%; border-collapse: collapse; font-size: 8pt; }
+thead { display: table-header-group; }
+tr { break-inside: avoid; }
+th, td {
+  padding-block: 2mm;
+  padding-inline: 2mm;
+  border-block-end: .5pt solid var(--md-outline-variant);
+  text-align: start;
+  vertical-align: middle;
+  overflow-wrap: anywhere;
+}
+th { background: var(--md-secondary-container); color: var(--md-on-secondary-container); font-weight: 500; }
+bdi { direction: ltr; font-family: "Roboto", sans-serif; }
+.hash { font-size: 7pt; overflow-wrap: anywhere; }
+.narrative { white-space: pre-wrap; overflow-wrap: anywhere; }
+.history { break-inside: avoid; border-block-start: .5pt solid var(--md-outline-variant); padding-block: 2mm; }
+.watermark { position: fixed; inset-block-start: 40%; inset-inline-start: 8%; color: var(--md-error); opacity: .14; font-size: 30pt; transform: rotate(-25deg); }
+footer { margin-block-start: 6mm; border-block-start: 1pt solid var(--md-outline); padding-block-start: 2mm; font-size: 7pt; color: var(--md-on-surface-variant); }

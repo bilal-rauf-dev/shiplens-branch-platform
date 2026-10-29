@@ -490,6 +490,8 @@ def demo_reset_payload(scenario):
 
 
 ROUTE_CASES = {
+    "export-report-pdf": RouteCase("GET", report_url, report_object, 200),
+    "export-summary-pdf": RouteCase("GET", page_url, no_object, 200),
     "export-collections-csv": RouteCase("GET", page_url, collection_object, 200),
     "export-unsent-csv": RouteCase("GET", page_url, no_object, 200),
     "export-reports-csv": RouteCase("GET", page_url, report_object, 200),

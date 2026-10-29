@@ -1,6 +1,8 @@
 """Every reachable named route must be explicitly public or declare an action."""
 
 ROUTE_ACTIONS = {
+    "export-report-pdf": "report.export_pdf",
+    "export-summary-pdf": "summary.export_pdf",
     "export-collections-csv": "collection.export_csv",
     "export-unsent-csv": "unsent.export_csv",
     "export-reports-csv": "report.export_csv",

@@ -19,7 +19,20 @@ def test_logical_css_passes(tmp_path):
     assert CHECKER["find_violations"](tmp_path) == []
 
 
-@pytest.mark.parametrize("css", ["a { margin-left: 2px; }", "a { width: 20px; }"])
+@pytest.mark.parametrize(
+    "css",
+    [
+        "a { margin-left: 2px; }",
+        "a { width: 20px; }",
+        "a { padding-right: 2px; }",
+        "a { border-left: 1px solid; }",
+        "a { right: 0; }",
+        "a { left: 0; }",
+        "a { text-align: right; }",
+        "a { float: left; }",
+        "a { float: right; }",
+    ],
+)
 def test_physical_css_reports_source_location(tmp_path, css):
     static = tmp_path / "static"
     static.mkdir()
@@ -54,3 +67,10 @@ def test_only_cms_filter_may_mark_html_safe(tmp_path):
     templates.mkdir()
     (templates / "bad.html").write_text("{{ value|safe }}")
     assert len(CHECKER["find_violations"](tmp_path)) == 2
+
+
+def test_vendor_css_is_exempt(tmp_path):
+    vendor = tmp_path / "static" / "vendor"
+    vendor.mkdir(parents=True)
+    (vendor / "library.css").write_text("a { left: 0; float: right; }")
+    assert CHECKER["find_violations"](tmp_path) == []

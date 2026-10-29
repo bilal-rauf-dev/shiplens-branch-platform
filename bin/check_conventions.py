@@ -8,7 +8,7 @@ PHYSICAL_CSS = re.compile(
     r"(?:margin|padding|border)-(?:left|right|top|bottom)\b"
     r"|(?:left|right|top|bottom|width|height|min-width|max-width|min-height|max-height)\s*:"
     r"|(?:margin|padding)\s*:"
-    r"|text-align\s*:\s*(?:left|right)\b)"
+    r"|(?:text-align|float)\s*:\s*(?:left|right)\b)"
 )
 DIRECT_MODEL_WRITE = re.compile(r"\.save\s*\(|\.objects\.get\s*\(")
 
@@ -17,6 +17,8 @@ def find_violations(root):
     """Return source locations that break the explicit rules in AGENTS.md."""
     violations = []
     for path in sorted((root / "static").rglob("*.css")):
+        if "vendor" in path.relative_to(root / "static").parts:
+            continue
         for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
             if PHYSICAL_CSS.search(line):
                 violations.append(

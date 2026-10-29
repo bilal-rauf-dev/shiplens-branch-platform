@@ -4,8 +4,8 @@
   <ol>
     {% for row in history %}
       <li>
-        <p><time datetime="{{ row.event.occurred_at|date:'c' }}">{{ row.event.occurred_at|localtime|date:"DATETIME_FORMAT" }} {% translate "PKT" %}</time> · {{ row.event.actor_label }} · {{ row.action_label }}</p>
-        <ul>{% for change in row.changes %}<li>{{ change.field }}: {{ change.before|default:"—" }} → {{ change.after|default:"—" }}</li>{% endfor %}</ul>
+        <p><time datetime="{{ row.event.occurred_at|date:'c' }}">{{ row.event.occurred_at|localtime|date:"DATETIME_FORMAT" }} {% translate "PKT" %}</time> · <bdi>{{ row.event.actor_label }}</bdi> · {{ row.action_label }}</p>
+        <ul>{% for change in row.changes %}<li>{{ change.field }}: <bdi>{{ change.before|default:"—" }}</bdi> <span class="icon-directional" aria-hidden="true">→</span> <bdi>{{ change.after|default:"—" }}</bdi></li>{% endfor %}</ul>
       </li>
     {% empty %}<li>{% translate "No history yet." %}</li>{% endfor %}
   </ol>

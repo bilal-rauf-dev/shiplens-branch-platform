@@ -42,3 +42,15 @@ def test_view_writes_and_csrf_exemptions_are_rejected(tmp_path):
 
     assert len(violations) == 3
     assert not any("services.py" in violation for violation in violations)
+
+
+def test_only_cms_filter_may_mark_html_safe(tmp_path):
+    app = tmp_path / "apps" / "cms" / "templatetags"
+    app.mkdir(parents=True)
+    (app / "cms.py").write_text("return mark_safe(sanitize(value))\n")
+    assert CHECKER["find_violations"](tmp_path) == []
+    (app / "other.py").write_text("return mark_safe(value)\n")
+    templates = tmp_path / "templates"
+    templates.mkdir()
+    (templates / "bad.html").write_text("{{ value|safe }}")
+    assert len(CHECKER["find_violations"](tmp_path)) == 2

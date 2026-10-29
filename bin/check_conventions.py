@@ -26,6 +26,14 @@ def find_violations(root):
     for path in sorted((root / "apps").rglob("*.py")):
         is_view = path.name == "views.py" or "views" in path.relative_to(root).parts
         for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+            if (
+                re.search(r"\bmark_safe\s*\(", line)
+                and path.relative_to(root).as_posix() != "apps/cms/templatetags/cms.py"
+            ):
+                violations.append(
+                    f"{path.relative_to(root)}:{number}: "
+                    "only render_cms may mark sanitized HTML safe"
+                )
             if "csrf_exempt" in line:
                 violations.append(
                     f"{path.relative_to(root)}:{number}: CSRF exemptions are forbidden"
@@ -33,6 +41,13 @@ def find_violations(root):
             if is_view and DIRECT_MODEL_WRITE.search(line):
                 violations.append(
                     f"{path.relative_to(root)}:{number}: use services/scoped lookups"
+                )
+    for path in sorted((root / "templates").rglob("*.html")):
+        for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+            if re.search(r"\|\s*safe\b", line):
+                violations.append(
+                    f"{path.relative_to(root)}:{number}: "
+                    "use render_cms for sanitized CMS HTML"
                 )
     return violations
 

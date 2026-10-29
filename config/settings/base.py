@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "apps.seed.apps.SeedConfig",
     "apps.dashboard.apps.DashboardConfig",
     "apps.exports",
+    "apps.cms",
     "axes",
 ]
 AUTH_USER_MODEL = "accounts.User"

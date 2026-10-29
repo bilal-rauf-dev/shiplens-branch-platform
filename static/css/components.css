@@ -1,6 +1,6 @@
 /* MD3 controls share state layers so each colour variant behaves alike. */
 .btn, button {
-  position: relative; isolation: isolate; display: inline-flex; align-items: center;
+  position: relative; isolation: isolate; overflow: hidden; display: inline-flex; align-items: center;
   justify-content: center; gap: var(--md-s2); min-block-size: 40px;
   padding-block: var(--md-s2); padding-inline: var(--md-s5); border: 0;
   border-radius: var(--md-radius-full); color: var(--md-on-primary);
@@ -69,21 +69,21 @@
 .hero > *, .section--primary > * { position: relative; z-index: 1; }
 .hero::before, .hero::after, .section--primary::before {
   content: ""; position: absolute; z-index: 0; pointer-events: none;
-  border-radius: 100px 20px 100px 100px;
+  border-radius: 50%;
 }
 .hero::before {
   inset-block-start: -25%; inset-inline-end: -10%; inline-size: 55%; block-size: 125%;
-  background: radial-gradient(circle, rgb(103 80 164 / .24), transparent 70%);
+  background: radial-gradient(closest-side, rgb(103 80 164 / .24), transparent);
   mix-blend-mode: multiply;
 }
 .hero::after {
   inset-block-end: -35%; inset-inline-start: 25%; inline-size: 45%; block-size: 80%;
-  background: radial-gradient(circle, rgb(125 82 96 / .18), transparent 72%);
+  background: radial-gradient(closest-side, rgb(125 82 96 / .18), transparent);
   mix-blend-mode: multiply;
 }
 .section--primary::before {
   inset-block-end: -35%; inset-inline-end: -10%; inline-size: 60%; block-size: 130%;
-  background: radial-gradient(circle, rgb(232 222 248 / .25), transparent 70%);
+  background: radial-gradient(closest-side, rgb(232 222 248 / .25), transparent);
 }
 .section--primary .card--glass {
   color: var(--md-on-primary); background: rgb(255 255 255 / .12);
@@ -251,8 +251,8 @@ input[type="checkbox"], input[type="radio"] {
 .empty-state::before {
   content: ""; position: absolute; z-index: 0;
   inset-block-start: -50%; inset-inline-end: -10%;
-  inline-size: 60%; block-size: 150%; border-radius: 100px 20px 100px 100px;
-  background: radial-gradient(circle, rgb(103 80 164 / .15), transparent 70%);
+  inline-size: 60%; block-size: 150%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(103 80 164 / .15), transparent);
   pointer-events: none;
 }
 .empty-state > * { position: relative; z-index: 1; }

@@ -33,6 +33,40 @@ def test_hover_styles_only_apply_to_hover_devices():
                 assert "blur(" not in tinycss2.serialize(declaration.value)
 
 
+def test_decorative_shapes_fade_inside_their_boxes_and_avoid_form_cards():
+    for path in CSS.parent.glob("*.css"):
+        stylesheet = tinycss2.parse_stylesheet(path.read_text(encoding="utf-8"))
+        for rule, _ in rules_in(stylesheet):
+            selector = tinycss2.serialize(rule.prelude)
+            for declaration in tinycss2.parse_declaration_list(rule.content):
+                if declaration.type != "declaration":
+                    continue
+                value = tinycss2.serialize(declaration.value)
+                if "radial-gradient(" in value:
+                    assert "radial-gradient(closest-side," in value, selector
+                    assert ".public-form-card" not in selector
+                    assert ".login-card" not in selector
+                if declaration.name == "mix-blend-mode":
+                    assert selector.strip() in {".hero::before", ".hero::after"}
+
+
+def test_button_state_layers_are_clipped_to_the_button():
+    stylesheet = tinycss2.parse_stylesheet(CSS.read_text(encoding="utf-8"))
+    for rule, _ in rules_in(stylesheet):
+        if tinycss2.serialize(rule.prelude).strip() != ".btn, button":
+            continue
+        declarations = {
+            item.name: tinycss2.serialize(item.value).strip()
+            for item in tinycss2.parse_declaration_list(rule.content)
+            if item.type == "declaration"
+        }
+        assert declarations["position"] == "relative"
+        assert declarations["overflow"] == "hidden"
+        assert declarations["border-radius"] == "var(--md-radius-full)"
+        return
+    pytest.fail("Missing shared button containment rule")
+
+
 @pytest.mark.parametrize(
     "status",
     [

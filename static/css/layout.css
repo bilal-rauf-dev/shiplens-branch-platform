@@ -26,15 +26,8 @@ body { display: flex; flex-direction: column; }
 .inline-action { display: inline-flex; align-items: center; margin-block: 0; margin-inline: 0; }
 .filter-panel { padding-block: var(--md-s4); padding-inline: var(--md-s4); border-radius: var(--md-radius-lg); background: var(--md-surface-container); }
 .form-card .form-field, .filter-panel .form-field { max-inline-size: none; }
-.public-form-card, .login-card { position: relative; isolation: isolate; overflow: hidden; max-inline-size: 48rem; margin-inline: auto; }
+.public-form-card, .login-card { max-inline-size: 48rem; margin-inline: auto; }
 .login-card { max-inline-size: 32rem; }
-.public-form-card::before, .login-card::before {
-  content: ""; position: absolute; z-index: 0; pointer-events: none;
-  inset-block-start: -25%; inset-inline-end: -20%; inline-size: 70%; block-size: 80%;
-  border-radius: 100px 20px 100px 100px;
-  background: radial-gradient(circle, rgb(103 80 164 / .20), transparent 70%);
-}
-.public-form-card > *, .login-card > * { position: relative; z-index: 1; }
 main { flex: 1; padding-block: var(--md-s8); }
 main h1 { margin-block: 0 var(--md-s5); }
 nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--md-s4); }

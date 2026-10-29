@@ -1,4 +1,4 @@
-{% extends "pdf/base.html" %}{% load i18n tz %}
+{% extends "pdf/base.html" %}{% load i18n tz money %}
 {% block heading %}<h1>{% translate "Weekly report" %}</h1>
 <p><bdi>{{ report.branch.code }}</bdi> · {% if lang == 'ur' %}{{ report.branch.name_ur }}{% else %}{{ report.branch.name_en }}{% endif %}</p>
 <p><bdi>{{ report.week_start|date:"Y-m-d" }}</bdi> – <bdi>{{ report.week_end|date:"Y-m-d" }}</bdi></p>
@@ -9,16 +9,16 @@
 {% if report.status != 'LOCKED' %}<div class="watermark">{% translate "DRAFT — NOT APPROVED" %}</div>{% endif %}
 <h2>{% translate "Aggregates" %}</h2>
 <table><tbody>
-<tr><th>{% translate "Total (PKR)" %}</th><td><bdi>{{ figures.total_amount|floatformat:"2g" }}</bdi></td><th>{% translate "Entry count" %}</th><td><bdi>{{ figures.entry_count }}</bdi></td></tr>
-{% for method in method_totals %}<tr><th>{{ method.label }}</th><td colspan="3"><bdi>{{ method.amount|floatformat:"2g" }}</bdi></td></tr>{% endfor %}
-<tr><th>{% translate "Unsent at week end (PKR)" %}</th><td colspan="3"><bdi>{{ figures.unsent_amount_at_week_end|floatformat:"2g" }}</bdi></td></tr>
+<tr><th>{% translate "Total (PKR)" %}</th><td><bdi>{{ figures.total_amount|money }}</bdi></td><th>{% translate "Entry count" %}</th><td><bdi>{{ figures.entry_count }}</bdi></td></tr>
+{% for method in method_totals %}<tr><th>{{ method.label }}</th><td colspan="3"><bdi>{{ method.amount|money }}</bdi></td></tr>{% endfor %}
+<tr><th>{% translate "Unsent at week end (PKR)" %}</th><td colspan="3"><bdi>{{ figures.unsent_amount_at_week_end|money }}</bdi></td></tr>
 <tr><th>{% translate "New members" %}</th><td><bdi>{{ figures.new_members }}</bdi></td><th>{% translate "Active members at week end" %}</th><td><bdi>{{ figures.active_members_end }}</bdi></td></tr>
 <tr><th>{% translate "Applications received" %}</th><td><bdi>{{ figures.applications_received }}</bdi></td><th>{% translate "Applications accepted" %}</th><td><bdi>{{ figures.applications_accepted }}</bdi></td></tr>
 <tr><th>{% translate "Applications declined" %}</th><td colspan="3"><bdi>{{ figures.applications_declined }}</bdi></td></tr>
 </tbody></table>
 <h2>{% translate "Collections" %}</h2>
 <table><thead><tr><th>{% translate "Reference" %}</th><th>{% translate "Collection date" %}</th><th>{% translate "Method" %}</th><th>{% translate "Amount (PKR)" %}</th></tr></thead><tbody>
-{% for line in lines %}<tr><td><bdi>{{ line.reference }}</bdi></td><td><bdi>{{ line.collection_date|date:"Y-m-d" }}</bdi></td><td>{{ line.method }}</td><td><bdi>{{ line.amount|floatformat:"2g" }}</bdi></td></tr>{% empty %}<tr><td colspan="4">{% translate "No collections found." %}</td></tr>{% endfor %}
+{% for line in lines %}<tr><td><bdi>{{ line.reference }}</bdi></td><td><bdi>{{ line.collection_date|date:"Y-m-d" }}</bdi></td><td>{{ line.method }}</td><td><bdi>{{ line.amount|money }}</bdi></td></tr>{% empty %}<tr><td colspan="4">{% translate "No collections found." %}</td></tr>{% endfor %}
 </tbody></table>
 <h2>{% translate "Narrative" %}</h2>{% for item in narrative_items %}<h3>{{ item.label }}</h3><p class="narrative">{{ item.value }}</p>{% endfor %}
 <h2>{% translate "Review history" %}</h2>

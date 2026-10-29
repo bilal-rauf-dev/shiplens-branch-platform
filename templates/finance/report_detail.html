@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n tz exports %}
+{% load i18n tz exports money %}
 {% block title %}{{ report.branch.code }} · {{ report.week_start }} · {% translate "ShipLens" %}
 {% endblock %}
 {% block content %}<h1 class="page-title"><bdi>{{ report.branch.code }}</bdi> · <bdi>{{ report.week_start }}</bdi> – <bdi>{{ report.week_end }}</bdi></h1>
@@ -18,13 +18,13 @@
 {% endif %}</h2>
 <dl class="record-details card">
 <dt>{% translate "Total (PKR)" %}</dt>
-<dd><bdi>{{ figures.total_amount|floatformat:2 }}</bdi></dd>
+<dd><bdi>{{ figures.total_amount|money }}</bdi></dd>
 <dt>{% translate "Entry count" %}</dt>
 <dd><bdi>{{ figures.entry_count }}</bdi></dd>
 {% for method in method_totals %}<dt>{{ method.label }}</dt>
-<dd><bdi>{{ method.amount|floatformat:2 }}</bdi></dd>{% endfor %}
+<dd><bdi>{{ method.amount|money }}</bdi></dd>{% endfor %}
 <dt>{% translate "Unsent at week end (PKR)" %}</dt>
-<dd><bdi>{{ figures.unsent_amount_at_week_end|floatformat:2 }}</bdi></dd>
+<dd><bdi>{{ figures.unsent_amount_at_week_end|money }}</bdi></dd>
 <dt>{% translate "New members" %}</dt>
 <dd><bdi>{{ figures.new_members }}</bdi></dd>
 <dt>{% translate "Active members at week end" %}</dt>
@@ -52,7 +52,7 @@
 </td>
 <td data-label="{% translate 'Collection date' %}"><bdi>{{ line.collection_date }}</bdi></td>
 <td data-label="{% translate 'Method' %}">{{ line.method }}</td>
-<td class="numeric" data-label="{% translate 'Amount (PKR)' %}"><bdi>{{ line.amount|floatformat:2 }}</bdi></td>
+<td class="numeric" data-label="{% translate 'Amount (PKR)' %}"><bdi>{{ line.amount|money }}</bdi></td>
 </tr>{% empty %}<tr>
 <td colspan="4">{% translate "No collections found." %}</td>
 </tr>{% endfor %}</tbody>

@@ -301,7 +301,7 @@ def test_member_list_urdu_and_mobile_labels(
     client.force_login(reviewer)
     response = client.get("/ur/app/members/")
     assert response.status_code == 200 and 'dir="rtl"' in response.text
-    assert "اراکین" in response.text
+    assert "ارکان" in response.text
     assert "آزمائشی شاخ" in response.text
     assert 'data-label="رکن شناخت"' in response.text
     assert "<script" not in response.text

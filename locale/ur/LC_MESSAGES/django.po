@@ -2,387 +2,2107 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ShipLens\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-30 01:06+0500\n"
 "Language: ur\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Access denied"
-msgstr "رسائی کی اجازت نہیں"
+#: apps/accounts/apps.py:8
+msgid "Accounts"
+msgstr "اکاؤنٹس"
 
-msgid "You do not have permission to access this page."
-msgstr "آپ کو اس صفحے تک رسائی کی اجازت نہیں ہے۔"
+#: apps/accounts/forms.py:14 apps/accounts/forms.py:55
+#: apps/branches/forms.py:42 apps/branches/forms.py:63
+#: apps/branches/selectors.py:20 apps/exports/registry.py:112
+#: apps/volunteers/forms.py:265 templates/accounts/user_detail.html:7
+#: templates/accounts/user_list.html:10 templates/accounts/user_list.html:13
+#: templates/branches/branch_detail.html:16
+#: templates/volunteers/application_detail.html:11
+#: templates/volunteers/member_detail.html:8
+msgid "Email"
+msgstr "ای میل"
 
-msgid "Page not found"
-msgstr "صفحہ نہیں ملا"
+#: apps/accounts/forms.py:19
+msgid "Password"
+msgstr "پاس ورڈ"
 
-msgid "The page you requested could not be found."
-msgstr "آپ کا مطلوبہ صفحہ نہیں مل سکا۔"
+#: apps/accounts/forms.py:37
+msgid "Email or password is incorrect."
+msgstr "ای میل یا پاس ورڈ درست نہیں ہے۔"
 
-msgid "Something went wrong"
-msgstr "کچھ غلط ہو گیا"
+#: apps/accounts/forms.py:56 apps/accounts/forms.py:61
+#: apps/exports/registry.py:105 apps/volunteers/forms.py:261
+#: templates/volunteers/application_detail.html:10
+#: templates/volunteers/application_list.html:19
+#: templates/volunteers/application_list.html:23
+#: templates/volunteers/member_detail.html:7
+#: templates/volunteers/member_list.html:13
+#: templates/volunteers/member_list.html:16
+msgid "Full name"
+msgstr "پورا نام"
 
-msgid "Please try again later."
-msgstr "براہ کرم کچھ دیر بعد دوبارہ کوشش کریں۔"
+#: apps/accounts/forms.py:57 apps/accounts/forms.py:62
+#: templates/accounts/user_detail.html:8 templates/accounts/user_list.html:10
+#: templates/accounts/user_list.html:13
+msgid "Role"
+msgstr "کردار"
 
-msgid "This action is not allowed in the branch's current state."
-msgstr "شاخ کی موجودہ حالت میں اس کارروائی کی اجازت نہیں ہے۔"
+#: apps/accounts/forms.py:66 apps/audit/forms.py:34
+#: apps/finance/report_forms.py:15 apps/volunteers/forms.py:115
+#: apps/volunteers/forms.py:191 apps/volunteers/selectors.py:57
+#: templates/audit/event_detail.html:11 templates/audit/event_list.html:13
+#: templates/audit/event_list.html:19 templates/dashboard/financial.html:35
+#: templates/dashboard/financial.html:36 templates/dashboard/financial.html:39
+#: templates/dashboard/hr.html:12 templates/finance/collection_detail.html:4
+#: templates/finance/collection_list.html:9
+#: templates/finance/collection_list.html:10
+#: templates/finance/report_list.html:18 templates/finance/report_list.html:26
+#: templates/finance/transfer_detail.html:4
+#: templates/finance/transfer_list.html:5
+#: templates/pdf/monthly_summary.html:16 templates/pdf/monthly_summary.html:18
+#: templates/volunteers/application_list.html:19
+#: templates/volunteers/application_list.html:23
+#: templates/volunteers/member_detail.html:10
+#: templates/volunteers/member_list.html:13
+#: templates/volunteers/member_list.html:17
+#: templates/volunteers/team_list.html:8
+#: templates/volunteers/team_list.html:10
+msgid "Branch"
+msgstr "شاخ"
 
-msgid "This branch cannot be closed: %(blockers)s"
-msgstr "یہ شاخ بند نہیں کی جا سکتی: %(blockers)s"
+#: apps/accounts/forms.py:77
+msgid "Collection lock days"
+msgstr "وصولی مقفل ہونے تک دن"
 
+#: apps/accounts/forms.py:79
+msgid "Allow submission during the current week"
+msgstr "موجودہ ہفتے کے دوران رپورٹ جمع کرنے کی اجازت دیں"
+
+#: apps/accounts/forms.py:82
+msgid "Minimum volunteer age"
+msgstr "رضاکار کی کم از کم عمر"
+
+#: apps/accounts/forms.py:83
+msgid "Applications per hour per IP"
+msgstr "فی آئی پی فی گھنٹہ درخواستیں"
+
+#: apps/accounts/forms.py:90
+#, python-format
+msgid "Allowed range: %(min)s–%(max)s."
+msgstr "مجاز حد: %(min)s–%(max)s۔"
+
+#: apps/accounts/models.py:14
+msgid "Super Admin"
+msgstr "اعلیٰ منتظم"
+
+#: apps/accounts/models.py:15
+msgid "Finance Reviewer"
+msgstr "مالی جائزہ کار"
+
+#: apps/accounts/models.py:16
+msgid "Content Editor"
+msgstr "مواد کے مدیر"
+
+#: apps/accounts/models.py:17
+msgid "Branch Lead"
+msgstr "شاخ کے سربراہ"
+
+#: apps/accounts/models.py:18
+msgid "HR Lead"
+msgstr "افرادی وسائل کے سربراہ"
+
+#: apps/accounts/models.py:32
+msgid "An email address is required."
+msgstr "ای میل پتہ درج کرنا ضروری ہے۔"
+
+#: apps/accounts/models.py:52
+msgid "A Super Admin must be active and have the Super Admin role."
+msgstr "اعلیٰ منتظم کا فعال ہونا اور اعلیٰ منتظم کا کردار رکھنا ضروری ہے۔"
+
+#: apps/accounts/models.py:61 apps/branches/models.py:69
+msgid "email address"
+msgstr "ای میل پتہ"
+
+#: apps/accounts/models.py:62 apps/volunteers/models.py:64
+#: apps/volunteers/models.py:185
+msgid "full name"
+msgstr "پورا نام"
+
+#: apps/accounts/models.py:63
+msgid "role"
+msgstr "کردار"
+
+#: apps/accounts/models.py:64 apps/volunteers/models.py:30
+#: apps/volunteers/models.py:45
+msgid "active"
+msgstr "فعال"
+
+#: apps/accounts/models.py:65
+msgid "demo account"
+msgstr "نمائشی اکاؤنٹ"
+
+#: apps/accounts/models.py:66
+msgid "must change password"
+msgstr "پاس ورڈ کی تبدیلی ضروری ہے"
+
+#: apps/accounts/models.py:68 apps/volunteers/models.py:78
+msgid "preferred language"
+msgstr "ترجیحی زبان"
+
+#: apps/accounts/models.py:70 apps/volunteers/forms.py:319
+#: config/settings/base.py:111 templates/cms/editor.html:10
+#: templates/cms/editor.html:12
+msgid "English"
+msgstr "انگریزی"
+
+#: apps/accounts/models.py:70 apps/volunteers/forms.py:319
+msgid "Urdu"
+msgstr "اردو"
+
+#: apps/accounts/models.py:73
+msgid "date joined"
+msgstr "شمولیت کی تاریخ"
+
+#: apps/accounts/models.py:74 apps/branches/models.py:22
+#: apps/branches/models.py:96 apps/core/models.py:17 apps/core/models.py:31
+#: apps/finance/models.py:80 apps/finance/models.py:237
+#: apps/volunteers/models.py:120 apps/volunteers/models.py:212
+msgid "updated at"
+msgstr "ترمیم کا وقت"
+
+#: apps/accounts/models.py:82 apps/accounts/models.py:104
+msgid "user"
+msgstr "صارف"
+
+#: apps/accounts/models.py:83
+msgid "users"
+msgstr "صارفین"
+
+#: apps/accounts/models.py:110 apps/branches/models.py:100
+msgid "branch"
+msgstr "شاخ"
+
+#: apps/accounts/models.py:116 apps/branches/models.py:85
+msgid "created by"
+msgstr "تخلیق کرنے والا"
+
+#: apps/accounts/models.py:118 apps/branches/models.py:21
+#: apps/branches/models.py:95 apps/finance/models.py:79
+#: apps/finance/models.py:169 apps/finance/models.py:236
+#: apps/volunteers/models.py:119 apps/volunteers/models.py:211
+msgid "created at"
+msgstr "تخلیق کا وقت"
+
+#: apps/accounts/models.py:122
+msgid "user branch assignment"
+msgstr "صارف کو شاخ کی تفویض"
+
+#: apps/accounts/models.py:123
+msgid "user branch assignments"
+msgstr "صارفین کو شاخوں کی تفویض"
+
+#: apps/accounts/services.py:97
+msgid "This account's password cannot be changed."
+msgstr "اس اکاؤنٹ کا پاس ورڈ تبدیل نہیں کیا جا سکتا۔"
+
+#: apps/accounts/services.py:99
+msgid "Your current password is incorrect."
+msgstr "آپ کا موجودہ پاس ورڈ درست نہیں ہے۔"
+
+#: apps/accounts/services.py:119
+msgid "Only Branch Leads and HR Leads can be assigned branches."
+msgstr ""
+"شاخیں صرف شاخ کے سربراہان اور افرادی وسائل کے سربراہان کو تفویض کی جا سکتی "
+"ہیں۔"
+
+#: apps/accounts/services.py:123
+msgid "Closed branches cannot receive assignments."
+msgstr "بند شاخیں تفویض نہیں کی جا سکتیں۔"
+
+#: apps/accounts/services.py:157 templates/accounts/user_detail.html:12
+msgid "Demo accounts cannot be edited."
+msgstr "نمائشی اکاؤنٹس میں ترمیم نہیں کی جا سکتی۔"
+
+#: apps/accounts/services.py:173
+msgid "The last active Super Admin cannot be demoted or deactivated."
+msgstr ""
+"آخری فعال اعلیٰ منتظم کا کردار تبدیل یا اکاؤنٹ غیر فعال نہیں کیا جا سکتا۔"
+
+#: apps/accounts/services.py:195 apps/accounts/services.py:221
+msgid "Demo Super Admins cannot create Super Admins."
+msgstr "نمائشی اعلیٰ منتظمین نئے اعلیٰ منتظمین نہیں بنا سکتے۔"
+
+#: apps/accounts/services.py:245
+msgid "Active must be true or false."
+msgstr "فعال ہونے کی قدر درست یا غلط ہونی چاہیے۔"
+
+#: apps/accounts/services.py:316
+msgid "Provide exactly the four editable settings."
+msgstr "صرف چار قابلِ ترمیم ترتیبات فراہم کریں۔"
+
+#: apps/accounts/services.py:326
+msgid "Enter a value within the allowed range."
+msgstr "براہِ کرم مجاز حد کے اندر قدر درج کریں۔"
+
+#: apps/accounts/views.py:42
+msgid "Too many login attempts from this connection. Please try again later."
+msgstr ""
+"اس کنکشن سے لاگ ان کی بہت زیادہ کوششیں کی گئی ہیں۔ براہ کرم بعد میں دوبارہ "
+"کوشش کریں۔"
+
+#: apps/accounts/views.py:111
+msgid "Staff area"
+msgstr "عملے کا حصہ"
+
+#: apps/accounts/views.py:158 templates/accounts/user_list.html:6
+msgid "Create user"
+msgstr "صارف بنائیں"
+
+#: apps/accounts/views.py:176 templates/accounts/user_detail.html:14
+msgid "Edit user"
+msgstr "صارف میں ترمیم کریں"
+
+#: apps/audit/apps.py:8 apps/audit/selectors.py:34
+msgid "Audit"
+msgstr "آڈٹ"
+
+#: apps/audit/forms.py:13
+msgid "From date (PKT)"
+msgstr "ابتدائی تاریخ (پاکستانی وقت)"
+
+#: apps/audit/forms.py:18
+msgid "To date (PKT)"
+msgstr "آخری تاریخ (پاکستانی وقت)"
+
+#: apps/audit/forms.py:22
+msgid "Actor email"
+msgstr "کارروائی کرنے والے کی ای میل"
+
+#: apps/audit/forms.py:24 apps/exports/registry.py:123
+msgid "Actor role"
+msgstr "کارروائی کرنے والے کا کردار"
+
+#: apps/audit/forms.py:25
+msgid "All roles"
+msgstr "تمام کردار"
+
+#: apps/audit/forms.py:28 apps/exports/registry.py:124
+#: templates/audit/event_detail.html:9 templates/audit/event_list.html:13
+#: templates/audit/event_list.html:17
+msgid "Action"
+msgstr "کارروائی"
+
+#: apps/audit/forms.py:29 apps/exports/registry.py:125
+msgid "Entity type"
+msgstr "ریکارڈ کی قسم"
+
+#: apps/audit/forms.py:31
+msgid "Entity ID or label"
+msgstr "ریکارڈ کی شناخت یا نام"
+
+#: apps/audit/forms.py:37 apps/finance/report_forms.py:18
+#: apps/volunteers/forms.py:154 apps/volunteers/forms.py:194
+msgid "All branches"
+msgstr "تمام شاخیں"
+
+#: apps/audit/forms.py:44
+msgid "All entity types"
+msgstr "تمام ریکارڈ کی قسمیں"
+
+#: apps/audit/forms.py:56 apps/finance/forms.py:48
+#: apps/finance/report_forms.py:50 apps/volunteers/forms.py:184
+msgid "The end date must be on or after the start date."
+msgstr "آخری تاریخ ابتدائی تاریخ سے پہلے نہیں ہو سکتی۔"
+
+#: apps/audit/models.py:11
+msgid "occurred at"
+msgstr "واقعے کا وقت"
+
+#: apps/audit/models.py:18
+msgid "actor"
+msgstr "عمل انجام دینے والا"
+
+#: apps/audit/models.py:20
+msgid "actor label"
+msgstr "عمل انجام دینے والے کی شناخت"
+
+#: apps/audit/models.py:21
+msgid "actor role"
+msgstr "عمل انجام دینے والے کا کردار"
+
+#: apps/audit/models.py:22
+msgid "action"
+msgstr "عمل"
+
+#: apps/audit/models.py:23
+msgid "entity type"
+msgstr "ریکارڈ کی قسم"
+
+#: apps/audit/models.py:24
+msgid "entity ID"
+msgstr "ریکارڈ کی شناخت"
+
+#: apps/audit/models.py:25
+msgid "entity label"
+msgstr "ریکارڈ کا نام"
+
+#: apps/audit/models.py:26
+msgid "branch ID"
+msgstr "شاخ کی شناخت"
+
+#: apps/audit/models.py:27
+msgid "before"
+msgstr "پہلے"
+
+#: apps/audit/models.py:28
+msgid "after"
+msgstr "بعد میں"
+
+#: apps/audit/models.py:29
+msgid "metadata"
+msgstr "اضافی معلومات"
+
+#: apps/audit/models.py:30 apps/exports/registry.py:132
+#: templates/audit/event_detail.html:12
+msgid "IP address"
+msgstr "آئی پی پتہ"
+
+#: apps/audit/models.py:31
+msgid "user agent"
+msgstr "براؤزر کی شناخت"
+
+#: apps/audit/models.py:32
+msgid "request ID"
+msgstr "درخواست کی شناخت"
+
+#: apps/audit/models.py:33
+msgid "previous hash"
+msgstr "پچھلا ہیش"
+
+#: apps/audit/models.py:34
+msgid "hash"
+msgstr "ہیش"
+
+#: apps/audit/models.py:38
+msgid "audit event"
+msgstr "آڈٹ کا واقعہ"
+
+#: apps/audit/models.py:39
+msgid "audit events"
+msgstr "آڈٹ کے واقعات"
+
+#: apps/audit/selectors.py:27
+msgid "Authentication"
+msgstr "توثیق"
+
+#: apps/audit/selectors.py:28 templates/branches/branch_detail.html:21
+#: templates/branches/branch_list.html:18
+#: templates/branches/branch_list.html:21
+#: templates/dashboard/financial.html:21 templates/dashboard/hr.html:10
+#: templates/partials/staff_navigation.html:24
+#: templates/pdf/monthly_summary.html:10
+#: templates/volunteers/member_list.html:3
+#: templates/volunteers/member_list.html:5
+msgid "Members"
+msgstr "ارکان"
+
+#: apps/audit/selectors.py:29 templates/partials/staff_navigation.html:23
+#: templates/volunteers/team_list.html:3 templates/volunteers/team_list.html:5
+#: templates/volunteers/team_list.html:7
+msgid "Teams"
+msgstr "ٹیمیں"
+
+#: apps/audit/selectors.py:30 templates/partials/staff_navigation.html:13
+#: templates/volunteers/volunteer_role_list.html:3
+#: templates/volunteers/volunteer_role_list.html:5
+#: templates/volunteers/volunteer_role_list.html:7
+msgid "Volunteer roles"
+msgstr "رضاکارانہ کردار"
+
+#: apps/audit/selectors.py:31 apps/branches/apps.py:8
+#: templates/branches/branch_list.html:3 templates/branches/branch_list.html:5
+#: templates/dashboard/financial.html:24
+#: templates/partials/staff_navigation.html:17
+#: templates/pdf/monthly_summary.html:9 templates/public/navigation.html:5
+msgid "Branches"
+msgstr "شاخیں"
+
+#: apps/audit/selectors.py:32 templates/branches/branch_list.html:8
+#: templates/branches/city_list.html:3 templates/branches/city_list.html:5
+#: templates/branches/city_list.html:7
+msgid "Cities"
+msgstr "شہر"
+
+#: apps/audit/selectors.py:33 templates/dashboard/financial.html:25
+#: templates/partials/staff_navigation.html:20
+#: templates/pdf/monthly_summary.html:11
+#: templates/volunteers/application_list.html:3
+#: templates/volunteers/application_list.html:5
+msgid "Applications"
+msgstr "درخواستیں"
+
+#: apps/audit/selectors.py:35 templates/accounts/user_list.html:3
+#: templates/accounts/user_list.html:5
+#: templates/partials/staff_navigation.html:11
+msgid "Users"
+msgstr "صارفین"
+
+#: apps/audit/selectors.py:36
+msgid "Permissions"
+msgstr "اجازتیں"
+
+#: apps/audit/selectors.py:37 templates/accounts/settings.html:3
+#: templates/accounts/settings.html:5
+#: templates/partials/staff_navigation.html:12
+msgid "System settings"
+msgstr "نظام کی ترتیبات"
+
+#: apps/audit/selectors.py:38
+msgid "Assignments"
+msgstr "ذمہ داریاں"
+
+#: apps/audit/selectors.py:47
+msgid "All actions"
+msgstr "تمام کارروائیاں"
+
+#: apps/audit/selectors.py:145
+msgid "System / anonymous"
+msgstr "نظام / گمنام"
+
+#: apps/audit/selectors.py:147 templates/audit/event_detail.html:20
+msgid "No field changes"
+msgstr "کوئی خانہ تبدیل نہیں ہوا"
+
+#: apps/audit/views.py:65
+#, python-format
+msgid "Chain intact (%(count)s events)"
+msgstr "سلسلہ درست ہے (%(count)s واقعات)"
+
+#: apps/audit/views.py:68
+#, python-format
+msgid "Chain broken at event #%(id)s"
+msgstr "واقعہ #%(id)s پر سلسلہ ٹوٹ گیا"
+
+#: apps/branches/forms.py:12 apps/branches/forms.py:23
+#: apps/branches/selectors.py:10 apps/publicsite/forms.py:17
+#: templates/branches/branch_detail.html:10
+#: templates/branches/branch_list.html:18
+#: templates/branches/branch_list.html:21
+msgid "City"
+msgstr "شہر"
+
+#: apps/branches/forms.py:15 apps/branches/selectors.py:11
+#: apps/cms/forms.py:15 apps/exports/registry.py:37
+#: apps/exports/registry.py:69 apps/exports/registry.py:86
+#: apps/exports/registry.py:109 apps/finance/report_forms.py:21
+#: apps/finance/report_selectors.py:86 apps/volunteers/forms.py:124
+#: apps/volunteers/forms.py:197 apps/volunteers/selectors.py:50
+#: apps/volunteers/selectors.py:169 templates/branches/branch_list.html:18
+#: templates/branches/branch_list.html:21 templates/cms/list.html:7
+#: templates/cms/list.html:8 templates/dashboard/financial.html:39
+#: templates/finance/report_list.html:20 templates/finance/report_list.html:30
+#: templates/pdf/weekly_report.html:5
+#: templates/volunteers/application_list.html:19
+#: templates/volunteers/application_list.html:24
+#: templates/volunteers/member_detail.html:13
+#: templates/volunteers/member_list.html:13
+#: templates/volunteers/member_list.html:20
+#: templates/volunteers/team_list.html:8
+#: templates/volunteers/team_list.html:11
+#: templates/volunteers/volunteer_role_list.html:8
+#: templates/volunteers/volunteer_role_list.html:11
+msgid "Status"
+msgstr "حالت"
+
+#: apps/branches/forms.py:16 apps/cms/forms.py:13
+#: apps/finance/report_forms.py:22 apps/volunteers/forms.py:125
+msgid "All statuses"
+msgstr "تمام حالتیں"
+
+#: apps/branches/forms.py:25 apps/branches/forms.py:46
+#: apps/branches/forms.py:73 apps/branches/forms.py:78
+#: apps/branches/models.py:19 apps/branches/models.py:54
+#: apps/branches/selectors.py:15 apps/volunteers/forms.py:107
+#: apps/volunteers/models.py:28 templates/branches/branch_detail.html:11
+#: templates/branches/city_list.html:8 templates/branches/city_list.html:9
+#: templates/volunteers/volunteer_role_list.html:8
+#: templates/volunteers/volunteer_role_list.html:10
+msgid "English name"
+msgstr "انگریزی نام"
+
+#: apps/branches/forms.py:26 apps/branches/forms.py:47
+#: apps/branches/forms.py:74 apps/branches/forms.py:79
+#: apps/branches/models.py:20 apps/branches/models.py:55
+#: apps/branches/selectors.py:16 apps/volunteers/forms.py:108
+#: apps/volunteers/models.py:29 templates/branches/branch_detail.html:12
+#: templates/branches/city_list.html:8 templates/branches/city_list.html:9
+#: templates/volunteers/volunteer_role_list.html:8
+#: templates/volunteers/volunteer_role_list.html:10
+msgid "Urdu name"
+msgstr "اردو نام"
+
+#: apps/branches/forms.py:28 apps/branches/forms.py:49
+#: apps/branches/models.py:56 apps/branches/selectors.py:17
+#: templates/branches/branch_detail.html:13
+msgid "English address"
+msgstr "انگریزی پتہ"
+
+#: apps/branches/forms.py:31 apps/branches/forms.py:52
+#: apps/branches/models.py:57 apps/branches/selectors.py:18
+#: templates/branches/branch_detail.html:14
+msgid "Urdu address"
+msgstr "اردو پتہ"
+
+#: apps/branches/forms.py:34 apps/branches/forms.py:55
+#: apps/branches/selectors.py:19 apps/exports/registry.py:113
+#: templates/branches/branch_detail.html:15
+msgid "Phone"
+msgstr "فون"
+
+#: apps/branches/forms.py:68 apps/branches/selectors.py:9
+#: templates/branches/branch_list.html:18
+#: templates/branches/branch_list.html:21 templates/branches/city_list.html:8
+#: templates/branches/city_list.html:9
+#: templates/volunteers/volunteer_role_list.html:8
+#: templates/volunteers/volunteer_role_list.html:10
+msgid "Code"
+msgstr "کوڈ"
+
+#: apps/branches/models.py:14 apps/branches/models.py:47
+#: apps/volunteers/models.py:27
+msgid "code"
+msgstr "کوڈ"
+
+#: apps/branches/models.py:17
+msgid "Use three uppercase letters."
+msgstr "انگریزی کے تین بڑے حروف استعمال کریں۔"
+
+#: apps/branches/models.py:26 apps/branches/models.py:52
+msgid "city"
+msgstr "شہر"
+
+#: apps/branches/models.py:27
+msgid "cities"
+msgstr "شہر"
+
+#: apps/branches/models.py:40 templates/dashboard/financial.html:24
+#: templates/pdf/monthly_summary.html:9
+msgid "Forming"
+msgstr "تشکیل میں"
+
+#: apps/branches/models.py:41 apps/volunteers/models.py:21
+#: templates/accounts/user_detail.html:9 templates/accounts/user_list.html:10
+#: templates/accounts/user_list.html:13 templates/dashboard/financial.html:21
+#: templates/dashboard/financial.html:24 templates/dashboard/hr.html:10
+#: templates/pdf/monthly_summary.html:9 templates/pdf/monthly_summary.html:10
+#: templates/volunteers/team_list.html:11
+#: templates/volunteers/volunteer_role_list.html:11
+msgid "Active"
+msgstr "فعال"
+
+#: apps/branches/models.py:42 templates/dashboard/financial.html:24
+#: templates/pdf/monthly_summary.html:9
+msgid "Paused"
+msgstr "رکی ہوئی"
+
+#: apps/branches/models.py:43 templates/dashboard/financial.html:24
+#: templates/pdf/monthly_summary.html:9
+msgid "Closed"
+msgstr "بند"
+
+#: apps/branches/models.py:59 apps/volunteers/models.py:66
+#: apps/volunteers/models.py:187
+msgid "phone"
+msgstr "فون"
+
+#: apps/branches/models.py:65
+msgid "Use an E.164 phone number, such as +922112345678."
+msgstr "E.164 کے مطابق فون نمبر درج کریں، مثلاً +922112345678۔"
+
+#: apps/branches/models.py:71 apps/cms/models.py:43 apps/finance/models.py:43
+#: apps/volunteers/models.py:82 apps/volunteers/models.py:189
+msgid "status"
+msgstr "حالت"
+
+#: apps/branches/models.py:76
+msgid "status reason"
+msgstr "حالت کی وجہ"
+
+#: apps/branches/models.py:77
+msgid "opened on"
+msgstr "افتتاح کی تاریخ"
+
+#: apps/branches/models.py:78
+msgid "closed on"
+msgstr "بند ہونے کی تاریخ"
+
+#: apps/branches/models.py:93 apps/core/models.py:15
+msgid "updated by"
+msgstr "تبدیلی کرنے والا"
+
+#: apps/branches/models.py:101
+msgid "branches"
+msgstr "شاخیں"
+
+#: apps/branches/selectors.py:12 templates/branches/branch_detail.html:17
+msgid "Status reason"
+msgstr "حالت کی وجہ"
+
+#: apps/branches/selectors.py:13 templates/branches/branch_detail.html:18
+msgid "Opened on"
+msgstr "کھولنے کی تاریخ"
+
+#: apps/branches/selectors.py:14 templates/branches/branch_detail.html:19
+msgid "Closed on"
+msgstr "بند کرنے کی تاریخ"
+
+#: apps/branches/selectors.py:23
+msgid "Branch created"
+msgstr "شاخ بنائی گئی"
+
+#: apps/branches/selectors.py:24
+msgid "Branch updated"
+msgstr "شاخ میں ترمیم ہوئی"
+
+#: apps/branches/selectors.py:25
+msgid "Branch activated"
+msgstr "شاخ فعال ہوئی"
+
+#: apps/branches/selectors.py:26
+msgid "Branch paused"
+msgstr "شاخ روکی گئی"
+
+#: apps/branches/selectors.py:27
+msgid "Branch resumed"
+msgstr "شاخ دوبارہ شروع ہوئی"
+
+#: apps/branches/selectors.py:28
+msgid "Branch closed"
+msgstr "شاخ بند ہوئی"
+
+#: apps/branches/services.py:67
+#, python-format
+msgid "Unsent collections: %(count)s, total PKR %(total)s."
+msgstr "غیر ارسال شدہ وصولیاں: %(count)s، کل رقم %(total)s روپے۔"
+
+#: apps/branches/services.py:74
+#, python-format
+msgid "Open weekly reports: %(count)s."
+msgstr "نامکمل ہفتہ وار رپورٹیں: %(count)s۔"
+
+#: apps/branches/services.py:84 apps/volunteers/services.py:637
 #, python-format
 msgid "Give a reason between %(minimum)s and %(maximum)s characters."
 msgstr "%(minimum)s سے %(maximum)s حروف میں وجہ لکھیں۔"
 
-msgid "Branch status updated."
-msgstr "شاخ کی حالت تبدیل کر دی گئی ہے۔"
+#: apps/branches/services.py:94
+#, python-format
+msgid "This branch cannot be closed: %(blockers)s"
+msgstr "یہ شاخ بند نہیں کی جا سکتی: %(blockers)s"
 
-msgid "Branches"
-msgstr "شاخیں"
+#: apps/branches/services.py:136
+msgid "This action is not allowed in the branch's current state."
+msgstr "شاخ کی موجودہ حالت میں اس کارروائی کی اجازت نہیں ہے۔"
 
-msgid "Branch register"
-msgstr "شاخوں کا اندراج"
+#: apps/branches/services.py:223
+msgid "Only branch name, address and contact fields may be edited."
+msgstr "صرف شاخ کے نام، پتے اور رابطے کی معلومات میں ترمیم کی جا سکتی ہے۔"
 
-msgid "New branch"
-msgstr "نئی شاخ"
-
+#: apps/branches/views.py:88
 msgid "Create branch"
 msgstr "شاخ بنائیں"
 
+#: apps/branches/views.py:102 templates/branches/branch_detail.html:22
 msgid "Edit branch"
 msgstr "شاخ میں ترمیم"
 
-msgid "Save branch"
-msgstr "شاخ محفوظ کریں"
-
-msgid "Back to branches"
-msgstr "شاخوں کی فہرست پر واپس"
-
-msgid "Cities"
-msgstr "شہر"
-
-msgid "New city"
-msgstr "نیا شہر"
-
+#: apps/branches/views.py:136
 msgid "Create city"
 msgstr "شہر بنائیں"
 
+#: apps/branches/views.py:149 templates/branches/city_list.html:9
 msgid "Edit city"
 msgstr "شہر میں ترمیم"
 
-msgid "Save city"
-msgstr "شہر محفوظ کریں"
+#: apps/branches/views.py:195
+msgid "Branch status updated."
+msgstr "شاخ کی حالت تبدیل کر دی گئی ہے۔"
 
-msgid "Back to cities"
-msgstr "شہروں کی فہرست پر واپس"
+#: apps/cms/forms.py:10 apps/cms/forms.py:20
+msgid "Type"
+msgstr "قسم"
 
-msgid "Code"
-msgstr "کوڈ"
+#: apps/cms/forms.py:22
+msgid "Slug"
+msgstr "یو آر ایل کا مختصر نام"
 
-msgid "Name"
-msgstr "نام"
+#: apps/cms/forms.py:26
+msgid "Leave blank to generate it from the English title."
+msgstr "انگریزی عنوان سے خودکار طور پر بنانے کے لیے خالی چھوڑ دیں۔"
 
-msgid "City"
-msgstr "شہر"
+#: apps/cms/forms.py:28 apps/volunteers/forms.py:109
+#: templates/volunteers/volunteer_role_list.html:8
+#: templates/volunteers/volunteer_role_list.html:10
+msgid "Sort order"
+msgstr "ترتیب"
 
-msgid "Status"
-msgstr "حالت"
+#: apps/cms/forms.py:30
+msgid "Illustration"
+msgstr "تصویر"
 
-msgid "All statuses"
-msgstr "تمام حالتیں"
+#: apps/cms/forms.py:36
+msgid "Event start (PKT)"
+msgstr "تقریب کا آغاز (پاکستانی وقت)"
 
-msgid "Members"
-msgstr "ارکان"
+#: apps/cms/forms.py:43
+msgid "Event end (PKT)"
+msgstr "تقریب کا اختتام (پاکستانی وقت)"
 
-msgid "Unsent"
-msgstr "غیر بھیجی گئی"
+#: apps/cms/forms.py:50 apps/cms/models.py:53
+msgid "English location"
+msgstr "مقام انگریزی میں"
 
-msgid "Unsent collections"
-msgstr "غیر بھیجی گئی وصولیاں"
+#: apps/cms/forms.py:53 apps/cms/models.py:54
+msgid "Urdu location"
+msgstr "مقام اردو میں"
 
-msgid "Apply filters"
-msgstr "فلٹر لگائیں"
+#: apps/cms/forms.py:58
+msgid "English title"
+msgstr "انگریزی عنوان"
 
-msgid "No branches found."
-msgstr "کوئی شاخ نہیں ملی۔"
+#: apps/cms/forms.py:60
+msgid "English summary"
+msgstr "انگریزی خلاصہ"
 
-msgid "No cities found."
-msgstr "کوئی شہر نہیں ملا۔"
+#: apps/cms/forms.py:63
+msgid "English body (Markdown)"
+msgstr "انگریزی متن (Markdown)"
 
-msgid "Branch pages"
-msgstr "شاخوں کے صفحات"
+#: apps/cms/forms.py:65
+msgid "Urdu title"
+msgstr "اردو عنوان"
 
-msgid "Previous"
-msgstr "پچھلا"
+#: apps/cms/forms.py:67
+msgid "Urdu summary"
+msgstr "اردو خلاصہ"
 
-msgid "Next"
-msgstr "اگلا"
+#: apps/cms/forms.py:70
+msgid "Urdu body (Markdown)"
+msgstr "اردو متن (Markdown)"
 
-msgid "Page %(current)s of %(total)s"
-msgstr "صفحہ %(current)s از %(total)s"
+#: apps/cms/forms.py:81
+msgid "Use a stable public URL."
+msgstr "مستقل عوامی یو آر ایل استعمال کریں۔"
 
-msgid "English name"
-msgstr "انگریزی نام"
+#: apps/cms/forms.py:88
+msgid "This field is required for events."
+msgstr "تقریبات کے لیے یہ خانہ بھرنا ضروری ہے۔"
 
-msgid "Urdu name"
-msgstr "اردو نام"
+#: apps/cms/forms.py:91
+msgid "The event must end on or after its start."
+msgstr "تقریب کا اختتام آغاز کے وقت یا اس کے بعد ہونا چاہیے۔"
 
-msgid "English address"
-msgstr "انگریزی پتہ"
+#: apps/cms/models.py:10
+msgid "Page section"
+msgstr "صفحے کا حصہ"
 
-msgid "Urdu address"
-msgstr "اردو پتہ"
+#: apps/cms/models.py:11
+msgid "Program"
+msgstr "پروگرام"
 
-msgid "Phone"
-msgstr "فون"
+#: apps/cms/models.py:12
+msgid "Event"
+msgstr "تقریب"
 
-msgid "Email"
-msgstr "ای میل"
+#: apps/cms/models.py:16 apps/finance/models.py:28
+msgid "Draft"
+msgstr "مسودہ"
 
-msgid "Status reason"
-msgstr "حالت کی وجہ"
+#: apps/cms/models.py:17
+msgid "Published"
+msgstr "شائع شدہ"
 
-msgid "Opened on"
-msgstr "کھولنے کی تاریخ"
+#: apps/cms/models.py:18
+msgid "Archived"
+msgstr "محفوظ شدہ"
 
-msgid "Closed on"
-msgstr "بند کرنے کی تاریخ"
+#: apps/cms/models.py:22
+msgid "No illustration"
+msgstr "کوئی تصویر نہیں"
 
-msgid "Counts"
-msgstr "تعداد"
-
-msgid "Change status"
-msgstr "حالت تبدیل کریں"
-
-msgid "Reason"
-msgstr "وجہ"
-
-msgid "Activate"
-msgstr "فعال کریں"
-
-msgid "Pause"
-msgstr "روکیں"
-
-msgid "Resume"
-msgstr "دوبارہ شروع کریں"
-
-msgid "Close"
-msgstr "بند کریں"
-
-msgid "History"
-msgstr "تاریخچہ"
-
-msgid "PKT"
-msgstr "پاکستانی وقت"
-
-msgid "No history yet."
-msgstr "ابھی کوئی تاریخچہ نہیں۔"
-
-msgid "Actions"
-msgstr "کارروائیاں"
-
-msgid "Branch created"
-msgstr "شاخ بنائی گئی"
-
-msgid "Branch updated"
-msgstr "شاخ میں ترمیم ہوئی"
-
-msgid "Branch activated"
-msgstr "شاخ فعال ہوئی"
-
-msgid "Branch paused"
-msgstr "شاخ روکی گئی"
-
-msgid "Branch resumed"
-msgstr "شاخ دوبارہ شروع ہوئی"
-
-msgid "Branch closed"
-msgstr "شاخ بند ہوئی"
-
-msgid "Forming"
-msgstr "تشکیل میں"
-
-msgid "Active"
-msgstr "فعال"
-
-msgid "Paused"
-msgstr "رکی ہوئی"
-
-msgid "Closed"
-msgstr "بند"
-
-msgid "Accepted"
-msgstr "منظور شدہ"
-
-#, python-format
-msgid "Applicants must be between %(minimum)s and %(maximum)s years old."
-msgstr ""
-"درخواست گزار کی عمر %(minimum)s سے %(maximum)s سال کے درمیان ہونی چاہیے۔"
-
-msgid "Availability"
-msgstr "دستیابی"
-
-msgid "Choose an Active or Forming branch."
-msgstr "فعال یا تشکیل پاتی شاخ منتخب کریں۔"
-
-msgid "Choose at least one time when you can volunteer."
-msgstr "رضاکارانہ کام کے لیے کم از کم ایک وقت منتخب کریں۔"
-
-msgid "Choose between one and five interests."
-msgstr "ایک سے پانچ دلچسپیاں منتخب کریں۔"
-
-msgid "Choose the areas you are interested in."
-msgstr "اپنی دلچسپی کے شعبے منتخب کریں۔"
-
-msgid "Choose the language you prefer for communication."
-msgstr "رابطے کے لیے اپنی پسندیدہ زبان منتخب کریں۔"
-
-msgid "Date of birth"
-msgstr "تاریخ پیدائش"
-
-msgid "Declined"
-msgstr "مسترد شدہ"
-
-msgid "Education"
+#: apps/cms/models.py:23
+msgid "Learning"
 msgstr "تعلیم"
 
-msgid "English"
-msgstr "انگریزی"
+#: apps/cms/models.py:24
+msgid "Community"
+msgstr "برادری"
 
+#: apps/cms/models.py:25
+msgid "Care"
+msgstr "نگہداشت"
+
+#: apps/cms/models.py:26
+msgid "Growth"
+msgstr "نشوونما"
+
+#: apps/cms/models.py:31
+msgid "type"
+msgstr "قسم"
+
+#: apps/cms/models.py:33
+msgid "slug"
+msgstr "یو آر ایل کا مختصر نام"
+
+#: apps/cms/models.py:38
+msgid "Use 3–80 lowercase letters, digits or hyphens."
+msgstr "انگریزی کے 3–80 چھوٹے حروف، ہندسے یا ہائفن استعمال کریں۔"
+
+#: apps/cms/models.py:51
+msgid "event start"
+msgstr "تقریب کا آغاز"
+
+#: apps/cms/models.py:52
+msgid "event end"
+msgstr "تقریب کا اختتام"
+
+#: apps/cms/models.py:59
+msgid "illustration"
+msgstr "تصویر"
+
+#: apps/cms/models.py:61 apps/volunteers/models.py:31
+msgid "sort order"
+msgstr "ترتیب"
+
+#: apps/cms/models.py:108
+msgid "title"
+msgstr "عنوان"
+
+#: apps/cms/models.py:109
+msgid "summary"
+msgstr "خلاصہ"
+
+#: apps/cms/models.py:110
+msgid "body (Markdown)"
+msgstr "متن (Markdown)"
+
+#: apps/cms/selectors.py:50
+msgid "English only"
+msgstr "صرف انگریزی میں"
+
+#: apps/cms/services.py:49
+msgid "Events need a start and end time."
+msgstr "تقریبات کے لیے آغاز اور اختتام کا وقت ضروری ہے۔"
+
+#: apps/cms/services.py:95
+msgid "Restore archived content before editing."
+msgstr "ترمیم کرنے سے پہلے محفوظ شدہ مواد بحال کریں۔"
+
+#: apps/cms/services.py:119
+msgid "Unknown content transition."
+msgstr "مواد کی حالت میں نامعلوم تبدیلی۔"
+
+#: apps/cms/services.py:127
+msgid "This content transition is not available."
+msgstr "مواد کی حالت میں یہ تبدیلی دستیاب نہیں ہے۔"
+
+#: apps/cms/services.py:137
+msgid "Publishing needs an English title and body and an Urdu title."
+msgstr "اشاعت کے لیے انگریزی عنوان و متن اور اردو عنوان ضروری ہیں۔"
+
+#: apps/cms/services.py:148
+msgid "That published slug is already in use."
+msgstr "شائع شدہ مواد کا یہ مختصر نام پہلے سے استعمال میں ہے۔"
+
+#: apps/cms/views.py:105
+msgid "Working copy saved."
+msgstr "زیرِ ترمیم مسودہ محفوظ ہو گیا۔"
+
+#: apps/cms/views.py:134 templates/cms/actions.html:5
+msgid "Publish"
+msgstr "شائع کریں"
+
+#: apps/cms/views.py:135 templates/cms/actions.html:6
+msgid "Unpublish"
+msgstr "اشاعت واپس لیں"
+
+#: apps/cms/views.py:136 templates/cms/actions.html:7
+msgid "Archive"
+msgstr "محفوظ کریں"
+
+#: apps/cms/views.py:137 templates/cms/actions.html:4
+msgid "Restore"
+msgstr "بحال کریں"
+
+#: apps/cms/views.py:160
+msgid "Content state updated."
+msgstr "مواد کی حالت تبدیل ہو گئی۔"
+
+#: apps/core/apps.py:8
+msgid "Core"
+msgstr "بنیادی نظام"
+
+#: apps/core/messages.py:11
+#| msgid "This field is required for events."
+msgid "This field is required."
+msgstr "یہ خانہ بھرنا ضروری ہے۔"
+
+#: apps/core/messages.py:12
+#| msgid "email address"
+msgid "Enter a valid email address."
+msgstr "براہِ کرم درست ای میل پتہ درج کریں۔"
+
+#: apps/core/messages.py:13
+#| msgid "Enter a valid Pakistani mobile number."
+msgid "Enter a valid integer."
+msgstr "براہِ کرم درست صحیح عدد درج کریں۔"
+
+#: apps/core/messages.py:14
+#| msgid "Enter a valid Pakistani mobile number."
+msgid "Enter a valid date."
+msgstr "براہِ کرم درست تاریخ درج کریں۔"
+
+#: apps/core/messages.py:15
+msgid "Enter a number."
+msgstr "براہِ کرم عدد درج کریں۔"
+
+#: apps/core/messages.py:16
+#| msgid "Enter a valid Pakistani mobile number."
+msgid "Enter a whole number."
+msgstr "براہِ کرم صحیح عدد درج کریں۔"
+
+#: apps/core/messages.py:17
+#| msgid "Enter a valid Pakistani mobile number."
+msgid "Enter a valid value."
+msgstr "براہِ کرم درست قدر درج کریں۔"
+
+#: apps/core/messages.py:18
+msgid "Null characters are not allowed."
+msgstr "نَل حروف کی اجازت نہیں ہے۔"
+
+#: apps/core/messages.py:20
 msgid ""
-"Enter a name of 3–100 characters using letters, spaces, periods, apostrophes"
-" or hyphens."
+"Select a valid choice. That choice is not one of the available choices."
+msgstr "براہِ کرم دستیاب اختیارات میں سے درست انتخاب کریں۔"
+
+#: apps/core/messages.py:23
+#, python-format
+msgid "Select a valid choice. %(value)s is not one of the available choices."
 msgstr ""
-"حروف، وقفے، نقطے، اپاسٹراف یا ہائفن استعمال کرتے ہوئے 3 سے 100 حروف میں نام "
-"درج کریں۔"
+"براہِ کرم درست انتخاب کریں۔ %(value)s دستیاب اختیارات میں شامل نہیں ہے۔"
 
-msgid "Enter a valid Pakistani mobile number."
-msgstr "درست پاکستانی موبائل نمبر درج کریں۔"
+#: apps/core/messages.py:25
+msgid "Enter a list of values."
+msgstr "براہِ کرم قدروں کی فہرست درج کریں۔"
 
-msgid "Enter an email address where HR can contact you."
-msgstr "ای میل کا پتہ لکھیں جس پر عملہ آپ سے رابطہ کر سکے۔"
+#: apps/core/messages.py:26
+#| msgid "Password"
+msgid "Old password"
+msgstr "موجودہ پاس ورڈ"
 
-msgid "Enter your date of birth."
-msgstr "اپنی تاریخ پیدائش درج کریں۔"
+#: apps/core/messages.py:27
+#| msgid "Change password"
+msgid "New password"
+msgstr "نیا پاس ورڈ"
 
-msgid "Full name"
-msgstr "پورا نام"
+#: apps/core/messages.py:28
+msgid "New password confirmation"
+msgstr "نئے پاس ورڈ کی تصدیق"
 
-msgid "General volunteering"
-msgstr "عمومی رضاکارانہ کام"
+#: apps/core/messages.py:29
+msgid "Password confirmation"
+msgstr "پاس ورڈ کی تصدیق"
 
-msgid "Get involved"
-msgstr "رضاکار بنیں"
+#: apps/core/messages.py:30
+msgid "The two password fields didn't match."
+msgstr "دونوں خانوں میں درج پاس ورڈ ایک جیسے نہیں ہیں۔"
 
-msgid "Health camps"
-msgstr "طبی کیمپ"
+#: apps/core/messages.py:31
+msgid "Enter the same password as before, for verification."
+msgstr "تصدیق کے لیے وہی پاس ورڈ دوبارہ درج کریں۔"
 
-msgid "I agree to the privacy notice"
-msgstr "میں رازداری کے نوٹس سے متفق ہوں"
+#: apps/core/messages.py:32
+msgid "Your old password was entered incorrectly. Please enter it again."
+msgstr "آپ کا موجودہ پاس ورڈ درست نہیں ہے۔ براہِ کرم دوبارہ درج کریں۔"
 
-msgid "IP hash"
-msgstr "آئی پی ہیش"
+#: apps/core/messages.py:33
+#, python-format
+msgid "The password is too similar to the %(verbose_name)s."
+msgstr "پاس ورڈ %(verbose_name)s سے بہت زیادہ ملتا جلتا ہے۔"
 
-msgid "Inactive"
-msgstr "غیر فعال"
-
-msgid "Interests"
-msgstr "دلچسپیاں"
-
-msgid "Leave this field empty"
-msgstr "یہ خانہ خالی چھوڑیں"
-
-msgid "Left"
-msgstr "الگ ہو چکے"
-
-msgid "Mobile number"
-msgstr "موبائل نمبر"
-
-msgid "My parent or guardian agrees to my application"
-msgstr "میرے والدین یا سرپرست میری درخواست سے متفق ہیں"
-
-msgid "Pakistani mobile number, for example 0300 1234567."
-msgstr "پاکستانی موبائل نمبر، مثلاً 0300 1234567۔"
-
-msgid "Parent or guardian consent is required if you are under 18."
+#: apps/core/messages.py:35
+msgid "Your password can't be too similar to your other personal information."
 msgstr ""
-"اگر آپ کی عمر 18 سال سے کم ہے تو والدین یا سرپرست کی رضامندی ضروری ہے۔"
+"آپ کا پاس ورڈ آپ کی دوسری ذاتی معلومات سے بہت زیادہ ملتا جلتا نہیں ہونا "
+"چاہیے۔"
 
-msgid "Pending"
-msgstr "زیر التوا"
+#: apps/core/messages.py:37
+msgid "This password is too common."
+msgstr "یہ پاس ورڈ بہت عام ہے۔"
 
-msgid "Please correct the following problems"
-msgstr "براہ کرم درج ذیل مسائل درست کریں"
+#: apps/core/messages.py:38
+msgid "Your password can't be a commonly used password."
+msgstr "آپ کا پاس ورڈ عام استعمال ہونے والا پاس ورڈ نہیں ہونا چاہیے۔"
 
-msgid "Please try again later"
-msgstr "براہ کرم کچھ دیر بعد دوبارہ کوشش کریں"
+#: apps/core/messages.py:39
+msgid "This password is entirely numeric."
+msgstr "یہ پاس ورڈ صرف ہندسوں پر مشتمل ہے۔"
 
-msgid "Preferred branch"
-msgstr "ترجیحی شاخ"
+#: apps/core/messages.py:40
+msgid "Your password can't be entirely numeric."
+msgstr "آپ کا پاس ورڈ صرف ہندسوں پر مشتمل نہیں ہونا چاہیے۔"
 
-msgid "Preferred language"
-msgstr "ترجیحی زبان"
+#: apps/core/messages.py:42
+#, python-format
+msgid ""
+"Ensure this value has at least %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at least %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+"اس قدر میں کم از کم %(limit_value)d حرف ہونا چاہیے (موجودہ تعداد "
+"%(show_value)d ہے)۔"
+msgstr[1] ""
+"اس قدر میں کم از کم %(limit_value)d حروف ہونے چاہییں (موجودہ تعداد "
+"%(show_value)d ہے)۔"
 
-msgid "Ration drive"
-msgstr "راشن کی تقسیم"
+#: apps/core/messages.py:47
+#, python-format
+msgid ""
+"Ensure this value has at most %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at most %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+"اس قدر میں زیادہ سے زیادہ %(limit_value)d حرف ہونا چاہیے (موجودہ تعداد "
+"%(show_value)d ہے)۔"
+msgstr[1] ""
+"اس قدر میں زیادہ سے زیادہ %(limit_value)d حروف ہونے چاہییں (موجودہ تعداد "
+"%(show_value)d ہے)۔"
 
+#: apps/core/messages.py:52
+#, python-format
+msgid "Ensure that there are no more than %(max)s digit in total."
+msgid_plural "Ensure that there are no more than %(max)s digits in total."
+msgstr[0] "کل ہندسوں کی تعداد %(max)s سے زیادہ نہیں ہونی چاہیے۔"
+msgstr[1] "کل ہندسوں کی تعداد %(max)s سے زیادہ نہیں ہونی چاہیے۔"
+
+#: apps/core/messages.py:57
+#, python-format
+msgid "Ensure that there are no more than %(max)s decimal place."
+msgid_plural "Ensure that there are no more than %(max)s decimal places."
+msgstr[0] "اعشاری مقامات کی تعداد %(max)s سے زیادہ نہیں ہونی چاہیے۔"
+msgstr[1] "اعشاری مقامات کی تعداد %(max)s سے زیادہ نہیں ہونی چاہیے۔"
+
+#: apps/core/messages.py:62
+#, python-format
+msgid ""
+"Ensure that there are no more than %(max)s digit before the decimal point."
+msgid_plural ""
+"Ensure that there are no more than %(max)s digits before the decimal point."
+msgstr[0] ""
+"اعشاری نقطے سے پہلے ہندسوں کی تعداد %(max)s سے زیادہ نہیں ہونی چاہیے۔"
+msgstr[1] ""
+"اعشاری نقطے سے پہلے ہندسوں کی تعداد %(max)s سے زیادہ نہیں ہونی چاہیے۔"
+
+#: apps/core/messages.py:67
+#, python-format
+msgid "This password is too short. It must contain at least %d character."
+msgid_plural ""
+"This password is too short. It must contain at least %d characters."
+msgstr[0] "یہ پاس ورڈ بہت چھوٹا ہے۔ اس میں کم از کم %d حرف ہونا چاہیے۔"
+msgstr[1] "یہ پاس ورڈ بہت چھوٹا ہے۔ اس میں کم از کم %d حروف ہونے چاہییں۔"
+
+#: apps/core/messages.py:72
+#, python-format
+msgid "Your password must contain at least %(min_length)d character."
+msgid_plural "Your password must contain at least %(min_length)d characters."
+msgstr[0] "آپ کے پاس ورڈ میں کم از کم %(min_length)d حرف ہونا چاہیے۔"
+msgstr[1] "آپ کے پاس ورڈ میں کم از کم %(min_length)d حروف ہونے چاہییں۔"
+
+#: apps/core/models.py:9 apps/core/models.py:29
+msgid "key"
+msgstr "کلید"
+
+#: apps/core/models.py:10
+msgid "value"
+msgstr "قدر"
+
+#: apps/core/models.py:21
+msgid "system setting"
+msgstr "نظام کی ترتیب"
+
+#: apps/core/models.py:22
+msgid "system settings"
+msgstr "نظام کی ترتیبات"
+
+#: apps/core/models.py:30
+msgid "last value"
+msgstr "آخری قدر"
+
+#: apps/core/models.py:35
+msgid "ID sequence"
+msgstr "شناختی نمبروں کا تسلسل"
+
+#: apps/core/models.py:36
+msgid "ID sequences"
+msgstr "شناختی نمبروں کے تسلسل"
+
+#: apps/core/templates/core/forms/required.html:1
+msgid "required"
+msgstr "ضروری"
+
+#: apps/core/templatetags/money.py:17
+#, python-format
+msgid "Rs %(amount)s"
+msgstr "%(amount)s روپے"
+
+#: apps/dashboard/forms.py:9
+msgid "Period"
+msgstr "مدت"
+
+#: apps/dashboard/views.py:56 apps/exports/registry.py:87
+#: templates/dashboard/financial.html:16 templates/dashboard/financial.html:31
+#: templates/dashboard/financial.html:39 templates/pdf/monthly_summary.html:5
+#: templates/pdf/monthly_summary.html:16 templates/pdf/monthly_summary.html:17
+msgid "Collected"
+msgstr "وصول شدہ"
+
+#: apps/dashboard/views.py:57 apps/exports/registry.py:89
+#: apps/finance/models.py:32 templates/dashboard/financial.html:17
+#: templates/dashboard/financial.html:31 templates/dashboard/financial.html:39
+#: templates/pdf/monthly_summary.html:6 templates/pdf/monthly_summary.html:16
+#: templates/pdf/monthly_summary.html:17
+msgid "Approved"
+msgstr "منظور شدہ"
+
+#: apps/dashboard/views.py:58 templates/dashboard/financial.html:33
+#: templates/finance/report_detail.html:28
+#: templates/pdf/monthly_summary.html:17 templates/pdf/weekly_report.html:15
+msgid "New members"
+msgstr "نئے ارکان"
+
+#: apps/exports/registry.py:30 apps/exports/registry.py:52
+#: apps/volunteers/selectors.py:167 templates/dashboard/financial.html:35
+#: templates/dashboard/financial.html:36
+#: templates/finance/collection_list.html:9
+#: templates/finance/collection_list.html:10
+#: templates/finance/report_detail.html:43
+#: templates/finance/report_detail.html:50
+#: templates/finance/transfer_list.html:5
+#: templates/pdf/monthly_summary.html:18 templates/pdf/weekly_report.html:20
+#: templates/volunteers/application_list.html:19
+#: templates/volunteers/application_list.html:22
+#: templates/volunteers/thanks.html:8
 msgid "Reference"
 msgstr "حوالہ نمبر"
 
-msgid "Required if you are under 18."
-msgstr "اگر آپ کی عمر 18 سال سے کم ہے تو یہ ضروری ہے۔"
+#: apps/exports/registry.py:31 apps/exports/registry.py:51
+#: apps/exports/registry.py:66 apps/exports/registry.py:85
+#: apps/exports/registry.py:106 apps/exports/registry.py:127
+msgid "Branch code"
+msgstr "شاخ کا کوڈ"
 
-msgid "ShipLens"
-msgstr "ShipLens"
+#: apps/exports/registry.py:32 apps/exports/registry.py:53
+#: apps/finance/forms.py:138 templates/finance/collection_detail.html:4
+#: templates/finance/collection_list.html:9
+#: templates/finance/collection_list.html:10
+#: templates/finance/report_detail.html:44
+#: templates/finance/report_detail.html:53 templates/pdf/weekly_report.html:20
+msgid "Collection date"
+msgstr "وصولی کی تاریخ"
 
-msgid "Submit application"
-msgstr "درخواست جمع کریں"
+#: apps/exports/registry.py:33 apps/exports/registry.py:54
+#: apps/finance/forms.py:26 apps/finance/forms.py:146
+#: templates/dashboard/financial.html:35 templates/dashboard/financial.html:36
+#: templates/finance/collection_detail.html:4
+#: templates/finance/collection_list.html:9
+#: templates/finance/collection_list.html:10
+#: templates/finance/report_detail.html:45
+#: templates/finance/report_detail.html:54 templates/pdf/weekly_report.html:20
+msgid "Method"
+msgstr "طریقہ"
 
-msgid "Thank you"
-msgstr "شکریہ"
+#: apps/exports/registry.py:34 apps/exports/registry.py:55
+#: templates/dashboard/financial.html:35 templates/dashboard/financial.html:36
+#: templates/pdf/monthly_summary.html:18
+msgid "Amount"
+msgstr "رقم"
 
-msgid "Thank you for your interest in volunteering."
-msgstr "رضاکارانہ کام میں دلچسپی لینے کا شکریہ۔"
+#: apps/exports/registry.py:35 apps/finance/forms.py:148
+#: templates/finance/collection_detail.html:4
+msgid "Receipt number"
+msgstr "رسید نمبر"
 
-msgid "This branch is not accepting applications."
-msgstr "یہ شاخ درخواستیں قبول نہیں کر رہی۔"
+#: apps/exports/registry.py:36 apps/finance/forms.py:157
+#: templates/finance/collection_detail.html:4
+msgid "Source note"
+msgstr "ماخذ کا نوٹ"
 
+#: apps/exports/registry.py:39
+msgid "Transfer reference"
+msgstr "منتقلی کا حوالہ"
+
+#: apps/exports/registry.py:42
+msgid "Created by"
+msgstr "تخلیق کرنے والا"
+
+#: apps/exports/registry.py:43
+msgid "Created at (PKT)"
+msgstr "تخلیق کا وقت (پاکستانی وقت)"
+
+#: apps/exports/registry.py:56 templates/dashboard/financial.html:35
+#: templates/dashboard/financial.html:36 templates/pdf/monthly_summary.html:18
+msgid "Age (days)"
+msgstr "گزرا وقت (دن)"
+
+#: apps/exports/registry.py:57 apps/finance/models.py:22
+#: apps/finance/models.py:33 templates/dashboard/financial.html:36
+#: templates/finance/collection_list.html:10
+#: templates/pdf/monthly_summary.html:18
+msgid "Locked"
+msgstr "مقفل"
+
+#: apps/exports/registry.py:58 templates/dashboard/financial.html:35
+#: templates/dashboard/financial.html:36 templates/pdf/monthly_summary.html:18
+msgid "Week report"
+msgstr "ہفتہ وار رپورٹ"
+
+#: apps/exports/registry.py:67
+msgid "Week start"
+msgstr "ہفتے کا آغاز"
+
+#: apps/exports/registry.py:68
+msgid "Week end"
+msgstr "ہفتے کا اختتام"
+
+#: apps/exports/registry.py:70 apps/finance/report_selectors.py:87
+#: templates/finance/report_detail.html:8
+#: templates/finance/report_list.html:21 templates/finance/report_list.html:33
+#: templates/pdf/weekly_report.html:5
+msgid "Revision"
+msgstr "نسخہ"
+
+#: apps/exports/registry.py:72
+msgid "Total amount"
+msgstr "کل رقم"
+
+#: apps/exports/registry.py:75 templates/finance/report_detail.html:22
+#: templates/pdf/weekly_report.html:12
+msgid "Entry count"
+msgstr "اندراجات کی تعداد"
+
+#: apps/exports/registry.py:76
+msgid "Submitted at (PKT)"
+msgstr "جمع کرنے کا وقت (پاکستانی وقت)"
+
+#: apps/exports/registry.py:77
+msgid "Approved at (PKT)"
+msgstr "منظوری کا وقت (پاکستانی وقت)"
+
+#: apps/exports/registry.py:88
+msgid "Collection count"
+msgstr "وصولیوں کی تعداد"
+
+#: apps/exports/registry.py:90 apps/finance/forms.py:34
+#: templates/branches/branch_list.html:18
+#: templates/branches/branch_list.html:21
+#: templates/pdf/monthly_summary.html:16
+msgid "Unsent"
+msgstr "غیر ارسال شدہ"
+
+#: apps/exports/registry.py:91
+msgid "Unsent count"
+msgstr "غیر ارسال شدہ وصولیوں کی تعداد"
+
+#: apps/exports/registry.py:92 templates/pdf/monthly_summary.html:8
+msgid "Oldest age (days)"
+msgstr "قدیم ترین وصولی کو گزرے دن"
+
+#: apps/exports/registry.py:94 templates/dashboard/financial.html:39
+#: templates/pdf/monthly_summary.html:16
+msgid "Latest report"
+msgstr "تازہ ترین رپورٹ"
+
+#: apps/exports/registry.py:104 apps/volunteers/selectors.py:56
+#: templates/volunteers/member_list.html:13
+#: templates/volunteers/member_list.html:15
+msgid "Member ID"
+msgstr "رکن شناخت"
+
+#: apps/exports/registry.py:107 apps/volunteers/forms.py:60
+#: apps/volunteers/forms.py:118 apps/volunteers/forms.py:212
+#: apps/volunteers/selectors.py:52 templates/volunteers/member_detail.html:11
+#: templates/volunteers/member_list.html:13
+#: templates/volunteers/member_list.html:18
+msgid "Team"
+msgstr "ٹیم"
+
+#: apps/exports/registry.py:108 apps/volunteers/forms.py:63
+#: apps/volunteers/forms.py:121 apps/volunteers/forms.py:215
+#: apps/volunteers/selectors.py:53 templates/volunteers/member_detail.html:12
+#: templates/volunteers/member_list.html:13
+#: templates/volunteers/member_list.html:19
+msgid "Volunteer role"
+msgstr "رضاکارانہ کردار"
+
+#: apps/exports/registry.py:110 templates/volunteers/member_detail.html:14
+#: templates/volunteers/member_list.html:13
+#: templates/volunteers/member_list.html:21
+msgid "Joined on"
+msgstr "شمولیت کی تاریخ"
+
+#: apps/exports/registry.py:111 apps/volunteers/forms.py:98
+#: apps/volunteers/selectors.py:51 templates/volunteers/member_detail.html:15
+msgid "Left on"
+msgstr "علیحدگی کی تاریخ"
+
+#: apps/exports/registry.py:121
+msgid "Occurred at (PKT)"
+msgstr "واقعے کا وقت (پاکستانی وقت)"
+
+#: apps/exports/registry.py:122 templates/audit/event_detail.html:8
+#: templates/audit/event_list.html:13 templates/audit/event_list.html:16
+msgid "Actor"
+msgstr "کارروائی کرنے والا"
+
+#: apps/exports/registry.py:126
+msgid "Entity label"
+msgstr "ریکارڈ کا نام"
+
+#: apps/exports/registry.py:129
+msgid "Changes (JSON)"
+msgstr "تبدیلیاں (JSON)"
+
+#: apps/exports/registry.py:133 templates/audit/event_detail.html:14
+msgid "Request ID"
+msgstr "درخواست کی شناخت"
+
+#: apps/finance/apps.py:8
+msgid "Finance"
+msgstr "مالیات"
+
+#: apps/finance/forms.py:16
+msgid "From date"
+msgstr "ابتدائی تاریخ"
+
+#: apps/finance/forms.py:21
+msgid "To date"
+msgstr "آخری تاریخ"
+
+#: apps/finance/forms.py:27
+msgid "All methods"
+msgstr "تمام طریقے"
+
+#: apps/finance/forms.py:31 templates/finance/collection_detail.html:4
+#: templates/finance/collection_list.html:9
+#: templates/finance/collection_list.html:10
+msgid "State"
+msgstr "حالت"
+
+#: apps/finance/forms.py:33
+msgid "All states"
+msgstr "تمام حالتیں"
+
+#: apps/finance/forms.py:55 apps/finance/forms.py:73
+#: templates/finance/collection_list.html:2
+#: templates/finance/collection_list.html:3
+#: templates/finance/collection_list.html:9
+#: templates/finance/report_detail.html:40
+#: templates/partials/staff_navigation.html:28
+#: templates/pdf/weekly_report.html:19
+msgid "Collections"
+msgstr "وصولیاں"
+
+#: apps/finance/forms.py:67
+msgid "Choose collections from one branch only."
+msgstr "صرف ایک شاخ کی وصولیاں منتخب کریں۔"
+
+#: apps/finance/forms.py:78 templates/finance/transfer_detail.html:4
+#: templates/finance/transfer_list.html:5
+msgid "Transfer date"
+msgstr "منتقلی کی تاریخ"
+
+#: apps/finance/forms.py:80 templates/finance/transfer_detail.html:5
+msgid "Bank reference"
+msgstr "بینک حوالہ"
+
+#: apps/finance/forms.py:81 templates/finance/transfer_detail.html:5
+msgid "Note"
+msgstr "نوٹ"
+
+#: apps/finance/forms.py:114 apps/finance/services.py:73
+msgid "Choose a transfer date between the latest collection date and today."
+msgstr "تازہ ترین وصولی کی تاریخ سے آج تک منتقلی کی تاریخ منتخب کریں۔"
+
+#: apps/finance/forms.py:122 templates/finance/collection_detail.html:4
+msgid "Void reason"
+msgstr "منسوخی کی وجہ"
+
+#: apps/finance/forms.py:141 templates/finance/collection_detail.html:4
+#: templates/finance/collection_list.html:9
+#: templates/finance/collection_list.html:10
+#: templates/finance/report_detail.html:46
+#: templates/finance/report_detail.html:55 templates/pdf/weekly_report.html:20
+msgid "Amount (PKR)"
+msgstr "رقم (روپے)"
+
+#: apps/finance/forms.py:154
+msgid "Collected by"
+msgstr "وصول کرنے والا"
+
+#: apps/finance/forms.py:179
+msgid "Choose an amount within the allowed range."
+msgstr "مقررہ حد کے اندر رقم درج کریں۔"
+
+#: apps/finance/forms.py:191 apps/finance/services.py:308
+msgid "Choose a date within the allowed collection window."
+msgstr "وصولی کی اجازت یافتہ مدت میں تاریخ منتخب کریں۔"
+
+#: apps/finance/management/commands/generate_weekly_drafts.py:9
+msgid "Generate missing weekly report drafts for active branches."
+msgstr "فعال شاخوں کے لیے گمشدہ ہفتہ وار مسودے بنائیں۔"
+
+#: apps/finance/models.py:15
+msgid "Cash"
+msgstr "نقد"
+
+#: apps/finance/models.py:16
+msgid "Cheque"
+msgstr "چیک"
+
+#: apps/finance/models.py:17
+msgid "Bank deposit"
+msgstr "بینک میں جمع"
+
+#: apps/finance/models.py:21 templates/dashboard/financial.html:36
+#: templates/pdf/monthly_summary.html:18
+msgid "Open"
+msgstr "کھلا"
+
+#: apps/finance/models.py:23
+msgid "Sent"
+msgstr "بھیجا گیا"
+
+#: apps/finance/models.py:24
+msgid "Voided"
+msgstr "منسوخ"
+
+#: apps/finance/models.py:29
+msgid "Submitted"
+msgstr "جمع شدہ"
+
+#: apps/finance/models.py:30 templates/dashboard/financial.html:22
+#: templates/pdf/monthly_summary.html:12
+msgid "Returned"
+msgstr "واپس شدہ"
+
+#: apps/finance/models.py:31
+msgid "Resubmitted"
+msgstr "دوبارہ جمع شدہ"
+
+#: apps/finance/models.py:40
+msgid "week start"
+msgstr "ہفتے کا آغاز"
+
+#: apps/finance/models.py:41
+msgid "week end"
+msgstr "ہفتے کا اختتام"
+
+#: apps/finance/models.py:49 apps/finance/models.py:123
+msgid "revision"
+msgstr "نظرِ ثانی نمبر"
+
+#: apps/finance/models.py:50
+msgid "narrative"
+msgstr "تفصیلی بیان"
+
+#: apps/finance/models.py:51
+msgid "snapshot"
+msgstr "محفوظ عکس"
+
+#: apps/finance/models.py:52
+msgid "snapshot hash"
+msgstr "محفوظ عکس کا ہیش"
+
+#: apps/finance/models.py:53
+msgid "submitted at"
+msgstr "جمع کرنے کا وقت"
+
+#: apps/finance/models.py:61
+msgid "reviewed at"
+msgstr "جائزے کا وقت"
+
+#: apps/finance/models.py:69
+msgid "review comment"
+msgstr "جائزے کی رائے"
+
+#: apps/finance/models.py:70
+msgid "approved at"
+msgstr "منظوری کا وقت"
+
+#: apps/finance/models.py:78
+msgid "locked at"
+msgstr "مقفل ہونے کا وقت"
+
+#: apps/finance/models.py:127 apps/finance/models.py:154
+#: apps/finance/models.py:184 apps/volunteers/models.py:63
+msgid "reference"
+msgstr "حوالہ نمبر"
+
+#: apps/finance/models.py:128 apps/finance/models.py:201
+msgid "collection date"
+msgstr "وصولی کی تاریخ"
+
+#: apps/finance/models.py:130 apps/finance/models.py:204
+msgid "method"
+msgstr "طریقہ"
+
+#: apps/finance/models.py:132 apps/finance/models.py:202
+msgid "amount"
+msgstr "رقم"
+
+#: apps/finance/models.py:148
+msgid "Collection"
+msgstr "وصولی"
+
+#: apps/finance/models.py:149
+msgid "Adjustment"
+msgstr "ایڈجسٹمنٹ"
+
+#: apps/finance/models.py:158
+msgid "transfer date"
+msgstr "منتقلی کی تاریخ"
+
+#: apps/finance/models.py:159
+msgid "bank reference"
+msgstr "بینک حوالہ"
+
+#: apps/finance/models.py:161
+msgid "total amount"
+msgstr "کل رقم"
+
+#: apps/finance/models.py:163
+msgid "note"
+msgstr "نوٹ"
+
+#: apps/finance/models.py:189
+msgid "entry type"
+msgstr "اندراج کی قسم"
+
+#: apps/finance/models.py:206
+msgid "receipt number"
+msgstr "رسید نمبر"
+
+#: apps/finance/models.py:214
+msgid "source note"
+msgstr "ذریعے کی وضاحت"
+
+#: apps/finance/models.py:222
+msgid "voided at"
+msgstr "منسوخی کا وقت"
+
+#: apps/finance/models.py:230
+msgid "void reason"
+msgstr "منسوخی کی وجہ"
+
+#: apps/finance/report_fields.py:12
+msgid "Activities"
+msgstr "سرگرمیاں"
+
+#: apps/finance/report_fields.py:19
+msgid "Volunteer hours"
+msgstr "رضاکارانہ گھنٹے"
+
+#: apps/finance/report_fields.py:26
+msgid "Issues"
+msgstr "مسائل"
+
+#: apps/finance/report_forms.py:26
+msgid "Week from"
+msgstr "ہفتے کی ابتدا"
+
+#: apps/finance/report_forms.py:31
+msgid "Week to"
+msgstr "ہفتے کا اختتام"
+
+#: apps/finance/report_forms.py:58 apps/finance/report_selectors.py:103
+msgid "Review comment"
+msgstr "جائزے کا تبصرہ"
+
+#: apps/finance/report_selectors.py:76
+msgid "Report drafted"
+msgstr "رپورٹ کا مسودہ بنایا گیا"
+
+#: apps/finance/report_selectors.py:77
+msgid "Report submitted"
+msgstr "رپورٹ جمع کرائی گئی"
+
+#: apps/finance/report_selectors.py:78
+msgid "Report returned"
+msgstr "رپورٹ واپس کی گئی"
+
+#: apps/finance/report_selectors.py:79
+msgid "Report resubmitted"
+msgstr "رپورٹ دوبارہ جمع کرائی گئی"
+
+#: apps/finance/report_selectors.py:80
+msgid "Report approved"
+msgstr "رپورٹ منظور ہوئی"
+
+#: apps/finance/report_selectors.py:81
+msgid "Report locked"
+msgstr "رپورٹ مقفل ہوئی"
+
+#: apps/finance/report_selectors.py:82
+msgid "Narrative updated"
+msgstr "تفصیل تبدیل ہوئی"
+
+#: apps/finance/report_selectors.py:88
+msgid "Locked at"
+msgstr "مقفل ہونے کا وقت"
+
+#: apps/finance/report_services.py:60
+msgid "Narrative can only be edited in Draft or Returned reports."
+msgstr "تفصیل صرف مسودہ یا واپس شدہ رپورٹ میں بدلی جا سکتی ہے۔"
+
+#: apps/finance/report_services.py:87
+msgid "This action is not available for the report's current status."
+msgstr "رپورٹ کی موجودہ حالت میں یہ کارروائی دستیاب نہیں ہے۔"
+
+#: apps/finance/report_services.py:101
+msgid "The reporting week has not ended yet."
+msgstr "رپورٹ کا ہفتہ ابھی ختم نہیں ہوا۔"
+
+#: apps/finance/report_services.py:151
+msgid "This report revision has changed. Reload before reviewing."
+msgstr "رپورٹ کا نسخہ بدل گیا ہے۔ جائزے سے پہلے دوبارہ کھولیں۔"
+
+#: apps/finance/report_services.py:160
+#, python-format
+msgid "Give a return comment between %(minimum)s and %(maximum)s characters."
+msgstr "واپسی کا تبصرہ %(minimum)s سے %(maximum)s حروف میں درج کریں۔"
+
+#: apps/finance/report_services.py:228
+msgid "Choose a reporting week since opening."
+msgstr "شاخ کے افتتاح کے بعد کا رپورٹنگ ہفتہ منتخب کریں۔"
+
+#: apps/finance/report_views.py:139
+msgid "Report saved."
+msgstr "رپورٹ محفوظ ہو گئی۔"
+
+#: apps/finance/report_views.py:139
+msgid "Report submitted for review."
+msgstr "رپورٹ جائزے کے لیے جمع ہو گئی۔"
+
+#: apps/finance/report_views.py:159
+msgid "Report returned to the branch."
+msgstr "رپورٹ شاخ کو واپس کر دی گئی۔"
+
+#: apps/finance/report_views.py:161
+msgid "Report approved and locked."
+msgstr "رپورٹ منظور اور مقفل ہو گئی۔"
+
+#: apps/finance/selectors.py:89
+msgid "Collection created"
+msgstr "وصولی درج ہوئی"
+
+#: apps/finance/selectors.py:90
+msgid "Collection updated"
+msgstr "وصولی کی ترمیم ہوئی"
+
+#: apps/finance/selectors.py:91
+msgid "Collection voided"
+msgstr "وصولی منسوخ ہوئی"
+
+#: apps/finance/selectors.py:92
+msgid "Collection edit refused"
+msgstr "وصولی میں ترمیم مسترد ہوئی"
+
+#: apps/finance/selectors.py:93
+msgid "Collection sent"
+msgstr "وصولی بھیج دی گئی"
+
+#: apps/finance/services.py:49
+msgid "Choose at least one collection."
+msgstr "کم از کم ایک وصولی منتخب کریں۔"
+
+#: apps/finance/services.py:57
+msgid "Choose only collections from this branch."
+msgstr "صرف اسی شاخ کی وصولیاں منتخب کریں۔"
+
+#: apps/finance/services.py:63 apps/finance/views.py:280
+msgid "A selected collection is voided or already sent."
+msgstr "منتخب وصولی منسوخ ہو چکی ہے یا پہلے بھیجی جا چکی ہے۔"
+
+#: apps/finance/services.py:85
+msgid "Use 3–50 characters for the bank reference."
+msgstr "بینک حوالے کے لیے 3 سے 50 حروف استعمال کریں۔"
+
+#: apps/finance/services.py:131
+msgid "This entry has been voided."
+msgstr "یہ اندراج منسوخ ہو چکا ہے۔"
+
+#: apps/finance/services.py:133
+msgid "This entry has already been sent."
+msgstr "یہ اندراج پہلے بھیجا جا چکا ہے۔"
+
+#: apps/finance/services.py:137
+#, python-format
+msgid "This entry locked on %(when)s (PKT)."
+msgstr "یہ اندراج %(when)s (پاکستانی وقت) پر مقفل ہوا۔"
+
+#: apps/finance/services.py:141 apps/finance/services.py:324
+msgid "This collection week is closed."
+msgstr "وصولی کا یہ ہفتہ بند ہے۔"
+
+#: apps/finance/services.py:168 apps/finance/services.py:371
+msgid "This receipt number already exists in this branch."
+msgstr "یہ رسید نمبر اس شاخ میں پہلے سے موجود ہے۔"
+
+#: apps/finance/services.py:206
+#, python-format
+msgid "Give a void reason between %(minimum)s and %(maximum)s characters."
+msgstr "منسوخی کی وجہ %(minimum)s سے %(maximum)s حروف میں درج کریں۔"
+
+#: apps/finance/services.py:293
 msgid ""
-"Too many applications have been submitted from this connection. Please try "
-"again later."
+"Enter a positive amount with at most two decimal places within the allowed "
+"maximum."
 msgstr ""
-"اس رابطے سے بہت زیادہ درخواستیں جمع ہو چکی ہیں۔ براہ کرم کچھ دیر بعد دوبارہ "
-"کوشش کریں۔"
+"مقررہ حد میں مثبت رقم زیادہ سے زیادہ دو اعشاری ہندسوں کے ساتھ درج کریں۔"
 
-msgid "Urdu"
-msgstr "اردو"
+#: apps/finance/services.py:313
+msgid "Choose an offline collection method."
+msgstr "آف لائن وصولی کا طریقہ منتخب کریں۔"
 
-msgid "Use your name, including Urdu letters if preferred."
-msgstr "اپنا نام لکھیں، چاہیں تو اردو حروف استعمال کریں۔"
+#: apps/finance/services.py:319
+msgid "Use 1–30 letters, numbers, slashes or dashes for the receipt."
+msgstr "رسید کے لیے 1 سے 30 حروف، ہندسے، سلیش یا ڈیش استعمال کریں۔"
 
+#: apps/finance/services.py:331
+msgid "Choose a member from this branch."
+msgstr "اسی شاخ کا رکن منتخب کریں۔"
+
+#: apps/finance/services.py:336
+msgid "Use at most 200 characters for the source note."
+msgstr "ماخذ کے نوٹ میں زیادہ سے زیادہ 200 حروف لکھیں۔"
+
+#: apps/finance/services.py:364
+msgid "Collections can only be entered for an active branch."
+msgstr "وصولی صرف فعال شاخ کے لیے درج کی جا سکتی ہے۔"
+
+#: apps/finance/views.py:95 templates/finance/collection_list.html:5
+#: templates/finance/collection_list.html:6
+msgid "Create collection"
+msgstr "وصولی درج کریں"
+
+#: apps/finance/views.py:121
+msgid "Collection created."
+msgstr "وصولی درج کر دی گئی۔"
+
+#: apps/finance/views.py:130 templates/finance/collection_detail.html:5
+msgid "Edit collection"
+msgstr "وصولی میں ترمیم کریں"
+
+#: apps/finance/views.py:165
+msgid "Collection updated."
+msgstr "وصولی کی ترمیم محفوظ ہو گئی۔"
+
+#: apps/finance/views.py:301
+msgid "Transfer created."
+msgstr "منتقلی درج کر دی گئی۔"
+
+#: apps/finance/views.py:308 templates/finance/collection_detail.html:6
+msgid "Void collection"
+msgstr "وصولی منسوخ کریں"
+
+#: apps/finance/views.py:327
+msgid "Collection voided."
+msgstr "وصولی منسوخ کر دی گئی۔"
+
+#: apps/publicsite/context_processors.py:22
+msgid "Learn about Ujala's purpose, values and transparent offline donations."
+msgstr ""
+"اجالا کے مقصد، اقدار اور بالمشافہ عطیات کے شفاف انتظام کے بارے میں جانیے۔"
+
+#: apps/publicsite/context_processors.py:25
+msgid ""
+"Explore local education and food-support programs with Ujala volunteers."
+msgstr ""
+"اجالا کے رضاکاروں کے ساتھ مقامی تعلیمی اور غذائی تعاون کے پروگرام دیکھیے۔"
+
+#: apps/publicsite/context_processors.py:28
+msgid "Find a public Ujala branch near you and contact its local team."
+msgstr "اپنی قریبی اجالا شاخ تلاش کیجیے اور مقامی ٹیم سے رابطہ کیجیے۔"
+
+#: apps/publicsite/context_processors.py:31
+msgid ""
+"Discover upcoming Ujala volunteer activities and past community events."
+msgstr ""
+"اجالا کی آنے والی رضاکارانہ سرگرمیوں اور گزشتہ اجتماعی تقریبات کے بارے میں "
+"جانیے۔"
+
+#: apps/publicsite/context_processors.py:34
+msgid "Apply to volunteer with Ujala and support your local community."
+msgstr ""
+"اجالا کے ساتھ رضاکارانہ خدمت کی درخواست دیجیے اور اپنے محلے کا ساتھ دیجیے۔"
+
+#: apps/publicsite/context_processors.py:37
+msgid ""
+"Contact the Ujala Volunteer Network head office or find a local branch."
+msgstr ""
+"اجالا رضاکار نیٹ ورک کے مرکزی دفتر سے رابطہ کیجیے یا مقامی شاخ تلاش کیجیے۔"
+
+#: apps/publicsite/context_processors.py:40
+msgid "Read how Ujala handles private applicant and member information."
+msgstr ""
+"جانیے کہ اجالا درخواست گزاروں اور ارکان کی نجی معلومات کا خیال کیسے رکھتا "
+"ہے۔"
+
+#: apps/publicsite/context_processors.py:44 templates/public/home.html:7
+#: templates/public/navigation.html:7
+#: templates/volunteers/application_form.html:3
+#: templates/volunteers/application_form.html:7
+msgid "Get involved"
+msgstr "رضاکار بنیں"
+
+#: apps/publicsite/context_processors.py:46 templates/base.html:15
+#: templates/base.html:34 templates/base.html:60 templates/pdf/base.html:5
+#: templates/public/base.html:2 templates/public/home.html:3
+#: templates/volunteers/application_form.html:3
+#: templates/volunteers/thanks.html:3
+msgid "Ujala Volunteer Network"
+msgstr "اجالا رضاکار نیٹ ورک"
+
+#: apps/publicsite/context_processors.py:54
+msgid "Light up your city with Ujala Volunteer Network."
+msgstr "اجالا رضاکار نیٹ ورک کے ساتھ اپنے شہر کو روشن کیجیے۔"
+
+#: apps/publicsite/forms.py:20
+msgid "All cities"
+msgstr "تمام شہر"
+
+#: apps/publicsite/views.py:47 templates/base.html:60
+msgid "Light up your city"
+msgstr "اپنے شہر کو روشن کریں"
+
+#: apps/publicsite/views.py:59
+msgid "About us"
+msgstr "ہمارا تعارف"
+
+#: apps/publicsite/views.py:75 templates/public/navigation.html:4
+msgid "Programs"
+msgstr "پروگرام"
+
+#: apps/publicsite/views.py:99 templates/public/navigation.html:6
+msgid "Events"
+msgstr "تقریبات"
+
+#: apps/publicsite/views.py:115
+msgid "Our branches"
+msgstr "ہماری شاخیں"
+
+#: apps/publicsite/views.py:131 templates/base.html:60
+msgid "Contact"
+msgstr "رابطہ"
+
+#: apps/publicsite/views.py:140
+msgid "Privacy notice"
+msgstr "رازداری کا نوٹس"
+
+#: apps/seed/views.py:22
+msgid "Demo data reset. Please log in again."
+msgstr "نمائشی ڈیٹا بحال ہو گیا۔ براہِ کرم دوبارہ لاگ اِن کریں۔"
+
+#: apps/volunteers/apps.py:8
 msgid "Volunteers"
 msgstr "رضاکار"
 
-msgid "Weekday evenings"
-msgstr "ہفتے کے عام دنوں کی شام"
+#: apps/volunteers/constants.py:5
+msgid "Education"
+msgstr "تعلیم"
 
+#: apps/volunteers/constants.py:6
+msgid "Ration drive"
+msgstr "راشن کی تقسیم"
+
+#: apps/volunteers/constants.py:7
+msgid "Health camps"
+msgstr "طبی کیمپ"
+
+#: apps/volunteers/constants.py:8
+msgid "General volunteering"
+msgstr "عمومی رضاکارانہ کام"
+
+#: apps/volunteers/constants.py:11
 msgid "Weekday mornings"
 msgstr "ہفتے کے عام دنوں کی صبح"
 
+#: apps/volunteers/constants.py:12
+msgid "Weekday evenings"
+msgstr "ہفتے کے عام دنوں کی شام"
+
+#: apps/volunteers/constants.py:13
 msgid "Weekends"
 msgstr "ہفتہ اور اتوار"
 
+#: apps/volunteers/forms.py:55 templates/volunteers/team_list.html:8
+#: templates/volunteers/team_list.html:10
+msgid "Team name"
+msgstr "ٹیم کا نام"
+
+#: apps/volunteers/forms.py:66 apps/volunteers/forms.py:270
+#: apps/volunteers/selectors.py:54
+#: templates/volunteers/application_detail.html:12
+#: templates/volunteers/member_detail.html:9
+msgid "Mobile number"
+msgstr "موبائل نمبر"
+
+#: apps/volunteers/forms.py:72
+msgid "Use the international format, for example +923001234567."
+msgstr "بین الاقوامی شکل استعمال کریں، مثلاً +923001234567۔"
+
+#: apps/volunteers/forms.py:75 apps/volunteers/selectors.py:55
+#: templates/volunteers/member_detail.html:17
+msgid "Notes"
+msgstr "نوٹس"
+
+#: apps/volunteers/forms.py:103 apps/volunteers/forms.py:229
+#: templates/branches/branch_detail.html:30
+msgid "Reason"
+msgstr "وجہ"
+
+#: apps/volunteers/forms.py:113
+msgid "Search"
+msgstr "تلاش"
+
+#: apps/volunteers/forms.py:129
+msgid "Joined from"
+msgstr "شمولیت کی ابتدائی تاریخ"
+
+#: apps/volunteers/forms.py:134
+msgid "Joined to"
+msgstr "شمولیت کی آخری تاریخ"
+
+#: apps/volunteers/forms.py:139
+msgid "Sort by"
+msgstr "ترتیب دیں"
+
+#: apps/volunteers/forms.py:142
+msgid "Newest first"
+msgstr "نئے پہلے"
+
+#: apps/volunteers/forms.py:143
+msgid "Name (A–Z)"
+msgstr "نام (الف سے ی)"
+
+#: apps/volunteers/forms.py:144
+msgid "Name (Z–A)"
+msgstr "نام (ی سے الف)"
+
+#: apps/volunteers/forms.py:145
+msgid "Joined date (oldest first)"
+msgstr "تاریخ شمولیت (پرانی پہلے)"
+
+#: apps/volunteers/forms.py:146
+msgid "Joined date (newest first)"
+msgstr "تاریخ شمولیت (نئی پہلے)"
+
+#: apps/volunteers/forms.py:165
+msgid "All teams"
+msgstr "تمام ٹیمیں"
+
+#: apps/volunteers/forms.py:172
+msgid "All volunteer roles"
+msgstr "تمام رضاکارانہ کردار"
+
+#: apps/volunteers/forms.py:255
+msgid "Target branch"
+msgstr "منزل کی شاخ"
+
+#: apps/volunteers/forms.py:262
+msgid "Use your name, including Urdu letters if preferred."
+msgstr "اپنا نام لکھیں، چاہیں تو اردو حروف استعمال کریں۔"
+
+#: apps/volunteers/forms.py:267
+msgid "Enter an email address where HR can contact you."
+msgstr "ای میل کا پتہ لکھیں جس پر عملہ آپ سے رابطہ کر سکے۔"
+
+#: apps/volunteers/forms.py:283
+msgid "Pakistani mobile number, for example 0300 1234567."
+msgstr "پاکستانی موبائل نمبر، مثلاً 0300 1234567۔"
+
+#: apps/volunteers/forms.py:286
+msgid "Date of birth"
+msgstr "تاریخ پیدائش"
+
+#: apps/volunteers/forms.py:288
+msgid "Enter your date of birth."
+msgstr "اپنی تاریخ پیدائش درج کریں۔"
+
+#: apps/volunteers/forms.py:291
+msgid "My parent or guardian agrees to my application"
+msgstr "میرے والدین یا سرپرست میری درخواست سے متفق ہیں"
+
+#: apps/volunteers/forms.py:293
+msgid "Required if you are under 18."
+msgstr "اگر آپ کی عمر 18 سال سے کم ہے تو یہ ضروری ہے۔"
+
+#: apps/volunteers/forms.py:296 apps/volunteers/selectors.py:168
+#: templates/volunteers/application_detail.html:15
+msgid "Preferred branch"
+msgstr "ترجیحی شاخ"
+
+#: apps/volunteers/forms.py:298 apps/volunteers/services.py:682
+msgid "Choose an Active or Forming branch."
+msgstr "فعال یا تشکیل پاتی شاخ منتخب کریں۔"
+
+#: apps/volunteers/forms.py:301
+#: templates/volunteers/application_detail.html:16
+msgid "Interests"
+msgstr "دلچسپیاں"
+
+#: apps/volunteers/forms.py:304
+msgid "Choose the areas you are interested in."
+msgstr "اپنی دلچسپی کے شعبے منتخب کریں۔"
+
+#: apps/volunteers/forms.py:307
+#: templates/volunteers/application_detail.html:17
+msgid "Availability"
+msgstr "دستیابی"
+
+#: apps/volunteers/forms.py:310
+msgid "Choose at least one time when you can volunteer."
+msgstr "رضاکارانہ کام کے لیے کم از کم ایک وقت منتخب کریں۔"
+
+#: apps/volunteers/forms.py:313
 msgid "Why do you want to volunteer?"
 msgstr "آپ رضاکار کیوں بننا چاہتے ہیں؟"
 
+#: apps/volunteers/forms.py:315 apps/volunteers/forms.py:431
 msgid "Write between 20 and 1000 characters."
 msgstr "20 سے 1000 حروف میں لکھیں۔"
 
-msgid "You must agree to the privacy notice."
-msgstr "آپ کا رازداری کے نوٹس سے متفق ہونا ضروری ہے۔"
+#: apps/volunteers/forms.py:318
+#: templates/volunteers/application_detail.html:19
+msgid "Preferred language"
+msgstr "ترجیحی زبان"
 
+#: apps/volunteers/forms.py:321
+msgid "Choose the language you prefer for communication."
+msgstr "رابطے کے لیے اپنی پسندیدہ زبان منتخب کریں۔"
+
+#: apps/volunteers/forms.py:324
+msgid "I agree to the privacy notice"
+msgstr "میں رازداری کے نوٹس سے متفق ہوں"
+
+#: apps/volunteers/forms.py:326
 msgid ""
 "Your details are used by authorised staff to review your application and are"
 " not shown publicly."
@@ -390,1209 +2110,1426 @@ msgstr ""
 "آپ کی معلومات مجاز عملہ درخواست کا جائزہ لینے کے لیے استعمال کرتا ہے اور یہ "
 "عوام کو نہیں دکھائی جاتیں۔"
 
-msgid "active"
-msgstr "فعال"
+#: apps/volunteers/forms.py:331
+msgid "Leave this field empty"
+msgstr "یہ خانہ خالی چھوڑیں"
 
-msgid "availability"
-msgstr "دستیابی"
+#: apps/volunteers/forms.py:399
+msgid ""
+"Enter a name of 3–100 characters using letters, spaces, periods, apostrophes"
+" or hyphens."
+msgstr ""
+"حروف، وقفے، نقطے، اپاسٹراف یا ہائفن استعمال کرتے ہوئے 3 سے 100 حروف میں نام "
+"درج کریں۔"
 
-msgid "code"
-msgstr "کوڈ"
+#: apps/volunteers/forms.py:415
+msgid "Enter a valid Pakistani mobile number."
+msgstr "درست پاکستانی موبائل نمبر درج کریں۔"
 
-msgid "consent at"
-msgstr "رضامندی کا وقت"
+#: apps/volunteers/forms.py:421
+msgid "Choose between one and five interests."
+msgstr "ایک سے پانچ دلچسپیاں منتخب کریں۔"
 
-msgid "created at"
-msgstr "تخلیق کا وقت"
+#: apps/volunteers/forms.py:446
+#, python-format
+msgid "Applicants must be between %(minimum)s and %(maximum)s years old."
+msgstr ""
+"درخواست گزار کی عمر %(minimum)s سے %(maximum)s سال کے درمیان ہونی چاہیے۔"
 
-msgid "date of birth"
-msgstr "تاریخ پیدائش"
+#: apps/volunteers/forms.py:459
+msgid "Parent or guardian consent is required if you are under 18."
+msgstr ""
+"اگر آپ کی عمر 18 سال سے کم ہے تو والدین یا سرپرست کی رضامندی ضروری ہے۔"
 
-msgid "decided at"
-msgstr "فیصلے کا وقت"
+#: apps/volunteers/models.py:15 templates/dashboard/financial.html:25
+#: templates/finance/report_detail.html:15
+#: templates/pdf/monthly_summary.html:11
+msgid "Pending"
+msgstr "زیر التوا"
 
-msgid "decision note"
-msgstr "فیصلے کا نوٹ"
+#: apps/volunteers/models.py:16
+msgid "Accepted"
+msgstr "قبول شدہ"
 
-msgid "email"
-msgstr "ای میل"
+#: apps/volunteers/models.py:17
+msgid "Declined"
+msgstr "مسترد شدہ"
 
-msgid "full name"
-msgstr "پورا نام"
+#: apps/volunteers/models.py:22 templates/volunteers/team_list.html:11
+#: templates/volunteers/volunteer_role_list.html:11
+msgid "Inactive"
+msgstr "غیر فعال"
 
-msgid "guardian consent"
-msgstr "سرپرست کی رضامندی"
+#: apps/volunteers/models.py:23
+msgid "Left"
+msgstr "الگ ہو چکے"
 
-msgid "interests"
-msgstr "دلچسپیاں"
-
-msgid "joined on"
-msgstr "شمولیت کی تاریخ"
-
-msgid "left on"
-msgstr "علیحدگی کی تاریخ"
-
-msgid "member ID"
-msgstr "رکن کا شناختی نمبر"
-
-msgid "motivation"
-msgstr "رضاکار بننے کی وجہ"
-
+#: apps/volunteers/models.py:44
 msgid "name"
 msgstr "نام"
 
-msgid "notes"
-msgstr "نوٹس"
+#: apps/volunteers/models.py:65 apps/volunteers/models.py:186
+msgid "email"
+msgstr "ای میل"
 
-msgid "phone"
-msgstr "فون"
+#: apps/volunteers/models.py:67
+msgid "date of birth"
+msgstr "تاریخ پیدائش"
 
+#: apps/volunteers/models.py:68
+msgid "guardian consent"
+msgstr "سرپرست کی رضامندی"
+
+#: apps/volunteers/models.py:72
+msgid "interests"
+msgstr "دلچسپیاں"
+
+#: apps/volunteers/models.py:74
+msgid "availability"
+msgstr "دستیابی"
+
+#: apps/volunteers/models.py:76
+msgid "motivation"
+msgstr "رضاکار بننے کی وجہ"
+
+#: apps/volunteers/models.py:80
+msgid "consent at"
+msgstr "رضامندی کا وقت"
+
+#: apps/volunteers/models.py:87
 msgid "possible duplicate"
 msgstr "ممکنہ تکرار"
 
-msgid "preferred language"
-msgstr "ترجیحی زبان"
-
-msgid "reference"
-msgstr "حوالہ نمبر"
-
-msgid "sort order"
-msgstr "ترتیب"
-
-msgid "status"
-msgstr "حالت"
-
-msgid "updated at"
-msgstr "ترمیم کا وقت"
-
-msgid "This application has already been decided."
-msgstr "اس درخواست پر فیصلہ ہو چکا ہے۔"
-
-msgid "This branch is closed and cannot accept applicants."
-msgstr "یہ شاخ بند ہے اور درخواست گزار قبول نہیں کر سکتی۔"
-
-msgid "Choose a team from this application's branch."
-msgstr "اس درخواست کی شاخ سے ٹیم منتخب کریں۔"
-
-msgid "Choose an existing volunteer role."
-msgstr "موجود رضاکارانہ کردار منتخب کریں۔"
-
-msgid "A matched record is outside your access."
-msgstr "مماثل ریکارڈ تک آپ کو رسائی نہیں ہے۔"
-
-msgid "Accept application"
-msgstr "درخواست منظور کریں"
-
-msgid "Age"
-msgstr "عمر"
-
-msgid "All branches"
-msgstr "تمام شاخیں"
-
-msgid "Application accepted"
-msgstr "درخواست منظور ہوئی"
-
-msgid "Application declined"
-msgstr "درخواست مسترد کی گئی"
-
-msgid "Application declined."
-msgstr "درخواست مسترد کر دی گئی۔"
-
-msgid "Application pages"
-msgstr "درخواستوں کے صفحات"
-
-msgid "Application reassigned"
-msgstr "درخواست کی شاخ تبدیل ہوئی"
-
-msgid "Application reassigned."
-msgstr "درخواست کی شاخ تبدیل کر دی گئی۔"
-
-msgid "Application status"
-msgstr "درخواست کی حالت"
-
-msgid "Application submitted"
-msgstr "درخواست جمع ہوئی"
-
-msgid "Applications"
-msgstr "درخواستیں"
-
-msgid "Back to applications"
-msgstr "درخواستوں کی فہرست پر واپس"
-
-msgid "Branch"
-msgstr "شاخ"
-
-msgid "Confirm accept"
-msgstr "منظوری کی تصدیق کریں"
-
-msgid "Confirm decline"
-msgstr "مسترد کرنے کی تصدیق کریں"
-
-msgid "Created at"
-msgstr "تخلیق کا وقت"
-
-msgid "Decided at"
+#: apps/volunteers/models.py:109
+msgid "decided at"
 msgstr "فیصلے کا وقت"
 
-msgid "Decided by"
-msgstr "فیصلہ کرنے والا"
-
-msgid "Decision note"
+#: apps/volunteers/models.py:110
+msgid "decision note"
 msgstr "فیصلے کا نوٹ"
 
-msgid "Decline application"
-msgstr "درخواست مسترد کریں"
+#: apps/volunteers/models.py:118
+msgid "IP hash"
+msgstr "آئی پی ہیش"
 
-msgid "Guardian consent"
-msgstr "سرپرست کی رضامندی"
+#: apps/volunteers/models.py:168
+msgid "member ID"
+msgstr "رکن کا شناختی نمبر"
 
-msgid "Joined on"
+#: apps/volunteers/models.py:194
+msgid "joined on"
 msgstr "شمولیت کی تاریخ"
 
-msgid "Left on"
+#: apps/volunteers/models.py:195
+msgid "left on"
 msgstr "علیحدگی کی تاریخ"
 
+#: apps/volunteers/models.py:196
+msgid "notes"
+msgstr "نوٹس"
+
+#: apps/volunteers/selectors.py:60
+msgid "Member created"
+msgstr "رکن بنا دیا گیا"
+
+#: apps/volunteers/selectors.py:61
+msgid "Member updated"
+msgstr "رکن کی ترمیم محفوظ ہو گئی"
+
+#: apps/volunteers/selectors.py:62
+msgid "Member status changed"
+msgstr "رکن کی حالت تبدیل ہو گئی"
+
+#: apps/volunteers/selectors.py:63
+msgid "Member reinstated"
+msgstr "رکن بحال کر دیا گیا"
+
+#: apps/volunteers/selectors.py:170
+#: templates/volunteers/application_detail.html:28
 msgid "Member"
 msgstr "رکن"
 
+#: apps/volunteers/selectors.py:171
+#: templates/volunteers/application_detail.html:27
+msgid "Decision note"
+msgstr "فیصلے کا نوٹ"
+
+#: apps/volunteers/selectors.py:174
+msgid "Application submitted"
+msgstr "درخواست جمع ہوئی"
+
+#: apps/volunteers/selectors.py:175
+msgid "Application accepted"
+msgstr "درخواست قبول ہوئی"
+
+#: apps/volunteers/selectors.py:176
+msgid "Application declined"
+msgstr "درخواست مسترد کی گئی"
+
+#: apps/volunteers/selectors.py:177
+msgid "Application reassigned"
+msgstr "درخواست کی شاخ تبدیل ہوئی"
+
+#: apps/volunteers/services.py:55
+msgid "Choose a team from this member's branch."
+msgstr "اس رکن کی شاخ سے ٹیم منتخب کریں۔"
+
+#: apps/volunteers/services.py:57
+msgid "Import members at their historical joining date."
+msgstr "ارکان کو ان کی اصل تاریخِ شمولیت کے ساتھ درآمد کریں۔"
+
+#: apps/volunteers/services.py:107
+msgid "Choose an active team from this member's branch."
+msgstr "اس رکن کی شاخ سے فعال ٹیم منتخب کریں۔"
+
+#: apps/volunteers/services.py:115 apps/volunteers/services.py:558
+msgid "Choose an active volunteer role."
+msgstr "فعال رضاکارانہ کردار منتخب کریں۔"
+
+#: apps/volunteers/services.py:118
+msgid "Enter a Pakistani mobile number in international format."
+msgstr "پاکستانی موبائل نمبر بین الاقوامی شکل میں درج کریں۔"
+
+#: apps/volunteers/services.py:164
+msgid "This action is not available for the member's current status."
+msgstr "رکن کی موجودہ حالت میں یہ کارروائی دستیاب نہیں ہے۔"
+
+#: apps/volunteers/services.py:168
+msgid "The leaving date must be on or after the joining date."
+msgstr "رخصتی کی تاریخ شمولیت کی تاریخ سے پہلے نہیں ہو سکتی۔"
+
+#: apps/volunteers/services.py:173
+msgid "Give a reason for reinstating this member."
+msgstr "اس رکن کی بحالی کی وجہ بتائیں۔"
+
+#: apps/volunteers/services.py:182 apps/volunteers/services.py:200
+#: apps/volunteers/services.py:569
+msgid "A current member already uses this email address."
+msgstr "ایک موجودہ رکن پہلے ہی یہ ای میل پتہ استعمال کر رہا ہے۔"
+
+#: apps/volunteers/services.py:245
+msgid "A team with this name already exists in this branch."
+msgstr "اس نام کی ٹیم اس شاخ میں پہلے سے موجود ہے۔"
+
+#: apps/volunteers/services.py:464
+msgid "You must agree to the privacy notice."
+msgstr "آپ کا رازداری کے نوٹس سے متفق ہونا ضروری ہے۔"
+
+#: apps/volunteers/services.py:471
+msgid "This branch is not accepting applications."
+msgstr "یہ شاخ درخواستیں قبول نہیں کر رہی۔"
+
+#: apps/volunteers/services.py:520
+msgid "This application has already been decided."
+msgstr "اس درخواست پر فیصلہ ہو چکا ہے۔"
+
+#: apps/volunteers/services.py:535
+msgid "This branch is closed and cannot accept applicants."
+msgstr "یہ شاخ بند ہے اور درخواست گزار قبول نہیں کر سکتی۔"
+
+#: apps/volunteers/services.py:548
+msgid "Choose an active team from this application's branch."
+msgstr "اس درخواست کی شاخ سے فعال ٹیم منتخب کریں۔"
+
+#: apps/volunteers/views.py:96 templates/volunteers/team_list.html:6
+msgid "Create team"
+msgstr "ٹیم بنائیں"
+
+#: apps/volunteers/views.py:111
+msgid "Team created."
+msgstr "ٹیم بنا دی گئی۔"
+
+#: apps/volunteers/views.py:122 templates/volunteers/team_list.html:12
+msgid "Rename team"
+msgstr "ٹیم کا نام بدلیں"
+
+#: apps/volunteers/views.py:144
+msgid "Team renamed."
+msgstr "ٹیم کا نام بدل دیا گیا۔"
+
+#: apps/volunteers/views.py:151
+msgid "Team deactivated."
+msgstr "ٹیم غیر فعال کر دی گئی۔"
+
+#: apps/volunteers/views.py:167
+#: templates/volunteers/volunteer_role_list.html:6
+msgid "Create volunteer role"
+msgstr "رضاکارانہ کردار بنائیں"
+
+#: apps/volunteers/views.py:177
+msgid "Volunteer role created."
+msgstr "رضاکارانہ کردار بنا دیا گیا۔"
+
+#: apps/volunteers/views.py:183
+#: templates/volunteers/volunteer_role_list.html:12
+msgid "Edit volunteer role"
+msgstr "رضاکارانہ کردار میں ترمیم کریں"
+
+#: apps/volunteers/views.py:212
+msgid "Volunteer role updated."
+msgstr "رضاکارانہ کردار کی ترمیم محفوظ ہو گئی۔"
+
+#: apps/volunteers/views.py:219
+msgid "Volunteer role deactivated."
+msgstr "رضاکارانہ کردار غیر فعال کر دیا گیا۔"
+
+#: apps/volunteers/views.py:361
+msgid "Please correct the errors below."
+msgstr "براہ کرم درج ذیل غلطیاں درست کریں۔"
+
+#: apps/volunteers/views.py:395
 #, python-format
 msgid "Member %(member_id)s created."
 msgstr "رکن %(member_id)s بنا دیا گیا۔"
 
-msgid "Motivation"
-msgstr "رضاکار بننے کی وجہ"
-
-msgid "No"
-msgstr "نہیں"
-
-msgid "No applications found."
-msgstr "کوئی درخواست نہیں ملی۔"
-
-msgid "Please correct the errors below."
-msgstr "براہ کرم درج ذیل غلطیاں درست کریں۔"
-
-msgid "Possible duplicate"
-msgstr "ممکنہ تکرار"
-
-msgid "Privacy consent recorded"
-msgstr "رازداری کی رضامندی کا وقت"
-
-msgid "Reassign branch"
-msgstr "شاخ تبدیل کریں"
-
-msgid "Submitted (PKT)"
-msgstr "جمع کرنے کا وقت (پاکستانی وقت)"
-
-msgid "Target branch"
-msgstr "منزل کی شاخ"
-
-msgid "Team"
-msgstr "ٹیم"
-
-msgid "Updated at"
-msgstr "ترمیم کا وقت"
-
-msgid "Volunteer applications"
-msgstr "رضاکاروں کی درخواستیں"
-
-msgid "Volunteer role"
-msgstr "رضاکارانہ کردار"
-
-msgid "Yes"
-msgstr "ہاں"
-
-msgid "A current member already uses this email address."
-msgstr "ایک موجودہ رکن پہلے ہی یہ ای میل پتہ استعمال کر رہا ہے۔"
-
-msgid "Too many login attempts from this connection. Please try again later."
-msgstr ""
-"اس کنکشن سے لاگ ان کی بہت زیادہ کوششیں کی گئی ہیں۔ براہ کرم بعد میں دوبارہ "
-"کوشش کریں۔"
-
-msgid "Teams"
-msgstr "ٹیمیں"
-
-msgid "Team name"
-msgstr "ٹیم کا نام"
-
-msgid "Sort order"
-msgstr "ترتیب"
-
-msgid "Create team"
-msgstr "ٹیم بنائیں"
-
-msgid "Rename team"
-msgstr "ٹیم کا نام بدلیں"
-
-msgid "Deactivate team"
-msgstr "ٹیم غیر فعال کریں"
-
-msgid "No teams found."
-msgstr "کوئی ٹیم نہیں ملی۔"
-
-msgid "Team created."
-msgstr "ٹیم بنا دی گئی۔"
-
-msgid "Team renamed."
-msgstr "ٹیم کا نام بدل دیا گیا۔"
-
-msgid "Team deactivated."
-msgstr "ٹیم غیر فعال کر دی گئی۔"
-
-msgid "Volunteer roles"
-msgstr "رضاکارانہ کردار"
-
-msgid "Create volunteer role"
-msgstr "رضاکارانہ کردار بنائیں"
-
-msgid "Edit volunteer role"
-msgstr "رضاکارانہ کردار میں ترمیم کریں"
-
-msgid "Deactivate volunteer role"
-msgstr "رضاکارانہ کردار غیر فعال کریں"
-
-msgid "No volunteer roles found."
-msgstr "کوئی رضاکارانہ کردار نہیں ملا۔"
-
-msgid "Volunteer role created."
-msgstr "رضاکارانہ کردار بنا دیا گیا۔"
-
-msgid "Volunteer role updated."
-msgstr "رضاکارانہ کردار کی ترمیم محفوظ ہو گئی۔"
-
-msgid "Volunteer role deactivated."
-msgstr "رضاکارانہ کردار غیر فعال کر دیا گیا۔"
-
-msgid "A team with this name already exists in this branch."
-msgstr "اس نام کی ٹیم اس شاخ میں پہلے سے موجود ہے۔"
-
-msgid "Choose an active team from this application's branch."
-msgstr "اس درخواست کی شاخ سے فعال ٹیم منتخب کریں۔"
-
-msgid "Choose an active volunteer role."
-msgstr "فعال رضاکارانہ کردار منتخب کریں۔"
-
-msgid "Save"
-msgstr "محفوظ کریں"
-
-msgid "Back to list"
-msgstr "فہرست پر واپس جائیں"
-
-msgid "Search"
-msgstr "تلاش"
-
-msgid "Joined from"
-msgstr "شمولیت کی ابتدائی تاریخ"
-
-msgid "Joined to"
-msgstr "شمولیت کی آخری تاریخ"
-
-msgid "Sort by"
-msgstr "ترتیب دیں"
-
-msgid "Newest first"
-msgstr "نئے پہلے"
-
-msgid "Name (A–Z)"
-msgstr "نام (الف سے ی)"
-
-msgid "Name (Z–A)"
-msgstr "نام (ی سے الف)"
-
-msgid "Joined date (oldest first)"
-msgstr "تاریخ شمولیت (پرانی پہلے)"
-
-msgid "Joined date (newest first)"
-msgstr "تاریخ شمولیت (نئی پہلے)"
-
-msgid "All teams"
-msgstr "تمام ٹیمیں"
-
-msgid "All volunteer roles"
-msgstr "تمام رضاکارانہ کردار"
-
-msgid "The end date must be on or after the start date."
-msgstr "آخری تاریخ ابتدائی تاریخ سے پہلے نہیں ہو سکتی۔"
-
-msgid "Reset filters"
-msgstr "فلٹر صاف کریں"
-
-msgid "Member register"
-msgstr "اراکین کا رجسٹر"
-
-msgid "Member ID"
-msgstr "رکن شناخت"
-
-msgid "No members found."
-msgstr "کوئی رکن نہیں ملا۔"
-
-msgid "Member pages"
-msgstr "اراکین کے صفحات"
-
-msgid "Use the international format, for example +923001234567."
-msgstr "بین الاقوامی شکل استعمال کریں، مثلاً +923001234567۔"
-
-msgid "Choose an active team from this member's branch."
-msgstr "اس رکن کی شاخ سے فعال ٹیم منتخب کریں۔"
-
-msgid "Enter a Pakistani mobile number in international format."
-msgstr "پاکستانی موبائل نمبر بین الاقوامی شکل میں درج کریں۔"
-
-msgid "This action is not available for the member's current status."
-msgstr "رکن کی موجودہ حالت میں یہ کارروائی دستیاب نہیں ہے۔"
-
-msgid "The leaving date must be on or after the joining date."
-msgstr "رخصتی کی تاریخ شمولیت کی تاریخ سے پہلے نہیں ہو سکتی۔"
-
-msgid "Give a reason for reinstating this member."
-msgstr "اس رکن کی بحالی کی وجہ بتائیں۔"
-
-msgid "Member created"
-msgstr "رکن بنا دیا گیا"
-
-msgid "Member updated"
-msgstr "رکن کی ترمیم محفوظ ہو گئی"
-
-msgid "Member status changed"
-msgstr "رکن کی حالت تبدیل ہو گئی"
-
-msgid "Member reinstated"
-msgstr "رکن بحال کر دیا گیا"
-
+#: apps/volunteers/views.py:414
+msgid "Application declined."
+msgstr "درخواست مسترد کر دی گئی۔"
+
+#: apps/volunteers/views.py:436
+msgid "Application reassigned."
+msgstr "درخواست کی شاخ تبدیل کر دی گئی۔"
+
+#: apps/volunteers/views.py:465
 msgid "Deactivate member"
 msgstr "رکن غیر فعال کریں"
 
+#: apps/volunteers/views.py:466
 msgid "Reactivate member"
 msgstr "رکن فعال کریں"
 
+#: apps/volunteers/views.py:467
 msgid "Mark member left"
 msgstr "رکن کی رخصتی درج کریں"
 
+#: apps/volunteers/views.py:468
 msgid "Reinstate member"
 msgstr "رکن بحال کریں"
 
+#: apps/volunteers/views.py:508 templates/volunteers/member_detail.html:18
 msgid "Edit member"
 msgstr "رکن میں ترمیم کریں"
 
+#: apps/volunteers/views.py:544
 msgid "Member updated."
 msgstr "رکن کی ترمیم محفوظ ہو گئی۔"
 
+#: apps/volunteers/views.py:565
 msgid "Member status updated."
 msgstr "رکن کی حالت تبدیل ہو گئی۔"
 
-msgid "Notes"
-msgstr "نوٹس"
-
-msgid "From date (PKT)"
-msgstr "ابتدائی تاریخ (پاکستانی وقت)"
-
-msgid "To date (PKT)"
-msgstr "آخری تاریخ (پاکستانی وقت)"
-
-msgid "Actor email"
-msgstr "کارروائی کرنے والے کی ای میل"
-
-msgid "Actor role"
-msgstr "کارروائی کرنے والے کا کردار"
-
-msgid "All roles"
-msgstr "تمام کردار"
-
-msgid "Action"
-msgstr "کارروائی"
-
-msgid "Entity type"
-msgstr "ریکارڈ کی قسم"
-
-msgid "Entity ID or label"
-msgstr "ریکارڈ کی شناخت یا نام"
-
-msgid "All entity types"
-msgstr "تمام ریکارڈ کی قسمیں"
-
-msgid "Authentication"
-msgstr "توثیق"
-
-msgid "Audit"
-msgstr "آڈٹ"
-
-msgid "Permissions"
-msgstr "اجازتیں"
-
-msgid "Assignments"
-msgstr "ذمہ داریاں"
-
-msgid "All actions"
-msgstr "تمام کارروائیاں"
-
-msgid "System / anonymous"
-msgstr "نظام / گمنام"
-
-msgid "No field changes"
-msgstr "کوئی خانہ تبدیل نہیں ہوا"
-
-msgid "Chain intact (%(count)s events)"
-msgstr "سلسلہ درست ہے (%(count)s واقعات)"
-
-msgid "Chain broken at event #%(id)s"
-msgstr "واقعہ #%(id)s پر سلسلہ ٹوٹ گیا"
-
-msgid "Audit log"
-msgstr "آڈٹ لاگ"
-
-msgid "Verify chain"
-msgstr "سلسلے کی تصدیق کریں"
-
-msgid "Time (PKT)"
-msgstr "وقت (پاکستانی وقت)"
-
-msgid "Actor"
-msgstr "کارروائی کرنے والا"
-
-msgid "Entity"
-msgstr "ریکارڈ"
-
-msgid "Changed fields"
-msgstr "تبدیل شدہ خانے"
-
-msgid "No audit events found."
-msgstr "آڈٹ کا کوئی واقعہ نہیں ملا۔"
-
-msgid "Audit pages"
-msgstr "آڈٹ کے صفحات"
-
-msgid "Audit event"
-msgstr "آڈٹ واقعہ"
-
-msgid "IP address"
-msgstr "آئی پی پتہ"
-
-msgid "User agent"
-msgstr "صارف کا براؤزر"
-
-msgid "Request ID"
-msgstr "درخواست کی شناخت"
-
-msgid "Previous hash"
-msgstr "پچھلا ہیش"
-
-msgid "Hash"
-msgstr "ہیش"
-
-msgid "Field"
-msgstr "خانہ"
-
-msgid "Before"
-msgstr "پہلے"
-
-msgid "After"
-msgstr "بعد"
-
-msgid "Metadata"
-msgstr "اضافی معلومات"
-
-msgid "Back to audit log"
-msgstr "آڈٹ لاگ پر واپس جائیں"
-
-msgid "Finance"
-msgstr "مالیات"
-
-msgid "Cash"
-msgstr "نقد"
-
-msgid "Cheque"
-msgstr "چیک"
-
-msgid "Bank deposit"
-msgstr "بینک میں جمع"
-
-msgid "Collection"
-msgstr "وصولی"
-
-msgid "Adjustment"
-msgstr "ایڈجسٹمنٹ"
-
-msgid "Collection date"
-msgstr "وصولی کی تاریخ"
-
-msgid "Amount (PKR)"
-msgstr "رقم (روپے)"
-
-msgid "Method"
-msgstr "طریقہ"
-
-msgid "Receipt number"
-msgstr "رسید نمبر"
-
-msgid "Collected by"
-msgstr "وصول کرنے والا"
-
-msgid "Source note"
-msgstr "ماخذ کا نوٹ"
-
-msgid "Choose an amount within the allowed range."
-msgstr "مقررہ حد کے اندر رقم درج کریں۔"
-
-msgid "Choose a date within the allowed collection window."
-msgstr "وصولی کی اجازت یافتہ مدت میں تاریخ منتخب کریں۔"
-
-msgid ""
-"Enter a positive amount with at most two decimal places within the allowed "
-"maximum."
-msgstr ""
-"مقررہ حد میں مثبت رقم زیادہ سے زیادہ دو اعشاری ہندسوں کے ساتھ درج کریں۔"
-
-msgid "Choose an offline collection method."
-msgstr "آف لائن وصولی کا طریقہ منتخب کریں۔"
-
-msgid "Use 1–30 letters, numbers, slashes or dashes for the receipt."
-msgstr "رسید کے لیے 1 سے 30 حروف، ہندسے، سلیش یا ڈیش استعمال کریں۔"
-
-msgid "This collection week is closed."
-msgstr "وصولی کا یہ ہفتہ بند ہے۔"
-
-msgid "Choose a member from this branch."
-msgstr "اسی شاخ کا رکن منتخب کریں۔"
-
-msgid "Use at most 200 characters for the source note."
-msgstr "ماخذ کے نوٹ میں زیادہ سے زیادہ 200 حروف لکھیں۔"
-
-msgid "Collections can only be entered for an active branch."
-msgstr "وصولی صرف فعال شاخ کے لیے درج کی جا سکتی ہے۔"
-
-msgid "This receipt number already exists in this branch."
-msgstr "یہ رسید نمبر اس شاخ میں پہلے سے موجود ہے۔"
-
-msgid "Open"
-msgstr "کھلا"
-
-msgid "Locked"
-msgstr "مقفل"
-
-msgid "Sent"
-msgstr "بھیجا گیا"
-
-msgid "Voided"
-msgstr "منسوخ"
-
-msgid "This entry has been voided."
-msgstr "یہ اندراج منسوخ ہو چکا ہے۔"
-
-msgid "This entry has already been sent."
-msgstr "یہ اندراج پہلے بھیجا جا چکا ہے۔"
-
-msgid "This entry locked on %(when)s (PKT)."
-msgstr "یہ اندراج %(when)s (پاکستانی وقت) پر مقفل ہوا۔"
-
-msgid "Give a void reason between 5 and 300 characters."
-msgstr "منسوخی کی وجہ 5 سے 300 حروف میں درج کریں۔"
-
-msgid "From date"
-msgstr "ابتدائی تاریخ"
-
-msgid "To date"
-msgstr "آخری تاریخ"
-
-msgid "All methods"
-msgstr "تمام طریقے"
-
-msgid "State"
-msgstr "حالت"
-
-msgid "All states"
-msgstr "تمام حالتیں"
-
-msgid "Void reason"
-msgstr "منسوخی کی وجہ"
-
-msgid "Collection created"
-msgstr "وصولی درج ہوئی"
-
-msgid "Collection updated"
-msgstr "وصولی کی ترمیم ہوئی"
-
-msgid "Collection voided"
-msgstr "وصولی منسوخ ہوئی"
-
-msgid "Collection edit refused"
-msgstr "وصولی میں ترمیم مسترد ہوئی"
-
-msgid "Collection sent"
-msgstr "وصولی بھیج دی گئی"
-
-msgid "Collections"
-msgstr "وصولیاں"
-
-msgid "Create collection"
-msgstr "وصولی درج کریں"
-
-msgid "Edit collection"
-msgstr "وصولی میں ترمیم کریں"
-
-msgid "Void collection"
-msgstr "وصولی منسوخ کریں"
-
-msgid "Collection created."
-msgstr "وصولی درج کر دی گئی۔"
-
-msgid "Collection updated."
-msgstr "وصولی کی ترمیم محفوظ ہو گئی۔"
-
-msgid "Collection voided."
-msgstr "وصولی منسوخ کر دی گئی۔"
-
-msgid "Lock"
-msgstr "قفل"
-
-msgid "Locks in %(duration)s"
-msgstr "%(duration)s میں مقفل ہوگا"
-
-msgid "No collections found."
-msgstr "کوئی وصولی نہیں ملی۔"
-
-msgid "Non-voided total (PKR)"
-msgstr "غیر منسوخ کل رقم (روپے)"
-
-msgid "Locks at (PKT)"
-msgstr "مقفل ہونے کا وقت (پاکستانی وقت)"
-
-msgid "Give a void reason between %(minimum)s and %(maximum)s characters."
-msgstr "منسوخی کی وجہ %(minimum)s سے %(maximum)s حروف میں درج کریں۔"
-
-msgid "Choose at least one collection."
-msgstr "کم از کم ایک وصولی منتخب کریں۔"
-
-msgid "Choose only collections from this branch."
-msgstr "صرف اسی شاخ کی وصولیاں منتخب کریں۔"
-
-msgid "A selected collection is voided or already sent."
-msgstr "منتخب وصولی منسوخ ہو چکی ہے یا پہلے بھیجی جا چکی ہے۔"
-
-msgid "Choose a transfer date between the latest collection date and today."
-msgstr "تازہ ترین وصولی کی تاریخ سے آج تک منتقلی کی تاریخ منتخب کریں۔"
-
-msgid "Use 3–50 characters for the bank reference."
-msgstr "بینک حوالے کے لیے 3 سے 50 حروف استعمال کریں۔"
-
-msgid "Choose collections from one branch only."
-msgstr "صرف ایک شاخ کی وصولیاں منتخب کریں۔"
-
-msgid "Transfer date"
-msgstr "منتقلی کی تاریخ"
-
-msgid "Bank reference"
-msgstr "بینک حوالہ"
-
-msgid "Transfer created."
-msgstr "منتقلی درج کر دی گئی۔"
-
-msgid "Select unsent collections"
-msgstr "غیر ارسال شدہ وصولیاں منتخب کریں"
-
-msgid "Review selected entries"
-msgstr "منتخب اندراجات کا جائزہ لیں"
-
-msgid "Create transfer"
-msgstr "منتقلی درج کریں"
-
-msgid "Selected collections"
-msgstr "منتخب وصولیاں"
-
-msgid "PKR"
-msgstr "روپے"
-
-msgid "Selected total (PKR)"
-msgstr "منتخب کل رقم (روپے)"
-
-msgid "Mark sent"
-msgstr "بھیجا گیا درج کریں"
-
-msgid "Transfers"
-msgstr "منتقلیاں"
-
-msgid "Total (PKR)"
-msgstr "کل رقم (روپے)"
-
-msgid "No transfers found."
-msgstr "کوئی منتقلی نہیں ملی۔"
-
-msgid "Select"
-msgstr "منتخب کریں"
-
-msgid "Prepare transfer"
-msgstr "منتقلی تیار کریں"
-
-msgid "View transfer"
-msgstr "منتقلی دیکھیں"
-
-msgid "Unsent collections: %(count)s, total PKR %(total)s."
-msgstr "غیر ارسال شدہ وصولیاں: %(count)s، کل رقم %(total)s روپے۔"
-
-msgid "Draft"
-msgstr "مسودہ"
-
-msgid "Submitted"
-msgstr "جمع شدہ"
-
-msgid "Returned"
-msgstr "واپس شدہ"
-
-msgid "Resubmitted"
-msgstr "دوبارہ جمع شدہ"
-
-msgid "Approved"
-msgstr "منظور شدہ"
-
-msgid "Activities"
-msgstr "سرگرمیاں"
-
-msgid "Volunteer hours"
-msgstr "رضاکارانہ گھنٹے"
-
-msgid "Issues"
-msgstr "مسائل"
-
-msgid "Generate missing weekly report drafts for active branches."
-msgstr "فعال شاخوں کے لیے گمشدہ ہفتہ وار مسودے بنائیں۔"
-
-msgid "Narrative can only be edited in Draft or Returned reports."
-msgstr "تفصیل صرف مسودہ یا واپس شدہ رپورٹ میں بدلی جا سکتی ہے۔"
-
-msgid "This action is not available for the report's current status."
-msgstr "رپورٹ کی موجودہ حالت میں یہ کارروائی دستیاب نہیں ہے۔"
-
-msgid "The reporting week has not ended yet."
-msgstr "رپورٹ کا ہفتہ ابھی ختم نہیں ہوا۔"
-
-msgid "This report revision has changed. Reload before reviewing."
-msgstr "رپورٹ کا نسخہ بدل گیا ہے۔ جائزے سے پہلے دوبارہ کھولیں۔"
-
-msgid "Give a return comment between %(minimum)s and %(maximum)s characters."
-msgstr "واپسی کا تبصرہ %(minimum)s سے %(maximum)s حروف میں درج کریں۔"
-
-msgid "Open weekly reports: %(count)s."
-msgstr "نامکمل ہفتہ وار رپورٹیں: %(count)s۔"
-
-msgid "Weekly reports"
-msgstr "ہفتہ وار رپورٹیں"
-
-msgid "Review queue"
-msgstr "جائزے کی قطار"
-
-msgid "Week from"
-msgstr "ہفتے کی ابتدا"
-
-msgid "Week to"
-msgstr "ہفتے کا اختتام"
-
-msgid "Review comment"
-msgstr "جائزے کا تبصرہ"
-
-msgid "Report drafted"
-msgstr "رپورٹ کا مسودہ بنایا گیا"
-
-msgid "Report submitted"
-msgstr "رپورٹ جمع کرائی گئی"
-
-msgid "Report returned"
-msgstr "رپورٹ واپس کی گئی"
-
-msgid "Report resubmitted"
-msgstr "رپورٹ دوبارہ جمع کرائی گئی"
-
-msgid "Report approved"
-msgstr "رپورٹ منظور ہوئی"
-
-msgid "Report locked"
-msgstr "رپورٹ مقفل ہوئی"
-
-msgid "Narrative updated"
-msgstr "تفصیل تبدیل ہوئی"
-
-msgid "Report saved."
-msgstr "رپورٹ محفوظ ہو گئی۔"
-
-msgid "Report submitted for review."
-msgstr "رپورٹ جائزے کے لیے جمع ہو گئی۔"
-
-msgid "Report returned to the branch."
-msgstr "رپورٹ شاخ کو واپس کر دی گئی۔"
-
-msgid "Report approved and locked."
-msgstr "رپورٹ منظور اور مقفل ہو گئی۔"
-
-msgid "Week"
-msgstr "ہفتہ"
-
-msgid "Revision"
-msgstr "نسخہ"
-
-msgid "No reports found."
-msgstr "کوئی رپورٹ نہیں ملی۔"
-
-msgid "Returned comment"
-msgstr "واپسی کا تبصرہ"
-
-msgid "Locked — approved by"
-msgstr "مقفل — منظور کرنے والا"
-
-msgid "Approved figures"
-msgstr "منظور شدہ اعداد"
-
-msgid "Live figures"
-msgstr "موجودہ اعداد"
-
-msgid "Entry count"
-msgstr "اندراجات کی تعداد"
-
-msgid "Unsent at week end (PKR)"
-msgstr "ہفتے کے اختتام پر غیر منتقل رقم (روپے)"
-
-msgid "New members"
-msgstr "نئے اراکین"
-
-msgid "Active members at week end"
-msgstr "ہفتے کے اختتام پر فعال اراکین"
-
-msgid "Applications received"
-msgstr "موصولہ درخواستیں"
-
-msgid "Applications accepted"
-msgstr "قبول شدہ درخواستیں"
-
-msgid "Applications declined"
-msgstr "مسترد شدہ درخواستیں"
-
-msgid "Save narrative"
-msgstr "تفصیل محفوظ کریں"
-
-msgid "Resubmit"
-msgstr "دوبارہ جمع کرائیں"
-
-msgid "Submit for review"
-msgstr "جائزے کے لیے جمع کرائیں"
-
-msgid "Return to branch"
-msgstr "شاخ کو واپس کریں"
-
-msgid "Approve and lock"
-msgstr "منظور اور مقفل کریں"
-
-msgid "Snapshot hash"
-msgstr "محفوظ اعداد کا ہیش"
-
-msgid "Locked at"
-msgstr "مقفل ہونے کا وقت"
-
-msgid "Menu"
-msgstr "فہرست"
-
+#: config/settings/base.py:111
+msgid "اردو"
+msgstr "اردو"
+
+#: templates/403.html:3 templates/403.html:6
+msgid "Access denied"
+msgstr "رسائی کی اجازت نہیں"
+
+#: templates/403.html:3 templates/404.html:3 templates/429.html:3
+#: templates/500.html:3 templates/accounts/action_error.html:3
+#: templates/accounts/change_password.html:3 templates/accounts/login.html:3
+#: templates/accounts/role_home.html:3 templates/accounts/settings.html:3
+#: templates/accounts/temporary_password.html:3
+#: templates/accounts/user_detail.html:3 templates/accounts/user_form.html:3
+#: templates/accounts/user_list.html:3 templates/audit/event_detail.html:3
+#: templates/audit/event_list.html:3 templates/base.html:7
+#: templates/branches/branch_detail.html:3
+#: templates/branches/branch_form.html:3 templates/branches/branch_list.html:3
+#: templates/branches/city_form.html:3 templates/branches/city_list.html:3
+#: templates/cms/editor.html:2 templates/cms/list.html:2
+#: templates/core/home.html:5 templates/dashboard/financial.html:3
+#: templates/dashboard/hr.html:3 templates/finance/collection_detail.html:2
+#: templates/finance/collection_form.html:2
+#: templates/finance/collection_list.html:2
+#: templates/finance/report_detail.html:3 templates/finance/report_list.html:4
+#: templates/finance/transfer_detail.html:2
+#: templates/finance/transfer_form.html:2
+#: templates/finance/transfer_list.html:2 templates/pdf/base.html:3
+#: templates/volunteers/application_detail.html:3
+#: templates/volunteers/application_list.html:3
+#: templates/volunteers/management_form.html:3
+#: templates/volunteers/member_detail.html:3
+#: templates/volunteers/member_list.html:3
+#: templates/volunteers/team_list.html:3
+#: templates/volunteers/volunteer_role_list.html:3
+msgid "ShipLens"
+msgstr "ShipLens"
+
+#: templates/403.html:7
+msgid "You do not have permission to access this page."
+msgstr "آپ کو اس صفحے تک رسائی کی اجازت نہیں ہے۔"
+
+#: templates/403.html:8 templates/404.html:8 templates/429.html:8
+#: templates/500.html:8
 msgid "Return home"
 msgstr "ابتدائی صفحے پر جائیں"
 
-msgid "ShipLens helps volunteers and branches serve their communities."
-msgstr ""
+#: templates/404.html:3 templates/404.html:6
+msgid "Page not found"
+msgstr "صفحہ نہیں ملا"
 
-msgid "Explore ShipLens and local volunteer opportunities."
-msgstr ""
+#: templates/404.html:7
+msgid "The page you requested could not be found."
+msgstr "آپ کا مطلوبہ صفحہ نہیں مل سکا۔"
 
-msgid "Apply to volunteer with ShipLens and support your local community."
-msgstr ""
+#: templates/429.html:3 templates/429.html:6
+msgid "Please try again later"
+msgstr "براہ کرم کچھ دیر بعد دوبارہ کوشش کریں"
 
+#: templates/429.html:7
+msgid ""
+"Too many applications have been submitted from this connection. Please try "
+"again later."
+msgstr ""
+"اس رابطے سے بہت زیادہ درخواستیں جمع ہو چکی ہیں۔ براہ کرم کچھ دیر بعد دوبارہ "
+"کوشش کریں۔"
+
+#: templates/500.html:3 templates/500.html:6
+msgid "Something went wrong"
+msgstr "کچھ غلط ہو گیا"
+
+#: templates/500.html:7
+msgid "Please try again later."
+msgstr "براہ کرم کچھ دیر بعد دوبارہ کوشش کریں۔"
+
+#: templates/accounts/action_error.html:3
+#: templates/accounts/action_error.html:5
+msgid "Change could not be completed"
+msgstr "تبدیلی مکمل نہیں ہو سکی"
+
+#: templates/accounts/action_error.html:7
+#: templates/accounts/temporary_password.html:10
+msgid "Back to users"
+msgstr "صارفین کی فہرست پر واپس جائیں"
+
+#: templates/accounts/change_password.html:3
+#: templates/accounts/change_password.html:5
+#: templates/accounts/change_password.html:10
+#: templates/partials/staff_navigation.html:34
+msgid "Change password"
+msgstr "پاس ورڈ تبدیل کریں"
+
+#: templates/accounts/change_password.html:6
+msgid "Change your temporary password before continuing."
+msgstr "آگے بڑھنے سے پہلے اپنا عارضی پاس ورڈ تبدیل کریں۔"
+
+#: templates/accounts/login.html:3 templates/accounts/login.html:6
+#: templates/accounts/login.html:13 templates/base.html:40
+msgid "Log in"
+msgstr "لاگ اِن کریں"
+
+#: templates/accounts/login.html:8
+#, python-format
+msgid "Too many attempts. Try again in %(minutes)s minutes."
+msgstr ""
+"کوششوں کی تعداد حد سے بڑھ گئی ہے۔ %(minutes)s منٹ بعد دوبارہ کوشش کریں۔"
+
+#: templates/accounts/role_home.html:6
+msgid "This page will be built in a later task."
+msgstr "یہ صفحہ آئندہ مرحلے میں بنایا جائے گا۔"
+
+#: templates/accounts/settings.html:6
+msgid "Changes apply immediately and are recorded in the audit log."
+msgstr "تبدیلیاں فوراً نافذ ہوتی ہیں اور آڈٹ لاگ میں درج ہوتی ہیں۔"
+
+#: templates/accounts/settings.html:10
+msgid "Save settings"
+msgstr "ترتیبات محفوظ کریں"
+
+#: templates/accounts/settings.html:14 templates/accounts/settings.html:18
 msgid "Reset demo data"
-msgstr ""
+msgstr "نمائشی ڈیٹا بحال کریں"
 
+#: templates/accounts/settings.html:15
 msgid ""
 "This replaces all demo changes with the sample data and logs everyone out."
 msgstr ""
+"اس سے تمام نمائشی تبدیلیوں کی جگہ نمونہ ڈیٹا آ جائے گا اور سب صارفین لاگ آؤٹ"
+" ہو جائیں گے۔"
 
-msgid "Demo data reset. Please log in again."
-msgstr ""
+#: templates/accounts/temporary_password.html:3
+#: templates/accounts/temporary_password.html:5
+msgid "Temporary password"
+msgstr "عارضی پاس ورڈ"
 
-msgid "Choose a reporting week since opening."
-msgstr ""
+#: templates/accounts/temporary_password.html:7
+msgid "Copy this password now. It will not be shown again."
+msgstr "یہ پاس ورڈ ابھی نقل کر لیں۔ اسے دوبارہ نہیں دکھایا جائے گا۔"
 
-msgid "Choose a team from this member's branch."
-msgstr ""
+#: templates/accounts/temporary_password.html:9
+msgid "The user must change this password after logging in."
+msgstr "لاگ اِن کرنے کے بعد صارف کے لیے یہ پاس ورڈ تبدیل کرنا ضروری ہے۔"
 
-msgid "Import members at their historical joining date."
-msgstr ""
+#: templates/accounts/user_detail.html:9 templates/accounts/user_list.html:13
+#: templates/volunteers/application_detail.html:14
+msgid "Yes"
+msgstr "ہاں"
 
-msgid "Acceptance in period"
-msgstr ""
+#: templates/accounts/user_detail.html:9 templates/accounts/user_list.html:13
+#: templates/volunteers/application_detail.html:14
+msgid "No"
+msgstr "نہیں"
 
-msgid "Age (days)"
-msgstr ""
+#: templates/accounts/user_detail.html:17
+msgid "Deactivate user"
+msgstr "صارف غیر فعال کریں"
 
-msgid "Amount"
-msgstr ""
+#: templates/accounts/user_detail.html:19
+msgid "Reactivate user"
+msgstr "صارف دوبارہ فعال کریں"
 
+#: templates/accounts/user_detail.html:21
+msgid "Issue temporary password"
+msgstr "عارضی پاس ورڈ جاری کریں"
+
+#: templates/accounts/user_detail.html:24
+msgid "Branch assignments"
+msgstr "شاخوں کی تفویض"
+
+#: templates/accounts/user_detail.html:29
+msgid "Remove assignment"
+msgstr "تفویض ختم کریں"
+
+#: templates/accounts/user_detail.html:33
+msgid "No branch assignments."
+msgstr "کوئی شاخ تفویض نہیں کی گئی۔"
+
+#: templates/accounts/user_detail.html:41
+msgid "Assign branch"
+msgstr "شاخ تفویض کریں"
+
+#: templates/accounts/user_form.html:9
+msgid "Save user"
+msgstr "صارف محفوظ کریں"
+
+#: templates/accounts/user_list.html:9
+msgid "Staff accounts"
+msgstr "عملے کے اکاؤنٹس"
+
+#: templates/accounts/user_list.html:10 templates/accounts/user_list.html:13
+#: templates/branches/branch_list.html:18
+#: templates/branches/branch_list.html:21
+msgid "Name"
+msgstr "نام"
+
+#: templates/accounts/user_list.html:15
+msgid "No users found."
+msgstr "کوئی صارف نہیں ملا۔"
+
+#: templates/audit/event_detail.html:3 templates/audit/event_detail.html:5
+msgid "Audit event"
+msgstr "آڈٹ واقعہ"
+
+#: templates/audit/event_detail.html:7 templates/audit/event_list.html:13
+#: templates/audit/event_list.html:15
+msgid "Time (PKT)"
+msgstr "وقت (پاکستانی وقت)"
+
+#: templates/audit/event_detail.html:10 templates/audit/event_list.html:13
+#: templates/audit/event_list.html:18
+msgid "Entity"
+msgstr "ریکارڈ"
+
+#: templates/audit/event_detail.html:13
+msgid "User agent"
+msgstr "صارف کا براؤزر"
+
+#: templates/audit/event_detail.html:15
+msgid "Previous hash"
+msgstr "پچھلا ہیش"
+
+#: templates/audit/event_detail.html:16
+msgid "Hash"
+msgstr "ہیش"
+
+#: templates/audit/event_detail.html:18 templates/audit/event_list.html:3
+#: templates/audit/event_list.html:5 templates/audit/event_list.html:12
+#: templates/partials/staff_navigation.html:14
+msgid "Audit log"
+msgstr "آڈٹ لاگ"
+
+#: templates/audit/event_detail.html:19 templates/audit/event_detail.html:20
+msgid "Field"
+msgstr "خانہ"
+
+#: templates/audit/event_detail.html:19 templates/audit/event_detail.html:20
+msgid "Before"
+msgstr "پہلے"
+
+#: templates/audit/event_detail.html:19
+msgid "After"
+msgstr "بعد"
+
+#: templates/audit/event_detail.html:22
+msgid "Metadata"
+msgstr "اضافی معلومات"
+
+#: templates/audit/event_detail.html:23
+msgid "Back to audit log"
+msgstr "آڈٹ لاگ پر واپس جائیں"
+
+#: templates/audit/event_list.html:7
+msgid "Verify chain"
+msgstr "سلسلے کی تصدیق کریں"
+
+#: templates/audit/event_list.html:10 templates/branches/branch_list.html:13
+#: templates/cms/list.html:6 templates/finance/collection_list.html:7
+#: templates/finance/report_list.html:12
+#: templates/volunteers/application_list.html:14
+#: templates/volunteers/member_list.html:9
+msgid "Apply filters"
+msgstr "فلٹر لگائیں"
+
+#: templates/audit/event_list.html:10 templates/volunteers/member_list.html:9
+msgid "Reset filters"
+msgstr "فلٹر صاف کریں"
+
+#: templates/audit/event_list.html:13 templates/audit/event_list.html:19
+msgid "Changed fields"
+msgstr "تبدیل شدہ خانے"
+
+#: templates/audit/event_list.html:20
+msgid "No audit events found."
+msgstr "آڈٹ کا کوئی واقعہ نہیں ملا۔"
+
+#: templates/audit/event_list.html:22
+msgid "Audit pages"
+msgstr "آڈٹ کے صفحات"
+
+#: templates/audit/event_list.html:23 templates/branches/branch_list.html:28
+#: templates/finance/collection_list.html:12
+#: templates/finance/report_list.html:40
+#: templates/finance/transfer_list.html:6
+#: templates/volunteers/application_list.html:29
+#: templates/volunteers/member_list.html:25
+msgid "Previous"
+msgstr "پچھلا"
+
+#: templates/audit/event_list.html:24 templates/branches/branch_list.html:29
+#: templates/volunteers/application_list.html:30
+#: templates/volunteers/member_list.html:26
+#, python-format
+msgid "Page %(current)s of <bdi>%(total)s</bdi>"
+msgstr "صفحہ %(current)s، کل <bdi>%(total)s</bdi>"
+
+#: templates/audit/event_list.html:25 templates/branches/branch_list.html:30
+#: templates/finance/collection_list.html:12
+#: templates/finance/report_list.html:41
+#: templates/finance/transfer_list.html:6
+#: templates/volunteers/application_list.html:31
+#: templates/volunteers/member_list.html:27
+msgid "Next"
+msgstr "اگلا"
+
+#: templates/base.html:31
+msgid "Skip to main content"
+msgstr "مرکزی مواد پر جائیں"
+
+#: templates/base.html:34
+msgid "Ujala"
+msgstr "اجالا"
+
+#: templates/base.html:36 templates/base.html:41
+msgid "Menu"
+msgstr "فہرست"
+
+#: templates/base.html:36 templates/base.html:43 templates/base.html:49
+msgid "Main navigation"
+msgstr "مرکزی رہنمائی"
+
+#: templates/base.html:41
+msgid "Mobile navigation"
+msgstr "موبائل رہنمائی"
+
+#: templates/base.html:60 templates/pdf/base.html:7
+msgid "Demo data"
+msgstr "نمائشی ڈیٹا"
+
+#: templates/base.html:60
+msgid "Footer navigation"
+msgstr "صفحے کے آخر کی رہنمائی"
+
+#: templates/base.html:60
+msgid "Privacy"
+msgstr "رازداری"
+
+#: templates/branches/branch_detail.html:5
+#: templates/branches/branch_form.html:5
+msgid "Back to branches"
+msgstr "شاخوں کی فہرست پر واپس"
+
+#: templates/branches/branch_detail.html:21
+msgid "Counts"
+msgstr "تعداد"
+
+#: templates/branches/branch_detail.html:21
+#: templates/dashboard/financial.html:35 templates/pdf/monthly_summary.html:18
+msgid "Unsent collections"
+msgstr "غیر ارسال شدہ وصولیاں"
+
+#: templates/branches/branch_detail.html:24
+msgid "Change status"
+msgstr "حالت تبدیل کریں"
+
+#: templates/branches/branch_detail.html:33
+msgid "Activate"
+msgstr "فعال کریں"
+
+#: templates/branches/branch_detail.html:33
+msgid "Pause"
+msgstr "روکیں"
+
+#: templates/branches/branch_detail.html:33
+msgid "Resume"
+msgstr "دوبارہ شروع کریں"
+
+#: templates/branches/branch_detail.html:33
+msgid "Close"
+msgstr "بند کریں"
+
+#: templates/branches/branch_form.html:10
+msgid "Save branch"
+msgstr "شاخ محفوظ کریں"
+
+#: templates/branches/branch_list.html:7
+msgid "New branch"
+msgstr "نئی شاخ"
+
+#: templates/branches/branch_list.html:17
+msgid "Branch register"
+msgstr "شاخوں کا اندراج"
+
+#: templates/branches/branch_list.html:22
+#: templates/dashboard/financial.html:39
+msgid "No branches found."
+msgstr "کوئی شاخ نہیں ملی۔"
+
+#: templates/branches/branch_list.html:27
+msgid "Branch pages"
+msgstr "شاخوں کے صفحات"
+
+#: templates/branches/city_form.html:5
+msgid "Back to cities"
+msgstr "شہروں کی فہرست پر واپس"
+
+#: templates/branches/city_form.html:7
+msgid "Save city"
+msgstr "شہر محفوظ کریں"
+
+#: templates/branches/city_list.html:6
+msgid "New city"
+msgstr "نیا شہر"
+
+#: templates/branches/city_list.html:8 templates/branches/city_list.html:9
+#: templates/cms/list.html:7 templates/cms/list.html:8
+#: templates/volunteers/team_list.html:8
+#: templates/volunteers/team_list.html:12
+#: templates/volunteers/volunteer_role_list.html:8
+#: templates/volunteers/volunteer_role_list.html:12
+msgid "Actions"
+msgstr "کارروائیاں"
+
+#: templates/branches/city_list.html:9
+msgid "No cities found."
+msgstr "کوئی شہر نہیں ملا۔"
+
+#: templates/cms/actions.html:2
+msgid "Edit"
+msgstr "ترمیم کریں"
+
+#: templates/cms/actions.html:3
+msgid "Preview"
+msgstr "پیش منظر"
+
+#: templates/cms/confirm.html:1
+msgid "Confirm content action"
+msgstr "مواد پر عمل کی تصدیق کریں"
+
+#: templates/cms/confirm.html:1
+msgid "Confirm"
+msgstr "تصدیق کریں"
+
+#: templates/cms/confirm.html:1
+msgid "Cancel"
+msgstr "منسوخ کریں"
+
+#: templates/cms/editor.html:2 templates/cms/editor.html:3
+msgid "Content editor"
+msgstr "مواد کے مدیر"
+
+#: templates/cms/editor.html:21
+msgid "Event details (events only)"
+msgstr "تقریب کی تفصیلات (صرف تقریبات کے لیے)"
+
+#: templates/cms/editor.html:28
+msgid "Save working copy"
+msgstr "زیرِ ترمیم مسودہ محفوظ کریں"
+
+#: templates/cms/list.html:2 templates/cms/list.html:3
+#: templates/partials/staff_navigation.html:2
+msgid "Content"
+msgstr "مواد"
+
+#: templates/cms/list.html:4
+msgid "Content types"
+msgstr "مواد کی اقسام"
+
+#: templates/cms/list.html:5
+msgid "New content"
+msgstr "نیا مواد"
+
+#: templates/cms/list.html:7
+msgid "Working copies"
+msgstr "زیرِ ترمیم مسودے"
+
+#: templates/cms/list.html:7 templates/cms/list.html:8
+msgid "Title"
+msgstr "عنوان"
+
+#: templates/cms/list.html:7 templates/cms/list.html:8
+msgid "Updated"
+msgstr "تبدیلی کا وقت"
+
+#: templates/cms/list.html:8
+msgid "Unpublished changes"
+msgstr "غیر شائع شدہ تبدیلیاں"
+
+#: templates/cms/list.html:8
+msgid "No content yet."
+msgstr "ابھی کوئی مواد موجود نہیں ہے۔"
+
+#: templates/cms/preview.html:2
+msgid "Preview — not published"
+msgstr "پیش منظر — شائع نہیں ہوا"
+
+#: templates/core/home.html:3
+msgid "Explore ShipLens and local volunteer opportunities."
+msgstr "ShipLens اور مقامی رضاکارانہ مواقع کے بارے میں جانیں۔"
+
+#: templates/dashboard/_period.html:4
+msgid "Show period"
+msgstr "مدت دکھائیں"
+
+#: templates/dashboard/_period.html:6
+#, python-format
+msgid "Showing %(period_label)s (latest month with data)"
+msgstr "%(period_label)s دکھایا جا رہا ہے (ڈیٹا والا تازہ ترین مہینہ)"
+
+#: templates/dashboard/_period.html:6
+#, python-format
+msgid "Showing %(period_label)s"
+msgstr "%(period_label)s دکھایا جا رہا ہے"
+
+#: templates/dashboard/_period.html:7
 msgid "As of"
-msgstr ""
+msgstr "بتاریخ"
 
-msgid "Awaiting review"
-msgstr ""
+#: templates/dashboard/_period.html:7 templates/partials/history.html:7
+#: templates/public/detail.html:1
+msgid "PKT"
+msgstr "پاکستانی وقت"
 
-msgid "Branch summary"
-msgstr ""
-
-msgid "Chart values"
-msgstr ""
-
-msgid "Collected"
-msgstr ""
-
-msgid ""
-"Collected and approved money over 12 months; values follow in the table."
-msgstr ""
-
-msgid "Collected and approved: 12 months"
-msgstr ""
-
-msgid "Collected, awaiting approval"
-msgstr ""
-
+#: templates/dashboard/financial.html:3
+#: templates/partials/staff_navigation.html:4
 msgid "Dashboard"
-msgstr ""
+msgstr "ڈیش بورڈ"
 
-msgid "Date"
-msgstr ""
-
-msgid "From locked report revisions"
-msgstr ""
-
-msgid "HR overview"
-msgstr ""
-
+#: templates/dashboard/financial.html:9
 msgid "Head-office dashboard"
-msgstr ""
+msgstr "مرکزی دفتر کا ڈیش بورڈ"
 
-msgid "Key indicators"
-msgstr ""
-
-msgid "Latest report"
-msgstr ""
-
-msgid "Lock state"
-msgstr ""
-
-msgid "Month"
-msgstr ""
-
+#: templates/dashboard/financial.html:9
+#: templates/partials/staff_navigation.html:6
 msgid "My branch"
-msgstr ""
+msgstr "میری شاخ"
 
-msgid "New in period"
-msgstr ""
+#: templates/dashboard/financial.html:11
+#: templates/finance/report_detail.html:6
+msgid "Download PDF"
+msgstr "پی ڈی ایف ڈاؤن لوڈ کریں"
 
-msgid "New members over 12 months; values follow in the table."
-msgstr ""
-
-msgid "New members: 12 months"
-msgstr ""
-
-msgid "No assigned branches."
-msgstr ""
-
+#: templates/dashboard/financial.html:14
 msgid ""
 "No collections in this period. Period totals are zero; unsent totals include"
 " earlier periods."
 msgstr ""
+"اس مدت میں کوئی وصولی نہیں ہے۔ مدت کے مجموعے صفر ہیں؛ غیر ارسال شدہ مجموعوں "
+"میں پچھلی مدتیں بھی شامل ہیں۔"
 
-msgid "No report"
-msgstr ""
+#: templates/dashboard/financial.html:15 templates/dashboard/hr.html:7
+#: templates/pdf/monthly_summary.html:4
+msgid "Key indicators"
+msgstr "اہم اشاریے"
 
-msgid "No unsent collections."
-msgstr ""
-
-msgid "Pending applications"
-msgstr ""
-
-msgid "Pending approval"
-msgstr ""
-
-msgid "Pending by assigned branch"
-msgstr ""
-
-msgid "Period"
-msgstr ""
-
-msgid "Report compliance"
-msgstr ""
-
-msgid "Reports"
-msgstr ""
-
-msgid "Review applications"
-msgstr ""
-
-msgid "Rs"
-msgstr ""
-
-msgid "Sent in period"
-msgstr ""
-
-msgid "Show period"
-msgstr ""
-
-msgid "Showing %(period_label)s"
-msgstr ""
-
-msgid "Showing %(period_label)s (latest month with data)"
-msgstr ""
-
-msgid "Total"
-msgstr ""
-
-msgid "Trends"
-msgstr ""
-
-msgid "Unsent (all time)"
-msgstr ""
-
-msgid "Unsent collections, oldest first"
-msgstr ""
-
-msgid "Week report"
-msgstr ""
-
-msgid "Week starting"
-msgstr ""
-
+#: templates/dashboard/financial.html:16
 msgid "entries"
-msgstr ""
+msgstr "اندراجات"
 
+#: templates/dashboard/financial.html:17
+msgid "From locked report revisions"
+msgstr "مقفل رپورٹوں کی نظرِ ثانی سے"
+
+#: templates/dashboard/financial.html:18 templates/pdf/monthly_summary.html:7
+msgid "Pending approval"
+msgstr "منظوری کا منتظر"
+
+#: templates/dashboard/financial.html:18
+msgid "Collected, awaiting approval"
+msgstr "وصول شدہ، منظوری کا منتظر"
+
+#: templates/dashboard/financial.html:19 templates/dashboard/financial.html:39
+#: templates/pdf/monthly_summary.html:8
+msgid "Unsent (all time)"
+msgstr "غیر ارسال شدہ (تمام مدتوں کا)"
+
+#: templates/dashboard/financial.html:19
 msgid "entries; oldest age in days:"
-msgstr ""
+msgstr "اندراجات؛ قدیم ترین وصولی کو گزرے دن:"
 
-msgid "required"
-msgstr "ضروری"
+#: templates/dashboard/financial.html:20 templates/pdf/monthly_summary.html:14
+msgid "Sent in period"
+msgstr "اس مدت میں ارسال شدہ"
 
+#: templates/dashboard/financial.html:21 templates/dashboard/hr.html:10
+#: templates/pdf/monthly_summary.html:10
+msgid "New in period"
+msgstr "اس مدت میں نئے"
+
+#: templates/dashboard/financial.html:22 templates/pdf/monthly_summary.html:12
+msgid "Reports"
+msgstr "رپورٹیں"
+
+#: templates/dashboard/financial.html:22 templates/pdf/monthly_summary.html:12
+msgid "Awaiting review"
+msgstr "جائزے کا منتظر"
+
+#: templates/dashboard/financial.html:24 templates/pdf/monthly_summary.html:9
+msgid "Total"
+msgstr "کل"
+
+#: templates/dashboard/financial.html:25 templates/dashboard/hr.html:9
+#: templates/pdf/monthly_summary.html:11
+msgid "Acceptance in period"
+msgstr "اس مدت میں قبول شدہ درخواستیں"
+
+#: templates/dashboard/financial.html:26 templates/pdf/monthly_summary.html:13
+msgid "Report compliance"
+msgstr "رپورٹوں کی تکمیل"
+
+#: templates/dashboard/financial.html:26
+msgid "Week starting"
+msgstr "ہفتے کا آغاز"
+
+#: templates/dashboard/financial.html:29
+msgid "Trends"
+msgstr "رجحانات"
+
+#: templates/dashboard/financial.html:30 templates/dashboard/financial.html:31
+#: templates/pdf/monthly_summary.html:17
+msgid "Collected and approved: 12 months"
+msgstr "وصول شدہ اور منظور شدہ: 12 ماہ"
+
+#: templates/dashboard/financial.html:30
+msgid ""
+"Collected and approved money over 12 months; values follow in the table."
+msgstr "12 ماہ کی وصول شدہ اور منظور شدہ رقوم؛ اعداد جدول میں درج ہیں۔"
+
+#: templates/dashboard/financial.html:31 templates/dashboard/financial.html:33
+msgid "Chart values"
+msgstr "چارٹ کے اعداد"
+
+#: templates/dashboard/financial.html:31 templates/dashboard/financial.html:33
+#: templates/pdf/monthly_summary.html:17
+msgid "Month"
+msgstr "مہینہ"
+
+#: templates/dashboard/financial.html:33
+msgid "New members: 12 months"
+msgstr "نئے ارکان: 12 ماہ"
+
+#: templates/dashboard/financial.html:33
+msgid "New members over 12 months; values follow in the table."
+msgstr "12 ماہ کے نئے ارکان؛ اعداد جدول میں درج ہیں۔"
+
+#: templates/dashboard/financial.html:35
+msgid "Unsent collections, oldest first"
+msgstr "غیر ارسال شدہ وصولیاں، قدیم ترین پہلے"
+
+#: templates/dashboard/financial.html:35 templates/dashboard/financial.html:36
+#: templates/pdf/monthly_summary.html:18
+msgid "Date"
+msgstr "تاریخ"
+
+#: templates/dashboard/financial.html:35 templates/dashboard/financial.html:36
+#: templates/pdf/monthly_summary.html:18
+msgid "Lock state"
+msgstr "مقفل ہونے کی حالت"
+
+#: templates/dashboard/financial.html:36
+msgid "No report"
+msgstr "کوئی رپورٹ نہیں"
+
+#: templates/dashboard/financial.html:37
+msgid "No unsent collections."
+msgstr "کوئی غیر ارسال شدہ وصولی نہیں ہے۔"
+
+#: templates/dashboard/financial.html:39 templates/pdf/monthly_summary.html:16
+msgid "Branch summary"
+msgstr "شاخ کا خلاصہ"
+
+#: templates/dashboard/hr.html:3 templates/dashboard/hr.html:5
+#: templates/partials/staff_navigation.html:8
+msgid "HR overview"
+msgstr "افرادی وسائل کا جائزہ"
+
+#: templates/dashboard/hr.html:8 templates/dashboard/hr.html:12
+msgid "Pending applications"
+msgstr "زیرِ غور درخواستیں"
+
+#: templates/dashboard/hr.html:12
+msgid "Pending by assigned branch"
+msgstr "تفویض شدہ شاخ کے مطابق زیرِ غور درخواستیں"
+
+#: templates/dashboard/hr.html:12
+msgid "No assigned branches."
+msgstr "کوئی شاخ تفویض نہیں کی گئی۔"
+
+#: templates/dashboard/hr.html:13
+msgid "Review applications"
+msgstr "درخواستوں کا جائزہ لیں"
+
+#: templates/exports/csv_button.html:2 templates/exports/too_large.html:4
+msgid "Export CSV"
+msgstr "سی ایس وی برآمد کریں"
+
+#: templates/exports/invalid.html:2
+msgid "Check export filters"
+msgstr "برآمد کے فلٹر دیکھیں"
+
+#: templates/exports/invalid.html:2
+msgid "Try again"
+msgstr "دوبارہ کوشش کریں"
+
+#: templates/exports/too_large.html:2
+msgid "Summary is too large for PDF"
+msgstr "پی ڈی ایف کے لیے خلاصہ بہت بڑا ہے"
+
+#: templates/exports/too_large.html:3
+msgid "Use the CSV export for this many rows."
+msgstr "اتنے زیادہ اندراجات کے لیے سی ایس وی برآمد استعمال کریں۔"
+
+#: templates/finance/collection_detail.html:4
+msgid "Locks at (PKT)"
+msgstr "مقفل ہونے کا وقت (پاکستانی وقت)"
+
+#: templates/finance/collection_detail.html:7
+msgid "View transfer"
+msgstr "منتقلی دیکھیں"
+
+#: templates/finance/collection_form.html:4
+#: templates/volunteers/management_form.html:10
+msgid "Save"
+msgstr "محفوظ کریں"
+
+#: templates/finance/collection_form.html:5
+#: templates/volunteers/management_form.html:12
+msgid "Back to list"
+msgstr "فہرست پر واپس جائیں"
+
+#: templates/finance/collection_list.html:9
+#: templates/finance/collection_list.html:10
+msgid "Select"
+msgstr "منتخب کریں"
+
+#: templates/finance/collection_list.html:9
+#: templates/finance/collection_list.html:10
+msgid "Lock"
+msgstr "قفل"
+
+#: templates/finance/collection_list.html:10
+#, python-format
+msgid "Locks in %(duration)s"
+msgstr "%(duration)s میں مقفل ہوگا"
+
+#: templates/finance/collection_list.html:10
+#: templates/finance/report_detail.html:57 templates/pdf/weekly_report.html:21
+msgid "No collections found."
+msgstr "کوئی وصولی نہیں ملی۔"
+
+#: templates/finance/collection_list.html:11
+msgid "Non-voided total (PKR)"
+msgstr "غیر منسوخ کل رقم (روپے)"
+
+#: templates/finance/collection_list.html:11
+msgid "Prepare transfer"
+msgstr "منتقلی تیار کریں"
+
+#: templates/finance/report_detail.html:10
+msgid "Returned comment"
+msgstr "واپسی کا تبصرہ"
+
+#: templates/finance/report_detail.html:11
+msgid "Locked — approved by"
+msgstr "مقفل — منظور کرنے والا"
+
+#: templates/finance/report_detail.html:13
+msgid "Approved figures"
+msgstr "منظور شدہ اعداد"
+
+#: templates/finance/report_detail.html:17
+msgid "Live figures"
+msgstr "موجودہ اعداد"
+
+#: templates/finance/report_detail.html:20
+#: templates/finance/transfer_detail.html:5
+#: templates/finance/transfer_list.html:5 templates/pdf/weekly_report.html:12
+msgid "Total (PKR)"
+msgstr "کل رقم (روپے)"
+
+#: templates/finance/report_detail.html:26 templates/pdf/weekly_report.html:14
+msgid "Unsent at week end (PKR)"
+msgstr "ہفتے کے اختتام پر غیر منتقل رقم (روپے)"
+
+#: templates/finance/report_detail.html:30 templates/pdf/weekly_report.html:15
+msgid "Active members at week end"
+msgstr "ہفتے کے اختتام پر فعال ارکان"
+
+#: templates/finance/report_detail.html:32 templates/pdf/weekly_report.html:16
+msgid "Applications received"
+msgstr "موصولہ درخواستیں"
+
+#: templates/finance/report_detail.html:34 templates/pdf/weekly_report.html:16
+msgid "Applications accepted"
+msgstr "قبول شدہ درخواستیں"
+
+#: templates/finance/report_detail.html:36 templates/pdf/weekly_report.html:17
+msgid "Applications declined"
+msgstr "مسترد شدہ درخواستیں"
+
+#: templates/finance/report_detail.html:62
+msgid "Save narrative"
+msgstr "تفصیل محفوظ کریں"
+
+#: templates/finance/report_detail.html:64
+msgid "Resubmit"
+msgstr "دوبارہ جمع کرائیں"
+
+#: templates/finance/report_detail.html:66
+msgid "Submit for review"
+msgstr "جائزے کے لیے جمع کرائیں"
+
+#: templates/finance/report_detail.html:79
+msgid "Return to branch"
+msgstr "شاخ کو واپس کریں"
+
+#: templates/finance/report_detail.html:80
+msgid "Approve and lock"
+msgstr "منظور اور مقفل کریں"
+
+#: templates/finance/report_detail.html:82 templates/pdf/weekly_report.html:6
+msgid "Snapshot hash"
+msgstr "محفوظ اعداد کا ہیش"
+
+#: templates/finance/report_list.html:4 templates/finance/report_list.html:9
+#: templates/finance/report_list.html:15
+#: templates/partials/staff_navigation.html:27
+msgid "Weekly reports"
+msgstr "ہفتہ وار رپورٹیں"
+
+#: templates/finance/report_list.html:7
+#: templates/partials/staff_navigation.html:32
+msgid "Review queue"
+msgstr "جائزے کی قطار"
+
+#: templates/finance/report_list.html:19 templates/finance/report_list.html:27
+msgid "Week"
+msgstr "ہفتہ"
+
+#: templates/finance/report_list.html:36
+msgid "No reports found."
+msgstr "کوئی رپورٹ نہیں ملی۔"
+
+#: templates/finance/transfer_form.html:2
+#: templates/finance/transfer_form.html:3
+#: templates/finance/transfer_list.html:4
+msgid "Create transfer"
+msgstr "منتقلی درج کریں"
+
+#: templates/finance/transfer_form.html:5
+#: templates/finance/transfer_selection.html:3
+msgid "Review selected entries"
+msgstr "منتخب اندراجات کا جائزہ لیں"
+
+#: templates/finance/transfer_form.html:6
+msgid "Selected collections"
+msgstr "منتخب وصولیاں"
+
+#: templates/finance/transfer_form.html:6
+msgid "Selected total (PKR)"
+msgstr "منتخب کل رقم (روپے)"
+
+#: templates/finance/transfer_form.html:11
+msgid "Mark sent"
+msgstr "بھیجا گیا درج کریں"
+
+#: templates/finance/transfer_list.html:2
+#: templates/finance/transfer_list.html:3
+#: templates/finance/transfer_list.html:5
+#: templates/partials/staff_navigation.html:29
+msgid "Transfers"
+msgstr "منتقلیاں"
+
+#: templates/finance/transfer_list.html:5
+msgid "No transfers found."
+msgstr "کوئی منتقلی نہیں ملی۔"
+
+#: templates/finance/transfer_selection.html:2
+msgid "Select unsent collections"
+msgstr "غیر ارسال شدہ وصولیاں منتخب کریں"
+
+#: templates/partials/form_field.html:18
 msgid "Read notice"
 msgstr "نوٹس پڑھیں"
 
-msgid "Ujala Volunteer Network"
-msgstr "اجالا رضاکار نیٹ ورک"
+#: templates/partials/history.html:2 templates/partials/history.html:3
+msgid "History"
+msgstr "تاریخچہ"
 
-msgid "Ujala"
-msgstr "اجالا"
+#: templates/partials/history.html:10 templates/pdf/weekly_report.html:25
+msgid "No history yet."
+msgstr "ابھی کوئی تاریخچہ نہیں۔"
 
-msgid "Home"
-msgstr "صفحۂ اول"
+#: templates/partials/staff_navigation.html:35
+msgid "Log out"
+msgstr "لاگ آؤٹ کریں"
 
-msgid "About"
-msgstr "تعارف"
+#: templates/pdf/base.html:7
+msgid "Generated at (PKT)"
+msgstr "تیاری کا وقت (پاکستانی وقت)"
 
-msgid "About us"
-msgstr "ہمارا تعارف"
+#: templates/pdf/base.html:7
+msgid "by"
+msgstr "تیار کرنے والا"
 
-msgid "Programs"
-msgstr "پروگرام"
+#: templates/pdf/monthly_summary.html:2
+msgid "Monthly head-office summary"
+msgstr "مرکزی دفتر کا ماہانہ خلاصہ"
 
-msgid "Events"
-msgstr "تقریبات"
+#: templates/pdf/weekly_report.html:2
+msgid "Weekly report"
+msgstr "ہفتہ وار رپورٹ"
 
-msgid "Our branches"
-msgstr "ہماری شاخیں"
+#: templates/pdf/weekly_report.html:9
+msgid "DRAFT — NOT APPROVED"
+msgstr "مسودہ — منظور نہیں ہوا"
 
-msgid "Contact"
-msgstr "رابطہ"
+#: templates/pdf/weekly_report.html:10
+msgid "Aggregates"
+msgstr "مجموعے"
 
-msgid "Privacy"
-msgstr "رازداری"
+#: templates/pdf/weekly_report.html:23
+msgid "Narrative"
+msgstr "تفصیلی بیان"
 
-msgid "Privacy notice"
-msgstr "رازداری کا نوٹس"
+#: templates/pdf/weekly_report.html:24
+msgid "Review history"
+msgstr "جائزے کی تاریخ"
 
-msgid "Light up your city"
-msgstr "اپنے شہر کو روشن کریں"
-
-msgid "Learn more"
-msgstr "مزید جانیے"
-
-msgid "Our programs"
-msgstr "ہمارے پروگرام"
-
-msgid "Explore programs"
-msgstr "پروگرام دیکھیے"
-
-msgid "Find a branch"
-msgstr "شاخ تلاش کیجیے"
-
-msgid "Apply to volunteer"
-msgstr "رضاکار بننے کی درخواست دیجیے"
-
-msgid "Join us next"
-msgstr "اگلی سرگرمی میں ہمارے ساتھ شامل ہوئیے"
-
-msgid "All events"
-msgstr "تمام تقریبات"
-
-msgid "Volunteer with us"
-msgstr "ہمارے ساتھ رضاکارانہ خدمت کیجیے"
-
-msgid ""
-"A little of your time can make a lasting difference in your neighbourhood."
-msgstr "آپ کا تھوڑا سا وقت آپ کے محلے میں دیرپا اچھا فرق لا سکتا ہے۔"
-
-msgid "Upcoming events"
-msgstr "آنے والی تقریبات"
-
-msgid "Past events"
-msgstr "گزشتہ تقریبات"
-
-msgid "No upcoming events are published yet."
-msgstr "ابھی کوئی آنے والی تقریب شائع نہیں ہوئی۔"
-
-msgid "Past events will appear here."
-msgstr "گزشتہ تقریبات یہاں دکھائی جائیں گی۔"
-
-msgid "Published programs will appear here."
-msgstr "شائع شدہ پروگرام یہاں دکھائی جائیں گے۔"
-
-msgid "Published information will appear here."
-msgstr "شائع شدہ معلومات یہاں دکھائی جائیں گی۔"
-
-msgid "Find a practical way to serve your community."
-msgstr "اپنے محلے کی خدمت کا کوئی عملی طریقہ تلاش کیجیے۔"
-
-msgid "Meet your neighbours and lend a hand."
-msgstr "اپنے پڑوسیوں سے ملیے اور ان کا ہاتھ بٹائیے۔"
-
-msgid "Local teams, a shared purpose."
-msgstr "مقامی ٹیمیں، مشترک مقصد۔"
-
-msgid "Find branches"
-msgstr "شاخیں تلاش کیجیے"
-
-msgid "All cities"
-msgstr "تمام شہر"
-
-msgid "No public branches match your filter."
-msgstr "آپ کے انتخاب کے مطابق کوئی عوامی شاخ نہیں ملی۔"
-
+#: templates/public/branch_detail.html:1
 msgid "Visit or contact this branch"
 msgstr "اس شاخ میں تشریف لائیے یا رابطہ کیجیے"
 
+#: templates/public/branch_detail.html:1 templates/public/branches.html:1
 msgid "Coming soon — apply to be a founding volunteer."
 msgstr ""
 "جلد آغاز ہوگا — ابتدائی رضاکار ٹیم میں شامل ہونے کے لیے درخواست دیجیے۔"
 
+#: templates/public/branch_detail.html:1 templates/public/home.html:3
+msgid "Apply to volunteer"
+msgstr "رضاکار بننے کی درخواست دیجیے"
+
+#: templates/public/branches.html:1
+msgid "Local teams, a shared purpose."
+msgstr "مقامی ٹیمیں، مشترک مقصد۔"
+
+#: templates/public/branches.html:1
+msgid "Find branches"
+msgstr "شاخیں تلاش کیجیے"
+
+#: templates/public/branches.html:1
+msgid "No public branches match your filter."
+msgstr "آپ کے انتخاب کے مطابق کوئی عوامی شاخ نہیں ملی۔"
+
+#: templates/public/card.html:2
+msgid "Learn more"
+msgstr "مزید جانیے"
+
+#: templates/public/contact.html:1
 msgid "We would be glad to hear from you."
 msgstr "آپ سے رابطہ کر کے ہمیں خوشی ہوگی۔"
 
+#: templates/public/contact.html:1
 msgid "Head office"
 msgstr "مرکزی دفتر"
 
+#: templates/public/contact.html:1
 msgid "Find your nearest branch"
 msgstr "اپنی قریبی شاخ تلاش کیجیے"
 
+#: templates/public/contact_details.html:1
 msgid "House 10, Community Lane, Karachi, Pakistan"
 msgstr "گھر نمبر 10، کمیونٹی لین، کراچی، پاکستان"
 
+#: templates/public/detail.html:1 templates/public/home.html:7
+msgid "Volunteer with us"
+msgstr "ہمارے ساتھ رضاکارانہ خدمت کیجیے"
+
+#: templates/public/events.html:1
+msgid "Meet your neighbours and lend a hand."
+msgstr "اپنے پڑوسیوں سے ملیے اور ان کا ہاتھ بٹائیے۔"
+
+#: templates/public/events.html:1
+msgid "Upcoming events"
+msgstr "آنے والی تقریبات"
+
+#: templates/public/events.html:1
+msgid "No upcoming events are published yet."
+msgstr "ابھی کوئی آنے والی تقریب شائع نہیں ہوئی۔"
+
+#: templates/public/events.html:1
+msgid "Past events"
+msgstr "گزشتہ تقریبات"
+
+#: templates/public/events.html:1
+msgid "Past events will appear here."
+msgstr "گزشتہ تقریبات یہاں دکھائی جائیں گی۔"
+
+#: templates/public/home.html:3 templates/volunteers/application_form.html:29
+msgid "Find a branch"
+msgstr "شاخ تلاش کیجیے"
+
+#: templates/public/home.html:5 templates/public/programs.html:1
+msgid "Our programs"
+msgstr "ہمارے پروگرام"
+
+#: templates/public/home.html:5
+msgid "Explore programs"
+msgstr "پروگرام دیکھیے"
+
+#: templates/public/home.html:5 templates/public/programs.html:1
+msgid "Published programs will appear here."
+msgstr "شائع شدہ پروگرام یہاں دکھائی جائیں گے۔"
+
+#: templates/public/home.html:6
+msgid "Join us next"
+msgstr "اگلی سرگرمی میں ہمارے ساتھ شامل ہوئیے"
+
+#: templates/public/home.html:6
+msgid "All events"
+msgstr "تمام تقریبات"
+
+#: templates/public/home.html:7
+msgid ""
+"A little of your time can make a lasting difference in your neighbourhood."
+msgstr "آپ کا تھوڑا سا وقت آپ کے محلے میں دیرپا اچھا فرق لا سکتا ہے۔"
+
+#: templates/public/navigation.html:2
+msgid "Home"
+msgstr "صفحۂ اول"
+
+#: templates/public/navigation.html:3
+msgid "About"
+msgstr "تعارف"
+
+#: templates/public/programs.html:1
+msgid "Find a practical way to serve your community."
+msgstr "اپنے محلے کی خدمت کا کوئی عملی طریقہ تلاش کیجیے۔"
+
+#: templates/public/sections.html:1
+msgid "Published information will appear here."
+msgstr "شائع شدہ معلومات یہاں دکھائی جائیں گی۔"
+
+#: templates/volunteers/application_detail.html:5
+msgid "Back to applications"
+msgstr "درخواستوں کی فہرست پر واپس"
+
+#: templates/volunteers/application_detail.html:13
+msgid "Age"
+msgstr "عمر"
+
+#: templates/volunteers/application_detail.html:14
+msgid "Guardian consent"
+msgstr "سرپرست کی رضامندی"
+
+#: templates/volunteers/application_detail.html:18
+msgid "Motivation"
+msgstr "رضاکار بننے کی وجہ"
+
+#: templates/volunteers/application_detail.html:20
+msgid "Privacy consent recorded"
+msgstr "رازداری کی رضامندی کا وقت"
+
+#: templates/volunteers/application_detail.html:21
+msgid "Created at"
+msgstr "تخلیق کا وقت"
+
+#: templates/volunteers/application_detail.html:22
+msgid "Updated at"
+msgstr "ترمیم کا وقت"
+
+#: templates/volunteers/application_detail.html:24
+msgid "Decided by"
+msgstr "فیصلہ کرنے والا"
+
+#: templates/volunteers/application_detail.html:25
+msgid "Decided at"
+msgstr "فیصلے کا وقت"
+
+#: templates/volunteers/application_detail.html:31
+#: templates/volunteers/application_detail.html:32
+#: templates/volunteers/application_list.html:22
+msgid "Possible duplicate"
+msgstr "ممکنہ تکرار"
+
+#: templates/volunteers/application_detail.html:35
+msgid "A matched record is outside your access."
+msgstr "مماثل ریکارڈ تک آپ کو رسائی نہیں ہے۔"
+
+#: templates/volunteers/application_detail.html:39
+msgid "Accept application"
+msgstr "درخواست قبول کریں"
+
+#: templates/volunteers/application_detail.html:40
+msgid "Confirm accept"
+msgstr "قبول کرنے کی تصدیق کریں"
+
+#: templates/volunteers/application_detail.html:44
+msgid "Decline application"
+msgstr "درخواست مسترد کریں"
+
+#: templates/volunteers/application_detail.html:45
+msgid "Confirm decline"
+msgstr "مسترد کرنے کی تصدیق کریں"
+
+#: templates/volunteers/application_detail.html:49
+#: templates/volunteers/application_detail.html:50
+msgid "Reassign branch"
+msgstr "شاخ تبدیل کریں"
+
+#: templates/volunteers/application_form.html:10
+msgid "Please correct the following problems"
+msgstr "براہ کرم درج ذیل مسائل درست کریں"
+
+#: templates/volunteers/application_form.html:26
+msgid "Submit application"
+msgstr "درخواست جمع کریں"
+
+#: templates/volunteers/application_form.html:29
 msgid "Prefer to help with a donation?"
 msgstr "کیا آپ عطیہ دے کر مدد کرنا چاہتے ہیں؟"
 
+#: templates/volunteers/application_form.html:29
 msgid ""
 "Donate offline at your nearest branch. Always ask for an official receipt; "
 "donations are deposited to our main account and reviewed weekly."
@@ -1601,46 +3538,59 @@ msgstr ""
 "عطیات ہمارے مرکزی اکاؤنٹ میں جمع ہوتے ہیں اور ان کا ہفتہ وار جائزہ لیا جاتا "
 "ہے۔"
 
-msgid "English only"
-msgstr "صرف انگریزی میں"
+#: templates/volunteers/application_list.html:6
+msgid "Application status"
+msgstr "درخواست کی حالت"
 
-msgid "Footer navigation"
-msgstr "صفحے کے آخر کی رہنمائی"
+#: templates/volunteers/application_list.html:18
+msgid "Volunteer applications"
+msgstr "رضاکاروں کی درخواستیں"
 
-msgid "Mobile navigation"
-msgstr "موبائل رہنمائی"
+#: templates/volunteers/application_list.html:19
+#: templates/volunteers/application_list.html:24
+msgid "Submitted (PKT)"
+msgstr "جمع کرنے کا وقت (پاکستانی وقت)"
 
-msgid "Learn about Ujala's purpose, values and transparent offline donations."
-msgstr ""
-"اجالا کے مقصد، اقدار اور بالمشافہ عطیات کے شفاف انتظام کے بارے میں جانیے۔"
+#: templates/volunteers/application_list.html:26
+msgid "No applications found."
+msgstr "کوئی درخواست نہیں ملی۔"
 
-msgid ""
-"Explore local education and food-support programs with Ujala volunteers."
-msgstr ""
-"اجالا کے رضاکاروں کے ساتھ مقامی تعلیمی اور غذائی تعاون کے پروگرام دیکھیے۔"
+#: templates/volunteers/application_list.html:28
+msgid "Application pages"
+msgstr "درخواستوں کے صفحات"
 
-msgid "Find a public Ujala branch near you and contact its local team."
-msgstr "اپنی قریبی اجالا شاخ تلاش کیجیے اور مقامی ٹیم سے رابطہ کیجیے۔"
+#: templates/volunteers/member_list.html:12
+msgid "Member register"
+msgstr "ارکان کا رجسٹر"
 
-msgid ""
-"Discover upcoming Ujala volunteer activities and past community events."
-msgstr ""
-"اجالا کی آنے والی رضاکارانہ سرگرمیوں اور گزشتہ اجتماعی تقریبات کے بارے میں "
-"جانیے۔"
+#: templates/volunteers/member_list.html:22
+msgid "No members found."
+msgstr "کوئی رکن نہیں ملا۔"
 
-msgid "Apply to volunteer with Ujala and support your local community."
-msgstr ""
-"اجالا کے ساتھ رضاکارانہ خدمت کی درخواست دیجیے اور اپنے محلے کا ساتھ دیجیے۔"
+#: templates/volunteers/member_list.html:24
+msgid "Member pages"
+msgstr "ارکان کے صفحات"
 
-msgid ""
-"Contact the Ujala Volunteer Network head office or find a local branch."
-msgstr ""
-"اجالا رضاکار نیٹ ورک کے مرکزی دفتر سے رابطہ کیجیے یا مقامی شاخ تلاش کیجیے۔"
+#: templates/volunteers/team_list.html:13
+msgid "Deactivate team"
+msgstr "ٹیم غیر فعال کریں"
 
-msgid "Read how Ujala handles private applicant and member information."
-msgstr ""
-"جانیے کہ اجالا درخواست گزاروں اور اراکین کی نجی معلومات کا خیال کیسے رکھتا "
-"ہے۔"
+#: templates/volunteers/team_list.html:15
+msgid "No teams found."
+msgstr "کوئی ٹیم نہیں ملی۔"
 
-msgid "Light up your city with Ujala Volunteer Network."
-msgstr "اجالا رضاکار نیٹ ورک کے ساتھ اپنے شہر کو روشن کیجیے۔"
+#: templates/volunteers/thanks.html:3 templates/volunteers/thanks.html:6
+msgid "Thank you"
+msgstr "شکریہ"
+
+#: templates/volunteers/thanks.html:7
+msgid "Thank you for your interest in volunteering."
+msgstr "رضاکارانہ کام میں دلچسپی لینے کا شکریہ۔"
+
+#: templates/volunteers/volunteer_role_list.html:13
+msgid "Deactivate volunteer role"
+msgstr "رضاکارانہ کردار غیر فعال کریں"
+
+#: templates/volunteers/volunteer_role_list.html:15
+msgid "No volunteer roles found."
+msgstr "کوئی رضاکارانہ کردار نہیں ملا۔"

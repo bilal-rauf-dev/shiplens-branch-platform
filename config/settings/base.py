@@ -217,3 +217,6 @@ LOGGING = {
     },
     "root": {"handlers": ["console"], "level": LOG_LEVEL},
 }
+
+FORMAT_MODULE_PATH = "formats"
+USE_THOUSAND_SEPARATOR = True

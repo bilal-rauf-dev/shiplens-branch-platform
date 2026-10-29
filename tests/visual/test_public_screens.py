@@ -9,6 +9,9 @@ import os
 from pathlib import Path
 
 import pytest
+from django.conf import settings
+from django.core.management import call_command
+from django.test import override_settings
 from playwright.async_api import async_playwright
 
 pytestmark = [
@@ -36,12 +39,18 @@ pytestmark = [
         ("/en/get-involved/", "en-application"),
         ("/ur/get-involved/", "ur-application"),
         ("/en/accounts/login/", "en-login"),
+        ("/en/programs/", "en-programs"),
+        ("/ur/events/", "ur-events"),
+        ("/en/branches/", "en-branches"),
     ],
 )
-def test_public_screenshot(
-    live_server, branch_factory, viewport, path, name, pytestconfig
-):
-    branch_factory(name_en="Karachi Central", status="ACTIVE")
+def test_public_screenshot(live_server, viewport, path, name, pytestconfig):
+    with override_settings(
+        PASSWORD_HASHERS=["django.contrib.auth.hashers.MD5PasswordHasher"]
+    ):
+        call_command(
+            "import_sample_data", str(settings.BASE_DIR / "sample_data"), verbosity=0
+        )
     channel = pytestconfig.getoption("--browser-channel")
     asyncio.run(capture_page(live_server.url, viewport, path, name, channel))
 
@@ -66,7 +75,10 @@ async def check_and_capture(page, server_url, viewport, path, name):
     if "get-involved" in path:
         consent = page.locator("#id_privacy_consent")
         assert not await consent.is_checked()
-        await page.locator('a[href="#id_privacy_consent_hint"]').click()
+        privacy_path = "/ur/privacy/" if path.startswith("/ur/") else "/en/privacy/"
+        await page.locator(f'a[href="{privacy_path}"]').first.click()
+        assert page.url.endswith(privacy_path)
+        await page.go_back(wait_until="networkidle")
         assert not await consent.is_checked(), (
             "Reading the notice must not toggle consent"
         )
@@ -88,7 +100,12 @@ async def check_and_capture(page, server_url, viewport, path, name):
     assert await page.locator("html").get_attribute("dir") == (
         "rtl" if path.startswith("/ur/") else "ltr"
     )
-    assert await page.locator('header [aria-current="page"]').count() == 1
+    if viewport["width"] < 768 and "login" not in path:
+        await page.locator(".public-menu summary").click()
+        assert await page.locator('header [aria-current="page"]:visible').count() == 1
+        await page.locator(".public-menu summary").click()
+    else:
+        assert await page.locator('header [aria-current="page"]:visible').count() == 1
     assert (
         await page.locator(".brand").evaluate(
             "node => getComputedStyle(node).fontWeight"
@@ -103,7 +120,7 @@ async def check_and_capture(page, server_url, viewport, path, name):
     )
     if "get-involved" in path or "login" in path:
         assert (
-            await page.locator(".card").evaluate(
+            await page.locator(".public-form-card, .login-card").evaluate(
                 "node => getComputedStyle(node, '::before').content"
             )
             == "none"

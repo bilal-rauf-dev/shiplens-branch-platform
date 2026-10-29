@@ -1,10 +1,31 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
+from django.templatetags.static import static
+from django.urls import reverse
+from django.utils.html import strip_tags
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_GET
 
 from apps.branches.selectors import public_branches
 from apps.publicsite import selectors
 from apps.publicsite.forms import CityFilterForm
+
+
+def public_response(request, template, context, **kwargs):
+    """Use the same published text for the visible content and its SEO description."""
+    content = context.get("content") or context.get("hero")
+    if not content and context.get("sections"):
+        content = context["sections"][0]
+    if content:
+        context["meta_description"] = (
+            content.get("summary")
+            or " ".join(strip_tags(content.get("body_html", "")).split())[:160]
+        )
+        if content.get("image_path"):
+            context["og_image"] = request.build_absolute_uri(
+                static(content["image_path"])
+            )
+    return render(request, template, context, **kwargs)
 
 
 @require_GET
@@ -14,7 +35,7 @@ def home(request):
     upcoming, _past = selectors.event_groups(
         [row for row in rows if row["type"] == "EVENT"]
     )
-    return render(
+    return public_response(
         request,
         "public/home.html",
         {
@@ -31,7 +52,7 @@ def home(request):
 
 @require_GET
 def about(request):
-    return render(
+    return public_response(
         request,
         "public/sections.html",
         {
@@ -47,7 +68,7 @@ def about(request):
 
 @require_GET
 def programs(request):
-    return render(
+    return public_response(
         request,
         "public/programs.html",
         {
@@ -60,7 +81,7 @@ def programs(request):
 @require_GET
 def content_detail(request, slug, type):
     content = selectors.detail(type, slug, request.LANGUAGE_CODE)
-    return render(
+    return public_response(
         request,
         "public/detail.html",
         {"content": content, "page_title": content["title"]},
@@ -72,7 +93,7 @@ def events(request):
     upcoming, past = selectors.event_groups(
         selectors.cards(request.LANGUAGE_CODE, "EVENT")
     )
-    return render(
+    return public_response(
         request,
         "public/events.html",
         {"page_title": _("Events"), "upcoming": upcoming, "past": past},
@@ -88,7 +109,7 @@ def branches(request):
         rows = rows.none()
     elif form.cleaned_data.get("city"):
         rows = rows.filter(city=form.cleaned_data["city"])
-    return render(
+    return public_response(
         request,
         "public/branches.html",
         {"page_title": _("Our branches"), "branches": rows, "form": form},
@@ -100,19 +121,19 @@ def branches(request):
 def branch_detail(request, code):
     branch = get_object_or_404(public_branches(), code=code)
     title = branch.name_ur if request.LANGUAGE_CODE == "ur" else branch.name_en
-    return render(
+    return public_response(
         request, "public/branch_detail.html", {"page_title": title, "branch": branch}
     )
 
 
 @require_GET
 def contact(request):
-    return render(request, "public/contact.html", {"page_title": _("Contact")})
+    return public_response(request, "public/contact.html", {"page_title": _("Contact")})
 
 
 @require_GET
 def privacy(request):
-    return render(
+    return public_response(
         request,
         "public/sections.html",
         {
@@ -123,4 +144,15 @@ def privacy(request):
                 if row["slug"] == "privacy-notice"
             ],
         },
+    )
+
+
+@require_GET
+def robots(request):
+    sitemap = request.build_absolute_uri(reverse("sitemap"))
+    return HttpResponse(
+        "User-agent: *\nAllow: /\nDisallow: /en/app/\nDisallow: /ur/app/\n"
+        "Disallow: /en/accounts/\nDisallow: /ur/accounts/\nDisallow: /accounts/\n"
+        f"Sitemap: {sitemap}\n",
+        content_type="text/plain; charset=utf-8",
     )

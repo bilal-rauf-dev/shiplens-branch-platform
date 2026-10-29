@@ -5,7 +5,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% translate "ShipLens" %}{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}{% translate 'ShipLens helps volunteers and branches serve their communities.' %}{% endblock %}">
+    <meta name="description" content="{% block meta_description %}{{ meta_description }}{% endblock %}">
+    <link rel="icon" href="{% static 'img/cms/growth.svg' %}" type="image/svg+xml">
+    {% if indexable %}
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="alternate" hreflang="en" href="{{ alternate_en }}">
+    <link rel="alternate" hreflang="ur" href="{{ alternate_ur }}">
+    <link rel="alternate" hreflang="x-default" href="{{ alternate_en }}">
+    <meta property="og:title" content="{{ page_title }} · {% translate 'Ujala Volunteer Network' %}">
+    <meta property="og:description" content="{{ meta_description }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ og_image }}">
+    {% else %}<meta name="robots" content="noindex, nofollow">{% endif %}
     <link rel="preload" href="{% static 'fonts/roboto-400-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
     {% if LANGUAGE_CODE == 'ur' %}<link rel="preload" href="{% static 'fonts/noto-naskh-arabic-400-urdu.woff2' %}" as="font" type="font/woff2" crossorigin>{% endif %}
     <link rel="stylesheet" href="{% static 'css/tokens.css' %}">

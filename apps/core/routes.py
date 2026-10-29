@@ -87,6 +87,8 @@ ROUTE_ACTIONS = {
 # Login handles signed-in visitors by redirecting them to their role's home.
 PUBLIC_ROUTES = frozenset(
     {
+        "sitemap",
+        "robots",
         "home",
         "account-login",
         "health",

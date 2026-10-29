@@ -1609,3 +1609,38 @@ msgstr "صفحے کے آخر کی رہنمائی"
 
 msgid "Mobile navigation"
 msgstr "موبائل رہنمائی"
+
+msgid "Learn about Ujala's purpose, values and transparent offline donations."
+msgstr ""
+"اجالا کے مقصد، اقدار اور بالمشافہ عطیات کے شفاف انتظام کے بارے میں جانیے۔"
+
+msgid ""
+"Explore local education and food-support programs with Ujala volunteers."
+msgstr ""
+"اجالا کے رضاکاروں کے ساتھ مقامی تعلیمی اور غذائی تعاون کے پروگرام دیکھیے۔"
+
+msgid "Find a public Ujala branch near you and contact its local team."
+msgstr "اپنی قریبی اجالا شاخ تلاش کیجیے اور مقامی ٹیم سے رابطہ کیجیے۔"
+
+msgid ""
+"Discover upcoming Ujala volunteer activities and past community events."
+msgstr ""
+"اجالا کی آنے والی رضاکارانہ سرگرمیوں اور گزشتہ اجتماعی تقریبات کے بارے میں "
+"جانیے۔"
+
+msgid "Apply to volunteer with Ujala and support your local community."
+msgstr ""
+"اجالا کے ساتھ رضاکارانہ خدمت کی درخواست دیجیے اور اپنے محلے کا ساتھ دیجیے۔"
+
+msgid ""
+"Contact the Ujala Volunteer Network head office or find a local branch."
+msgstr ""
+"اجالا رضاکار نیٹ ورک کے مرکزی دفتر سے رابطہ کیجیے یا مقامی شاخ تلاش کیجیے۔"
+
+msgid "Read how Ujala handles private applicant and member information."
+msgstr ""
+"جانیے کہ اجالا درخواست گزاروں اور اراکین کی نجی معلومات کا خیال کیسے رکھتا "
+"ہے۔"
+
+msgid "Light up your city with Ujala Volunteer Network."
+msgstr "اجالا رضاکار نیٹ ورک کے ساتھ اپنے شہر کو روشن کیجیے۔"

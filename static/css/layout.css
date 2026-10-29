@@ -132,3 +132,5 @@ nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--md-s4); }
 @media (width >= 768px) {
   .public-card.card--featured { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); align-items: center; gap: var(--md-s6); }
 }
+
+.event-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); }

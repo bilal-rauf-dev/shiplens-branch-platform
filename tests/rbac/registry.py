@@ -11,6 +11,7 @@ from apps import audit
 from apps.accounts.models import Role, User
 from apps.accounts.services import assign_branch
 from apps.branches.models import Branch, City
+from apps.cms import services as cms_services
 from apps.core import clock
 from apps.finance import report_services
 from apps.finance import services as finance_services
@@ -489,7 +490,61 @@ def demo_reset_payload(scenario):
     return {"data": {}}
 
 
+def content_create_payload(scenario):
+    return {
+        "data": {
+            "type": "PROGRAM",
+            "slug": "matrix-program",
+            "sort_order": 0,
+            "title_en": "Matrix program",
+            "body_en": "A local program.",
+            "title_ur": "مقامی پروگرام",
+        }
+    }
+
+
+def content_object(scenario):
+    item = cms_services.create(
+        scenario["admin"],
+        type="PROGRAM",
+        translations={
+            "en": {"title": "Matrix program", "body_md": "A local program."},
+            "ur": {"title": "مقامی پروگرام"},
+        },
+    )
+    return {"item": item, "data": {}}
+
+
+def content_edit_payload(scenario):
+    fixture = content_object(scenario)
+    fixture["data"] = content_create_payload(scenario)["data"]
+    return fixture
+
+
+def published_content_object(scenario):
+    fixture = content_object(scenario)
+    cms_services.transition(scenario["admin"], fixture["item"].pk, "publish")
+    return fixture
+
+
+def archived_content_object(scenario):
+    fixture = content_object(scenario)
+    cms_services.transition(scenario["admin"], fixture["item"].pk, "archive")
+    return fixture
+
+
+def content_url(name, fixture):
+    return reverse(name, kwargs={"pk": fixture["item"].pk})
+
+
 ROUTE_CASES = {
+    "content-create": RouteCase("POST", page_url, content_create_payload, 302),
+    "content-edit": RouteCase("POST", content_url, content_edit_payload, 302),
+    "content-preview": RouteCase("GET", content_url, content_object, 200),
+    "content-publish": RouteCase("POST", content_url, content_object, 302),
+    "content-unpublish": RouteCase("POST", content_url, published_content_object, 302),
+    "content-archive": RouteCase("POST", content_url, content_object, 302),
+    "content-restore": RouteCase("POST", content_url, archived_content_object, 302),
     "export-report-pdf": RouteCase("GET", report_url, report_object, 200),
     "export-summary-pdf": RouteCase("GET", page_url, no_object, 200),
     "export-collections-csv": RouteCase("GET", page_url, collection_object, 200),

@@ -45,6 +45,7 @@ class MustChangePasswordMiddleware:
             exempt_paths = {
                 reverse("account-change-password"),
                 reverse("account-logout"),
+                reverse("set_language"),
                 "/health",
             }
             if request.path not in exempt_paths and not request.path.startswith(

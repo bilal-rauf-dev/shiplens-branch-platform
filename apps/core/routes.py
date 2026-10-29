@@ -1,6 +1,13 @@
 """Every reachable named route must be explicitly public or declare an action."""
 
 ROUTE_ACTIONS = {
+    "content-create": "content.create",
+    "content-edit": "content.update",
+    "content-preview": "content.view",
+    "content-publish": "content.publish",
+    "content-unpublish": "content.unpublish",
+    "content-archive": "content.archive",
+    "content-restore": "content.restore",
     "export-report-pdf": "report.export_pdf",
     "export-summary-pdf": "summary.export_pdf",
     "export-collections-csv": "collection.export_csv",
@@ -79,5 +86,23 @@ ROUTE_ACTIONS = {
 
 # Login handles signed-in visitors by redirecting them to their role's home.
 PUBLIC_ROUTES = frozenset(
-    {"home", "account-login", "health", "volunteer-apply", "volunteer-thanks"}
+    {
+        "sitemap",
+        "robots",
+        "home",
+        "account-login",
+        "health",
+        "volunteer-apply",
+        "volunteer-thanks",
+        "set_language",
+        "public-about",
+        "public-programs",
+        "public-program-detail",
+        "public-branches",
+        "public-branch-detail",
+        "public-events",
+        "public-event-detail",
+        "public-contact",
+        "public-privacy",
+    }
 )

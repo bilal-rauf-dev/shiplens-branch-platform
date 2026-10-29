@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% load i18n cms static %}
+{% block content %}<p class="notice notice--warning">{% translate "Preview — not published" %}</p><h1 class="page-title">{{ copy.title }}</h1><p>{{ copy.summary }}</p>{% if copy.image_path %}<img class="cms-preview-image" src="{% static copy.image_path %}" width="400" height="300" alt="" loading="lazy">{% endif %}
+{% if copy.english_only %}<p class="notice">{{ copy.fallback_note }}</p>{% endif %}<div class="cms-prose"{% if copy.english_only %} lang="en" dir="ltr"{% endif %}>{{ copy.body_html|render_cms }}</div>
+{% include "cms/actions.html" %}{% endblock %}

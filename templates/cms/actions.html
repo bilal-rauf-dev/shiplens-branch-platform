@@ -1,0 +1,8 @@
+{% load i18n %}<div class="actions">
+{% if item.status != 'ARCHIVED' %}<a class="btn btn--text" href="{% url 'content-edit' item.pk %}">{% translate "Edit" %}</a>{% endif %}
+<a class="btn btn--text" href="{% url 'content-preview' item.pk %}">{% translate "Preview" %}</a>
+{% if item.status == 'ARCHIVED' %}<a class="btn btn--tonal" href="{% url 'content-restore' item.pk %}">{% translate "Restore" %}</a>
+{% else %}<a class="btn btn--tonal" href="{% url 'content-publish' item.pk %}">{% translate "Publish" %}</a>
+{% if item.status == 'PUBLISHED' %}<a class="btn btn--filled btn--error" href="{% url 'content-unpublish' item.pk %}">{% translate "Unpublish" %}</a>{% endif %}
+<a class="btn btn--filled btn--error" href="{% url 'content-archive' item.pk %}">{% translate "Archive" %}</a>{% endif %}
+</div>

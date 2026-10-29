@@ -1302,7 +1302,8 @@ msgstr ""
 msgid "Reset demo data"
 msgstr ""
 
-msgid "This replaces all demo changes with the sample data and logs everyone out."
+msgid ""
+"This replaces all demo changes with the sample data and logs everyone out."
 msgstr ""
 
 msgid "Demo data reset. Please log in again."
@@ -1469,3 +1470,177 @@ msgstr "ضروری"
 
 msgid "Read notice"
 msgstr "نوٹس پڑھیں"
+
+msgid "Ujala Volunteer Network"
+msgstr "اجالا رضاکار نیٹ ورک"
+
+msgid "Ujala"
+msgstr "اجالا"
+
+msgid "Home"
+msgstr "صفحۂ اول"
+
+msgid "About"
+msgstr "تعارف"
+
+msgid "About us"
+msgstr "ہمارا تعارف"
+
+msgid "Programs"
+msgstr "پروگرام"
+
+msgid "Events"
+msgstr "تقریبات"
+
+msgid "Our branches"
+msgstr "ہماری شاخیں"
+
+msgid "Contact"
+msgstr "رابطہ"
+
+msgid "Privacy"
+msgstr "رازداری"
+
+msgid "Privacy notice"
+msgstr "رازداری کا نوٹس"
+
+msgid "Light up your city"
+msgstr "اپنے شہر کو روشن کریں"
+
+msgid "Learn more"
+msgstr "مزید جانیے"
+
+msgid "Our programs"
+msgstr "ہمارے پروگرام"
+
+msgid "Explore programs"
+msgstr "پروگرام دیکھیے"
+
+msgid "Find a branch"
+msgstr "شاخ تلاش کیجیے"
+
+msgid "Apply to volunteer"
+msgstr "رضاکار بننے کی درخواست دیجیے"
+
+msgid "Join us next"
+msgstr "اگلی سرگرمی میں ہمارے ساتھ شامل ہوئیے"
+
+msgid "All events"
+msgstr "تمام تقریبات"
+
+msgid "Volunteer with us"
+msgstr "ہمارے ساتھ رضاکارانہ خدمت کیجیے"
+
+msgid ""
+"A little of your time can make a lasting difference in your neighbourhood."
+msgstr "آپ کا تھوڑا سا وقت آپ کے محلے میں دیرپا اچھا فرق لا سکتا ہے۔"
+
+msgid "Upcoming events"
+msgstr "آنے والی تقریبات"
+
+msgid "Past events"
+msgstr "گزشتہ تقریبات"
+
+msgid "No upcoming events are published yet."
+msgstr "ابھی کوئی آنے والی تقریب شائع نہیں ہوئی۔"
+
+msgid "Past events will appear here."
+msgstr "گزشتہ تقریبات یہاں دکھائی جائیں گی۔"
+
+msgid "Published programs will appear here."
+msgstr "شائع شدہ پروگرام یہاں دکھائی جائیں گے۔"
+
+msgid "Published information will appear here."
+msgstr "شائع شدہ معلومات یہاں دکھائی جائیں گی۔"
+
+msgid "Find a practical way to serve your community."
+msgstr "اپنے محلے کی خدمت کا کوئی عملی طریقہ تلاش کیجیے۔"
+
+msgid "Meet your neighbours and lend a hand."
+msgstr "اپنے پڑوسیوں سے ملیے اور ان کا ہاتھ بٹائیے۔"
+
+msgid "Local teams, a shared purpose."
+msgstr "مقامی ٹیمیں، مشترک مقصد۔"
+
+msgid "Find branches"
+msgstr "شاخیں تلاش کیجیے"
+
+msgid "All cities"
+msgstr "تمام شہر"
+
+msgid "No public branches match your filter."
+msgstr "آپ کے انتخاب کے مطابق کوئی عوامی شاخ نہیں ملی۔"
+
+msgid "Visit or contact this branch"
+msgstr "اس شاخ میں تشریف لائیے یا رابطہ کیجیے"
+
+msgid "Coming soon — apply to be a founding volunteer."
+msgstr ""
+"جلد آغاز ہوگا — ابتدائی رضاکار ٹیم میں شامل ہونے کے لیے درخواست دیجیے۔"
+
+msgid "We would be glad to hear from you."
+msgstr "آپ سے رابطہ کر کے ہمیں خوشی ہوگی۔"
+
+msgid "Head office"
+msgstr "مرکزی دفتر"
+
+msgid "Find your nearest branch"
+msgstr "اپنی قریبی شاخ تلاش کیجیے"
+
+msgid "House 10, Community Lane, Karachi, Pakistan"
+msgstr "گھر نمبر 10، کمیونٹی لین، کراچی، پاکستان"
+
+msgid "Prefer to help with a donation?"
+msgstr "کیا آپ عطیہ دے کر مدد کرنا چاہتے ہیں؟"
+
+msgid ""
+"Donate offline at your nearest branch. Always ask for an official receipt; "
+"donations are deposited to our main account and reviewed weekly."
+msgstr ""
+"آپ اپنی قریبی شاخ میں بالمشافہ عطیہ دے سکتے ہیں۔ باقاعدہ رسید ضرور لیجیے؛ "
+"عطیات ہمارے مرکزی اکاؤنٹ میں جمع ہوتے ہیں اور ان کا ہفتہ وار جائزہ لیا جاتا "
+"ہے۔"
+
+msgid "English only"
+msgstr "صرف انگریزی میں"
+
+msgid "Footer navigation"
+msgstr "صفحے کے آخر کی رہنمائی"
+
+msgid "Mobile navigation"
+msgstr "موبائل رہنمائی"
+
+msgid "Learn about Ujala's purpose, values and transparent offline donations."
+msgstr ""
+"اجالا کے مقصد، اقدار اور بالمشافہ عطیات کے شفاف انتظام کے بارے میں جانیے۔"
+
+msgid ""
+"Explore local education and food-support programs with Ujala volunteers."
+msgstr ""
+"اجالا کے رضاکاروں کے ساتھ مقامی تعلیمی اور غذائی تعاون کے پروگرام دیکھیے۔"
+
+msgid "Find a public Ujala branch near you and contact its local team."
+msgstr "اپنی قریبی اجالا شاخ تلاش کیجیے اور مقامی ٹیم سے رابطہ کیجیے۔"
+
+msgid ""
+"Discover upcoming Ujala volunteer activities and past community events."
+msgstr ""
+"اجالا کی آنے والی رضاکارانہ سرگرمیوں اور گزشتہ اجتماعی تقریبات کے بارے میں "
+"جانیے۔"
+
+msgid "Apply to volunteer with Ujala and support your local community."
+msgstr ""
+"اجالا کے ساتھ رضاکارانہ خدمت کی درخواست دیجیے اور اپنے محلے کا ساتھ دیجیے۔"
+
+msgid ""
+"Contact the Ujala Volunteer Network head office or find a local branch."
+msgstr ""
+"اجالا رضاکار نیٹ ورک کے مرکزی دفتر سے رابطہ کیجیے یا مقامی شاخ تلاش کیجیے۔"
+
+msgid "Read how Ujala handles private applicant and member information."
+msgstr ""
+"جانیے کہ اجالا درخواست گزاروں اور اراکین کی نجی معلومات کا خیال کیسے رکھتا "
+"ہے۔"
+
+msgid "Light up your city with Ujala Volunteer Network."
+msgstr "اجالا رضاکار نیٹ ورک کے ساتھ اپنے شہر کو روشن کیجیے۔"

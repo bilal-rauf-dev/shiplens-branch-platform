@@ -32,6 +32,8 @@ def _reset_tables():
     if not connection.in_atomic_block:
         raise AssertionError("Demo reset requires an outer transaction.")
     tables = (
+        "content_translations",
+        "content_items",
         "users",
         "user_branch_assignments",
         "cities",

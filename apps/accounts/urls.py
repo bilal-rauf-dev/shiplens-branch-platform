@@ -1,8 +1,7 @@
 from django.urls import path
-from django.utils.translation import gettext_lazy as _
 
 from apps.accounts import views
-from apps.accounts.views import ChangePasswordView, LoginView, RoleHomeView, logout
+from apps.accounts.views import ChangePasswordView, LoginView, logout
 
 urlpatterns = [
     path("app/users/", views.UserListView.as_view(), name="user-list"),
@@ -42,10 +41,5 @@ urlpatterns = [
         "accounts/change-password/",
         ChangePasswordView.as_view(),
         name="account-change-password",
-    ),
-    path(
-        "app/content/",
-        RoleHomeView.as_view(required_action="content.list", title=_("Content")),
-        name="content-list",
     ),
 ]

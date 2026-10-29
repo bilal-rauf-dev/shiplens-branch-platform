@@ -1,0 +1,29 @@
+{% extends "base.html" %}{% load i18n static %}
+{% block title %}{% translate "Content editor" %} · {% translate "ShipLens" %}{% endblock %}
+{% block content %}<h1 class="page-title">{% translate "Content editor" %}</h1>
+{% if item %}{% include "cms/actions.html" %}{% endif %}
+<form method="post" class="cms-editor card">{% csrf_token %}{{ form.non_field_errors }}
+{% include "partials/form_field.html" with field=form.type help_id="id_type_helptext" %}
+{% include "partials/form_field.html" with field=form.slug help_id="id_slug_helptext" %}
+{% include "partials/form_field.html" with field=form.sort_order help_id="id_sort_order_helptext" %}
+<div class="cms-tabs">
+<input class="visually-hidden cms-tab-radio" type="radio" name="editor_language" id="cms-tab-en" value="en" checked><label class="nav-link" for="cms-tab-en">{% translate "English" %}</label>
+<input class="visually-hidden cms-tab-radio" type="radio" name="editor_language" id="cms-tab-ur" value="ur"><label class="nav-link" for="cms-tab-ur" lang="ur" dir="rtl">اردو</label>
+<div class="cms-panels"><section class="cms-panel cms-panel--en" lang="en" dir="ltr"><h2 class="visually-hidden">{% translate "English" %}</h2>
+{% include "partials/form_field.html" with field=form.title_en help_id="id_title_en_helptext" %}
+{% include "partials/form_field.html" with field=form.summary_en help_id="id_summary_en_helptext" %}
+{% include "partials/form_field.html" with field=form.body_en help_id="id_body_en_helptext" %}
+</section><section class="cms-panel cms-panel--ur" lang="ur" dir="rtl"><h2 class="visually-hidden">اردو</h2>
+{% include "partials/form_field.html" with field=form.title_ur help_id="id_title_ur_helptext" %}
+{% include "partials/form_field.html" with field=form.summary_ur help_id="id_summary_ur_helptext" %}
+{% include "partials/form_field.html" with field=form.body_ur help_id="id_body_ur_helptext" %}
+</section></div></div>
+<fieldset class="application-group"><legend>{% translate "Event details (events only)" %}</legend>
+{% include "partials/form_field.html" with field=form.event_start help_id="id_event_start_helptext" %}
+{% include "partials/form_field.html" with field=form.event_end help_id="id_event_end_helptext" %}
+{% include "partials/form_field.html" with field=form.location_en help_id="id_location_en_helptext" %}
+{% include "partials/form_field.html" with field=form.location_ur help_id="id_location_ur_helptext" %}
+</fieldset>
+<fieldset class="application-group"><legend>{{ form.image_path.label }}</legend>{{ form.image_path.errors }}<div class="cms-image-picker">{% for choice in form.image_path %}<label class="choice-row card" for="{{ choice.id_for_label }}">{{ choice.tag }}<span>{% if choice.data.value %}<img src="{% static choice.data.value %}" width="160" height="120" alt="" loading="lazy">{% endif %}{{ choice.choice_label }}</span></label>{% endfor %}</div></fieldset>
+<button class="btn btn--filled" type="submit">{% translate "Save working copy" %}</button>
+</form>{% endblock %}

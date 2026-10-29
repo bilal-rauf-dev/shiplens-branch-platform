@@ -1,12 +1,26 @@
 """Resolve active navigation sections from Django route names, without JavaScript."""
 
 from django import template
+from django.urls import translate_url
 
 register = template.Library()
 
 # Detail and action routes belong to their list's navigation section. The finance
 # review queue is separate from the weekly report list, so it has its own pill.
 SECTIONS = {
+    "public-programs": ("public-programs", "public-program-detail"),
+    "public-branches": ("public-branches", "public-branch-detail"),
+    "public-events": ("public-events", "public-event-detail"),
+    "content-list": (
+        "content-list",
+        "content-create",
+        "content-edit",
+        "content-preview",
+        "content-publish",
+        "content-unpublish",
+        "content-archive",
+        "content-restore",
+    ),
     "user-list": (
         "user-list",
         "user-create",
@@ -87,3 +101,11 @@ def nav_current(context, route_name):
     if match is None:
         return False
     return match.url_name in SECTIONS.get(route_name, (route_name,))
+
+
+@register.simple_tag(takes_context=True)
+def language_next(context, language):
+    request = context.get("request")
+    return (
+        translate_url(request.get_full_path(), language) if request else f"/{language}/"
+    )

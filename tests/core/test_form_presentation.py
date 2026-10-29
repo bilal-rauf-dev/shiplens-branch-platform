@@ -66,7 +66,7 @@ def test_public_choice_controls_belong_to_their_label_rows(client):
         assert label is not None
         assert label["class"] == "choice-row"
         assert label["for"] == attributes["id"]
-    assert 'href="#id_privacy_consent_hint"' in response.text
+    assert 'href="/en/privacy/"' in response.text
     assert 'id="id_privacy_consent_hint" tabindex="-1"' in response.text
 
 

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sitemaps",
     "django.contrib.postgres",
     "apps.core.apps.CoreConfig",
     "apps.accounts.apps.AccountsConfig",
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
     "apps.seed.apps.SeedConfig",
     "apps.dashboard.apps.DashboardConfig",
     "apps.exports",
+    "apps.cms",
     "axes",
 ]
 AUTH_USER_MODEL = "accounts.User"
@@ -96,6 +98,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "apps.seed.context_processors.demo_mode",
+                "apps.publicsite.context_processors.public_context",
             ]
         },
     }

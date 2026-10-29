@@ -15,7 +15,7 @@
     {% if field.field.widget.input_type == "checkbox" %}
       <div{% if field.name == "privacy_consent" %} class="consent-row"{% endif %}>
         <label class="choice-row" for="{{ field.id_for_label }}">{{ field }}<span>{{ field.label }}{% include "core/forms/required.html" %}</span></label>
-        {% if field.name == "privacy_consent" %}<a href="#{{ help_id }}">{% translate "Read notice" %}</a>{% endif %}
+        {% if field.name == "privacy_consent" %}<a href="{% url 'public-privacy' %}">{% translate "Read notice" %}</a>{% endif %}
       </div>
     {% else %}
       {{ field.label_tag }}

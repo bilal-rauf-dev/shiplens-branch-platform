@@ -7,6 +7,7 @@ from apps.accounts.models import Role, User, UserBranchAssignment
 from apps.accounts.permissions import PERMISSIONS
 from apps.audit.models import AuditLog
 from apps.branches.models import Branch, City
+from apps.cms.models import ContentItem, ContentTranslation
 from apps.core.models import IdSequence, SystemSetting
 from apps.core.routes import ROUTE_ACTIONS
 from apps.finance.models import Collection, Transfer, WeeklyReport, WeeklyReportLine
@@ -26,6 +27,10 @@ def test_t_rbac_registry_covers_every_protected_route():
 def domain_snapshot():
     """Permission denials may be audited, but must not change business records."""
     return {
+        "content": list(ContentItem.objects.order_by("pk").values()),
+        "content_translations": list(
+            ContentTranslation.objects.order_by("pk").values()
+        ),
         "reports": list(WeeklyReport.objects.order_by("pk").values()),
         "report_lines": list(WeeklyReportLine.objects.order_by("pk").values()),
         "collections": list(Collection.objects.order_by("pk").values()),

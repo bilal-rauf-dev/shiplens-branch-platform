@@ -11,6 +11,7 @@ handler500 = "apps.core.views.server_error"
 
 urlpatterns = [path("health", health, name="health")]
 urlpatterns += i18n_patterns(
+    path("", include("apps.cms.urls")),
     path("", include("apps.exports.urls")),
     path("", include("apps.dashboard.urls")),
     path("", include("apps.seed.urls")),

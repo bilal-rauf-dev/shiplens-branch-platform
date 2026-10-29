@@ -1,6 +1,13 @@
 """Every reachable named route must be explicitly public or declare an action."""
 
 ROUTE_ACTIONS = {
+    "content-create": "content.create",
+    "content-edit": "content.update",
+    "content-preview": "content.view",
+    "content-publish": "content.publish",
+    "content-unpublish": "content.unpublish",
+    "content-archive": "content.archive",
+    "content-restore": "content.restore",
     "export-report-pdf": "report.export_pdf",
     "export-summary-pdf": "summary.export_pdf",
     "export-collections-csv": "collection.export_csv",

@@ -7,6 +7,16 @@ register = template.Library()
 # Detail and action routes belong to their list's navigation section. The finance
 # review queue is separate from the weekly report list, so it has its own pill.
 SECTIONS = {
+    "content-list": (
+        "content-list",
+        "content-create",
+        "content-edit",
+        "content-preview",
+        "content-publish",
+        "content-unpublish",
+        "content-archive",
+        "content-restore",
+    ),
     "user-list": (
         "user-list",
         "user-create",

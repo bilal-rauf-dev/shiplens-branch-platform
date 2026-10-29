@@ -1,4 +1,4 @@
-{% load i18n static %}
+{% load i18n static navigation %}
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
   <head>
@@ -19,7 +19,7 @@
     <a class="skip-link" href="#main">{% translate "Skip to main content" %}</a>
     <header class="site-header top-app-bar">
       <div class="container top-app-bar__inner">
-        <a class="brand" href="{% url 'home' %}">{% translate "ShipLens" %}</a>
+        {% nav_current 'home' as is_home %}<a class="brand" href="{% url 'home' %}"{% if is_home %} aria-current="page"{% endif %}>{% translate "ShipLens" %}</a>
         {% if user.is_authenticated %}
           <details class="staff-menu">
             <summary>{% translate "Menu" %}</summary>
@@ -27,8 +27,8 @@
           </details>
         {% else %}
           <nav class="public-navigation" aria-label="{% translate 'Main navigation' %}">
-            <a class="nav-link" href="{% url 'volunteer-apply' %}">{% translate "Get involved" %}</a>
-            <a class="nav-link" href="{% url 'account-login' %}">{% translate "Log in" %}</a>
+            {% nav_current 'volunteer-apply' as is_apply %}<a class="nav-link" href="{% url 'volunteer-apply' %}"{% if is_apply %} aria-current="page"{% endif %}>{% translate "Get involved" %}</a>
+            {% nav_current 'account-login' as is_login %}<a class="nav-link" href="{% url 'account-login' %}"{% if is_login %} aria-current="page"{% endif %}>{% translate "Log in" %}</a>
           </nav>
         {% endif %}
       </div>

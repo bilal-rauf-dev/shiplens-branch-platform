@@ -17,8 +17,11 @@ select = ["E", "F", "I", "B", "S", "DJ", "UP", "TID251"]
 DJANGO_SETTINGS_MODULE = "config.settings.test"
 python_files = ["test_*.py"]
 testpaths = ["tests"]
-markers = ["performance: deterministic query-count and timing budgets against PostgreSQL"]
-addopts = "--cov=apps --cov-report=term-missing"
+markers = [
+    "performance: deterministic query-count and timing budgets against PostgreSQL",
+    "visual: local browser screenshots, excluded from the default run and CI",
+]
+addopts = "-m 'not visual' --cov=apps --cov-report=term-missing"
 
 [tool.coverage.run]
 omit = ["*/migrations/*"]

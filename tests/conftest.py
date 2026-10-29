@@ -2,8 +2,16 @@ import pytest
 import time_machine
 from django.core.management import call_command
 from django.db import connection, transaction
+from django.utils import translation
 
 from apps.branches.models import Branch, City
+
+
+@pytest.fixture(autouse=True)
+def default_language(settings):
+    """Keep a previous request's Urdu locale from leaking into another test."""
+    with translation.override(settings.LANGUAGE_CODE):
+        yield
 
 
 @pytest.fixture

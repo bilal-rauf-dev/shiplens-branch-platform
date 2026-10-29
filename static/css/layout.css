@@ -4,9 +4,10 @@ body { display: flex; flex-direction: column; }
 .site-footer { background: var(--md-surface-container); }
 .site-header { border-block-end: 1px solid var(--md-outline-variant); }
 .site-footer { border-block-start: 1px solid var(--md-outline-variant); }
-.brand { font-weight: 700; }
-.top-app-bar__inner { position: relative; display: flex; align-items: center; justify-content: space-between; gap: var(--md-s4); }
-.public-navigation { margin-inline-start: auto; }
+.brand { font-size: 1.5rem; line-height: 1.3; font-weight: 500; color: var(--md-on-surface); }
+.top-app-bar__inner { position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--md-s4); }
+.public-navigation { margin-inline-start: auto; gap: var(--md-s2); }
+@media (width < 480px) { .public-navigation { margin-inline-start: 0; } }
 .staff-shell { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--md-s6); }
 .staff-main { min-inline-size: 0; }
 .staff-rail nav, .staff-menu nav { display: flex; flex-direction: column; align-items: stretch; gap: var(--md-s2); }

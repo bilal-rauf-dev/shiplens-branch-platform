@@ -219,11 +219,21 @@ input[type="checkbox"], input[type="radio"] {
   background: rgb(255 251 254 / .85); backdrop-filter: blur(12px);
   border-block-end: 1px solid var(--md-outline-variant);
 }
-.top-app-bar .nav-link, .staff-rail .nav-link {
+.brand, .nav-link {
+  position: relative; isolation: isolate; overflow: hidden;
   display: inline-flex; align-items: center; min-block-size: 40px;
   padding-inline: var(--md-s4); border-radius: var(--md-radius-full); text-decoration: none;
 }
-.top-app-bar .nav-link[aria-current="page"], .staff-rail .nav-link[aria-current="page"] {
+.nav-link { font-size: .875rem; line-height: 1.4; font-weight: 500; }
+.brand::before, .nav-link::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background: currentColor; opacity: 0; pointer-events: none;
+  transition: opacity var(--md-dur-fast) var(--md-ease);
+}
+.brand:focus-visible::before, .nav-link:focus-visible::before { opacity: .10; }
+.brand:active::before, .nav-link:active::before { opacity: .12; }
+.brand[aria-current="page"] { background: var(--md-secondary-container); }
+.nav-link[aria-current="page"] {
   color: var(--md-on-secondary-container); background: var(--md-secondary-container);
 }
 .staff-rail { display: none; }
@@ -243,9 +253,7 @@ input[type="checkbox"], input[type="radio"] {
   .staff-menu { display: none; }
 }
 @media (hover: hover) {
-  .top-app-bar .nav-link:hover, .staff-rail .nav-link:hover {
-    background: var(--md-secondary-container);
-  }
+  .brand:hover::before, .nav-link:hover::before { opacity: .08; }
 }
 
 .snackbar, .notice {

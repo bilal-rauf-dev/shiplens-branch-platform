@@ -10,3 +10,4 @@ pytest-playwright==0.10.0
 ruff==0.17.2
 pip-tools==7.6.2
 pip-audit==2.10.1
+pypdf==6.21.4

@@ -1,8 +1,9 @@
 {% extends "base.html" %}
-{% load i18n tz %}
+{% load i18n tz exports %}
 {% block title %}{{ report.branch.code }} · {{ report.week_start }} · {% translate "ShipLens" %}
 {% endblock %}
 {% block content %}<h1 class="page-title"><bdi>{{ report.branch.code }}</bdi> · <bdi>{{ report.week_start }}</bdi> – <bdi>{{ report.week_end }}</bdi></h1>
+{% pdf_allowed 'report' report as can_pdf %}{% if can_pdf %}<a class="btn btn--tonal" href="{% url 'export-report-pdf' report.pk %}">{% translate "Download PDF" %}</a>{% endif %}
 <p>
 <span class="chip status-badge" data-status="{{ report.status }}">{{ report.get_status_display }}</span> · {% translate "Revision" %} <bdi>{{ report.revision }}</bdi></p>
 {% for error in error_messages %}<p class="form-errors" role="alert">{{ error }}</p>{% endfor %}

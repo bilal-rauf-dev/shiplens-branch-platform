@@ -31,7 +31,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
-        libpango-1.0-0 libpangoft2-1.0-0 libharfbuzz0b libffi8 \
+        libpango-1.0-0 libpangoft2-1.0-0 libharfbuzz0b libharfbuzz-subset0 libffi8 \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /opt/venv /opt/venv

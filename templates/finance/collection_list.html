@@ -1,6 +1,7 @@
 {% extends "base.html" %}{% load i18n %}
 {% block title %}{% translate "Collections" %} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}<h1 class="page-title">{% translate "Collections" %}</h1>
+{% include "exports/csv_button.html" with code="collections" route="export-collections-csv" %}
 {% for branch in managed_branches %}<p><a class="btn btn--tonal{% if managed_branches|length == 1 %} desktop-only{% endif %}" href="{% url 'collection-create' branch.pk %}">{% translate "Create collection" %} · <bdi>{{ branch.code }}</bdi></a></p>{% endfor %}
 {% if managed_branches|length == 1 %}{% for branch in managed_branches %}<a class="fab" href="{% url 'collection-create' branch.pk %}" aria-label="{% translate 'Create collection' %}"><span aria-hidden="true">+</span></a>{% endfor %}{% endif %}
 <form method="get" class="filter-panel member-filters">{% include "accounts/_form_fields.html" with form=filter_form %}<button type="submit" class="btn btn--filled">{% translate "Apply filters" %}</button></form>

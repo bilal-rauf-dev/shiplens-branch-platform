@@ -1,0 +1,2 @@
+{% load i18n exports %}{% export_allowed code as allowed %}
+{% if allowed %}<a class="btn btn--tonal" href="{% url route %}?{{ request.GET.urlencode }}">{% translate "Export CSV" %}</a>{% endif %}

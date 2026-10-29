@@ -3,6 +3,7 @@
 {% block title %}{% translate "Members" %} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
   <h1 class="page-title">{% translate "Members" %}</h1>
+{% include "exports/csv_button.html" with code="members" route="export-members-csv" %}
   <form method="get" class="filter-panel member-filters">
     {% include "accounts/_form_fields.html" with form=filter_form %}
     <div class="actions"><button type="submit" class="btn btn--filled">{% translate "Apply filters" %}</button><a href="{% url 'member-list' %}" class="btn btn--text">{% translate "Reset filters" %}</a></div>

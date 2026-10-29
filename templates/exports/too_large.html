@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% load i18n %}{% block content %}
+<h1>{% translate "Summary is too large for PDF" %}</h1>
+<p>{% translate "Use the CSV export for this many rows." %}</p>
+<a class="btn btn--tonal" href="{% url 'export-summary-csv' %}?{{ request.GET.urlencode }}">{% translate "Export CSV" %}</a>
+{% endblock %}

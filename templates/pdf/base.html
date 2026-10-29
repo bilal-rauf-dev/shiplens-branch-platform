@@ -1,0 +1,8 @@
+{% load i18n tz %}<!doctype html>
+<html lang="{{ lang }}" dir="{% if lang == 'ur' %}rtl{% else %}ltr{% endif %}">
+<head><meta charset="utf-8"><title>{% block title %}{% translate "ShipLens" %}{% endblock %}</title></head>
+<body>
+<header><p class="organization">{% translate "ShipLens" %}</p>{% block heading %}{% endblock %}</header>
+{% block content %}{% endblock %}
+<footer>{% translate "Generated at (PKT)" %} <bdi>{{ generated_at|timezone:"Asia/Karachi"|date:"Y-m-d H:i" }}</bdi> {% translate "by" %} {{ generated_by.full_name }} (<bdi>{{ generated_by.email }}</bdi>){% if demo %} · {% translate "Demo data" %}{% endif %}</footer>
+</body></html>

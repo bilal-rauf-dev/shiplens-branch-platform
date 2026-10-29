@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "apps.finance.apps.FinanceConfig",
     "apps.seed.apps.SeedConfig",
     "apps.dashboard.apps.DashboardConfig",
+    "apps.exports",
     "axes",
 ]
 AUTH_USER_MODEL = "accounts.User"
@@ -130,6 +131,7 @@ PASSWORD_HASHERS = ["django.contrib.auth.hashers.Argon2PasswordHasher"]
 
 # Defaults from docs/planning/07-business-rules.md; DB overrides arrive in P2.
 BUSINESS_RULES = {
+    "export_rate_per_hour": 30,
     "login_rate_per_minute": 20,
     "login_rate_per_day": 200,
     "application_decline_reason_min_length": 5,

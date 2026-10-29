@@ -8,6 +8,8 @@
 {% block content %}
 <h1 class="page-title">{% if head_office %}{% translate "Head-office dashboard" %}{% else %}{% translate "My branch" %}{% endif %}</h1>
 {% include "dashboard/_period.html" %}
+{% if head_office %}{% include "exports/csv_button.html" with code="summary" route="export-summary-csv" %}{% endif %}
+{% include "exports/csv_button.html" with code="unsent" route="export-unsent-csv" %}
 {% if not collected.count %}<p class="notice">{% translate "No collections in this period. Period totals are zero; unsent totals include earlier periods." %}</p>{% endif %}
 <section class="dashboard-kpis" aria-label="{% translate 'Key indicators' %}">
   <article class="card"><h2 class="type-title-l">{% translate "Collected" %}</h2><p class="kpi-value">{% translate "Rs" %} <bdi>{{ collected.amount|floatformat:"2g" }}</bdi></p><p><bdi>{{ collected.count }}</bdi> {% translate "entries" %}</p></article>

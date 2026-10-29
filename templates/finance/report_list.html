@@ -8,6 +8,7 @@
 {% else %}
 {% translate "Weekly reports" %}
 {% endif %}</h1>
+{% include "exports/csv_button.html" with code="reports" route="export-reports-csv" %}
 <form method="get" class="filter-panel member-filters">{% include "accounts/_form_fields.html" with form=filter_form %}<button type="submit" class="btn btn--filled">{% translate "Apply filters" %}</button>
 </form>
 <div class="table-container card">

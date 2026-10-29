@@ -490,6 +490,12 @@ def demo_reset_payload(scenario):
 
 
 ROUTE_CASES = {
+    "export-collections-csv": RouteCase("GET", page_url, collection_object, 200),
+    "export-unsent-csv": RouteCase("GET", page_url, no_object, 200),
+    "export-reports-csv": RouteCase("GET", page_url, report_object, 200),
+    "export-summary-csv": RouteCase("GET", page_url, no_object, 200),
+    "export-members-csv": RouteCase("GET", page_url, member_object, 200),
+    "export-audit-csv": RouteCase("GET", page_url, audit_object, 200),
     "dashboard-hr": RouteCase("GET", page_url, no_object, 200),
     "demo-reset": RouteCase("POST", page_url, demo_reset_payload, 302),
     "report-list": RouteCase("GET", page_url, report_object, 200),

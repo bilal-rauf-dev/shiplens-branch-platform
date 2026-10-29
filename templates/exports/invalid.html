@@ -1,0 +1,2 @@
+{% extends "base.html" %}{% load i18n %}
+{% block content %}<h1>{% translate "Check export filters" %}</h1><form method="get">{% include "accounts/_form_fields.html" %}<button class="btn btn--filled" type="submit">{% translate "Try again" %}</button></form>{% endblock %}

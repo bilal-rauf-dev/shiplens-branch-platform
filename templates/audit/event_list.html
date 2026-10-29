@@ -3,6 +3,7 @@
 {% block title %}{% translate "Audit log" %} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
   <h1 class="page-title">{% translate "Audit log" %}</h1>
+{% include "exports/csv_button.html" with code="audit" route="export-audit-csv" %}
   <form method="post" action="{% url 'audit-verify' %}" class="inline-action">{% csrf_token %}<button type="submit" class="btn btn--tonal">{% translate "Verify chain" %}</button></form>
   <form method="get" class="filter-panel member-filters">
     {% include "accounts/_form_fields.html" with form=filter_form %}

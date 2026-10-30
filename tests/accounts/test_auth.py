@@ -7,11 +7,12 @@ from django.contrib.auth.password_validation import validate_password
 from django.contrib.sessions.models import Session
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError, transaction
-from django.test import Client
+from django.test import Client, override_settings
 
 from apps.accounts import services
 from apps.accounts.models import Role, User
 from apps.core import clock as business_clock
+from config.settings import base
 from tests.accounts.conftest import TEST_PASSWORD
 
 NEW_PASSWORD = "Cobalt!Harbor-83-Pine"  # noqa: S105 -- test-only credential.
@@ -166,7 +167,14 @@ def test_t_sec_password(user, password, code):
     assert code in [error.code for error in raised.value.error_list]
 
 
-def test_t_sec_password_hash(user):
+@override_settings(PASSWORD_HASHERS=base.PASSWORD_HASHERS)
+def test_t_sec_password_hash(db):
+    user = User.objects.create_user(
+        email="operator@example.com",
+        password=TEST_PASSWORD,
+        full_name="Test Operator",
+        role=Role.SUPER_ADMIN,
+    )
     assert user.password.startswith("argon2$")
     assert user.check_password(TEST_PASSWORD)
     assert not hasattr(user, "is_staff")

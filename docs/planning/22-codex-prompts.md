@@ -632,7 +632,7 @@ STEP 2 — CI jobs
 Commit: ci: add E2E and Lighthouse CI jobs
 
 STEP 3 — Fix findings + raise coverage gate
-- Fix every a11y/Lighthouse issue found on the measured pages (contrast, labels, heading order, image sizes). Raise --cov-fail-under to 70 if current coverage ≥ 72%; otherwise add tests to the lowest-covered service modules first and report the numbers.
+- Fix every a11y/Lighthouse issue found on the measured pages (contrast, labels, heading order, image sizes). Retain --cov-fail-under=90 from the audit fixes; if coverage drops below the gate, add tests to the lowest-covered service modules and report the numbers.
 Commit: ci: raise coverage threshold to 70%
 ```
 

@@ -11,3 +11,7 @@ STORAGES = {
     "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
 }
 WHITENOISE_AUTOREFRESH = True
+
+# Fast hashes keep ordinary tests quick; dedicated security tests use real Argon2.
+# Base and production settings keep Argon2 as their first password hasher.
+PASSWORD_HASHERS = ["django.contrib.auth.hashers.MD5PasswordHasher"]

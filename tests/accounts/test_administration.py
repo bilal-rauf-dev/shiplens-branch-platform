@@ -7,7 +7,7 @@ from django.contrib.auth import SESSION_KEY
 from django.contrib.sessions.models import Session
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.db import connections
-from django.test import Client
+from django.test import Client, override_settings
 from django.urls import reverse
 
 from apps import audit
@@ -21,6 +21,7 @@ from apps.branches.models import Branch, BranchStatus
 from apps.core import clock as business_clock
 from apps.core import rules
 from apps.core.models import SystemSetting
+from config.settings import base
 from tests.accounts.conftest import TEST_PASSWORD
 
 pytestmark = pytest.mark.django_db
@@ -117,6 +118,7 @@ def test_settings_whitelist(user):
         services.update_settings(user, collection_lock_days=3)
 
 
+@override_settings(PASSWORD_HASHERS=base.PASSWORD_HASHERS)
 def test_create_user_generated_password_and_audit(user):
     created, temporary = services.create_user(
         user, email="NEW@example.com", full_name="New Operator", role=Role.HR_LEAD

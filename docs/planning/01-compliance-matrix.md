@@ -76,7 +76,7 @@ Regardless of the answer, **commit every day from today**, so that if 2 Nov is c
 | D-11 | Content manager draft/publish | 06, 16 | 30 Oct | `T-CMS-*`. |
 | D-12 | Audit trail of all changes | 11 §audit | 25 Oct onward | `T-AUD-COVERAGE` (every mutating route writes ≥ 1 audit row). |
 | D-13 | English + Urdu, RTL | 12 | 31 Oct | `T-I18N-PARITY`, E2E checks `dir="rtl"`. |
-| D-14 | ≥ 60 % backend coverage | 17 | continuous | CI `--cov-fail-under=60` (raise to 70 on 31 Oct). |
+| D-14 | ≥ 60 % backend coverage | 17 | continuous | CI `--cov-fail-under=90` after the audit; exceeds the handbook minimum. |
 | D-15 | GitHub Actions CI | 15 | 24 Oct | Green badge on README; branch protection requires it. |
 | D-16 | Dockerfile + health endpoint | 15 | 24 Oct | CI job runs container and curls `/health`. |
 | D-17 | Public repo, MIT, 25/7/3 | §3 | 2 Nov | C-14…C-16. |

@@ -9,7 +9,7 @@ from tests.accounts.conftest import TEST_PASSWORD
 
 @pytest.fixture(scope="session")
 def matrix_password_hash():
-    """Reuse a real Argon2 test hash; authentication behavior has its own tests."""
+    """Reuse a configured test hash; authentication behavior has its own tests."""
     return make_password(TEST_PASSWORD)
 
 

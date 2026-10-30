@@ -6,13 +6,13 @@ the required checks in planning document 15, section 4.1.
 | Job | What it checks | Plan mapping |
 | --- | --- | --- |
 | `lint` | Ruff lint and formatting, logical CSS properties, no CSRF exemptions or direct model writes/lookups in views | Explainability and thin-view rules in AGENTS.md; plan 15 §4.1 |
-| `test` | PostgreSQL 16, production deployment settings, missing migrations, Django translation configuration, pytest and at least 60% coverage | Plan 17's PostgreSQL-only test strategy and initial coverage gate |
+| `test` | PostgreSQL 16, production deployment settings, missing migrations, Django translation configuration, pytest and at least 90% coverage | Plan 17's PostgreSQL-only strategy and audit coverage gate |
 | `security` | `pip-audit` against the runtime lock and Gitleaks against repository history | Plan 11's security controls and plan 15 §4.1 |
 | `docker` | Build with the commit SHA; start the production image and PostgreSQL; wait for Docker health; GET `/health`; require UID 10001 | Plan 15 §§1–2 and §4.1 |
 
 Coverage XML is uploaded and its total is written to the GitHub job summary,
 including when tests fail after producing a report. The coverage threshold is
-60% for P1; the planned later increase to 70% remains a separate change.
+90%. The original P1 gate was 60%; the audit fixes raised it to 90%.
 
 All action references use full commit SHAs with release comments. Workflow
 permissions default to `contents: read`; only the CodeQL job gets the additional
@@ -21,8 +21,9 @@ Superseded runs are cancelled using workflow/ref concurrency groups.
 
 `codeql.yml` analyzes Python on pull requests, pushes to `main`, and weekly.
 Dependabot checks pip dependencies, GitHub Actions and Docker images weekly.
-E2E and Lighthouse jobs are outside P1. Full Urdu catalogue parity checks belong
-to the later translation pass; P1 checks Django's translation configuration.
+Pip and Docker semver-major updates are ignored; stack upgrades need explicit review.
+CI compiles the Urdu catalogue, checks fresh message extraction and runs parity
+and rendered-usage tests. GNU gettext is installed for those checks.
 
 ## Local verification
 
@@ -35,7 +36,7 @@ python bin/check_conventions.py
 python manage.py check --deploy --fail-level WARNING --settings=config.settings.prod
 python manage.py makemigrations --check --dry-run
 python manage.py check --tag translation
-pytest --cov=apps --cov-report=xml --cov-report=term-missing --cov-fail-under=60
+pytest --cov=apps --cov-report=xml --cov-report=term-missing --cov-fail-under=90
 pip-audit -r requirements.txt
 ```
 
@@ -83,3 +84,9 @@ Enabling `django.contrib.postgres` also installs connection type handlers. The
 isolated health-probe connection uses Django's `NO_DB_ALIAS` to skip that handler
 setup for its `SELECT 1`; it still copies the configured database name and keeps
 its connection/query timeouts. Real PostgreSQL health tests cover this integration.
+
+
+Ordinary tests use MD5 hashing only in `config.settings.test` to reduce runtime.
+Base and production settings retain Argon2 first. Dedicated password-hash and
+user-creation security tests explicitly select the production hashers and still
+check real Argon2 hashes; settings tests guard the base/production defaults.

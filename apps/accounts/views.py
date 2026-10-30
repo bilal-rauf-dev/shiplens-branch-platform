@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.http import HttpResponseRedirect
@@ -8,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.debug import sensitive_post_parameters, sensitive_variables
 from django.views.decorators.http import require_POST
 from django.views.generic import DetailView, FormView, ListView, TemplateView
+from django.views.i18n import set_language as django_set_language
 
 from apps.accounts import selectors, services
 from apps.accounts.forms import (
@@ -299,3 +301,12 @@ class SettingsUpdateView(SettingsView):
             form.add_error(None, error)
             return self.form_invalid(form)
         return redirect("settings-view")
+
+
+@require_POST
+def set_language(request):
+    """Use Django's safe redirect and cookie, persisting signed-in preferences."""
+    language = request.POST.get("language")
+    if request.user.is_authenticated and language in dict(settings.LANGUAGES):
+        services.set_preferred_language(request.user, language)
+    return django_set_language(request)

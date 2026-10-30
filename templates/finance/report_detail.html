@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n tz exports %}
+{% load i18n tz exports money %}
 {% block title %}{{ report.branch.code }} · {{ report.week_start }} · {% translate "ShipLens" %}
 {% endblock %}
 {% block content %}<h1 class="page-title"><bdi>{{ report.branch.code }}</bdi> · <bdi>{{ report.week_start }}</bdi> – <bdi>{{ report.week_end }}</bdi></h1>
@@ -18,23 +18,23 @@
 {% endif %}</h2>
 <dl class="record-details card">
 <dt>{% translate "Total (PKR)" %}</dt>
-<dd><bdi>{{ figures.total_amount|floatformat:2 }}</bdi></dd>
+<dd><bdi>{{ figures.total_amount|money }}</bdi></dd>
 <dt>{% translate "Entry count" %}</dt>
-<dd>{{ figures.entry_count }}</dd>
+<dd><bdi>{{ figures.entry_count }}</bdi></dd>
 {% for method in method_totals %}<dt>{{ method.label }}</dt>
-<dd><bdi>{{ method.amount|floatformat:2 }}</bdi></dd>{% endfor %}
+<dd><bdi>{{ method.amount|money }}</bdi></dd>{% endfor %}
 <dt>{% translate "Unsent at week end (PKR)" %}</dt>
-<dd><bdi>{{ figures.unsent_amount_at_week_end|floatformat:2 }}</bdi></dd>
+<dd><bdi>{{ figures.unsent_amount_at_week_end|money }}</bdi></dd>
 <dt>{% translate "New members" %}</dt>
-<dd>{{ figures.new_members }}</dd>
+<dd><bdi>{{ figures.new_members }}</bdi></dd>
 <dt>{% translate "Active members at week end" %}</dt>
-<dd>{{ figures.active_members_end }}</dd>
+<dd><bdi>{{ figures.active_members_end }}</bdi></dd>
 <dt>{% translate "Applications received" %}</dt>
-<dd>{{ figures.applications_received }}</dd>
+<dd><bdi>{{ figures.applications_received }}</bdi></dd>
 <dt>{% translate "Applications accepted" %}</dt>
-<dd>{{ figures.applications_accepted }}</dd>
+<dd><bdi>{{ figures.applications_accepted }}</bdi></dd>
 <dt>{% translate "Applications declined" %}</dt>
-<dd>{{ figures.applications_declined }}</dd>
+<dd><bdi>{{ figures.applications_declined }}</bdi></dd>
 </dl>
 <div class="table-container card">
 <table class="data-table"><caption class="visually-hidden">{% translate "Collections" %}</caption>
@@ -43,7 +43,7 @@
 <th scope="col">{% translate "Reference" %}</th>
 <th scope="col">{% translate "Collection date" %}</th>
 <th scope="col">{% translate "Method" %}</th>
-<th scope="col">{% translate "Amount (PKR)" %}</th>
+<th scope="col" class="numeric">{% translate "Amount (PKR)" %}</th>
 </tr>
 </thead>
 <tbody>{% for line in lines %}<tr>
@@ -52,7 +52,7 @@
 </td>
 <td data-label="{% translate 'Collection date' %}"><bdi>{{ line.collection_date }}</bdi></td>
 <td data-label="{% translate 'Method' %}">{{ line.method }}</td>
-<td class="numeric" data-label="{% translate 'Amount (PKR)' %}"><bdi>{{ line.amount|floatformat:2 }}</bdi></td>
+<td class="numeric" data-label="{% translate 'Amount (PKR)' %}"><bdi>{{ line.amount|money }}</bdi></td>
 </tr>{% empty %}<tr>
 <td colspan="4">{% translate "No collections found." %}</td>
 </tr>{% endfor %}</tbody>
@@ -79,7 +79,7 @@
 <button type="submit" formaction="{% url 'report-return' report.pk %}" class="btn btn--filled btn--error">{% translate "Return to branch" %}</button>
 <button type="submit" formaction="{% url 'report-approve' report.pk %}" class="btn btn--filled">{% translate "Approve and lock" %}</button>
 </form>{% endif %}
-{% if not live %}<p class="audit-hash">{% translate "Snapshot hash" %}: {{ report.snapshot_hash }}</p>{% endif %}
+{% if not live %}<p class="audit-hash">{% translate "Snapshot hash" %}: <bdi>{{ report.snapshot_hash }}</bdi></p>{% endif %}
 {% if show_history %}
 {% include "partials/history.html" %}
 {% endif %}

@@ -69,10 +69,16 @@ jobs:
           cache-dependency-path: requirements*.txt
       - name: Install locked dependencies
         run: python -m pip install --require-hashes -r requirements.txt -r requirements-dev.txt
+      - name: Install gettext
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y gettext
+      - name: Compile Urdu catalogue
+        run: python manage.py compilemessages -l ur --ignore=.venv --ignore=.tmp
       - name: Check production settings
         run: python manage.py check --deploy --fail-level WARNING --settings=config.settings.prod
       - name: Check migrations
         run: python manage.py makemigrations --check --dry-run
+      - name: Check translation message coverage
+        run: python bin/check_translations.py
       - name: Check translation configuration
         run: python manage.py check --tag translation
       - name: Test with coverage gate

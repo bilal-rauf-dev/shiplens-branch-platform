@@ -350,3 +350,27 @@ def update_settings(actor, **values):
             before=before,
             after=values,
         )
+
+
+def set_preferred_language(actor, language):
+    """Save the caller's language preference and its audit event together."""
+    require(actor, "account.set_language")
+    with transaction.atomic():
+        user = (
+            User.objects.select_for_update().filter(pk=actor.pk, is_active=True).first()
+        )
+        if user is None:
+            raise PermissionDenied
+        if user.preferred_language == language:
+            return
+        before = {"preferred_language": user.preferred_language}
+        user.preferred_language = language
+        user.updated_at = clock.now()
+        user.save(update_fields=["preferred_language", "updated_at"])
+        audit.record(
+            actor,
+            "user.updated",
+            entity=user,
+            before=before,
+            after={"preferred_language": language},
+        )

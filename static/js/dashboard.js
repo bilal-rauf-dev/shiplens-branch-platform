@@ -7,7 +7,10 @@
   const money = JSON.parse(document.getElementById("money-trend").textContent);
   const tokens = getComputedStyle(document.documentElement);
   const locale = document.documentElement.lang;
-  Chart.defaults.font.family = tokens.getPropertyValue("--md-font").trim();
+  const rtl = locale === "ur";
+  Chart.defaults.font.family = rtl
+    ? '"Noto Naskh Arabic", "Roboto", serif'
+    : tokens.getPropertyValue("--md-font").trim();
   Chart.defaults.color = tokens.getPropertyValue("--md-on-surface-variant").trim();
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const monthLabel = new Intl.DateTimeFormat(locale, {
@@ -18,7 +21,10 @@
     responsive: true,
     maintainAspectRatio: false,
     animation: reducedMotion ? false : { duration: 300 },
-    plugins: { legend: { rtl: document.documentElement.dir === "rtl" } },
+    plugins: {
+      legend: { rtl, textDirection: rtl ? "rtl" : "ltr" },
+      tooltip: { rtl, textDirection: rtl ? "rtl" : "ltr" }
+    },
     scales: { y: { beginAtZero: true } }
   };
   new Chart(document.getElementById("money-chart"), {

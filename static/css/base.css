@@ -100,3 +100,7 @@ bdi, [dir="ltr"] { unicode-bidi: isolate; }
   .skip-link { inset-block-start: -100vh; }
   .skip-link:focus { inset-block-start: var(--md-s2); }
 }
+
+/* Mirroring is a reading direction, independent of motion preferences. */
+.icon-directional { display: inline-block; }
+[dir="rtl"] .icon-directional { scale: -1 1; }

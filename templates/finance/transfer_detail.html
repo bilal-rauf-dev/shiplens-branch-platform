@@ -1,7 +1,7 @@
-{% extends "base.html" %}{% load i18n %}
+{% extends "base.html" %}{% load i18n money %}
 {% block title %}{{ transfer.reference }} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}<h1 class="page-title"><bdi>{{ transfer.reference }}</bdi></h1><dl class="record-details card">
 <dt>{% translate "Branch" %}</dt><dd><bdi>{{ transfer.branch.code }}</bdi></dd><dt>{% translate "Transfer date" %}</dt><dd><bdi>{{ transfer.transfer_date }}</bdi></dd>
-<dt>{% translate "Bank reference" %}</dt><dd><bdi>{{ transfer.bank_reference }}</bdi></dd><dt>{% translate "Total (PKR)" %}</dt><dd><bdi>{{ transfer.total_amount|floatformat:2 }}</bdi></dd><dt>{% translate "Note" %}</dt><dd>{{ transfer.note|default:"—" }}</dd></dl>
-<ul>{% for item in collections %}<li><a href="{% url 'collection-detail' item.pk %}"><bdi>{{ item.reference }}</bdi></a> · <bdi>{{ item.amount|floatformat:2 }}</bdi></li>{% endfor %}</ul>
+<dt>{% translate "Bank reference" %}</dt><dd><bdi>{{ transfer.bank_reference }}</bdi></dd><dt>{% translate "Total (PKR)" %}</dt><dd><bdi>{{ transfer.total_amount|money }}</bdi></dd><dt>{% translate "Note" %}</dt><dd>{{ transfer.note|default:"—" }}</dd></dl>
+<ul>{% for item in collections %}<li><a href="{% url 'collection-detail' item.pk %}"><bdi>{{ item.reference }}</bdi></a> · <bdi>{{ item.amount|money }}</bdi></li>{% endfor %}</ul>
 {% endblock %}

@@ -85,6 +85,9 @@ def create(actor, *, type, translations, **fields):
 def update(actor, pk, *, translations, **fields):
     """Only the working copy changes; published output stays frozen until publish."""
     require(actor, "content.update")
+    for locale in ("en", "ur"):
+        if locale not in translations:
+            raise ValueError(f"Missing translation locale: {locale}")
     item = get_object_or_404(
         scope_queryset(
             actor, "content.update", ContentItem.objects.select_for_update()

@@ -157,3 +157,34 @@ def test_cms_other_roles_cannot_mutate(copy):
     )
     with pytest.raises(PermissionDenied):
         services.create(user, type="PROGRAM", translations=copy)
+
+
+@pytest.mark.parametrize("missing_locale", ["en", "ur"])
+def test_cms_update_requires_both_languages_without_changes(
+    editor, copy, clock, missing_locale
+):
+    item = services.create(editor, type="PROGRAM", translations=copy)
+    services.transition(editor, item.pk, "publish")
+    before_item = ContentItem.objects.values().get(pk=item.pk)
+    before_translations = list(
+        ContentTranslation.objects.filter(content=item).order_by("locale").values()
+    )
+    before_audit = AuditLog.objects.count()
+    clock.shift(timedelta(hours=1))
+    translations = {
+        locale: {**values, "title": "This change must not be saved"}
+        for locale, values in copy.items()
+        if locale != missing_locale
+    }
+    with pytest.raises(
+        ValueError, match=f"Missing translation locale: {missing_locale}"
+    ):
+        services.update(editor, item.pk, translations=translations, slug="changed-slug")
+    assert ContentItem.objects.values().get(pk=item.pk) == before_item
+    assert (
+        list(
+            ContentTranslation.objects.filter(content=item).order_by("locale").values()
+        )
+        == before_translations
+    )
+    assert AuditLog.objects.count() == before_audit

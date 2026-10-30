@@ -77,6 +77,8 @@ jobs:
         run: python manage.py check --deploy --fail-level WARNING --settings=config.settings.prod
       - name: Check migrations
         run: python manage.py makemigrations --check --dry-run
+      - name: Check translation message coverage
+        run: python bin/check_translations.py
       - name: Check translation configuration
         run: python manage.py check --tag translation
       - name: Test with coverage gate

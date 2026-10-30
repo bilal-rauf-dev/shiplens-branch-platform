@@ -32,3 +32,18 @@ numbers. Urdu dates use `j F Y`, for example `30 اکتوبر 2026`.
 A fluent owner review is especially useful for the technical terms محفوظ عکس
 (snapshot), ہیش (hash), and یو آر ایل کا مختصر نام (slug). The financial lock term
 مقفل distinguishes a permanent read-only state from closing a branch.
+
+
+To refresh application messages, run:
+
+```sh
+python manage.py makemessages -l ur -e html,txt,py --ignore=tests --ignore=.tmp --ignore=.venv
+python manage.py compilemessages -l ur --ignore=.tmp --ignore=.venv
+```
+
+Install GNU gettext in the development environment (the Docker `dev` stage has it).
+`python bin/check_translations.py` runs a fresh extraction in a temporary source
+copy and fails on missing message IDs, contexts or plural sources. It needs the
+locked Python dependencies and gettext, and works without settings or a database.
+CI runs it before pytest. The parity test separately requires every committed entry
+to be translated, with no fuzzy/obsolete entries and matching placeholders and HTML.

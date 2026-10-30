@@ -73,9 +73,6 @@
     "settings.update": {
       "SUPER_ADMIN": "GLOBAL"
     },
-    "demo.reset": {
-      "SUPER_ADMIN": "GLOBAL"
-    },
     "branch.list": {
       "SUPER_ADMIN": "GLOBAL",
       "FINANCE_REVIEWER": "GLOBAL",

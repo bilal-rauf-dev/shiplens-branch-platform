@@ -4,7 +4,7 @@ import pytest
 from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.db import DatabaseError, transaction
-from django.urls import reverse
+from django.urls import NoReverseMatch, Resolver404, resolve, reverse
 
 from apps.accounts.models import User
 from apps.accounts.selectors import role_home_name
@@ -106,18 +106,6 @@ def test_demo_reset_failure_restores_data_sequences_and_trigger_guards(monkeypat
         AuditLog.objects.update(action="tampered")
 
 
-def test_demo_reset_route_logs_everyone_out_and_redirects(client):
-    call_command("seed_demo")
-    client.force_login(User.objects.get(role="SUPER_ADMIN"))
-    response = client.post(reverse("demo-reset"))
-    assert response.status_code == 302
-    assert response.url == reverse("account-login")
-    assert "_auth_user_id" not in client.session
-    page = client.get(response.url)
-    assert "Demo data reset. Please log in again." in page.text
-    assert verify_chain() == (True, None)
-
-
 def test_startup_is_idempotent():
     output = StringIO()
     call_command("startup", stdout=output)
@@ -127,15 +115,28 @@ def test_startup_is_idempotent():
     assert "skipped" in output.getvalue()
 
 
-def test_reset_control_is_demo_only(client, settings):
+@pytest.mark.parametrize("language", ["en", "ur"])
+@pytest.mark.parametrize("enabled", [True, False])
+def test_reset_has_no_http_route_or_settings_control(
+    client, settings, language, enabled
+):
     call_command("seed_demo")
     client.force_login(User.objects.get(role="SUPER_ADMIN"))
-    assert reverse("demo-reset") in client.get(reverse("settings-view")).text
-    settings.DEMO_MODE = False
-    assert reverse("demo-reset") not in client.get(reverse("settings-view")).text
-    before = counts()
-    assert client.post(reverse("demo-reset")).status_code == 404
-    assert counts() == before
+    settings.DEMO_MODE = enabled
+    with pytest.raises(NoReverseMatch):
+        reverse("demo-reset")
+    path = f"/{language}/app/demo/reset/"
+    with pytest.raises(Resolver404):
+        resolve(path)
+    page = client.get(f"/{language}/app/settings/")
+    assert page.status_code == 200
+    assert "/app/demo/reset/" not in page.text
+    assert "Reset demo data" not in page.text
+    assert "نمائشی ڈیٹا بحال کریں" not in page.text
+    before = AuditLog.objects.count()
+    assert client.get(path).status_code == 404
+    assert client.post(path).status_code == 404
+    assert AuditLog.objects.count() >= before
 
 
 def test_non_demo_startup_does_not_seed(settings):

@@ -23,7 +23,6 @@ urlpatterns += i18n_patterns(
     path("", include("apps.cms.urls")),
     path("", include("apps.exports.urls")),
     path("", include("apps.dashboard.urls")),
-    path("", include("apps.seed.urls")),
     path("", include("apps.publicsite.urls")),
     path("", include("apps.accounts.urls")),
     path("", include("apps.branches.urls")),

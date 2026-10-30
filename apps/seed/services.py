@@ -1,4 +1,4 @@
-"""Demo-only seed and reset boundaries; production data cannot enter the reset."""
+"""Operator seeding and demo-database rebuilds, never application-user actions."""
 
 from pathlib import Path
 
@@ -65,7 +65,11 @@ def _reset_tables():
 
 
 def seed_demo(*, if_empty=False, reset=False, triggered_by=""):
-    """Seed one atomic history; reset first only for explicitly configured demos."""
+    """Rebuild the demo database from authored history when reset is requested.
+
+    The operator runs seed_demo --reset from a shell, never as an application user.
+    Startup may seed an empty demo; no HTTP view calls this service.
+    """
     require_demo_configuration()
     with transaction.atomic():
         # Serialize concurrent startup calls across gunicorn/deploy processes.

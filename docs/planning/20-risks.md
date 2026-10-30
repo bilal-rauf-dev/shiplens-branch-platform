@@ -19,7 +19,7 @@ P = probability, I = impact (1 low – 5 high).
 | R-12 | Similarity-check false positive | 2 | 5 | Original design docs, daily granular commits, ADRs, no templates, credits listed | — |
 | R-13 | Can't explain AI-assisted code in live demo | 2 | 5 | Line-by-line review before commit, Q&A sheet, self-quiz 1 Nov, boring patterns | Any file I can't explain → rewrite it |
 | R-14 | Sample data arrives in unexpected format / differs from seed | 3 | 5 | Tolerant importer + mapping YAML; keep KPI functions pure; 2 h reserved | First look at file |
-| R-15 | Demo vandalism on public live site (public SA password) | 3 | 3 | No hard deletes, demo-account protections, demo reset, re-seed on redeploy | Odd data on live |
+| R-15 | Demo vandalism on public live site (public SA password) | 3 | 3 | No hard deletes, demo-account protections, operator-only `seed_demo --reset`, seed on first deploy | Odd data on live |
 | R-16 | Coverage under 60 % late in the week | 2 | 4 | Tests alongside features; gate from day 1 | CI coverage trend |
 | R-17 | WeasyPrint system deps bloat image / fail to install | 2 | 3 | Validate on day 1 in Dockerfile (install libs early) | Docker build failures |
 | R-18 | DB triggers complicate tests/migrations | 2 | 2 | Triggers added via RunSQL with reverse; tested explicitly | Migration errors |

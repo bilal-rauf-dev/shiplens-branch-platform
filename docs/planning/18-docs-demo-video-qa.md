@@ -31,7 +31,7 @@ docs/
    | Content Editor | content.demo@shiplens.test | 〃 | Content |
    | Branch Lead (Karachi) | branchlead.demo@shiplens.test | 〃 | My branch |
    | HR Lead (Karachi + Lahore) | hr.demo@shiplens.test | 〃 | Applications |
-   *Demo data is fictional. Demo accounts cannot change passwords; Super Admin can reset demo data.*
+   *Demo data is fictional. Demo accounts cannot change passwords; the operator rebuilds the demo database from authored history by running `seed_demo --reset` against the live DB from the operator's machine before recording; no application user can reset it.*
 4. **Judge quick path** (≤ 2 min): how to verify each gate (dashboard Oct 2026 values; report R10 lifecycle; permission tests in CI; live link + CI badge).
 5. Features ↔ brief deliverables table (22 rows, with links).
 6. Screenshots (EN + UR).
@@ -83,7 +83,7 @@ Follows the handbook's suggested outline (§07), which judges will expect.
 | 3:30–4:30 | Urdu, CMS, exports | Switch to Urdu: public form, a table page and the dashboard mirrored RTL. Content Editor edits a program, publishes it, shows it live. Export collections CSV and the report PDF (Urdu) | CMS/bilingual, exports |
 | 4:30–5:00 | Engineering | GitHub: green CI on `main`, coverage %, Dockerfile (multi-stage, non-root, HEALTHCHECK), `/health`; one line on AI usage | Testing, Docker, docs |
 
-**Pre-recording checklist:** Render warmed (hit `/health` + pages 2 min before) · `Reset demo data` as SA · R10 in DRAFT · browser zoom 110 %, clean profile, no bookmarks bar · logins in a password-free notes window (not on screen) · two windows (BL / FR) side by side · mic test · OBS 1080p · close notifications · rehearse twice with stopwatch.
+**Pre-recording checklist:** Render warmed (hit `/health` + pages 2 min before) · operator runs `seed_demo --reset` against the live DB from the operator's machine · R10 in DRAFT · browser zoom 110 %, clean profile, no bookmarks bar · logins in a password-free notes window (not on screen) · two windows (BL / FR) side by side · mic test · OBS 1080p · close notifications · rehearse twice with stopwatch.
 **Fallback if Render is cold/down:** record with local Docker stack (same image, same seed), say so, and show the live `/health` separately; keep a 30-second backup clip of the live site recorded on 1 Nov.
 
 ## 6. Judge Q&A prep sheet

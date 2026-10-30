@@ -4,7 +4,15 @@ from apps.seed.services import seed_demo
 
 
 class Command(BaseCommand):
-    help = "Import the fictional dataset and set demo passwords from the environment."
+    """The operator rebuilds the demo database from authored history using --reset.
+
+    Run from a shell, never by an application user or through HTTP.
+    """
+
+    help = (
+        "Load authored demo history; --reset rebuilds the demo database. "
+        "Run by the operator from a shell, never by an application user."
+    )
 
     def add_arguments(self, parser):
         parser.add_argument("--if-empty", action="store_true")

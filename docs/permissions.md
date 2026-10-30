@@ -33,7 +33,6 @@ BL = Branch Lead; HR = HR Lead; ANON = anonymous.
 | `volunteer_role.manage` | — | GLOBAL | — | — | — | — |
 | `settings.view` | — | GLOBAL | — | — | — | — |
 | `settings.update` | — | GLOBAL | — | — | — | — |
-| `demo.reset` | — | GLOBAL | — | — | — | — |
 
 ## 3.3 Branches
 

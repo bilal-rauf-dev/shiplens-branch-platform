@@ -457,7 +457,7 @@ Commit: feat(sample-data): add authored fictional sample dataset as CSV
 STEP 2 — Importer + seed_demo
 - import_sample_data <dir> [--mapping YAML]: validates headers (clear error listing missing/unknown columns), loads in dependency order inside one transaction, uses services where they exist but allows historical timestamps through an explicit `as_of`/clock override (document how: e.g. time_machine-style clock context in core.clock used only by the importer). Reports are built by replaying transitions (draft → submit → [return → resubmit] → approve/lock) under the clock at the CSV timestamps, so audit rows and the hash chain are genuine and ordered.
 - seed_demo [--if-empty] [--reset]: requires DEMO_MODE=true and DEMO_PASSWORD; calls the importer on sample_data/; sets demo users' passwords and is_demo=True; marks the system_settings key "demo_seeded". --reset (DEMO_MODE only): `DROP SCHEMA public CASCADE; CREATE SCHEMA public;` → `migrate` → import. `flush` won't work because the audit table's TRUNCATE trigger blocks it, which is intended; dropping the schema removes the triggers along with the tables, so audit protection is never switched off for live data. Explain this in the summary.
-- SA "Reset demo data" button (POST, DEMO_MODE only, audited demo.reset).
+- Operator-only `seed_demo --reset` from a shell rebuilds the demo database from authored history (DEMO_MODE only, audited demo.reset); no HTTP reset view or button.
 - Tests: T-SEED-IDEMPOTENT, T-SEED-DEMO-ONLY (no DEMO_MODE → command refuses), T-SEED-USERS (5 role logins succeed and land on their homes), importer header error test.
 Commit: feat(seed): add sample data importer and demo seed with test logins
 

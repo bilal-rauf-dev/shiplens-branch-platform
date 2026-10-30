@@ -68,7 +68,7 @@ The system replaces all of that with one web platform: a bilingual (English/Urdu
 | REQ-046 | Failed logins are rate-limited / locked out (5 failures → 15 min lockout per account+IP). | I | `T-SEC-LOCKOUT` | W-10 |
 | REQ-047 | Passwords hashed with Argon2id; min length 12; common passwords rejected. | I | `T-SEC-PASSWORD` | W-10 |
 | REQ-048 | Users flagged `must_change_password` are forced to change it at next login. | A | `T-AUTH-FORCE-CHANGE` | W-12 |
-| REQ-049 | Demo accounts exist only when `DEMO_MODE=true`; their passwords cannot be changed through the UI; Super Admin can "reset demo data". | A | `T-SEED-DEMO-ONLY` | W-50 |
+| REQ-049 | Demo accounts exist only when `DEMO_MODE=true`; their passwords cannot be changed through the UI; the operator can rebuild demo data with `seed_demo --reset`. | A | `T-SEED-DEMO-ONLY` | W-50 |
 
 ## 5. Branch register (BRN)
 

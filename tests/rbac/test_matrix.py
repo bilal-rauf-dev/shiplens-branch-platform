@@ -67,6 +67,11 @@ def test_t_rbac_matrix_route(client, scenario, role, url_name):
         assert case.method == "POST", "Add explicit handling for a new HTTP method"
         response = client.post(url, data=fixture["data"])
 
+    if role == Role.SUPER_ADMIN:
+        assert AuditLog.objects.count() >= audit_count, (
+            f"Super Admin HTTP action removed audit records: {url_name}"
+        )
+
     action = ROUTE_ACTIONS[url_name]
     allowed = role != "ANON" and role in PERMISSIONS[action]
     if allowed:

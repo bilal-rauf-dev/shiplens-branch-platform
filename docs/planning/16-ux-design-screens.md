@@ -91,7 +91,7 @@ Role home after login: SA/FR → Dashboard; BL → My branch; HR → Application
 | S25 | Audit log viewer | SA | filters, table, detail drawer | export, verify chain | | |
 | S26 | Content list | CE, SA | type tabs, status badges, "unpublished changes" | new | | |
 | S27 | Content editor | CE, SA | EN/UR tabs, markdown textarea, preview, event fields | save draft, publish, unpublish, archive | "Add an Urdu title before publishing." | |
-| S28 | Users / Cities / Roles / Settings | SA | tables + forms | CRUD, reset password, reset demo | "Lock days must be between 1 and 30." | |
+| S28 | Users / Cities / Roles / Settings | SA | tables + forms | CRUD, reset password; demo rebuild is operator-only CLI | "Lock days must be between 1 and 30." | |
 | S29 | Error pages 403/404/500/429 | all | localised | home link | | |
 
 ## 4. Low-fi wireframes

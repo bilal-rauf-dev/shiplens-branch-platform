@@ -477,19 +477,6 @@ def settings_payload(scenario):
 
 # The four columns are method, URL builder, in-scope fixture factory and success
 # status. Payloads must be valid so a validation error cannot masquerade as denial.
-def demo_reset_payload(scenario):
-    # The matrix tests authorization; real transactional truncation is covered
-    # separately with transaction=True in tests/seed/test_demo.py.
-    scenario["settings"].DEMO_MODE = True
-
-    def reset(**kwargs):
-        with transaction.atomic():
-            audit.record(None, "demo.reset")
-
-    scenario["monkeypatch"].setattr("apps.seed.views.seed_demo", reset)
-    return {"data": {}}
-
-
 def content_create_payload(scenario):
     return {
         "data": {
@@ -554,7 +541,6 @@ ROUTE_CASES = {
     "export-members-csv": RouteCase("GET", page_url, member_object, 200),
     "export-audit-csv": RouteCase("GET", page_url, audit_object, 200),
     "dashboard-hr": RouteCase("GET", page_url, no_object, 200),
-    "demo-reset": RouteCase("POST", page_url, demo_reset_payload, 302),
     "report-list": RouteCase("GET", page_url, report_object, 200),
     "report-detail": RouteCase("GET", report_url, report_object, 200),
     "report-review-queue": RouteCase("GET", page_url, report_object, 200),

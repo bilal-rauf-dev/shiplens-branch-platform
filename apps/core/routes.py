@@ -17,7 +17,6 @@ ROUTE_ACTIONS = {
     "export-members-csv": "member.export_csv",
     "export-audit-csv": "audit.export_csv",
     "dashboard-hr": "dashboard.hr",
-    "demo-reset": "demo.reset",
     "report-list": "report.list",
     "report-detail": "report.view",
     "report-review-queue": "report.approve",

@@ -47,8 +47,8 @@ def test_urdu_staff_table_and_dashboard(client, sample_data, clock):
     for page in (collections, dashboard):
         assert '<html lang="ur" dir="rtl">' in page.text
     assert '<h1 class="page-title">وصولیاں</h1>' in collections.text
-    assert "5,250.50 روپے" in collections.text
+    assert "Rs 5,250.50" in collections.text
     assert '<h1 class="page-title">مرکزی دفتر کا ڈیش بورڈ</h1>' in dashboard.text
-    assert "<bdi>73,250.50 روپے</bdi>" in dashboard.text
+    assert "<bdi>Rs 73,250.50</bdi>" in dashboard.text
     assert "<bdi>BR-KHI-01</bdi>" in dashboard.text
     assert "۷۳٬۲۵۰" not in dashboard.text

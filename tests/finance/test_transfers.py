@@ -1,13 +1,16 @@
 from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 from decimal import Decimal
+from html.parser import HTMLParser
 from threading import Barrier
 from unittest.mock import patch
+from urllib.parse import parse_qs, urlsplit
 
 import pytest
 from django.core.exceptions import ValidationError
 from django.db import DatabaseError, connection, connections, transaction
 from django.urls import reverse
+from django.utils import translation
 
 from apps.audit.models import AuditLog
 from apps.core import clock as business_clock
@@ -185,3 +188,47 @@ def test_t_xfer_double(bl, branch, collection):
     assert sorted(results) == ["conflict", "sent"]
     assert Transfer.objects.count() == 1
     assert AuditLog.objects.filter(action="collection.sent").count() == 1
+
+
+class TransferCheckboxes(HTMLParser):
+    def __init__(self, markup):
+        super().__init__()
+        self.values = []
+        self.feed(markup)
+
+    def handle_starttag(self, tag, attrs):
+        attributes = dict(attrs)
+        if (
+            tag == "input"
+            and attributes.get("type") == "checkbox"
+            and attributes.get("name") == "collections"
+        ):
+            self.values.append(attributes["value"])
+
+
+@pytest.mark.parametrize("language", ["en", "ur"])
+def test_collection_ids_remain_unformatted_through_transfer_prepare(
+    client, bl, branch, collection_data, language
+):
+    Collection.objects.create(
+        id=1000,
+        reference="COL-BR-KHI-01-01000",
+        branch=branch,
+        created_by=bl,
+        **{**collection_data, "amount": Decimal("12345.50")},
+    )
+    client.force_login(bl)
+    with translation.override(language):
+        page = client.get(reverse("collection-list"), {"state": "UNSENT"})
+        assert page.status_code == 200
+        selected = TransferCheckboxes(page.text).values
+        assert selected == ["1000"]
+        assert 'value="1,000"' not in page.text
+        assert "Rs 12,345.50" in page.text
+        prepared = client.get(reverse("transfer-prepare"), {"collections": selected})
+        assert prepared.status_code == 302
+        assert parse_qs(urlsplit(prepared.url).query)["collections"] == ["1000"]
+        preview = client.get(prepared.url)
+        assert preview.status_code == 200
+        assert 'name="collections" value="1000"' in preview.text
+        assert "Rs 12,345.50" in preview.text

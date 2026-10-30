@@ -9,7 +9,7 @@ from apps.core.templatetags.money import money
 
 
 @pytest.mark.parametrize(
-    "language,expected", [("en", "Rs 12,345.50"), ("ur", "12,345.50 روپے")]
+    "language,expected", [("en", "Rs 12,345.50"), ("ur", "Rs 12,345.50")]
 )
 def test_money_uses_western_digits_and_locale_currency(language, expected):
     with translation.override(language):
@@ -30,7 +30,13 @@ def test_urdu_dates_and_number_separators():
     with translation.override("ur"):
         assert formats.get_format("DATE_FORMAT") == "j F Y"
         assert formats.date_format(date(2026, 10, 30)) == "30 اکتوبر 2026"
-        assert formats.number_format(Decimal("12345.50"), decimal_pos=2) == "12,345.50"
+        assert formats.number_format(Decimal("12345.50"), decimal_pos=2) == "12345.50"
+        assert (
+            formats.number_format(
+                Decimal("12345.50"), decimal_pos=2, force_grouping=True
+            )
+            == "12,345.50"
+        )
 
 
 @pytest.mark.parametrize(

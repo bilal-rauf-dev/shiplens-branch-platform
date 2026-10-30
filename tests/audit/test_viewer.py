@@ -7,6 +7,7 @@ import polib
 import pytest
 from django.db import connection, transaction
 from django.urls import reverse
+from django.utils import translation
 
 from apps import audit
 from apps.accounts.models import Role, User
@@ -348,3 +349,22 @@ def test_verify_audit_failure_rolls_back(sa, dataset):
         with pytest.raises(RuntimeError):
             services.verify_and_record(sa)
     assert AuditLog.objects.count() == count
+
+
+@pytest.mark.parametrize("language", ["en", "ur"])
+def test_audit_event_id_has_no_thousand_separator(admin_client, sa, language):
+    event = AuditLog(
+        id=1000,
+        actor=sa,
+        actor_label=sa.email,
+        actor_role=sa.role,
+        action="settings.updated",
+        prev_hash=services.GENESIS_HASH,
+    )
+    event.hash = services._hash(event)
+    event.save(force_insert=True)
+    with translation.override(language):
+        response = admin_client.get(reverse("audit-detail", kwargs={"pk": event.pk}))
+    assert response.status_code == 200
+    assert "#1000" in response.text
+    assert "#1,000" not in response.text

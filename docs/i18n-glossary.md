@@ -25,8 +25,7 @@ project catalogue overrides those messages without changing Django's validators.
 | hash | ہیش | Technical verification value; keep the value unchanged. |
 | slug | یو آر ایل کا مختصر نام | Keep actual URL slugs in Latin characters. |
 
-Finance amounts share the `money` template filter: `Rs 12,345.50` in English and
-`12,345.50 روپے` in Urdu. Wrap the output in `<bdi>`. CSV amounts remain plain
+Finance amounts share the `money` template filter: `Rs 12,345.50` in both English and Urdu. Wrap the output in `<bdi>`. CSV amounts remain plain
 numbers. Urdu dates use `j F Y`, for example `30 اکتوبر 2026`.
 
 A fluent owner review is especially useful for the technical terms محفوظ عکس
@@ -47,3 +46,6 @@ copy and fails on missing message IDs, contexts or plural sources. It needs the
 locked Python dependencies and gettext, and works without settings or a database.
 CI runs it before pytest. The parity test separately requires every committed entry
 to be translated, with no fuzzy/obsolete entries and matching placeholders and HTML.
+
+Global thousand separators stay disabled so IDs and form values remain machine-readable.
+Only explicit financial formatting adds grouping; Urdu date/number formats remain available.

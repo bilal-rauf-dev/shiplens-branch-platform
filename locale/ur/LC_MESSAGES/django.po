@@ -1147,7 +1147,7 @@ msgstr "ضروری"
 #: apps/core/templatetags/money.py:17
 #, python-format
 msgid "Rs %(amount)s"
-msgstr "%(amount)s روپے"
+msgstr "Rs %(amount)s"
 
 #: apps/dashboard/forms.py:9
 msgid "Period"

@@ -34,9 +34,9 @@ Workflow: `makemessages -l ur --ignore=venv` → translate → `compilemessages`
 - OPT-07: Noto Nastaliq Urdu for headings only.
 
 ## 6. Numerals, dates, money
-- Digits: Western (0-9) in both locales (common in Pakistani finance documents, avoids ambiguity). `USE_THOUSAND_SEPARATOR=True`.
+- Digits: Western (0-9) in both locales (common in Pakistani finance documents, avoids ambiguity). Global `USE_THOUSAND_SEPARATOR=False` (Django default) keeps IDs and form values ungrouped; the money filter groups financial amounts explicitly.
 - Dates: Django `date` filter with localised month names (`DATE_FORMAT` per locale in `formats/ur/formats.py`: `j F Y`).
-- Money: `Rs 12,345.50` (en) / `12,345.50 روپے` (ur) via one template filter `money`.
+- Money: `Rs 12,345.50` in both locales via one template filter `money`.
 
 ## 7. CMS translations
 - `content_translations` rows per locale; editor UI has EN / اردو tabs; Urdu tab inputs `dir="rtl" lang="ur"`.

@@ -22,6 +22,16 @@
   font-display: swap;
 }
 
+/* Reuse the preloaded regular face while heading weights download. Keeping
+   Roboto's glyph metrics avoids a system-font wrap change on small screens. */
+@font-face {
+  font-family: "Roboto Regular Fallback";
+  src: url("../fonts/roboto-400-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}
+
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {

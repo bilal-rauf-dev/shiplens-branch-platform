@@ -70,12 +70,12 @@ Every value in `09-…` §4.1–4.7 asserted with `Decimal` equality at `as_of=2
 ### 3.5 E2E smoke (Playwright)
 | ID | Journey |
 |---|---|
-| `E2E-01` | Visit 7 public pages in EN and UR; no console errors; axe no serious violations |
+| `E2E-01` | Visit Home, About, Programs, Branches, Events, Get Involved, Contact and Privacy in EN and UR; no console/CSP errors; axe no serious/critical violations |
 | `E2E-02` | Public applies → HR logs in → accepts → member ID shown → member appears in list |
-| `E2E-03` | Urdu: `dir=rtl`, switcher round-trip |
+| `E2E-03` | Urdu: `dir=rtl`, home switcher round-trip, server form errors, collections table and October dashboard; screenshots for H-13 |
 | `E2E-04` | BL logs collection → submits report → FR returns → BL resubmits → FR approves → locked badge; audit viewer shows 6 events |
 | `E2E-05` | FR dashboard (period Oct 2026) shows K1 `73,250.50` |
-| `E2E-LIVE` | Same as 01 + logins, run manually against Render URL on 2 Nov (`BASE_URL` env) |
+| `E2E-LIVE` | Read-only E2E-01 and E2E-05 against Render (`BASE_URL` env); only login POST is permitted; all write journeys skipped |
 
 ## 4. Traceability (REQ → BR → Test)
 

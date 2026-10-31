@@ -44,11 +44,11 @@ Job `lighthouse` (on PRs touching templates/static and on `main`): `docker compo
 ```json
 { "ci": { "collect": { "url": ["http://localhost:8000/en/", "http://localhost:8000/ur/",
   "http://localhost:8000/en/get-involved/", "http://localhost:8000/en/branches/",
-  "http://localhost:8000/en/events/"], "numberOfRuns": 3, "settings": { "preset": "mobile" } },
+  "http://localhost:8000/en/events/"], "numberOfRuns": 3, "settings": { "formFactor": "mobile", "skipAudits": ["is-on-https"] } },
   "assert": { "assertions": {
     "categories:performance": ["error", {"minScore": 0.9}],
     "categories:accessibility": ["error", {"minScore": 0.9}],
     "categories:best-practices": ["error", {"minScore": 0.9}],
     "categories:seo": ["error", {"minScore": 0.9}] } } } }
 ```
-Note: LHCI on `http://localhost` loses HTTPS-related points in Best Practices; run CI container with a self-signed TLS proxy **or** mark `is-on-https` audit off in CI only and verify it manually on live. Default: disable that single audit in CI and document it. If the job is flaky, keep it **required for performance/a11y/seo at 0.85** and verify 0.9 manually on live before submission.
+Note: LHCI on `http://localhost` loses HTTPS-related points in Best Practices; run CI container with a self-signed TLS proxy **or** mark `is-on-https` audit off in CI only and verify it manually on live. Default: disable that single audit in CI and document it. P12 keeps all four category gates at 0.90, using the median of three runs; do not lower the gate to hide a finding.

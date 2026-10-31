@@ -27,6 +27,8 @@
 .btn--filled { color: var(--md-on-primary); background: var(--md-primary); }
 .btn--tonal { color: var(--md-on-secondary-container); background: var(--md-secondary-container); }
 .btn--outlined { color: var(--md-primary); background: transparent; border: 1px solid var(--md-outline); }
+/* Decorative gradients must not lower the outlined label's contrast. */
+.hero .btn--outlined { background: var(--md-surface); }
 .btn--text { color: var(--md-primary); background: transparent; padding-inline: var(--md-s3); }
 .btn--filled.btn--error { color: #FFFFFF; background: var(--md-error); }
 @media (hover: hover) {

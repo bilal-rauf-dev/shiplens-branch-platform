@@ -20,8 +20,10 @@ testpaths = ["tests"]
 markers = [
     "performance: deterministic query-count and timing budgets against PostgreSQL",
     "visual: local browser screenshots, excluded from the default run and CI",
+    "e2e: Chromium journeys against an explicitly started seeded demo",
+    "read_only: remote E2E journey (login only, no application writes)",
 ]
-addopts = "-m 'not visual' --cov=apps --cov-report=term-missing"
+addopts = "-m 'not visual and not e2e' --cov=apps --cov-report=term-missing"
 
 [tool.coverage.run]
 omit = ["*/migrations/*"]

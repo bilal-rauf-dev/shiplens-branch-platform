@@ -61,3 +61,9 @@ that local instance and a disposable Super Admin. It verifies English and Urdu
 charts, the CMS editor and PDF downloads before printing the transfer totals.
 Run the query tests with the normal PostgreSQL test settings. Asset or content
 changes can change the byte totals; query budgets remain regression assertions.
+
+
+F1 supersedes the preload policy measured above: English now preloads Roboto 400
+and 500, with 500/700 set to `font-display: optional` to prevent late heading
+swaps. Urdu still preloads only Naskh. The earlier byte measurements are retained
+as dated P13 evidence and are not measurements of this updated font policy.

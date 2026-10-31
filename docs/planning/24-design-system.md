@@ -57,7 +57,7 @@ Contrast checks to verify in tests/Lighthouse: on-surface on surface ≈ 16:1; p
 
 ## 2. Typography
 
-- **Roboto, self-hosted** (`static/fonts/roboto-{400,500,700}-latin.woff2`, Apache-2.0 licence file included). Not Google Fonts: our CSP allows fonts from `'self'` only, and a third-party font request costs Lighthouse points. `font-display: swap`; preload only the 400 weight. Latin subset only (~20 KB per weight).
+- **Roboto, self-hosted** (`static/fonts/roboto-{400,500,700}-latin.woff2`, Apache-2.0 licence file included). Not Google Fonts: our CSP allows fonts from `'self'` only, and a third-party font request costs Lighthouse points. `font-display: swap` for 400; `optional` for 500/700 to prevent late heading reflow (F1). English pages preload 400 and 500; Urdu preloads only Naskh. Latin subset only (~20 KB per weight).
 - **Urdu keeps Noto Naskh Arabic** (Roboto has no Urdu glyphs), loaded only on `/ur/` pages, as already planned in `12-i18n-rtl.md`.
 - Scale (mobile steps one size down): Display 3.5rem/1.2 · Headline L 3rem/1.2 · Headline M 2rem/1.25 · Title L 1.5rem/1.3 · Body L 1.25rem/1.5 · Body M 1rem/1.55 · Label M 0.875rem/1.4 (letter-spacing .01em, weight 500) · Label S 0.75rem/1.4. Headings weight 500; body 400. Urdu line-height +0.25 on every step.
 

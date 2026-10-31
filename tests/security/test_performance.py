@@ -120,13 +120,15 @@ class PageAssets(HTMLParser):
 
 
 @pytest.mark.parametrize(
-    "language,font", [("en", "roboto-400"), ("ur", "noto-naskh-arabic-400")]
+    "language,fonts",
+    [("en", ["roboto-400", "roboto-500"]), ("ur", ["noto-naskh-arabic-400"])],
 )
-def test_only_active_language_font_is_preloaded(client, sample_data, language, font):
+def test_only_active_language_fonts_are_preloaded(client, sample_data, language, fonts):
     page = PageAssets(client.get(f"/{language}/").text)
-    assert len(page.preloads) == 1
-    assert font in page.preloads[0]["href"]
-    assert page.preloads[0]["as"] == "font"
+    assert len(page.preloads) == len(fonts)
+    for preload, font in zip(page.preloads, fonts, strict=True):
+        assert font in preload["href"]
+        assert preload["as"] == "font"
 
 
 def test_cms_images_are_small_minified_and_have_dimensions(client, sample_data):

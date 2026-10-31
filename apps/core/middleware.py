@@ -70,3 +70,25 @@ class RouteRegistryMiddleware:
             record_denial(request.user, route_name, ROUTE_ACTIONS[route_name])
             raise PermissionDenied
         return None
+
+
+class SecurityHeadersMiddleware:
+    """Apply browser isolation headers even to internal HTTP health responses.
+
+    CSP and this middleware wrap the health shortcut; Django's SSL redirect and
+    host validation remain inside it so internal probes can still call by IP.
+    """
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+        response["Permissions-Policy"] = (
+            "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+        )
+        response["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        response["Cross-Origin-Opener-Policy"] = "same-origin"
+        response.setdefault("X-Content-Type-Options", "nosniff")
+        response.setdefault("X-Frame-Options", "DENY")
+        return response

@@ -8,10 +8,10 @@
 | Tactic | Detail |
 |---|---|
 | Zero JS on public pages | No framework; language switcher is a plain form; mobile nav via `<details>/<summary>`. Only the form page loads a ~1 KB script for live character counters (optional). |
-| One small CSS file | ~15 KB unminified → ~4 KB brotli; hashed filename via WhiteNoise manifest; `Cache-Control: max-age=31536000, immutable`. Critical CSS inlining unnecessary at this size. |
-| Fonts | EN uses system fonts (0 bytes). UR: subset woff2 Naskh, `font-display: swap`, preload regular only, loaded only on `/ur/`. |
+| Small CSS layers | MD3 tokens/base/components/layout, loaded in order and compressed; hashed filename via WhiteNoise manifest; `Cache-Control: max-age=31536000, immutable`. Critical CSS inlining unnecessary at this size. |
+| Fonts | MD3 (plan 24) uses self-hosted Roboto for EN and subset woff2 Naskh for UR; `font-display: swap`, preload only the active language's regular face. Naskh loads only on `/ur/`. |
 | Images | Few, pre-optimised at build time: AVIF/WebP + JPEG fallback via `<picture>`, explicit `width`/`height` (no CLS), `loading="lazy"` below the fold, `fetchpriority="high"` for hero. Hero ≤ 60 KB. SVG logo inline. |
-| Server | gunicorn 2 workers; DB queries per public page ≤ 5 (`select_related`, `prefetch_related`); `django-debug-toolbar` locally to check N+1. Template fragment cache for public CMS blocks (60 s, invalidated on publish) — optional. |
+| Server | gunicorn 2 workers; DB queries per public page ≤ 6 (`select_related`, `prefetch_related`); `django-debug-toolbar` locally to check N+1. Template fragment cache for public CMS blocks (60 s, invalidated on publish) — optional. |
 | Compression | WhiteNoise brotli/gzip for static; `GZipMiddleware` **off** (BREACH risk with CSRF tokens on HTML) — HTML is small anyway. |
 | TTFB / cold start | Render free instances sleep after 15 min → 30–60 s first hit ruins Performance. Mitigation: paid Starter for judging window (Q-05) or keep-warm ping; measure only warm. LHCI runs against the local Docker build in CI, so CI scores are independent of Render. |
 | Third parties | None (no Google Fonts, analytics, maps embeds — map is a link to OpenStreetMap). |

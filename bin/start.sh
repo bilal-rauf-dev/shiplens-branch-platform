@@ -14,4 +14,5 @@ exec gunicorn config.wsgi \
     --workers "${WEB_CONCURRENCY:-2}" \
     --timeout 60 \
     --max-requests 500 \
-    --access-logfile -
+    --access-logfile - \
+    --access-logformat '{"event":"http.access","request_id":"%({x-request-id}o)s","method":"%(m)s","status":%(s)s,"bytes":"%(B)s","duration_us":%(D)s}'

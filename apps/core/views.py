@@ -83,3 +83,8 @@ def health(request):
             "time": clock.now().astimezone(UTC).isoformat().replace("+00:00", "Z"),
         }
     )
+
+
+def csrf_failure(request, reason=""):
+    """Return the same localized denial page without exposing CSRF diagnostics."""
+    return _error_response("403.html", 403)

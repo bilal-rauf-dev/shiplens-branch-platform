@@ -3,7 +3,8 @@
 from datetime import datetime, time, timedelta
 from decimal import Decimal
 
-from django.db.models import Count, Q, Sum
+from django.db.models import Count, OuterRef, Q, Subquery, Sum
+from django.db.models.functions import JSONObject
 from django.utils.translation import gettext_lazy as _
 
 from apps.accounts.permissions import can, scope_queryset
@@ -182,28 +183,45 @@ def report_aggregates(branch, week_start):
     """BR-083: current non-voided money; active-member history is an approximation."""
     start, end = week_bounds(week_start)
     items = week_collections(branch, start)
-    figures = items.aggregate(
-        total_amount=Sum("amount", default=Decimal("0.00")), entry_count=Count("pk")
+    money_fields = {
+        "total_amount": Sum("amount", default=Decimal("0.00")),
+        "entry_count": Count("pk"),
+        "unsent_amount_at_week_end": Sum(
+            "amount",
+            filter=Q(transfer__isnull=True) | Q(transfer__transfer_date__gt=end),
+            default=Decimal("0.00"),
+        ),
+    }
+    for method in CollectionMethod.values:
+        money_fields[f"method_{method}"] = Sum(
+            "amount", filter=Q(method=method), default=Decimal("0.00")
+        )
+    figures = items.aggregate(**money_fields)
+    figures["by_method"] = {
+        method: figures.pop(f"method_{method}") for method in CollectionMethod.values
+    }
+    # Independent grouped subqueries avoid a member × application join while
+    # returning both counter sets in one round trip. Empty groups become zeros.
+    members = (
+        Member.objects.filter(branch_id=OuterRef("pk")).order_by().values("branch_id")
     )
-    by_method = {method: Decimal("0.00") for method in CollectionMethod.values}
-    for row in items.order_by().values("method").annotate(total=Sum("amount")):
-        by_method[row["method"]] = row["total"]
-    figures["by_method"] = by_method
-    figures["unsent_amount_at_week_end"] = items.filter(
-        Q(transfer__isnull=True) | Q(transfer__transfer_date__gt=end)
-    ).aggregate(total=Sum("amount", default=Decimal("0.00")))["total"]
-    figures.update(
-        Member.objects.filter(branch=branch).aggregate(
+    members = members.annotate(
+        counts=JSONObject(
             new_members=Count("pk", filter=Q(joined_on__range=(start, end))),
             active_members_end=Count(
                 "pk", filter=Q(status=MemberStatus.ACTIVE, joined_on__lte=end)
             ),
         )
-    )
+    ).values("counts")
     lower = datetime.combine(start, time.min, tzinfo=clock.KARACHI)
     upper = datetime.combine(end, time.max, tzinfo=clock.KARACHI)
-    figures.update(
-        Application.objects.filter(preferred_branch=branch).aggregate(
+    applications = (
+        Application.objects.filter(preferred_branch_id=OuterRef("pk"))
+        .order_by()
+        .values("preferred_branch_id")
+    )
+    applications = applications.annotate(
+        counts=JSONObject(
             applications_received=Count(
                 "pk", filter=Q(created_at__range=(lower, upper))
             ),
@@ -220,5 +238,24 @@ def report_aggregates(branch, week_start):
                 ),
             ),
         )
+    ).values("counts")
+    counts = (
+        Branch.objects.annotate(
+            member_counts=Subquery(members),
+            application_counts=Subquery(applications),
+        )
+        .values("member_counts", "application_counts")
+        .get(pk=branch.pk)
+    )
+    figures.update(
+        counts["member_counts"] or {"new_members": 0, "active_members_end": 0}
+    )
+    figures.update(
+        counts["application_counts"]
+        or {
+            "applications_received": 0,
+            "applications_accepted": 0,
+            "applications_declined": 0,
+        }
     )
     return figures

@@ -58,6 +58,7 @@ E2E-02, E2E-03 and E2E-04 are skipped. A request guard also blocks unsafe HTTP
 methods remotely except the same-origin login POST needed by E2E-05. No domain
 records are created, edited, approved or voided by live checks. Login itself
 creates normal session/security records.
+The additional local font/contrast regressions also skip on remote targets.
 
 Pytest still imports the repository's Django test settings. Supply a local test
 `SECRET_KEY` and syntactically valid PostgreSQL `DATABASE_URL` in the shell, as
@@ -97,6 +98,9 @@ Set `COMPOSE_PROJECT_NAME` to a unique disposable project name. Always run the
 cleanup command even if a check fails. `down --volumes` deletes that project's
 disposable database; it must never target the live stack. On Windows, Lighthouse
 can use installed Chrome via `CHROME_PATH` if Chrome discovery needs help.
+Collection must succeed for all fifteen runs before asserting scores. An assert
+command with zero saved reports is not a valid gate result; the CI action fails
+when collection fails.
 
 The `e2e` job uploads retained traces/screenshots on failure. The `lighthouse`
 job always stores `.lighthouseci/` reports as a GitHub artifact and does not upload
@@ -129,3 +133,51 @@ three mobile runs on 31 October 2026. All category assertions passed.
 
 These are category medians, not a promise of identical scores on a free-tier
 deployment. Font-swap layout shift in individual runs remains for Step 3 review.
+
+### P12 Step 3 fixes and manual review
+
+- A deliberately delayed medium/bold font test reproduced a mobile layout shift
+  of 0.1127. The English stack now reuses the preloaded Roboto regular file as a
+  fallback until those weights arrive. The same test measures 0.0000 afterward;
+  all faces retain `font-display: swap`, with no extra font preload or download.
+- Axe could not determine some backgrounds because of decorative pseudo-elements.
+  Pixel sampling of the rendered backgrounds found the home hero's outlined
+  button at only 4.290:1. It now has an opaque MD surface backing: 6.282:1 at
+  rest, 5.603:1 on hover and 5.423:1 on keyboard focus in both languages. The
+  regression hides glyph paint temporarily to sample the actual backing under
+  the text; geometry, gradient, foreground colour and state layers remain intact.
+- All 27 final E2E/accessibility cases pass. An additional review of all axe
+  severities on the sixteen public variants found no violations. Other
+  pseudo-element contrast entries were manually checked against rendered pixels;
+  the lowest reviewed text contrast was 4.622:1, above the 4.5:1 requirement.
+- Keyboard verification confirms the first Tab reaches the skip link and Enter
+  focuses the main landmark. Urdu form/table/dashboard screenshots remain in the
+  Playwright output. Automated results do not replace screen-reader review.
+
+Remaining diagnostic notices are documented rather than hidden by disabling
+audits. Axe's pseudo-element contrast entries require the manual check above.
+Lighthouse can report the four small synchronous CSS layers as render blocking;
+they keep the first paint styled, and inline CSS is prohibited by CSP. Dynamic
+HTML stays uncompressed per the security plan's BREACH precaution; hashed static
+assets use WhiteNoise compression. A local slow-CPU notice describes the test
+machine, not an accessibility failure; throttling and category gates are unchanged.
+
+Final Lighthouse verification used fifteen successful reports (exactly three for
+each of the five URLs), with no runtime errors and all category assertions
+passing. A Windows Chrome trace-recording error on an earlier attempt was
+discarded and the entire collection repeated. Every final run measured CLS 0.
+
+| Page | Performance | Accessibility | Best Practices | SEO |
+| --- | ---: | ---: | ---: | ---: |
+| `/en/` | 99 | 100 | 100 | 100 |
+| `/ur/` | 98 | 100 | 100 | 100 |
+| `/en/get-involved/` | 99 | 100 | 100 | 100 |
+| `/en/branches/` | 99 | 100 | 100 | 100 |
+| `/en/events/` | 99 | 100 | 100 | 100 |
+
+The results use Lighthouse 12.6.1 through LHCI 0.15.1. Small Performance score
+variation between collections is expected; the category gate and simulated
+mobile throttling were not relaxed. The final E2E run used Playwright's pinned
+headless Chromium, with all twenty-seven cases passing. Local regression tests
+also reproduced and checked the font fix in the installed Chrome channel used
+by Lighthouse.

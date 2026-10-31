@@ -53,7 +53,7 @@
   --md-s8: 48px;
   --md-s12: 96px;
 
-  --md-font: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --md-font: "Roboto", "Roboto Regular Fallback", system-ui, -apple-system, "Segoe UI", sans-serif;
   --md-font-ur: "Noto Naskh Arabic", "Roboto", serif;
 }
 

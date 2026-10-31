@@ -24,9 +24,10 @@ BASE_URL=http://localhost:8000 pytest tests/e2e -m e2e --browser chromium \
 
 On Windows, set environment variables with `$env:NAME = 'value'`. An installed
 Chrome may be selected locally with `--browser-channel chrome`; CI installs the
-Chromium revision matching the locked Playwright package. The local HTTP harness
-supplies `X-Forwarded-Proto: https` to emulate the trusted deployment proxy and
-retain production HTTPS/cookie settings. Configure localhost as an allowed host
+Chromium revision matching the locked Playwright package. The CI overlay's
+loopback proxy supplies `X-Forwarded-Proto: https` on every request, including
+Lighthouse's separate robots fetch, to retain production HTTPS/cookie settings.
+Direct local browser runs also supply that header. Configure localhost as an allowed host
 and its HTTP origin as a trusted CSRF origin on the disposable stack.
 
 | Journey | Proof |
@@ -74,3 +75,57 @@ and its MPL-2.0/third-party notices live in `tests/e2e/vendor/`. Tests inject it
 from disk using DevTools evaluation, without changing CSP or shipping the engine
 to visitors. Serious and critical violations fail the public-page journey;
 manual keyboard and screen-reader review is still needed beyond automated rules.
+
+## CI stack and Lighthouse
+
+Both browser jobs build the default production Docker target and start the
+disposable stack with the E2E overlay. The workflow supplies a CI-only demo
+password, separate from the live site's password. Reproduce the commands locally
+after setting a disposable `DEMO_PASSWORD` in the environment:
+
+```sh
+docker build --tag shiplens:ci .
+docker compose -f docker-compose.ci.yml -f docker-compose.e2e.yml up --detach --wait --wait-timeout 120
+python -m playwright install chromium
+pytest tests/e2e -m e2e --browser chromium --no-cov --tracing retain-on-failure --screenshot only-on-failure --output test-results/e2e
+npx --yes --package @lhci/cli@0.15.1 lhci collect --config=lighthouserc.json
+npx --yes --package @lhci/cli@0.15.1 lhci assert --config=lighthouserc.json
+docker compose -f docker-compose.ci.yml -f docker-compose.e2e.yml down --volumes
+```
+
+Set `COMPOSE_PROJECT_NAME` to a unique disposable project name. Always run the
+cleanup command even if a check fails. `down --volumes` deletes that project's
+disposable database; it must never target the live stack. On Windows, Lighthouse
+can use installed Chrome via `CHROME_PATH` if Chrome discovery needs help.
+
+The `e2e` job uploads retained traces/screenshots on failure. The `lighthouse`
+job always stores `.lighthouseci/` reports as a GitHub artifact and does not upload
+them to temporary public storage. All actions are pinned to full commit hashes.
+
+Lighthouse measures `/en/`, `/ur/`, `/en/get-involved/`, `/en/branches/` and
+`/en/events/` with three mobile runs per page. Each category uses its median score
+and must reach 0.90: Performance, Accessibility, Best Practices and SEO. Mobile is
+selected with Lighthouse's `formFactor` setting (the older plan example's
+`preset: mobile` is not a Lighthouse preset). Only `is-on-https` is disabled,
+because CI uses HTTP localhost; the proxy mirrors the production proxy. This
+fixed-upstream helper is mounted read-only by the CI overlay and excluded from
+the production image. The overlay uses Compose's `!reset` tag (Compose 2.24.4+)
+to remove the app's direct host port; only the proxy is exposed on host loopback.
+Before handover, manually verify HTTPS, redirects and certificate validity on
+the live Render deployment. Local audits do not certify that external setup.
+
+### P12 Step 2 local baseline
+
+Production image, authored demo seed, loopback CI proxy, Lighthouse CI 0.15.1,
+three mobile runs on 31 October 2026. All category assertions passed.
+
+| Page | Performance | Accessibility | Best Practices | SEO |
+| --- | ---: | ---: | ---: | ---: |
+| `/en/` | 99 | 100 | 100 | 100 |
+| `/ur/` | 98 | 100 | 100 | 100 |
+| `/en/get-involved/` | 100 | 100 | 100 | 100 |
+| `/en/branches/` | 99 | 100 | 100 | 100 |
+| `/en/events/` | 100 | 100 | 100 | 100 |
+
+These are category medians, not a promise of identical scores on a free-tier
+deployment. Font-swap layout shift in individual runs remains for Step 3 review.

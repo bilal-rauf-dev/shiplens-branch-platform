@@ -1,3 +1,5 @@
+# Shell scripts must keep Unix line endings when checked out on Windows.
+*.sh text eol=lf
 # Keep vendored bytes stable, including the checksum recorded beside axe-core.
 tests/e2e/vendor/* text eol=lf
 # Preserve the upstream third-party licence notice verbatim.

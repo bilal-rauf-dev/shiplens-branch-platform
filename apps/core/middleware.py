@@ -1,6 +1,5 @@
 """Keep a correlation ID local to each request."""
 
-from contextvars import ContextVar
 from uuid import UUID, uuid4
 
 from django.conf import settings
@@ -12,9 +11,8 @@ from django.urls import reverse
 from apps.accounts.permissions import can
 from apps.audit.services import record_denial
 from apps.core import views
+from apps.core.context import request_id
 from apps.core.routes import PUBLIC_ROUTES, ROUTE_ACTIONS
-
-request_id = ContextVar("request_id", default=None)
 
 
 class HealthCheckMiddleware:

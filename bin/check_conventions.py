@@ -10,7 +10,7 @@ PHYSICAL_CSS = re.compile(
     r"|(?:margin|padding)\s*:"
     r"|(?:text-align|float)\s*:\s*(?:left|right)\b)"
 )
-DIRECT_MODEL_WRITE = re.compile(r"\.save\s*\(|\.objects\.get\s*\(")
+DIRECT_MODEL_WRITE = re.compile(r"\.save\s*\(|\bobjects\s*\.\s*get\s*\(")
 
 
 def find_violations(root):
@@ -26,10 +26,14 @@ def find_violations(root):
                 )
 
     for path in sorted((root / "apps").rglob("*.py")):
-        is_view = path.name == "views.py" or "views" in path.relative_to(root).parts
+        is_view = (
+            path.name == "views.py"
+            or path.name.endswith("_views.py")
+            or "views" in path.relative_to(root).parts
+        )
         for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
             if (
-                re.search(r"\bmark_safe\s*\(", line)
+                re.search(r"\bmark_safe\b", line)
                 and path.relative_to(root).as_posix() != "apps/cms/templatetags/cms.py"
             ):
                 violations.append(

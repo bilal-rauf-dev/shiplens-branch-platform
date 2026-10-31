@@ -1,5 +1,7 @@
 """Production settings with HTTPS and host-only secure cookies."""
 
+from copy import deepcopy
+
 from .base import *  # noqa: F403
 
 DEBUG = False
@@ -25,3 +27,8 @@ SESSION_COOKIE_PATH = "/"
 SESSION_COOKIE_DOMAIN = None
 CSRF_COOKIE_PATH = "/"
 CSRF_COOKIE_DOMAIN = None
+
+# Cloud connections require TLS by default. Only isolated local smoke stacks opt out.
+# Copy before editing: importing prod must not mutate base/dev/test configuration.
+DATABASES = deepcopy(DATABASES)  # noqa: F405
+DATABASES["default"].setdefault("OPTIONS", {}).setdefault("sslmode", "require")

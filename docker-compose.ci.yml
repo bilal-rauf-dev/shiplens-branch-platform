@@ -17,7 +17,8 @@ services:
     environment:
       DJANGO_SETTINGS_MODULE: config.settings.prod
       SECRET_KEY: ci-only-placeholder-signing-key-not-used-for-deployment-0123456789
-      DATABASE_URL: postgres://postgres:postgres@db:5432/shiplens
+      # This disposable database is reachable only on the private Compose network.
+      DATABASE_URL: postgres://postgres:postgres@db:5432/shiplens?sslmode=disable
       DJANGO_ALLOWED_HOSTS: example.com
       CSRF_TRUSTED_ORIGINS: https://example.com
       DEMO_MODE: "false"

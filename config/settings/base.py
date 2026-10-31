@@ -37,6 +37,9 @@ if TRUSTED_PROXY_HOPS < 0:
 DATABASES = {
     "default": dj_database_url.parse(os.environ["DATABASE_URL"], conn_max_age=60)
 }
+# Bound individual statements while preserving TLS/options supplied by the URL.
+options = DATABASES["default"].setdefault("OPTIONS", {})
+options["options"] = f"{options.get('options', '')} -c statement_timeout=15000".strip()
 if DATABASES["default"]["ENGINE"] != "django.db.backends.postgresql":
     raise ImproperlyConfigured("DATABASE_URL must use PostgreSQL.")
 
@@ -67,10 +70,10 @@ AUTHENTICATION_BACKENDS = [
 ]
 LOGIN_URL = "account-login"
 MIDDLEWARE = [
+    "apps.core.middleware.RequestIdMiddleware",
     "csp.middleware.CSPMiddleware",
     "apps.core.middleware.SecurityHeadersMiddleware",
     "apps.core.middleware.HealthCheckMiddleware",
-    "apps.core.middleware.RequestIdMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -214,8 +217,13 @@ LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
+    "formatters": {"safe_json": {"()": "apps.core.logging.SafeJsonFormatter"}},
     "handlers": {
-        "console": {"class": "logging.StreamHandler", "stream": "ext://sys.stdout"}
+        "console": {
+            "class": "logging.StreamHandler",
+            "stream": "ext://sys.stdout",
+            "formatter": "safe_json",
+        }
     },
     "root": {"handlers": ["console"], "level": LOG_LEVEL},
 }
@@ -239,3 +247,5 @@ CONTENT_SECURITY_POLICY = {
 }
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin"
+
+CSRF_FAILURE_VIEW = "apps.core.views.csrf_failure"

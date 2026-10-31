@@ -74,3 +74,14 @@ def test_vendor_css_is_exempt(tmp_path):
     vendor.mkdir(parents=True)
     (vendor / "library.css").write_text("a { left: 0; float: right; }")
     assert CHECKER["find_violations"](tmp_path) == []
+
+
+@pytest.mark.parametrize("filename", ["report_views.py", "pdf_views.py"])
+def test_all_view_modules_and_safe_import_aliases_are_checked(tmp_path, filename):
+    app = tmp_path / "apps" / "example"
+    app.mkdir(parents=True)
+    (app / filename).write_text("obj.save()\nModel.objects . get(pk=1)\n")
+    (app / "helper.py").write_text(
+        "from django.utils.safestring import mark_safe as trusted\n"
+    )
+    assert len(CHECKER["find_violations"](tmp_path)) == 3

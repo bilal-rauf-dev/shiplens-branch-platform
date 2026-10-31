@@ -9,6 +9,8 @@ import dj_database_url
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import gettext_lazy as _
 
+from apps.core.static import immutable_cache_headers
+
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = os.environ["SECRET_KEY"]
@@ -249,3 +251,5 @@ SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin"
 
 CSRF_FAILURE_VIEW = "apps.core.views.csrf_failure"
+
+WHITENOISE_ADD_HEADERS_FUNCTION = immutable_cache_headers

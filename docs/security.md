@@ -132,3 +132,9 @@ loopback Origin; real deployments use Render TLS. Production cookie flags remain
 unchanged and are tested separately with an enforced-CSRF HTTPS client.
 P13 Step 1 verified both EN/UR dashboards (two charts), CMS editor and PDF download
 with zero console errors or CSP violation events.
+
+
+P13 performance reads rule overrides once per request and reuses assignment querysets
+only for that request. Assignment services explicitly invalidate membership snapshots
+on add/remove; direct service calls remain fresh, and new requests get new snapshots.
+Revocation is tested both within a request snapshot and on the next one.

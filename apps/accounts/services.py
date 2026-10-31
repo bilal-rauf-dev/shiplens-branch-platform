@@ -15,7 +15,7 @@ from django_ratelimit.core import is_ratelimited
 from apps import audit
 from apps.accounts import selectors
 from apps.accounts.models import Role, User, UserBranchAssignment
-from apps.accounts.permissions import require
+from apps.accounts.permissions import invalidate_assignment_snapshot, require
 from apps.accounts.signals import password_changed
 from apps.branches.models import Branch, BranchStatus
 from apps.core import clock, rules
@@ -124,6 +124,7 @@ def assign_branch(actor, user, branch):
         assignment, _created = UserBranchAssignment.objects.get_or_create(
             user=user, branch=branch, defaults={"created_by": actor}
         )
+        invalidate_assignment_snapshot(user.pk)
         if _created:
             user.updated_at = clock.now()
             user.save(update_fields=["updated_at"])
@@ -184,6 +185,7 @@ def _remove_assignment(actor, assignment):
     )
     # Remove only the access-control link; the user, branch and audit history remain.
     assignment.delete()
+    invalidate_assignment_snapshot(assignment.user_id)
 
 
 @sensitive_variables()

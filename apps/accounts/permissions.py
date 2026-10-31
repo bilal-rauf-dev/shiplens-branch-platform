@@ -1,5 +1,8 @@
 """The permission table from planning/05, with explicit object scope checks."""
 
+from contextlib import contextmanager
+from contextvars import ContextVar
+
 from django.core.exceptions import PermissionDenied
 
 from apps.accounts.models import Role, UserBranchAssignment
@@ -133,13 +136,39 @@ ENTITY_VIEW_ACTIONS = {
 }
 
 
+_request_assignments = ContextVar("request_assignments", default=None)
+
+
+@contextmanager
+def request_scope_snapshot():
+    """Reuse each user's lazy assignment queryset only within one HTTP request."""
+    token = _request_assignments.set({})
+    try:
+        yield
+    finally:
+        _request_assignments.reset(token)
+
+
+def invalidate_assignment_snapshot(user_id):
+    """Assignment writes must take effect even later in the same request."""
+    snapshot = _request_assignments.get()
+    if snapshot is not None:
+        snapshot.pop(user_id, None)
+
+
 def assigned_branch_ids(user):
-    """Return assignments afresh so revocation takes effect within a session."""
+    """Read fresh outside requests; reuse evaluated membership checks inside one."""
     if not user or not user.is_authenticated or not user.is_active:
         return UserBranchAssignment.objects.none().values_list("branch_id", flat=True)
-    return UserBranchAssignment.objects.filter(user_id=user.pk).values_list(
+    snapshot = _request_assignments.get()
+    if snapshot is not None and user.pk in snapshot:
+        return snapshot[user.pk]
+    queryset = UserBranchAssignment.objects.filter(user_id=user.pk).values_list(
         "branch_id", flat=True
     )
+    if snapshot is not None:
+        snapshot[user.pk] = queryset
+    return queryset
 
 
 def _scope(user, action):

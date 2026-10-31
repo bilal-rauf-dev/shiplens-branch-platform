@@ -4,6 +4,7 @@ Set BROWSER_URL, BROWSER_EMAIL and BROWSER_PASSWORD, then run this file directly
 or select it with pytest -m visual. No credentials are stored in the repository.
 """
 
+import json
 import os
 from pathlib import Path
 
@@ -68,6 +69,59 @@ def test_csp_in_chromium(language):
             browser.close()
 
 
+def test_public_transfer_bytes():
+    url = os.environ.get("BROWSER_URL")
+    if not url:
+        pytest.skip("BROWSER_URL must point to a local production image")
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(channel="chrome")
+        try:
+            page = browser.new_page(extra_http_headers={"X-Forwarded-Proto": "https"})
+            session = page.context.new_cdp_session(page)
+            session.send("Network.enable")
+            session.send("Network.setCacheDisabled", {"cacheDisabled": True})
+            types = {}
+            transferred = {}
+            session.on(
+                "Network.responseReceived",
+                lambda event: types.update({event["requestId"]: event["type"]}),
+            )
+            session.on(
+                "Network.loadingFinished",
+                lambda event: transferred.update(
+                    {event["requestId"]: event["encodedDataLength"]}
+                ),
+            )
+            response = page.goto(f"{url}/en/", wait_until="networkidle")
+            assert response.status == 200
+            page.evaluate("document.fonts.ready.then(() => true)")
+            assert page.locator("script").count() == 0
+            totals = {
+                kind: int(
+                    sum(
+                        size
+                        for key, size in transferred.items()
+                        if types.get(key) == kind
+                    )
+                )
+                for kind in ("Document", "Stylesheet", "Font", "Image")
+            }
+            assert totals["Document"] > 0 and totals["Stylesheet"] > 0
+            result = {
+                "page": "/en/",
+                "bytes": totals,
+                "html_css_fonts": sum(
+                    totals[k] for k in ("Document", "Stylesheet", "Font")
+                ),
+                "total_including_images": sum(totals.values()),
+                "scripts": 0,
+            }
+            print(json.dumps(result))
+        finally:
+            browser.close()
+
+
 if __name__ == "__main__":
     for locale in ("en", "ur"):
         test_csp_in_chromium(locale)
+    test_public_transfer_bytes()

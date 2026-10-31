@@ -8,9 +8,9 @@ from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.urls import reverse
 
-from apps.accounts.permissions import can
+from apps.accounts.permissions import can, request_scope_snapshot
 from apps.audit.services import record_denial
-from apps.core import views
+from apps.core import rules, views
 from apps.core.context import request_id
 from apps.core.routes import PUBLIC_ROUTES, ROUTE_ACTIONS
 
@@ -37,7 +37,8 @@ class RequestIdMiddleware:
             correlation_id = str(uuid4())
         token = request_id.set(correlation_id)
         try:
-            response = self.get_response(request)
+            with rules.request_snapshot(), request_scope_snapshot():
+                response = self.get_response(request)
             response["X-Request-ID"] = correlation_id
             return response
         finally:

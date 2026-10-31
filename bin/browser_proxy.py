@@ -6,6 +6,7 @@ The upstream is fixed to the private seeded web service, not a request parameter
 
 import http.client
 import os
+import sys
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 HOP_HEADERS = {
@@ -22,27 +23,42 @@ HOP_HEADERS = {
 
 class BrowserProxy(BaseHTTPRequestHandler):
     def forward(self):
-        """Keep production redirects/cookies intact behind a trusted proxy."""
+        """Keep production redirects/cookies intact behind a trusted proxy.
+
+        Reject CR/LF in copied headers to prevent HTTP message splitting.
+        """
         upstream = http.client.HTTPConnection("web", 8000, timeout=65)
         try:
             if not self.path.startswith("/"):
                 self.send_error(400)
                 return
+            headers = {}
+            for key, value in self.headers.items():
+                # Compare safe copies: reject invalid headers instead of repairing them.
+                clean_key = key.replace("\r", "").replace("\n", "")
+                clean_value = value.replace("\r", "").replace("\n", "")
+                if key != clean_key or value != clean_value:
+                    print("Dropped request header containing CR/LF", file=sys.stderr)
+                    continue
+                if clean_key.lower() not in HOP_HEADERS and clean_key.lower() not in {
+                    "x-forwarded-proto",
+                    "x-forwarded-for",
+                }:
+                    headers[clean_key] = clean_value
             body = self.rfile.read(int(self.headers.get("Content-Length", "0")))
-            headers = {
-                key: value
-                for key, value in self.headers.items()
-                if key.lower() not in HOP_HEADERS
-                and key.lower() not in {"x-forwarded-proto", "x-forwarded-for"}
-            }
             headers["X-Forwarded-Proto"] = "https"
             headers["X-Forwarded-For"] = self.client_address[0]
             upstream.request(self.command, self.path, body=body, headers=headers)
             response = upstream.getresponse()
             self.send_response_only(response.status)
             for key, value in response.getheaders():
-                if key.lower() not in HOP_HEADERS:
-                    self.send_header(key, value)
+                clean_key = key.replace("\r", "").replace("\n", "")
+                clean_value = value.replace("\r", "").replace("\n", "")
+                if key != clean_key or value != clean_value:
+                    print("Dropped response header containing CR/LF", file=sys.stderr)
+                    continue
+                if clean_key.lower() not in HOP_HEADERS:
+                    self.send_header(clean_key, clean_value)
             self.send_header("Connection", "close")
             self.end_headers()
             if self.command != "HEAD":

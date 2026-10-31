@@ -212,3 +212,28 @@ and passed all four median category gates:
 | `/en/get-involved/` | 100 | 100 | 100 | 100 |
 | `/en/branches/` | 100 | 100 | 100 | 100 |
 | `/en/events/` | 100 | 100 | 100 | 100 |
+
+
+## F1 proxy header boundary
+
+The CI-only proxy drops copied request or response headers if either their name
+or value contains CR or LF. It writes a fixed direction-specific notice to stderr
+without printing the rejected data, avoiding log injection or credential leakage.
+Safe headers and duplicate response cookies are preserved. Unit tests inject
+CRLF, lone CR and lone LF into both names and values at the copy boundary; they
+mock transport because a real HTTP client may reject the payload before the
+proxy can inspect it.
+
+Newline-free candidate copies are compared with the originals; any difference
+drops the entire header, rather than forwarding a repaired value. Safe copies
+are forwarded only when unchanged. This also exposes the sanitization boundary
+to [CodeQL's Python header-injection model](https://github.com/github/codeql/blob/main/python/ql/lib/semmle/python/security/dataflow/HttpHeaderInjectionCustomizations.qll),
+which recognises newline replacement.
+
+
+F1 Step 2 verification: 21 focused safety tests passed, including six CR/LF
+header cases exercising both directions; all 17 public/Finance browser checks
+passed through the restarted proxy. The full PostgreSQL suite passed 2,125 tests
+with 97.88% app coverage. Ruff, formatting and convention checks passed.
+CodeQL was not executed locally because its CLI is unavailable; the existing
+CodeQL workflow will perform the scan in CI.

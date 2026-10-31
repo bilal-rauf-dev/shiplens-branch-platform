@@ -53,7 +53,6 @@ PERMISSIONS = {
     "volunteer_role.manage": {SA: GLOBAL},
     "settings.view": {SA: GLOBAL},
     "settings.update": {SA: GLOBAL},
-    "demo.reset": {SA: GLOBAL},
     "branch.list": {SA: GLOBAL, FR: GLOBAL, BL: ASSIGNED, HR: ASSIGNED},
     "branch.view": {SA: GLOBAL, FR: GLOBAL, BL: ASSIGNED, HR: ASSIGNED},
     "branch.create": {SA: GLOBAL},

@@ -34,7 +34,7 @@
 | W-41 | Transfers (mark sent), immutability trigger, tests | Tue 27 | 2 | W-40 | T-XFER-* green | — | PR #7 |
 | W-42 | Weekly reports: registry, lazy drafts, aggregates, transitions, snapshot, lock trigger, screens per state, lifecycle test | Wed 28 | 8 | W-40, W-41 | **T-RPT-LIFECYCLE green (G2)** | Biggest single task | PR #8 |
 | W-14 | Audit viewer + per-entity history panel + CSV | Wed 28 | 1.5 | W-13 | T-AUD-VIEWER | — | PR #8 |
-| W-50 | Author `sample_data/*.csv` from `09-…` §3; `import_sample_data` (one load path, replays report transitions for audit); `seed_demo` wrapper (demo users, `DEMO_PASSWORD`); `reset demo` | Thu 29 | 3.5 | W-42 | T-SEED-* green; live login works for 5 roles; CSV totals reconcile with §4 | Typos in CSV → caught by T-DASH-SEED | PR #9 |
+| W-50 | Author `sample_data/*.csv` from `09-…` §3; `import_sample_data` (one load path, replays report transitions for audit); `seed_demo` wrapper (demo users, `DEMO_PASSWORD`); operator-only `seed_demo --reset` | Thu 29 | 3.5 | W-42 | T-SEED-* green; live login works for 5 roles; CSV totals reconcile with §4 | Typos in CSV → caught by T-DASH-SEED | PR #9 |
 | W-51 | KPIs (pure functions), dashboard views, Chart.js trends, unsent list, branch dashboard; `T-DASH-SEED` | Thu 29 | 4 | W-50 | **T-DASH-SEED green (G1)** | Formula disagreement | PR #9 |
 | W-55 | CSV exports (BOM, guard, scope, audit) | Thu 29 | 1.5 | W-51 | T-EXP-CSV-* | — | PR #10 |
 | W-56 | PDF exports (report, monthly summary) EN; Urdu later | Thu 29 | 2 | W-55 | T-EXP-PDF-* | WeasyPrint in Docker | PR #10 |
@@ -145,9 +145,9 @@ Originally for a 26 Oct deadline (now moot). Use it as the **"never fall below" 
 - [ ] CI green on `main` at tagged commit; coverage ≥ 60 % (actual: __ %)
 - [ ] Render URL works in **incognito**; `/health` = ok + matching SHA; all 7 public pages in en + ur
 - [ ] Each of 5 test logins works on live; lands on correct home
-- [ ] Gate 1: dashboard Oct 2026 values match table · Gate 2: lifecycle performed on live after demo reset · Gate 3: RBAC tests listed in CI · Gate 4: link + CI
+- [ ] Gate 1: dashboard Oct 2026 values match table · Gate 2: lifecycle performed on live after an operator CLI demo rebuild · Gate 3: RBAC tests listed in CI · Gate 4: link + CI
 - [ ] Lighthouse ≥ 90 ×4 on measured pages (warm) — screenshots saved
 - [ ] `docs/` complete (ADRs, api, permissions, handover); README complete with logins; AI-USAGE complete
 - [ ] Video ≤ 5:00 uploaded, link opens logged-out
 - [ ] Tag `v1.0.0` pushed; full SHA copied; submission form filled (repo, live link, SHA, video, logins) — screenshot of confirmation saved
-- [ ] Render web + DB plan upgraded or expiry reminder set for ≤ 20 Nov; demo reset before judging window
+- [ ] Render web + DB plan upgraded or expiry reminder set for ≤ 20 Nov; operator CLI demo rebuild before judging window

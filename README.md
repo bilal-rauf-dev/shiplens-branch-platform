@@ -171,7 +171,9 @@ docker compose exec web python manage.py seed_demo --reset
 
 Reset replaces all demo domain data, settings overrides and audit history, restores
 the authored history, and logs everyone out. It is refused when `DEMO_MODE=false`.
-Super Admin can also use **Reset demo data** on System settings in demo mode.
+This rebuilds the demo database from the authored history. It is run only by the
+operator from a shell, never by an application user. There is no reset button or
+HTTP reset route, including for Super Admin.
 To import CSV history without demo passwords into an empty user database, run
 `python manage.py import_sample_data sample_data/`; alternative CSV headers can be
 mapped with `--mapping path/to/mapping.yaml` as documented in the column guide.

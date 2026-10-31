@@ -1,4 +1,5 @@
 import runpy
+from importlib import import_module
 
 import pytest
 from django.conf import settings
@@ -21,3 +22,13 @@ def test_render_hostname_added_to_hosts_and_origins(monkeypatch, render_hostname
         expected_origins.append(f"https://{render_hostname}")
     assert configuration["ALLOWED_HOSTS"] == expected_hosts
     assert configuration["CSRF_TRUSTED_ORIGINS"] == expected_origins
+
+
+@pytest.mark.parametrize(
+    "module_name", ["config.settings.base", "config.settings.prod"]
+)
+def test_base_and_production_keep_argon2_first(module_name):
+    configuration = import_module(module_name)
+    assert configuration.PASSWORD_HASHERS[0] == (
+        "django.contrib.auth.hashers.Argon2PasswordHasher"
+    )

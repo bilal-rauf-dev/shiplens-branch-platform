@@ -47,7 +47,8 @@ verification fails. Verification does not itself append a row.
 ## Immutability and limitations
 
 PostgreSQL triggers reject UPDATE, DELETE and TRUNCATE (BR-131), including ORM and
-raw SQL attempts. Outside the explicitly configured demo reset, no bypass or mutation endpoint exists. The database
+raw SQL attempts. No application user, including Super Admin, can remove audit rows through HTTP.
+No audit mutation or reset endpoint exists. The database
 owner can still disable/drop triggers and rewrite history; this is tamper
 resistance, not protection against a malicious database owner. The hash chain
 detects altered rows/links, but needs an independently retained tip to detect
@@ -63,12 +64,13 @@ database's flush helper disables only the TRUNCATE guard during Django cleanup a
 re-enables it in the same transaction. This exception exists only in test fixtures;
 ordinary test and application operations still encounter all guards.
 
-## Demo reset exception (P8)
+## Operator-only demo database rebuild
 
 `apps.seed.services._reset_tables()` is the one additional raw-SQL exception,
-**unreachable when DEMO_MODE=false**. `seed_demo --reset` and the Super Admin-only
-POST route call it only after checking `DEMO_MODE` and a `DEMO_PASSWORD` of at least
-12 characters. It disables USER triggers on a fixed list of application tables,
+**unreachable when DEMO_MODE=false**. `seed_demo --reset` is run by the operator from a shell, never by an application
+user. It rebuilds the demo database from the authored history after checking
+`DEMO_MODE` and a `DEMO_PASSWORD` of at least 12 characters. There is no HTTP reset
+view, URL, permission or settings-page control. It disables USER triggers on a fixed list of application tables,
 truncates domain data, audit history, counters, settings overrides, sessions, Axes
 records and the database cache with `RESTART IDENTITY CASCADE`, and re-enables the
 triggers before importing history. All of this, including the re-import and demo

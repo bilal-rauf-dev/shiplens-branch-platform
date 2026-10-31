@@ -32,7 +32,7 @@ SECTIONS = {
         "user-assign-branch",
         "user-remove-branch",
     ),
-    "settings-view": ("settings-view", "settings-update", "demo-reset"),
+    "settings-view": ("settings-view", "settings-update"),
     "volunteer-role-list": (
         "volunteer-role-list",
         "volunteer-role-create",

@@ -30,7 +30,7 @@ Primary list: **OWASP Top 10:2025**; 2021 IDs in brackets for judges who use the
 | Mass assignment | `ModelForm.Meta.fields` explicit lists; status/branch/code/created_by never in forms; services set them. `T-SEC-MASS-ASSIGN` posts `status=APPROVED` to narrative form → ignored. |
 | IDOR | All `get_object_or_404` calls take a scoped queryset; custom ruff/grep check that `Model.objects.get(` isn't used in views. |
 | Secrets | Render env vars (`SECRET_KEY` generateValue, `DATABASE_URL` from DB, `DEMO_PASSWORD` set manually); `.env` gitignored; `.env.example` committed; `gitleaks` action in CI. |
-| Demo credentials | Seeded only when `DEMO_MODE=true`; password from env (rotatable by changing env + redeploy → seed re-hashes); demo accounts can't change their password or be edited by other users; SA "Reset demo data" button re-runs seed; README warns that the live site is a demo with fictional data. Demo SA cannot create new SA accounts (prevents takeover persistence). |
+| Demo credentials | Seeded only when `DEMO_MODE=true`; password from env (rotatable by changing env + redeploy → seed re-hashes); demo accounts can't change their password or be edited by other users; only the operator can rebuild the demo database from authored history with `seed_demo --reset` from a shell; no application user can reset data; README warns that the live site is a demo with fictional data. Demo SA cannot create new SA accounts (prevents takeover persistence). |
 | Public form spam | honeypot, min fill time (signed timestamp), rate limit, max lengths, no file uploads, no outbound email (no mail-bomb vector). |
 | Applicant PII | Visible only to scoped HR + SA; never on public pages; not in Finance views; excluded from logs; exports audited; privacy notice page; retention note (declined applications purge after 12 months — documented, command `purge_declined_applications` OPT). |
 | Errors | `DEBUG=False`; 400/403/404/500 templates localised; 403 page doesn't reveal resource existence. |
@@ -49,7 +49,7 @@ Primary list: **OWASP Top 10:2025**; 2021 IDs in brackets for judges who use the
 | Bot floods application form | DB, HR time | honeypot, timing, rate limits |
 | XSS via CMS or applicant motivation | users' sessions | escaping, nh3, CSP |
 | Enumeration of applicants/members | PII | identical responses, 404 for out-of-scope |
-| Public demo vandalism | demo data | no hard deletes, demo reset button, demo-account protections |
+| Public demo vandalism | demo data | no hard deletes, operator-only `seed_demo --reset`, demo-account protections |
 
 ## 4. Audit design
 
@@ -60,7 +60,8 @@ Primary list: **OWASP Top 10:2025**; 2021 IDs in brackets for judges who use the
 | auth | `auth.login_succeeded`, `auth.login_failed`, `auth.locked_out`, `auth.rate_limited`, `auth.logout`, `auth.password_changed`, `auth.password_reset_issued` |
 | access | `permission.denied` (throttled: max 1 per user+route per minute) |
 | user | `user.created`, `user.updated`, `user.deactivated`, `user.reactivated`, `assignment.added`, `assignment.removed` |
-| settings | `settings.updated`, `demo.reset` |
+| settings | `settings.updated` |
+| operator demo rebuild (CLI only) | `demo.seeded`, `demo.reset` |
 | branch | `branch.created`, `branch.updated`, `branch.activated`, `branch.paused`, `branch.resumed`, `branch.closed`, `city.created` |
 | application | `application.submitted`, `application.reassigned`, `application.accepted`, `application.declined`, `application.spam_blocked` (no PII) |
 | member | `member.created`, `member.updated`, `member.status_changed`, `member.reinstated`, `team.created`, `team.updated`, `volunteer_role.created`, `volunteer_role.updated` |

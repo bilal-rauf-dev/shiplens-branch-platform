@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ShipLens\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-30 01:06+0500\n"
+"POT-Creation-Date: 2026-10-30 17:53+0500\n"
 "Language: ur\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -61,15 +61,14 @@ msgstr "کردار"
 #: templates/finance/collection_list.html:10
 #: templates/finance/report_list.html:18 templates/finance/report_list.html:26
 #: templates/finance/transfer_detail.html:4
-#: templates/finance/transfer_list.html:5
-#: templates/pdf/monthly_summary.html:16 templates/pdf/monthly_summary.html:18
+#: templates/finance/transfer_list.html:5 templates/pdf/monthly_summary.html:16
+#: templates/pdf/monthly_summary.html:18
 #: templates/volunteers/application_list.html:19
 #: templates/volunteers/application_list.html:23
 #: templates/volunteers/member_detail.html:10
 #: templates/volunteers/member_list.html:13
 #: templates/volunteers/member_list.html:17
-#: templates/volunteers/team_list.html:8
-#: templates/volunteers/team_list.html:10
+#: templates/volunteers/team_list.html:8 templates/volunteers/team_list.html:10
 msgid "Branch"
 msgstr "شاخ"
 
@@ -400,9 +399,8 @@ msgstr "توثیق"
 
 #: apps/audit/selectors.py:28 templates/branches/branch_detail.html:21
 #: templates/branches/branch_list.html:18
-#: templates/branches/branch_list.html:21
-#: templates/dashboard/financial.html:21 templates/dashboard/hr.html:10
-#: templates/partials/staff_navigation.html:24
+#: templates/branches/branch_list.html:21 templates/dashboard/financial.html:21
+#: templates/dashboard/hr.html:10 templates/partials/staff_navigation.html:24
 #: templates/pdf/monthly_summary.html:10
 #: templates/volunteers/member_list.html:3
 #: templates/volunteers/member_list.html:5
@@ -494,13 +492,13 @@ msgstr "واقعہ #%(id)s پر سلسلہ ٹوٹ گیا"
 msgid "City"
 msgstr "شہر"
 
-#: apps/branches/forms.py:15 apps/branches/selectors.py:11
-#: apps/cms/forms.py:15 apps/exports/registry.py:37
-#: apps/exports/registry.py:69 apps/exports/registry.py:86
-#: apps/exports/registry.py:109 apps/finance/report_forms.py:21
-#: apps/finance/report_selectors.py:86 apps/volunteers/forms.py:124
-#: apps/volunteers/forms.py:197 apps/volunteers/selectors.py:50
-#: apps/volunteers/selectors.py:169 templates/branches/branch_list.html:18
+#: apps/branches/forms.py:15 apps/branches/selectors.py:11 apps/cms/forms.py:15
+#: apps/exports/registry.py:37 apps/exports/registry.py:69
+#: apps/exports/registry.py:86 apps/exports/registry.py:109
+#: apps/finance/report_forms.py:21 apps/finance/report_selectors.py:86
+#: apps/volunteers/forms.py:124 apps/volunteers/forms.py:197
+#: apps/volunteers/selectors.py:50 apps/volunteers/selectors.py:169
+#: templates/branches/branch_list.html:18
 #: templates/branches/branch_list.html:21 templates/cms/list.html:7
 #: templates/cms/list.html:8 templates/dashboard/financial.html:39
 #: templates/finance/report_list.html:20 templates/finance/report_list.html:30
@@ -510,8 +508,7 @@ msgstr "شہر"
 #: templates/volunteers/member_detail.html:13
 #: templates/volunteers/member_list.html:13
 #: templates/volunteers/member_list.html:20
-#: templates/volunteers/team_list.html:8
-#: templates/volunteers/team_list.html:11
+#: templates/volunteers/team_list.html:8 templates/volunteers/team_list.html:11
 #: templates/volunteers/volunteer_role_list.html:8
 #: templates/volunteers/volunteer_role_list.html:11
 msgid "Status"
@@ -946,22 +943,18 @@ msgid "Core"
 msgstr "بنیادی نظام"
 
 #: apps/core/messages.py:11
-#| msgid "This field is required for events."
 msgid "This field is required."
 msgstr "یہ خانہ بھرنا ضروری ہے۔"
 
 #: apps/core/messages.py:12
-#| msgid "email address"
 msgid "Enter a valid email address."
 msgstr "براہِ کرم درست ای میل پتہ درج کریں۔"
 
 #: apps/core/messages.py:13
-#| msgid "Enter a valid Pakistani mobile number."
 msgid "Enter a valid integer."
 msgstr "براہِ کرم درست صحیح عدد درج کریں۔"
 
 #: apps/core/messages.py:14
-#| msgid "Enter a valid Pakistani mobile number."
 msgid "Enter a valid date."
 msgstr "براہِ کرم درست تاریخ درج کریں۔"
 
@@ -970,12 +963,10 @@ msgid "Enter a number."
 msgstr "براہِ کرم عدد درج کریں۔"
 
 #: apps/core/messages.py:16
-#| msgid "Enter a valid Pakistani mobile number."
 msgid "Enter a whole number."
 msgstr "براہِ کرم صحیح عدد درج کریں۔"
 
 #: apps/core/messages.py:17
-#| msgid "Enter a valid Pakistani mobile number."
 msgid "Enter a valid value."
 msgstr "براہِ کرم درست قدر درج کریں۔"
 
@@ -984,27 +975,23 @@ msgid "Null characters are not allowed."
 msgstr "نَل حروف کی اجازت نہیں ہے۔"
 
 #: apps/core/messages.py:20
-msgid ""
-"Select a valid choice. That choice is not one of the available choices."
+msgid "Select a valid choice. That choice is not one of the available choices."
 msgstr "براہِ کرم دستیاب اختیارات میں سے درست انتخاب کریں۔"
 
 #: apps/core/messages.py:23
 #, python-format
 msgid "Select a valid choice. %(value)s is not one of the available choices."
-msgstr ""
-"براہِ کرم درست انتخاب کریں۔ %(value)s دستیاب اختیارات میں شامل نہیں ہے۔"
+msgstr "براہِ کرم درست انتخاب کریں۔ %(value)s دستیاب اختیارات میں شامل نہیں ہے۔"
 
 #: apps/core/messages.py:25
 msgid "Enter a list of values."
 msgstr "براہِ کرم قدروں کی فہرست درج کریں۔"
 
 #: apps/core/messages.py:26
-#| msgid "Password"
 msgid "Old password"
 msgstr "موجودہ پاس ورڈ"
 
 #: apps/core/messages.py:27
-#| msgid "Change password"
 msgid "New password"
 msgstr "نیا پاس ورڈ"
 
@@ -1070,7 +1057,7 @@ msgstr[1] ""
 "اس قدر میں کم از کم %(limit_value)d حروف ہونے چاہییں (موجودہ تعداد "
 "%(show_value)d ہے)۔"
 
-#: apps/core/messages.py:47
+#: apps/core/messages.py:49
 #, python-format
 msgid ""
 "Ensure this value has at most %(limit_value)d character (it has "
@@ -1085,21 +1072,21 @@ msgstr[1] ""
 "اس قدر میں زیادہ سے زیادہ %(limit_value)d حروف ہونے چاہییں (موجودہ تعداد "
 "%(show_value)d ہے)۔"
 
-#: apps/core/messages.py:52
+#: apps/core/messages.py:56
 #, python-format
 msgid "Ensure that there are no more than %(max)s digit in total."
 msgid_plural "Ensure that there are no more than %(max)s digits in total."
 msgstr[0] "کل ہندسوں کی تعداد %(max)s سے زیادہ نہیں ہونی چاہیے۔"
 msgstr[1] "کل ہندسوں کی تعداد %(max)s سے زیادہ نہیں ہونی چاہیے۔"
 
-#: apps/core/messages.py:57
+#: apps/core/messages.py:61
 #, python-format
 msgid "Ensure that there are no more than %(max)s decimal place."
 msgid_plural "Ensure that there are no more than %(max)s decimal places."
 msgstr[0] "اعشاری مقامات کی تعداد %(max)s سے زیادہ نہیں ہونی چاہیے۔"
 msgstr[1] "اعشاری مقامات کی تعداد %(max)s سے زیادہ نہیں ہونی چاہیے۔"
 
-#: apps/core/messages.py:62
+#: apps/core/messages.py:66
 #, python-format
 msgid ""
 "Ensure that there are no more than %(max)s digit before the decimal point."
@@ -1110,7 +1097,7 @@ msgstr[0] ""
 msgstr[1] ""
 "اعشاری نقطے سے پہلے ہندسوں کی تعداد %(max)s سے زیادہ نہیں ہونی چاہیے۔"
 
-#: apps/core/messages.py:67
+#: apps/core/messages.py:71
 #, python-format
 msgid "This password is too short. It must contain at least %d character."
 msgid_plural ""
@@ -1118,7 +1105,7 @@ msgid_plural ""
 msgstr[0] "یہ پاس ورڈ بہت چھوٹا ہے۔ اس میں کم از کم %d حرف ہونا چاہیے۔"
 msgstr[1] "یہ پاس ورڈ بہت چھوٹا ہے۔ اس میں کم از کم %d حروف ہونے چاہییں۔"
 
-#: apps/core/messages.py:72
+#: apps/core/messages.py:76
 #, python-format
 msgid "Your password must contain at least %(min_length)d character."
 msgid_plural "Your password must contain at least %(min_length)d characters."
@@ -1160,7 +1147,7 @@ msgstr "ضروری"
 #: apps/core/templatetags/money.py:17
 #, python-format
 msgid "Rs %(amount)s"
-msgstr "%(amount)s روپے"
+msgstr "Rs %(amount)s"
 
 #: apps/dashboard/forms.py:9
 msgid "Period"
@@ -1194,8 +1181,8 @@ msgstr "نئے ارکان"
 #: templates/finance/collection_list.html:10
 #: templates/finance/report_detail.html:43
 #: templates/finance/report_detail.html:50
-#: templates/finance/transfer_list.html:5
-#: templates/pdf/monthly_summary.html:18 templates/pdf/weekly_report.html:20
+#: templates/finance/transfer_list.html:5 templates/pdf/monthly_summary.html:18
+#: templates/pdf/weekly_report.html:20
 #: templates/volunteers/application_list.html:19
 #: templates/volunteers/application_list.html:22
 #: templates/volunteers/thanks.html:8
@@ -1282,9 +1269,8 @@ msgid "Week end"
 msgstr "ہفتے کا اختتام"
 
 #: apps/exports/registry.py:70 apps/finance/report_selectors.py:87
-#: templates/finance/report_detail.html:8
-#: templates/finance/report_list.html:21 templates/finance/report_list.html:33
-#: templates/pdf/weekly_report.html:5
+#: templates/finance/report_detail.html:8 templates/finance/report_list.html:21
+#: templates/finance/report_list.html:33 templates/pdf/weekly_report.html:5
 msgid "Revision"
 msgstr "نسخہ"
 
@@ -1311,8 +1297,7 @@ msgstr "وصولیوں کی تعداد"
 
 #: apps/exports/registry.py:90 apps/finance/forms.py:34
 #: templates/branches/branch_list.html:18
-#: templates/branches/branch_list.html:21
-#: templates/pdf/monthly_summary.html:16
+#: templates/branches/branch_list.html:21 templates/pdf/monthly_summary.html:16
 msgid "Unsent"
 msgstr "غیر ارسال شدہ"
 
@@ -1842,8 +1827,7 @@ msgid "Find a public Ujala branch near you and contact its local team."
 msgstr "اپنی قریبی اجالا شاخ تلاش کیجیے اور مقامی ٹیم سے رابطہ کیجیے۔"
 
 #: apps/publicsite/context_processors.py:31
-msgid ""
-"Discover upcoming Ujala volunteer activities and past community events."
+msgid "Discover upcoming Ujala volunteer activities and past community events."
 msgstr ""
 "اجالا کی آنے والی رضاکارانہ سرگرمیوں اور گزشتہ اجتماعی تقریبات کے بارے میں "
 "جانیے۔"
@@ -1854,16 +1838,14 @@ msgstr ""
 "اجالا کے ساتھ رضاکارانہ خدمت کی درخواست دیجیے اور اپنے محلے کا ساتھ دیجیے۔"
 
 #: apps/publicsite/context_processors.py:37
-msgid ""
-"Contact the Ujala Volunteer Network head office or find a local branch."
+msgid "Contact the Ujala Volunteer Network head office or find a local branch."
 msgstr ""
 "اجالا رضاکار نیٹ ورک کے مرکزی دفتر سے رابطہ کیجیے یا مقامی شاخ تلاش کیجیے۔"
 
 #: apps/publicsite/context_processors.py:40
 msgid "Read how Ujala handles private applicant and member information."
 msgstr ""
-"جانیے کہ اجالا درخواست گزاروں اور ارکان کی نجی معلومات کا خیال کیسے رکھتا "
-"ہے۔"
+"جانیے کہ اجالا درخواست گزاروں اور ارکان کی نجی معلومات کا خیال کیسے رکھتا ہے۔"
 
 #: apps/publicsite/context_processors.py:44 templates/public/home.html:7
 #: templates/public/navigation.html:7
@@ -1915,10 +1897,6 @@ msgstr "رابطہ"
 #: apps/publicsite/views.py:140
 msgid "Privacy notice"
 msgstr "رازداری کا نوٹس"
-
-#: apps/seed/views.py:22
-msgid "Demo data reset. Please log in again."
-msgstr "نمائشی ڈیٹا بحال ہو گیا۔ براہِ کرم دوبارہ لاگ اِن کریں۔"
 
 #: apps/volunteers/apps.py:8
 msgid "Volunteers"
@@ -2063,8 +2041,7 @@ msgstr "ترجیحی شاخ"
 msgid "Choose an Active or Forming branch."
 msgstr "فعال یا تشکیل پاتی شاخ منتخب کریں۔"
 
-#: apps/volunteers/forms.py:301
-#: templates/volunteers/application_detail.html:16
+#: apps/volunteers/forms.py:301 templates/volunteers/application_detail.html:16
 msgid "Interests"
 msgstr "دلچسپیاں"
 
@@ -2072,8 +2049,7 @@ msgstr "دلچسپیاں"
 msgid "Choose the areas you are interested in."
 msgstr "اپنی دلچسپی کے شعبے منتخب کریں۔"
 
-#: apps/volunteers/forms.py:307
-#: templates/volunteers/application_detail.html:17
+#: apps/volunteers/forms.py:307 templates/volunteers/application_detail.html:17
 msgid "Availability"
 msgstr "دستیابی"
 
@@ -2089,8 +2065,7 @@ msgstr "آپ رضاکار کیوں بننا چاہتے ہیں؟"
 msgid "Write between 20 and 1000 characters."
 msgstr "20 سے 1000 حروف میں لکھیں۔"
 
-#: apps/volunteers/forms.py:318
-#: templates/volunteers/application_detail.html:19
+#: apps/volunteers/forms.py:318 templates/volunteers/application_detail.html:19
 msgid "Preferred language"
 msgstr "ترجیحی زبان"
 
@@ -2104,8 +2079,8 @@ msgstr "میں رازداری کے نوٹس سے متفق ہوں"
 
 #: apps/volunteers/forms.py:326
 msgid ""
-"Your details are used by authorised staff to review your application and are"
-" not shown publicly."
+"Your details are used by authorised staff to review your application and are "
+"not shown publicly."
 msgstr ""
 "آپ کی معلومات مجاز عملہ درخواست کا جائزہ لینے کے لیے استعمال کرتا ہے اور یہ "
 "عوام کو نہیں دکھائی جاتیں۔"
@@ -2116,8 +2091,8 @@ msgstr "یہ خانہ خالی چھوڑیں"
 
 #: apps/volunteers/forms.py:399
 msgid ""
-"Enter a name of 3–100 characters using letters, spaces, periods, apostrophes"
-" or hyphens."
+"Enter a name of 3–100 characters using letters, spaces, periods, apostrophes "
+"or hyphens."
 msgstr ""
 "حروف، وقفے، نقطے، اپاسٹراف یا ہائفن استعمال کرتے ہوئے 3 سے 100 حروف میں نام "
 "درج کریں۔"
@@ -2138,8 +2113,7 @@ msgstr ""
 
 #: apps/volunteers/forms.py:459
 msgid "Parent or guardian consent is required if you are under 18."
-msgstr ""
-"اگر آپ کی عمر 18 سال سے کم ہے تو والدین یا سرپرست کی رضامندی ضروری ہے۔"
+msgstr "اگر آپ کی عمر 18 سال سے کم ہے تو والدین یا سرپرست کی رضامندی ضروری ہے۔"
 
 #: apps/volunteers/models.py:15 templates/dashboard/financial.html:25
 #: templates/finance/report_detail.html:15
@@ -2351,8 +2325,7 @@ msgstr "ٹیم کا نام بدل دیا گیا۔"
 msgid "Team deactivated."
 msgstr "ٹیم غیر فعال کر دی گئی۔"
 
-#: apps/volunteers/views.py:167
-#: templates/volunteers/volunteer_role_list.html:6
+#: apps/volunteers/views.py:167 templates/volunteers/volunteer_role_list.html:6
 msgid "Create volunteer role"
 msgstr "رضاکارانہ کردار بنائیں"
 
@@ -2537,17 +2510,6 @@ msgstr "تبدیلیاں فوراً نافذ ہوتی ہیں اور آڈٹ لا�
 msgid "Save settings"
 msgstr "ترتیبات محفوظ کریں"
 
-#: templates/accounts/settings.html:14 templates/accounts/settings.html:18
-msgid "Reset demo data"
-msgstr "نمائشی ڈیٹا بحال کریں"
-
-#: templates/accounts/settings.html:15
-msgid ""
-"This replaces all demo changes with the sample data and logs everyone out."
-msgstr ""
-"اس سے تمام نمائشی تبدیلیوں کی جگہ نمونہ ڈیٹا آ جائے گا اور سب صارفین لاگ آؤٹ"
-" ہو جائیں گے۔"
-
 #: templates/accounts/temporary_password.html:3
 #: templates/accounts/temporary_password.html:5
 msgid "Temporary password"
@@ -2699,8 +2661,7 @@ msgstr "آڈٹ کے صفحات"
 
 #: templates/audit/event_list.html:23 templates/branches/branch_list.html:28
 #: templates/finance/collection_list.html:12
-#: templates/finance/report_list.html:40
-#: templates/finance/transfer_list.html:6
+#: templates/finance/report_list.html:40 templates/finance/transfer_list.html:6
 #: templates/volunteers/application_list.html:29
 #: templates/volunteers/member_list.html:25
 msgid "Previous"
@@ -2715,8 +2676,7 @@ msgstr "صفحہ %(current)s، کل <bdi>%(total)s</bdi>"
 
 #: templates/audit/event_list.html:25 templates/branches/branch_list.html:30
 #: templates/finance/collection_list.html:12
-#: templates/finance/report_list.html:41
-#: templates/finance/transfer_list.html:6
+#: templates/finance/report_list.html:41 templates/finance/transfer_list.html:6
 #: templates/volunteers/application_list.html:31
 #: templates/volunteers/member_list.html:27
 msgid "Next"
@@ -2800,8 +2760,7 @@ msgstr "نئی شاخ"
 msgid "Branch register"
 msgstr "شاخوں کا اندراج"
 
-#: templates/branches/branch_list.html:22
-#: templates/dashboard/financial.html:39
+#: templates/branches/branch_list.html:22 templates/dashboard/financial.html:39
 msgid "No branches found."
 msgstr "کوئی شاخ نہیں ملی۔"
 
@@ -2823,8 +2782,7 @@ msgstr "نیا شہر"
 
 #: templates/branches/city_list.html:8 templates/branches/city_list.html:9
 #: templates/cms/list.html:7 templates/cms/list.html:8
-#: templates/volunteers/team_list.html:8
-#: templates/volunteers/team_list.html:12
+#: templates/volunteers/team_list.html:8 templates/volunteers/team_list.html:12
 #: templates/volunteers/volunteer_role_list.html:8
 #: templates/volunteers/volunteer_role_list.html:12
 msgid "Actions"
@@ -2944,15 +2902,14 @@ msgstr "مرکزی دفتر کا ڈیش بورڈ"
 msgid "My branch"
 msgstr "میری شاخ"
 
-#: templates/dashboard/financial.html:11
-#: templates/finance/report_detail.html:6
+#: templates/dashboard/financial.html:11 templates/finance/report_detail.html:6
 msgid "Download PDF"
 msgstr "پی ڈی ایف ڈاؤن لوڈ کریں"
 
 #: templates/dashboard/financial.html:14
 msgid ""
-"No collections in this period. Period totals are zero; unsent totals include"
-" earlier periods."
+"No collections in this period. Period totals are zero; unsent totals include "
+"earlier periods."
 msgstr ""
 "اس مدت میں کوئی وصولی نہیں ہے۔ مدت کے مجموعے صفر ہیں؛ غیر ارسال شدہ مجموعوں "
 "میں پچھلی مدتیں بھی شامل ہیں۔"
@@ -3342,8 +3299,7 @@ msgstr "اس شاخ میں تشریف لائیے یا رابطہ کیجیے"
 
 #: templates/public/branch_detail.html:1 templates/public/branches.html:1
 msgid "Coming soon — apply to be a founding volunteer."
-msgstr ""
-"جلد آغاز ہوگا — ابتدائی رضاکار ٹیم میں شامل ہونے کے لیے درخواست دیجیے۔"
+msgstr "جلد آغاز ہوگا — ابتدائی رضاکار ٹیم میں شامل ہونے کے لیے درخواست دیجیے۔"
 
 #: templates/public/branch_detail.html:1 templates/public/home.html:3
 msgid "Apply to volunteer"

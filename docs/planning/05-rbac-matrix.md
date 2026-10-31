@@ -47,7 +47,6 @@ Legend: **✓** allowed (global) · **S** allowed within assigned branches · **
 | `city.manage` | — | ✓ | — | — | — | — |
 | `volunteer_role.manage` | — | ✓ | — | — | — | — |
 | `settings.view` / `settings.update` (lock days etc.) | — | ✓ | — | — | — | — |
-| `demo.reset` (DEMO_MODE only) | — | ✓ | — | — | — | — |
 
 ### 3.3 Branches
 

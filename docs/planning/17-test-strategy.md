@@ -13,7 +13,7 @@ Helpers: `factory_boy` factories per model; fixtures `seeded_db` (runs `seed_dem
 
 ## 2. Coverage
 - Measured on `apps/` (exclude `migrations/`, `settings`, `manage.py`, `wsgi`, `tests`).
-- CI gate: `--cov-fail-under=60` from day 1; raise to **70** on 31 Oct once reached. Target ≥ 75 % overall; ≥ 85 % on `services/`, `permissions.py`, `kpis.py`, `audit/`.
+- CI gate: `--cov-fail-under=90` after the project audit (the initial gate was 60%). Target ≥ 90 % overall; ≥ 85 % on `services/`, `permissions.py`, `kpis.py`, `audit/`.
 - Coverage report attached as CI artifact and summarised in job summary; README badge (static from last main run or Codecov free for public repos — optional).
 
 ## 3. Mandatory suites

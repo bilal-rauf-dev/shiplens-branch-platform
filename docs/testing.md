@@ -289,3 +289,13 @@ All 45 completed audits scored at least 96 in every category. Two Step 2
 NO_NAVSTART recordings were retried; completed scores were retained. The final
 set ran after the heavy test workloads finished. HTTPS/certificate validation
 remains a separate live check; only the localhost HTTPS audit was skipped.
+
+## D4 visual review fixes
+
+Step 1: 2,202 PostgreSQL tests passed, 0 failed, with 97.86% app coverage.
+Eight new local EN/UR browser checks passed: Finance/HR/Branch Lead heading
+hierarchy, scoped summary/unsent export labels, unchanged generic CSV labels,
+text-only audit chips, and amount/date wrapping with contained table overflow
+at 360, 768 and 1440 px. Mobile table cards remained active below 640 px.
+Every value of the six domain status enums has an explicit badge-mask rule.
+Ruff, formatting, conventions and Urdu extraction passed (783 entries).

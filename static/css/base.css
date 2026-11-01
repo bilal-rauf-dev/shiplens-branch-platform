@@ -68,7 +68,8 @@ a { color: var(--md-primary); }
 button, input, select, textarea { font: inherit; }
 :focus-visible { outline: 2px solid var(--md-primary); outline-offset: 2px; }
 bdi, [dir="ltr"] { unicode-bidi: isolate; }
-.numeric { font-variant-numeric: tabular-nums; text-align: end; }
+.numeric { font-variant-numeric: tabular-nums; text-align: end; white-space: nowrap; }
+.nowrap { white-space: nowrap; }
 .numeric bdi { direction: ltr; }
 .visually-hidden, .honeypot {
   position: absolute;

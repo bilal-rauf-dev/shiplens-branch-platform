@@ -169,7 +169,7 @@ input[type="checkbox"], input[type="radio"] {
   color: var(--md-on-error-container); background: var(--md-error-container);
 }
 
-.table-container { overflow: auto; }
+.table-container { overflow: auto; min-inline-size: 0; max-inline-size: 100%; }
 .pagination a, .filter-bar a {
   display: inline-flex; align-items: center; min-block-size: 40px;
   padding-inline: var(--md-s4); border-radius: var(--md-radius-full);

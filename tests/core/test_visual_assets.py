@@ -8,7 +8,10 @@ import pytest
 import tinycss2
 from django.conf import settings
 
-from apps.cms.models import ILLUSTRATIONS
+from apps.branches.models import BranchStatus
+from apps.cms.models import ILLUSTRATIONS, ContentStatus
+from apps.finance.models import CollectionState, ReportStatus
+from apps.volunteers.models import ApplicationStatus, MemberStatus
 
 ROOT = Path(__file__).resolve().parents[2]
 SVGS = sorted((ROOT / "static/img").rglob("*.svg"))
@@ -54,6 +57,39 @@ def test_t_ui_template_icon_contract():
     for name in declared:
         assert (ROOT / "static/img/icons" / f"{name}.svg").is_file(), name
         assert f'mask-image: url("../img/icons/{name}.svg")' in css
+
+
+@pytest.mark.parametrize(
+    "statuses",
+    [
+        BranchStatus,
+        CollectionState,
+        ReportStatus,
+        ApplicationStatus,
+        MemberStatus,
+        ContentStatus,
+    ],
+)
+def test_t_ui_every_status_has_an_explicit_mask(statuses):
+    masks = set()
+    css = (ROOT / "static/css/icons.css").read_text(encoding="utf-8")
+    for rule in tinycss2.parse_stylesheet(
+        css, skip_comments=True, skip_whitespace=True
+    ):
+        if rule.type != "qualified-rule":
+            continue
+        declarations = tinycss2.parse_declaration_list(rule.content)
+        if any(
+            item.type == "declaration" and item.lower_name == "mask-image"
+            for item in declarations
+        ):
+            masks.update(
+                re.findall(
+                    r'\[data-status="([A-Z_]+)"\]::before',
+                    tinycss2.serialize(rule.prelude),
+                )
+            )
+    assert set(statuses.values) <= masks
 
 
 def test_t_ui_motion_is_opt_in_and_composited():

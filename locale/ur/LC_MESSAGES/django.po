@@ -3568,3 +3568,9 @@ msgstr "درخت"
 
 msgid "Orientation"
 msgstr "تعارفی نشست"
+
+msgid "Export summary CSV"
+msgstr "خلاصے کی سی ایس وی برآمد کریں"
+
+msgid "Export unsent CSV"
+msgstr "غیر ارسال شدہ وصولیوں کی سی ایس وی برآمد کریں"

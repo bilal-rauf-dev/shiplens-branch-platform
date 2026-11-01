@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n money %}
 {% block title %}{% translate "Branches" %} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
   <h1 class="page-title">{% translate "Branches" %}</h1>
@@ -18,7 +18,7 @@
       <thead><tr><th scope="col">{% translate "Code" %}</th><th scope="col">{% translate "Name" %}</th><th scope="col">{% translate "City" %}</th><th scope="col">{% translate "Status" %}</th><th scope="col">{% translate "Members" %}</th><th scope="col">{% translate "Unsent" %}</th></tr></thead>
       <tbody>
         {% for branch in branches %}
-          <tr><td data-label="{% translate 'Code' %}"><a href="{% url 'branch-detail' branch.pk %}"><bdi>{{ branch.code }}</bdi></a></td><td data-label="{% translate 'Name' %}">{% if LANGUAGE_CODE == "ur" %}{{ branch.name_ur }}{% else %}{{ branch.name_en }}{% endif %}</td><td data-label="{% translate 'City' %}"><bdi>{{ branch.city.code }}</bdi></td><td data-label="{% translate 'Status' %}"><span class="chip status-badge" data-status="{{ branch.status }}">{{ branch.get_status_display }}</span></td><td class="numeric" data-label="{% translate 'Members' %}">—</td><td class="numeric" data-label="{% translate 'Unsent' %}">—</td></tr>
+          <tr><td data-label="{% translate 'Code' %}"><a href="{% url 'branch-detail' branch.pk %}"><bdi>{{ branch.code }}</bdi></a></td><td data-label="{% translate 'Name' %}">{% if LANGUAGE_CODE == "ur" %}{{ branch.name_ur }}{% else %}{{ branch.name_en }}{% endif %}</td><td data-label="{% translate 'City' %}"><bdi>{{ branch.city.code }}</bdi></td><td data-label="{% translate 'Status' %}"><span class="chip status-badge" data-status="{{ branch.status }}">{{ branch.get_status_display }}</span></td><td class="numeric" data-label="{% translate 'Members' %}">{% if branch.member_count != None %}<bdi>{{ branch.member_count }}</bdi>{% else %}—{% endif %}</td><td class="numeric" data-label="{% translate 'Unsent' %}">{% if branch.unsent_count != None %}<bdi>{{ branch.unsent_count }}</bdi> · <bdi>{{ branch.unsent_amount|money }}</bdi>{% else %}—{% endif %}</td></tr>
         {% empty %}<tr><td colspan="6">{% translate "No branches found." %}</td></tr>{% endfor %}
       </tbody>
     </table>

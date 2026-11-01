@@ -190,7 +190,7 @@ The [handover runbook](docs/handover.md) covers password rotation, CLI rebuilds,
 
 ## 📚 Limits, credits and ownership
 
-The release has no online payments, outbound email, file uploads or adjustment-entry workflow. Interest choices are fixed; weeks start on Monday. Historical active-member counts use current status. Member/unsent counts in the branch register remain placeholders; use the dashboard and operational lists for actual figures. Free hosting can cold-start, and its database needs an expiry plan. See the [runbook](docs/handover.md#known-limitations-and-deferred-work), [security boundaries](docs/security.md) and [implementation differences](docs/business-rules.md#differences-from-the-earlier-plan).
+The release has no online payments, outbound email, file uploads or adjustment-entry workflow. Interest choices are fixed; weeks start on Monday. Historical active-member counts use current status. Branch-register member and unsent counts follow the underlying list permissions. Free hosting can cold-start, and its database needs an expiry plan. See the [runbook](docs/handover.md#known-limitations-and-deferred-work), [security boundaries](docs/security.md) and [implementation differences](docs/business-rules.md#differences-from-the-earlier-plan).
 
 AI assistance is declared in **[AI-USAGE.md](AI-USAGE.md)**. The owner maintains that dated log and reviews the implementation for the solo challenge's explainability requirement.
 

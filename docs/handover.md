@@ -223,8 +223,8 @@ adjustment-entry workflow, dashboard JSON API or scheduler endpoint. The importe
 accepts a CSV directory and optional YAML header mapping, not XLSX files. Interests
 are a fixed list; report weeks are Monday–Sunday. Active-member historical figures
 use current status, and dashboard as_of does not reconstruct every past state.
-Member/unsent counts in the branch register are still placeholders; the dashboard
-and scoped operational lists supply actual figures.
+Branch-register counts follow member.list and collection.list permissions for
+each branch; denied metrics display a dash rather than a zero.
 CMS seed event dates are fixed. Refreshing a page supplies current data; no push
 updates exist. Free hosting can cold-start and needs operator-managed backup/expiry
 work. [Security limitations](security.md#known-limitations-and-operator-checks) and

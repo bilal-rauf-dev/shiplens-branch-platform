@@ -74,7 +74,7 @@ Contrast checks to verify in tests/Lighthouse: on-surface on surface ≈ 16:1; p
 | **Tables** `.data-table` | Inside a card; header row on surface-container-low; row hover is a state layer only (**no scale on rows** — scaling tables causes layout jank); numbers `text-align: end` with `<bdi>`; card layout under 640px (existing behaviour). |
 | **Navigation** | Top app bar: surface at 85% opacity with `backdrop-filter: blur(12px)` and a 1px outline-variant bottom border; sticky. Active nav item = secondary-container pill. Staff app on ≥ 1024px: a navigation rail/drawer with pill active indicator; mobile: the existing `<details>` menu styled as a sheet (radius 28px). |
 | **Messages / toasts** | Server flash messages as a snackbar-style card (inverse surface `#313033`, text `#F4EFF4`), radius 8px, `role="status"`; errors use error-container. |
-| **Empty states** | Card with a soft blob shape behind an icon, one sentence and a tonal button. |
+| **Empty states** | Card with an illustration, one sentence and a tonal button. |
 | **Dialogs** (confirm transitions) | Native `<dialog>` or a confirm page; radius 28px, `--md-elev-3`, scrim `rgb(0 0 0 / .32)`. |
 
 ## 4. Atmosphere: organic shapes — the performant way

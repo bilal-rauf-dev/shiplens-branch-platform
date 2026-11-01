@@ -326,3 +326,23 @@ D4 mobile Lighthouse medians, three completed runs per configured page:
 
 All fifteen individual audits scored at least 99 in every category. Collection
 ran after the test workloads finished; only the localhost HTTPS audit was skipped.
+
+## D5 dashboard width and featured-card gap
+
+The full PostgreSQL suite passed 2,208 tests, 0 failed (67 browser/visual cases
+deselected), with 97.86% app coverage. Ruff, formatting and conventions passed.
+
+The full local E2E suite passed 48/48, including Finance dashboard tables at
+1280 and 1440 px in EN/UR: every `.table-container` has `scrollWidth <= clientWidth`.
+Both home pages at 1440 px passed the measured minimum 23 px gap between the
+section heading and its following featured card. The eight EN/UR viewports
+(360, 412, 768 and 1440 px) passed too, including page overflow checks.
+
+All four home/dashboard screenshots were recaptured using D4's Chrome settings
+(1440×1000, DPR 1, fonts and lazy images ready) and visually reviewed: dashboard
+columns are visible and the featured-card heading gap is clear. The empty-state
+planning row now matches the illustration used since D4.
+
+Lighthouse was not rerun for D5: these CSS changes affect staff pages or viewports
+768 px and wider, so the mobile public-page audits are unaffected. CI runs
+Lighthouse on push.

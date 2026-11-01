@@ -1,5 +1,6 @@
 body { display: flex; flex-direction: column; }
 .container { inline-size: 100%; max-inline-size: 72rem; margin-inline: auto; padding-inline: var(--md-s4); }
+.staff-app .container { max-inline-size: 90rem; }
 .site-header, .site-footer { padding-block: var(--md-s4); }
 .site-footer { background: var(--md-surface-container); }
 .site-header { border-block-end: 1px solid var(--md-outline-variant); }
@@ -137,7 +138,8 @@ nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--md-s4); }
 }
 @media (width < 480px) { .brand-full { display: none; } .brand-short { display: inline; } }
 @media (width >= 768px) {
-  .section-heading + .card--featured { margin-block-start: var(--md-s4); }
+  /* This margin collapses with the heading's 24px; the card's 16px lift then leaves a 24px gap. */
+  .section-heading + .card--featured { margin-block-start: calc(var(--md-s5) + var(--md-s4)); }
   .public-card.card--featured { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); align-items: center; gap: var(--md-s6); }
 }
 

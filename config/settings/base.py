@@ -12,6 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from apps.core.static import immutable_cache_headers
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+RELEASE_VERSION = (BASE_DIR / "VERSION").read_text(encoding="utf-8").strip()
 
 SECRET_KEY = os.environ["SECRET_KEY"]
 DEBUG = False

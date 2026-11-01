@@ -6,15 +6,15 @@ I used AI tools as allowed by the ShipLens 1.0 rules. I reviewed and tested ever
 
 | Tool | Model / version | Used for |
 |---|---|---|
-| Claude Code (Anthropic) | Claude Opus | Planning documents in `docs/planning/`, design review, the `AGENTS.md` rules and the Codex task prompts |
-| OpenAI Codex | <model> | Implementation following the task prompts in `docs/planning/22-codex-prompts.md`, step by step, with my review before every commit |
+| Claude Code (Anthropic) | Claude Opus 5.5 | Planning documents in `docs/planning/`, design review, the `AGENTS.md` rules the Codex task prompts and review of Codex’s summaries and diffs |
+| OpenAI Codex | GPT-6.1 Sol | Implementation following the task prompts in `docs/planning/22-codex-prompts.md`, step by step, with my review before anything reached `main` |
 
 ## Rules I followed
 
-- I read AI output line by line and ran the tests before committing any of it.
+- I read AI output line by line and ran the tests before any of it reached `main`.
 - I never pasted secrets or real personal data into an AI tool.
 - I own the business rules, data model and permission decisions (see `docs/planning/` and the ADRs). AI proposed alternatives; I chose.
-- AI tools never committed, pushed or opened pull requests. I did every git step myself.
+- Until 27 October I made every commit myself. From commit `9ff5169` onwards, Codex made local commits on task branches, as `AGENTS.md` §2 sets out. AI tools never pushed, merged or opened pull requests; I did those steps myself.
 
 ## Log
 
@@ -40,3 +40,6 @@ I used AI tools as allowed by the ShipLens 1.0 rules. I reviewed and tested ever
 | 2026-11-01 | Codex | P14 ADRs, architecture, route reference and handover | docs/, README.md, apps/core/route_docs.py, apps/core/management/commands/export_routes.py, bin/export_model_diagram.py, bin/export_credits.py, tests/core/test_route_docs.py | Required the docs to describe the code rather than the plan and list every difference; checked the ER diagram covers all 17 models, the route export is sorted so its CI check is stable, the judge-path figures match the seed plan and no password appears; kept BR-067 marked as not implemented rather than overstating coverage |
 | 2026-11-01 | Codex | F2 startup drafts, branch register counts and correction guide | apps/seed/, apps/finance/management/, apps/branches/, templates/branches/, docs/, README.md, tests/seed/, tests/branches/ | Spotted the placeholder Members/Unsent counts while reviewing P14 and added them to this task; chose drafting at startup over a dashboard trigger or a token endpoint and had the reasons recorded in ADR 0006; checked the counts total 9 members and Rs 35,250.50 unsent to match the dashboard, and that drafts leave the judge path and K8/K9 unchanged |
 | 2026-11-01 | Claude Code + Codex | D3–D5 illustrations, icons, motion and staff layout fixes | static/, templates/, apps/cms/, sample_data/, bin/export_credits.py, locale/ur/, docs/, tests/ | Chose unDraw for the illustrations and supplied the files; a screenshot review with Claude Code found staff headings larger than page titles, repeated icons, a dashboard table clipped by the first fix and a spacing fix that had no effect because margins collapse; each got a follow-up commit and a test; kept the health.svg path so no extra migration was needed |
+| 2026-10-29 | Codex | Material You visual polish (PR #13) | static/css/, templates/, apps/, locale/ur/, tests/ | Reviewed Playwright screenshots on desktop and mobile in English and Urdu; re-ran mobile Lighthouse on /en/ and /en/get-involved/; confirmed no behaviour changes and that existing tests stayed green. Row added late on 1 Nov |
+| 2026-10-31 | Codex | P13 security hardening and performance (PR #21) | apps/accounts/, apps/core/, apps/finance/, bin/, config/settings/, docker-compose.ci.yml, docs/performance.md, docs/security.md, templates/base.html, tests/ | Checked for CSP violations on the dashboard charts, CMS editor and public pages in English and Urdu; reviewed the OWASP self-review and its documented raw-SQL exceptions; had the gaps it found fixed in the same PR. Row added late on 1 Nov |
+| 2026-11-01 | Claude Code + Codex | P16 release preparation | VERSION, CHANGELOG.md, config/settings/base.py, apps/core/views.py, apps/publicsite/context_processors.py, templates/base.html, locale/ur/, docs/handover.md, docs/openapi.yaml, tests/core/ | Kept the commit SHA in version and added release beside it; compared the changelog with all 21 merged PRs; added a test so broken docs links fail CI; corrected this file's rules, which said AI tools never committed although AGENTS.md has allowed it since 9ff5169 |

@@ -3574,3 +3574,7 @@ msgstr "خلاصے کی سی ایس وی برآمد کریں"
 
 msgid "Export unsent CSV"
 msgstr "غیر ارسال شدہ وصولیوں کی سی ایس وی برآمد کریں"
+
+#: templates/base.html
+msgid "Version"
+msgstr "ورژن"

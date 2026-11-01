@@ -1,6 +1,7 @@
 import os
 from datetime import UTC
 
+from django.conf import settings
 from django.contrib.auth.views import redirect_to_login
 from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
@@ -80,6 +81,7 @@ def health(request):
             "status": "ok",
             "db": "ok",
             "version": version[:7],
+            "release": settings.RELEASE_VERSION,
             "time": clock.now().astimezone(UTC).isoformat().replace("+00:00", "Z"),
         }
     )

@@ -30,16 +30,19 @@ history retains earlier reasons. Activation sets the Karachi opening date only
 when missing; resuming preserves it. Closing records the Karachi closing date.
 Actor, timestamp and audit history update in the same transaction.
 
-`close_blockers` currently returns an empty list. P6 will add unsent collections
-and P7 will add open reports. A nonempty list prevents closing. Branch assignments
+`close_blockers` checks unsent collections and Submitted/Resubmitted/Returned
+reports. A nonempty list prevents closing; see [finance](finance.md) and
+[weekly reports](weekly-reports.md). Branch assignments
 remain for history; the assignment service locks the branch and rejects new
 assignments once it is Closed.
 
 The register has city and branch create/edit screens for Super Admins. Finance
 Reviewers see every branch read-only; Branch and HR Leads see assigned branches.
 The list supports city/status filters and pages of 25. Only permitted staff see
-a branch's history. Counts remain placeholders until member and collection data
-arrive. City codes stay fixed after creation so existing branch codes still match.
+a branch's history. Members and Unsent in the branch list/detail remain `—`
+placeholders; those templates do not calculate counts. Use the scoped Members
+page and dashboard's unsent figures for real data. City codes stay fixed after
+creation so existing branch codes still match.
 
 The POST-only `/en/branches/<id>/<action>/` endpoint (also available in Urdu)
 redirects successful actions to the detail page, where a translated message is

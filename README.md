@@ -1,270 +1,199 @@
-# ShipLens — Branch-to-Head-Office Management Platform
+<p align="center">
+  <img src="docs/assets/readme-banner.svg" alt="ShipLens — from branch records to trusted decisions" width="1200">
+</p>
 
-A bilingual (English/Urdu) platform that connects volunteer branches to head office: a public website with volunteer applications, plus a secure back office for branches, members, offline collections, weekly reports with approval, a head-office dashboard and a full audit trail.
+<p align="center">
+  <a href="https://github.com/bilal-rauf-dev/shiplens-branch-platform/actions/workflows/ci.yml"><img src="https://github.com/bilal-rauf-dev/shiplens-branch-platform/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
+  <a href="https://shiplens-web.onrender.com"><img src="https://img.shields.io/badge/Live-demo-6750A4?style=flat-square&amp;logo=render&amp;logoColor=white" alt="Open live demo"></a>
+  <img src="https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&amp;logo=python&amp;logoColor=white" alt="Python 3.12">
+  <img src="https://img.shields.io/badge/Django-5.2_LTS-0C4B33?style=flat-square&amp;logo=django" alt="Django 5.2 LTS">
+  <img src="https://img.shields.io/badge/English_%2B_Urdu-RTL-7D5260?style=flat-square" alt="English and Urdu RTL">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/Licence-MIT-1E6B3A?style=flat-square" alt="MIT licence"></a>
+</p>
 
-Solo entry for **ShipLens 1.0** by EchoLens Digital. Work in progress; the full README comes with the release.
+# ShipLens
 
-The current build includes English and Urdu home pages, secure email login and
-password changes, role-specific dashboards, a database health endpoint,
-Docker packaging and CI. The central permission matrix and branch assignments are
-implemented, with default-deny route enforcement, localized error pages and an
-append-only audit log. The branch and city register provides scoped lists,
-audited editing and lifecycle controls. The authored sample data can be loaded
-with one command (below). The public volunteer form validates submissions, limits
-spam and stores applicant details for scoped HR review, decisions and audit history.
-HR can manage teams in assigned branches; Super Admin can manage teams globally
-and create, edit or deactivate bilingual volunteer roles. Branch Leads have a
-scoped, read-only team list. Deactivated teams and roles keep existing member
-links and cannot be selected for new acceptances.
-The member register supports scoped search, combined filters, stable sorting and
-25-member pages, with CSS cards on mobile and PostgreSQL search indexes.
-Member detail includes scoped editing, lifecycle actions and audit history.
-Super Admin can search the global audit log, inspect event diffs and verify the
-append-only hash chain from the Audit log navigation item.
-Offline collection entry now includes an exact seven-day lock, audited edits and
-voids, and immutable transfers to the main account. Unsent money blocks branch
-closure. See [finance documentation](docs/finance.md) for the rules and tests.
+ShipLens connects volunteer branches to head office in one bilingual English/Urdu platform. The public can explore **Ujala Volunteer Network**, a fictional demo organisation, and apply to volunteer; staff can manage branches and members, record **offline** collections and transfers, submit weekly reports, approve and lock figures, and follow every decision through an append-only audit trail. Head office gets fresh dashboard figures on each page load. There are no online payments or WebSocket updates.
 
-- Planning documents: [`docs/planning/`](docs/planning/00-executive-summary.md)
-- AI usage declaration: [`AI-USAGE.md`](AI-USAGE.md)
-- Licence: [MIT](LICENSE)
-- CI jobs and checks: [`docs/ci.md`](docs/ci.md)
-- Generated permission matrix and scope rules: [`docs/permissions.md`](docs/permissions.md)
-- Branch model, counters and migration notes: [`docs/branch-register.md`](docs/branch-register.md)
-- Public volunteer form and privacy controls: [`docs/volunteer-applications.md`](docs/volunteer-applications.md)
+**Solo entry for the ShipLens 1.0 build challenge.**
 
-## Run locally
+**[🟣 Open the live demo](https://shiplens-web.onrender.com/en/)** · **[اردو](https://shiplens-web.onrender.com/ur/)** · **[Health](https://shiplens-web.onrender.com/health)** · **[Documentation](docs/README.md)** · **[CI runs](https://github.com/bilal-rauf-dev/shiplens-branch-platform/actions/workflows/ci.yml)**
 
-Install Docker with Compose support (Docker Desktop on Windows). A host Python
-installation is not required to run the application.
+The free Render service can take up to a minute on the first load. Demo data is fictional and shared with other visitors; the reference values below assume a fresh authored seed.
 
-For a fresh checkout, copy the example environment file. Keep an existing `.env`:
+<!-- OWNER: Record the full final judged commit SHA after the final merge and matching deployment. -->
+**Submitted version:** owner to record the final SHA.
+
+<!-- OWNER: Insert the coverage percentage (and optional badge) from the final green CI job summary, not a local run. -->
+**Coverage:** see the final CI test-job summary; the enforced minimum is 90%.
+
+<!-- OWNER: Add the walkthrough video link: own voice, no more than five minutes. -->
+**Walkthrough video:** owner to add the link before submission.
+
+## 🔑 Try all five roles
+
+Sign in at **[Staff login](https://shiplens-web.onrender.com/en/accounts/login/)**. Passwords are **provided in the submission form**.
+
+| Role | Test login | Password | Lands on |
+| --- | --- | --- | --- |
+| Super Admin | `superadmin.demo@shiplens.test` | provided in the submission form | Head-office dashboard |
+| Finance Reviewer | `finance.demo@shiplens.test` | provided in the submission form | Head-office dashboard |
+| Content Editor | `content.demo@shiplens.test` | provided in the submission form | Content |
+| Branch Lead | `branchlead.demo@shiplens.test` | provided in the submission form | My branch dashboard (Karachi) |
+| HR Lead | `hr.demo@shiplens.test` | provided in the submission form | HR overview |
+
+Super Admin does not approve reports or accept applications. Finance reviews reports; assigned HR Leads decide applications. Demo accounts cannot change their passwords or be edited/reset through staff administration. See the generated [permission matrix](docs/permissions.md).
+
+## ⚡ Judge quick path — five steps, under five minutes
+
+Start with a fresh demo seed. Use the logins above and log out between roles. R9 is a sample label, so find the report by its branch and week.
+
+1. **Dashboard · Finance · 45 seconds.** Select **October 2026**. Collected is **Rs 73,250.50 (8 entries)**; Approved is Rs 43,250.50; Awaiting approval is Rs 30,000.00.
+2. **Approve R9 · Finance · 60 seconds.** Open Review queue → **BR-LHE-01, 12–18 October 2026**, Submitted, Rs 15,000.00. Choose **Approve and lock**. The report becomes Locked. Refresh the October dashboard: Approved becomes **Rs 58,250.50** and Awaiting becomes **Rs 15,000.00**; Collected stays unchanged.
+3. **Seven-day lock · Branch Lead · 45 seconds.** Open Collections and find receipt **C05**, Karachi, 8 October, Rs 5,250.50. It is Locked and unsent, with no edit/void controls. The lock is measured from entry creation time. [Boundary tests](tests/finance/test_lock.py) check one second before and exactly at seven days; nobody can unlock it.
+4. **Urdu · 30 seconds.** Open the public home and select **اردو**. Visit Get Involved to see the mirrored form and translated labels; staff pages and PDFs also support Urdu.
+5. **Audit · Super Admin · 60 seconds.** Open Audit log. Filter by Lahore and `report.approved`, open R9's approval event, then find `report.locked` for the same report. Check actor, changes and request ID; use **Verify chain** to check integrity. The lock event has a system actor.
+
+The full return/resubmit lifecycle uses **R10: Karachi, week starting 19 October** and is demonstrated by [the lifecycle test](tests/finance/test_report_acceptance.py) and [browser journeys](docs/testing.md). Approving R9 changes the shared demo; the next fresh baseline requires an operator rebuild.
+
+## ✨ What the brief becomes in ShipLens
+
+The IDs below match the deliverables in [the compliance plan](docs/planning/01-compliance-matrix.md).
+
+| Brief | Delivered behavior / evidence |
+| --- | --- |
+| D-01 · Public website | Home, About, Programs, Branches, Events, Get Involved, Contact, plus Privacy; [public site](docs/public-website.md). |
+| D-02 · Volunteer applications | Validated bilingual form, consent, spam controls and duplicate flags; [applications](docs/volunteer-applications.md). |
+| D-03 · Login and five roles | Email login, central permissions and branch scope; [generated matrix](docs/permissions.md). |
+| D-04 · Branch register | Generated codes, bilingual profiles and guarded lifecycle; [branches](docs/branch-register.md). |
+| D-05 · Acceptance to membership | HR acceptance creates exactly one member atomically; [rule catalogue](docs/business-rules.md). |
+| D-06 · Member register | Scoped search, combined filters, sorting, pagination, teams and lifecycle; [members](docs/volunteer-applications.md#member-register-and-search). |
+| D-07 · Seven-day lock | Exact creation-time boundary, voids and whole-entry offline transfers; [finance](docs/finance.md). |
+| D-08 · Weekly reports | Draft → submit → return → resubmit → approve → lock, with snapshots; [reports](docs/weekly-reports.md). |
+| D-09 · Head-office insight | October seed totals, twelve-month trends and unsent money; [expected values](docs/planning/09-dashboard-and-seed-data.md#41-reference-period-october-2026). |
+| D-10 · Exports | Scoped CSV and weekly/monthly PDF, including Urdu; [exports](docs/exports.md). |
+| D-11 · Content manager | Bilingual working copies, preview, published snapshots and sanitization; [content](docs/public-website.md). |
+| D-12 · Audit trail | Atomic events, append-only DB guards and a verifiable hash chain; [audit](docs/audit.md). |
+| D-13 · English + Urdu | Translated UI, logical CSS, RTL and local fonts; [Urdu guide](docs/i18n-glossary.md). |
+| D-14 · Automated tests | PostgreSQL suite with a 90% app-coverage gate; [CI](docs/ci.md). |
+| D-15 · GitHub Actions | Lint, tests, security, Docker, E2E, Lighthouse and separate CodeQL; [workflow](.github/workflows/ci.yml). |
+| D-16 · Docker + health | Non-root multistage image and DB readiness check; [Dockerfile](Dockerfile), [health contract](docs/openapi.yaml). |
+| D-17 · Public source + MIT | [Repository](https://github.com/bilal-rauf-dev/shiplens-branch-platform), [licence](LICENSE); the owner verifies final history/compliance. |
+| D-18 · Render + PostgreSQL | [Live demo](https://shiplens-web.onrender.com) and [Blueprint](render.yaml); [operations](docs/handover.md). |
+| D-19 · Documentation | Fifteen [ADRs](docs/README.md#architecture-decisions), architecture, generated routes and runbook. |
+| D-20 · Test logins | One published login per role in the table above. |
+| D-21 · README + AI declaration | This guide and the dated [AI usage log](AI-USAGE.md), maintained by the owner. |
+| D-22 · Walkthrough video | Owner-provided recording; link placeholder above. |
+
+## 🖼️ See it in both languages
+
+**Head office — October 2026, fresh local sample data**
+
+![English head-office dashboard with October 2026 totals](docs/screenshots/dashboard-en.png)
+
+**Urdu public home — right-to-left layout**
+
+![Urdu public home with mirrored navigation and local Naskh typography](docs/screenshots/home-ur.png)
+
+Also see the existing [Urdu weekly-report PDF example](docs/screenshots/export-report-ur.png). Screenshots contain fictional data; they do not certify the current live deployment.
+
+## 🧭 Architecture and stack choices
+
+`URL → permission + form → service + transaction → model + audit`
+
+Read-only queries live in selectors/KPIs. PostgreSQL constraints and triggers protect identifiers, sent money, locked reports and audit rows. There is one web service and one database; no scheduler is needed. See the [C4 and model diagrams](docs/architecture.md) and [ADRs](docs/README.md#architecture-decisions).
+
+| Choice | Why it fits |
+| --- | --- |
+| Python 3.12 + Django 5.2 LTS | Forms, sessions, translations and security defaults in one explainable server application. |
+| PostgreSQL 16 + psycopg 3 | Exact Decimal money, transactions, row locks, constraints and integrity triggers. |
+| Django templates + handwritten MD3 CSS | Small pages, native forms, logical properties for RTL; no frontend build or SPA. |
+| Gunicorn + WhiteNoise + Docker | One reproducible non-root runtime with hashed static assets. |
+| Argon2, Axes, ratelimit, CSP, Markdown + nh3 | Password hashing, abuse controls and a narrow sanitized content boundary; [security](docs/security.md). |
+| WeasyPrint + local Roboto/Naskh; CSV + PyYAML | Urdu PDF shaping, readable local fonts and a portable historical CSV importer with safe header mapping. openpyxl remains in the fixed runtime stack; there is no XLSX import workflow. |
+| Vendored Chart.js 4 | Two dashboard charts; public pages ship no scripts. |
+| pytest + Playwright + Ruff | PostgreSQL business-rule checks, browser journeys, lint and formatting; [testing](docs/testing.md). |
+
+No React, HTMX, Tailwind or Bootstrap. Detailed [performance evidence](docs/performance.md) and [design rules](docs/design-system.md) have their own guides.
+
+## 🐳 Run locally
+
+Install Docker with Compose support. From a fresh checkout, copy the example; keep any existing `.env`:
 
 ```sh
 cp .env.example .env
 ```
 
-Edit `.env` and replace the `SECRET_KEY` placeholder with a long random signing key.
-You can generate one without installing Python locally:
-
-```sh
-docker run --rm python:3.12-slim-bookworm python -c "import secrets; print(secrets.token_urlsafe(48))"
-```
-
-The example's PostgreSQL credentials are for local development. Keep the
-`DATABASE_URL` hostname as `db` inside Compose; if you change the database name,
-user or password, update both `DATABASE_URL` and the corresponding `POSTGRES_*`
-values. `.env` is ignored by Git and excluded from Docker builds.
-
-Start the stack (Compose discovers `docker-compose.yml` automatically):
+Set a long random `SECRET_KEY`. Match `DATABASE_URL` to `POSTGRES_DB`, `POSTGRES_USER` and `POSTGRES_PASSWORD`; the database hostname inside Compose is `db`. Keep secrets in `.env`, which is ignored by Git and excluded from images. Then:
 
 ```sh
 docker compose up --build
 ```
 
-Compose waits for PostgreSQL, applies migrations, creates the database cache table,
-compiles translation catalogs, then starts Django's development server. Open:
+Open [English home](http://localhost:8000/en/), [Urdu home](http://localhost:8000/ur/) or [health](http://localhost:8000/health). Development startup migrates, creates the cache table and compiles translations. To stop, use `docker compose down`; the named database volume is retained.
 
-- [English home](http://localhost:8000/en/)
-- [Urdu home](http://localhost:8000/ur/)
-- [Health endpoint](http://localhost:8000/health), which returns HTTP 200 with
-  `status` and `db` both `ok` when PostgreSQL is reachable.
+For a non-demo installation, bootstrap an operator with `docker compose exec web python manage.py createsuperuser`. This creates the application's Super Admin role; Django admin is not installed.
 
-To stop the stack, run `docker compose down` in another terminal. The named database
-volume is retained. See [CI documentation](docs/ci.md) for checks and the PostgreSQL
-test requirements.
+### Load the authored sample data
 
-To bootstrap a local staff account after updating an existing checkout, apply the
-migrations and run Django's interactive account-creation command:
-
-```sh
-docker compose exec web python manage.py migrate --noinput
-docker compose exec web python manage.py createsuperuser
-```
-
-This creates our `SUPER_ADMIN` role; the application does not use Django's admin,
-`is_staff`, or `is_superuser` permission flags. Open
-[staff login](http://localhost:8000/en/accounts/login/). Passwords require at least
-12 characters and must pass common-password, similarity and numeric-password
-checks. Five failed attempts lock that email/client-IP pair for 15 minutes.
-Login POSTs also share a limit across all emails from the same client IP:
-20 per minute and 200 per day. Excess requests return the translated 429 page
-and record `auth.rate_limited` without credentials in the audit event.
-Sessions expire after one hour idle or eight hours from login; activity does not
-extend the absolute deadline.
-
-The permission source is `apps/accounts/permissions.py`. After an intentional
-matrix change, regenerate its documentation with:
-
-```sh
-docker compose exec web python manage.py export_permissions
-```
-
-The tests compare the matrix to the frozen plan copy in `tests/rbac_expected.yaml`
-and verify that the generated document matches the committed file. That YAML file
-uses JSON syntax (a YAML 1.2 subset), so the tests need no extra YAML dependency.
-`tests/rbac/registry.py` supplies a valid request recipe for every protected route.
-The suite checks every role and anonymous access against the central matrix, plus
-direct service denials. New protected routes must add a recipe or CI fails; see
-[permission regression checks](docs/ci.md#permission-regression-checks).
-Super Admins can open [Users](http://localhost:8000/en/app/users/) and
-[System settings](http://localhost:8000/en/app/settings/) from the navigation.
-User creation and password reset show a generated temporary password only in that
-response, with caching disabled. Copy it before leaving; the next login requires a
-password change. Deactivation and reset revoke existing sessions.
-
-The last active Super Admin cannot be demoted or deactivated, including competing
-requests. Demo accounts cannot be edited or reset; demo Super Admins cannot create
-or promote another Super Admin. Only Branch Leads and HR Leads may receive branch
-assignments, and new assignments cannot target closed branches. Removing a branch
-assignment removes only the access link and records its history in the audit log.
-Changing a lead to a role without branch scope removes their assignment links.
-
-Settings override deployment defaults immediately: collection lock days (1–30),
-current-week submission, minimum volunteer age (14–25), and applications per hour
-(1–50). `apply_rate_per_hour` is the numeric application-rate rule; the former
-`apply_rate` string default is replaced. Every administration write uses an atomic
-service and records an audit event. All user mutation services set `updated_at`
-from `clock.now()`.
-
-Every named route must appear in `apps/core/routes.py`, either in `PUBLIC_ROUTES`
-or mapped to a permission in `ROUTE_ACTIONS`. Unregistered routes return 404;
-private routes redirect anonymous visitors to login and return 403 for roles
-without the declared permission. Generic list/detail views use
-`PermissionRequiredMixin` to filter their querysets before object lookup. Public
-login continues to redirect already signed-in visitors to their role's home.
-
-The 403, 404 and 500 pages use generic text with English/Urdu translations. Error
-rendering avoids request context processors and database lookups. Translation
-catalogs compile during Docker builds and Compose startup. Compose selects the
-`dev` stage, which adds GNU gettext for source-mounted development. The default
-build ends at `production` (based on the lean `runtime` stage); CI and Render keep
-building without a target and do not include gettext or `msgfmt`.
-The entrypoint disables Gunicorn's optional control socket because the runtime
-user has no home directory; container lifecycle commands manage the server.
-
-Audit rows record authentication events, password changes, branch assignments and
-permission denials (at most one per user/route every 60 seconds). Request context
-captures the validated client IP, a truncated user agent and the UUID request ID.
-Only the attempted email is captured from failed-login credentials. Secret keys
-are redacted recursively from before/after/metadata, and before/after retain only
-changed fields. See [audit design](docs/audit.md) for the hash and database guards.
-Verify the stored chain with:
-
-```sh
-docker compose exec web python manage.py verify_audit_chain
-```
-
-## Load the sample data
-
-No official sample data was published; this fictional dataset was authored for the
-ShipLens 1.0 submission. All names, emails and phone numbers are fictional.
-The versioned [CSV files and column guide](sample_data/README.md) implement the
-[sample-data specification](docs/planning/09-dashboard-and-seed-data.md).
-
-With the Compose stack running and `DEMO_MODE=true` plus a `DEMO_PASSWORD` of at
-least 12 characters configured in `.env`, load or restore the sample in one command:
+No official sample data was provided; this fictional CSV dataset was authored for the submission. Set `DEMO_MODE=true` and a `DEMO_PASSWORD` of at least twelve characters in `.env`, recreate the web container to load the updated environment, then run:
 
 ```sh
 docker compose exec web python manage.py seed_demo --reset
 ```
 
-Reset replaces all demo domain data, settings overrides and audit history, restores
-the authored history, and logs everyone out. It is refused when `DEMO_MODE=false`.
-This rebuilds the demo database from the authored history. It is run only by the
-operator from a shell, never by an application user. There is no reset button or
-HTTP reset route, including for Super Admin.
-To import CSV history without demo passwords into an empty user database, run
-`python manage.py import_sample_data sample_data/`; alternative CSV headers can be
-mapped with `--mapping path/to/mapping.yaml` as documented in the column guide.
+This intentionally replaces demo domain data, settings overrides, sessions and audit history. It is refused outside demo mode. It is an **operator command**, with no HTTP reset button or route. The [sample-data guide](sample_data/README.md) describes the CSVs and alternative header mapping. The [handover guide](docs/handover.md#rebuild-the-live-fictional-demo) gives the live-DB operator procedure.
 
-On Render, `bin/start.sh` invokes `python manage.py startup`. That single Python
-process runs migrations, creates the cache table, and calls `seed_demo --if-empty`
-when `DEMO_MODE=true`, before gunicorn starts. The `demo_seeded` marker prevents
-subsequent deploys from replacing demo changes. No password is stored in the CSVs.
-If a pre-P8 demo database already contains staff accounts, run `seed_demo --reset`
-once before relying on automatic startup seeding; plain history import requires an
-empty user table and never replaces an existing unmarked history.
+For a fresh seed in October 2026: Collected **Rs 73,250.50**, Approved **Rs 43,250.50**, Awaiting **Rs 30,000.00**, all-time Unsent **Rs 35,250.50 (6 entries)**, October Sent **Rs 38,000.00**. [All expected values](docs/planning/09-dashboard-and-seed-data.md#41-reference-period-october-2026) use 31 October 2026, 23:00 PKT; ages and compliance change with the business date.
 
-| Role | Test login | Password |
-| --- | --- | --- |
-| Super Admin | `superadmin.demo@shiplens.test` | value of DEMO_PASSWORD (see submission notes) |
-| Finance Reviewer | `finance.demo@shiplens.test` | value of DEMO_PASSWORD (see submission notes) |
-| Content Editor | `content.demo@shiplens.test` | value of DEMO_PASSWORD (see submission notes) |
-| Branch Lead (Karachi) | `branchlead.demo@shiplens.test` | value of DEMO_PASSWORD (see submission notes) |
-| HR Lead | `hr.demo@shiplens.test` | value of DEMO_PASSWORD (see submission notes) |
+Production startup seeds with `--if-empty`; later redeployments preserve demonstration changes. Development Compose requires the explicit command above.
 
-### Expected dashboard values — October 2026
+## 🧪 Run the checks
 
-Reference time: **31 October 2026, 23:00 PKT**. Select October 2026 to compare these
-figures. In a later month without collections, the dashboard defaults to the latest
-month with data and labels that fallback. Unsent ages grow with today's date;
-report compliance always uses the last completed week at the time of the request.
+The ordinary suite uses PostgreSQL, never SQLite, and excludes E2E/visual cases. With local Compose running, this disposable development runner installs test tools without adding them to the production image:
 
-| KPI | Expected |
+```sh
+docker compose run --rm --user root --env DJANGO_SETTINGS_MODULE=config.settings.test web sh -c 'python -m pip install --require-hashes -r requirements.txt -r requirements-dev.txt && ruff check . && ruff format --check . && python bin/check_conventions.py && pytest --cov=apps --cov-report=term-missing --cov-fail-under=90'
+```
+
+In a Python environment with the locked development dependencies and Chromium installed, use these commands after the environment/target setup in [the browser guide](docs/testing.md):
+
+```sh
+# Separately started, disposable seeded production stack; BASE_URL and DEMO_PASSWORD set.
+pytest tests/e2e -m e2e --browser chromium --no-cov --tracing retain-on-failure --screenshot only-on-failure
+
+# Local PostgreSQL test DB + installed Chrome; captures local live_server screenshots.
+pytest tests/visual -m visual --browser-channel chrome --no-cov
+```
+
+E2E advances R10, so rebuild only its disposable seed before repeating the full journey. Remote E2E permits read-only journeys plus login. Follow [testing](docs/testing.md) for setup, traces and Lighthouse; [CI](docs/ci.md) for coverage and security checks.
+
+## 🚀 Deploy and operate
+
+Use [render.yaml](render.yaml) as a Render Blueprint: Docker web service and PostgreSQL 16 in Singapore. The owner connects the repository's `main`, supplies `DEMO_PASSWORD`, waits for checks/deploy, then checks HTTPS, both languages, all five logins and `/health` against the deployed commit. Startup runs migrations before Gunicorn. Auto-deploy is configured for **After CI Checks Pass**; external service settings still need operator verification.
+
+| Environment value | Purpose |
 | --- | --- |
-| K1 Collected | **Rs 73,250.50**, **8** entries |
-| K2 Approved | **Rs 43,250.50** |
-| K3 Awaiting approval | **Rs 30,000.00** |
-| K4 Unsent, all time | **Rs 35,250.50**, **6** entries, oldest **26 days** |
-| K5 Branches | Active **2**, Paused **1**, Forming **1**, Closed **1**, Total **5** |
-| K6 Members | Active **9**, new in October **3** |
-| K7 Applications | Pending **3**, October acceptance **75%** (3 accepted / 4 decided) |
-| K8 Reports | Awaiting review **1** (R9), Returned **1** (R8) |
-| K9 Compliance, week 19–25 October | **0%** (0 / 2 active branches) |
-| K10 Sent in October | **Rs 38,000.00** |
+| `SECRET_KEY` | Local random signing key; generated by the Render Blueprint. |
+| `DATABASE_URL` | PostgreSQL URL; local `db` service or linked Render private URL. Production defaults to TLS. |
+| `DJANGO_SETTINGS_MODULE` | `config.settings.dev` locally; `config.settings.prod` on Render; `config.settings.test` for tests. |
+| `DJANGO_ALLOWED_HOSTS` | Comma-separated hostnames without schemes or ports. |
+| `CSRF_TRUSTED_ORIGINS` | Comma-separated origins including scheme. |
+| `RENDER_EXTERNAL_HOSTNAME` | Added automatically to allowed hosts and HTTPS CSRF origins. |
+| `TRUSTED_PROXY_HOPS` | Right-counted forwarded entries; Render default 1, direct deployment 0. |
+| `DEMO_MODE`, `DEMO_PASSWORD` | Enable guarded demo setup; the password is set manually and never stored in CSVs. |
+| `WEB_CONCURRENCY`, `PORT`, `LOG_LEVEL` | Gunicorn worker count (Blueprint: 2), listener and operational log level. |
+| `RENDER_GIT_COMMIT`, `GIT_SHA` | Render version or image-build fallback for the short health version. |
+| `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD` | Development Compose database configuration. |
 
-`tests/dashboard/test_t_dash_seed.py` checks every expected value in specification
-§4.1–§4.7, all twelve trend points, live approval updates, scope boundaries and the
-50-branch query budget. CSV/PDF exports arrive in P9; public content arrives in P10.
+The [handover runbook](docs/handover.md) covers password rotation, CLI rebuilds, database expiry/replacement, `pg_dump` backups, restore, administration and incidents. Changing the environment password and redeploying alone does **not** change existing demo hashes.
 
-## Deploy
+## 📚 Limits, credits and ownership
 
-The root [`render.yaml`](render.yaml) defines a Docker web service and a PostgreSQL
-16 database on the free plan in Singapore, following planning document 15 §5.1.
-Render builds the existing Dockerfile and checks `/health`.
+The release has no online payments, outbound email, file uploads or adjustment-entry workflow. Interest choices are fixed; weeks start on Monday. Historical active-member counts use current status. Member/unsent counts in the branch register remain placeholders; use the dashboard and operational lists for actual figures. Free hosting can cold-start, and its database needs an expiry plan. See the [runbook](docs/handover.md#known-limitations-and-deferred-work), [security boundaries](docs/security.md) and [implementation differences](docs/business-rules.md#differences-from-the-earlier-plan).
 
-1. Commit and push the finished changes to your GitHub repository's `main` branch,
-   then confirm that CI passes.
-2. In the [Render Dashboard](https://dashboard.render.com/), choose **New → Blueprint**,
-   connect the GitHub repository, select `main`, and use the root `render.yaml`.
-3. Review the `shiplens-web` and `shiplens-db` resources. Enter `DEMO_PASSWORD` when
-   prompted; keep it in Render's environment settings and out of the repository.
-4. Create the Blueprint and wait for the web service to become healthy. The
-   production entrypoint runs the single-process `startup` command before
-   gunicorn, including `seed_demo --if-empty` when demo mode is enabled.
-5. Open the actual HTTPS service URL shown by Render and check `/health`, `/en/`
-   and `/ur/`. Health reports the first seven characters of `RENDER_GIT_COMMIT`.
-6. Confirm auto-deploy is **After CI Checks Pass**. Subsequent `main` commits deploy
-   after their CI checks pass, as configured by `autoDeployTrigger: checksPass`.
+AI assistance is declared in **[AI-USAGE.md](AI-USAGE.md)**. The owner maintains that dated log and reviews the implementation for the solo challenge's explainability requirement.
 
-Render supplies `RENDER_EXTERNAL_HOSTNAME`. Settings automatically append that
-hostname to `ALLOWED_HOSTS` and its HTTPS origin to `CSRF_TRUSTED_ORIGINS`, so an
-assigned hostname that differs from `shiplens-web.onrender.com` still works. Add any
-custom domain explicitly to the two environment variables below. Blueprint field
-and secret behavior is described in the [Render Blueprint reference](https://render.com/docs/blueprint-spec).
+Thanks to Django, PostgreSQL, WeasyPrint, Chart.js, the Roboto and Noto font projects, axe-core and the other maintainers listed in **[credits and generated licences](docs/credits.md)**. Source code is **[MIT licensed](LICENSE)**; third-party components retain their licences.
 
-### Environment variables
-
-| Variable | Local / Render configuration |
-| --- | --- |
-| `SECRET_KEY` | Set a random value locally; Render generates the secret with `generateValue: true`. |
-| `DATABASE_URL` | Local example connects to Compose's `db`; Render injects the linked database's private connection string. |
-| `DJANGO_SETTINGS_MODULE` | Compose selects `config.settings.dev`; the Blueprint selects `config.settings.prod`. |
-| `DJANGO_ALLOWED_HOSTS` | Comma-separated hostnames, without schemes or ports. Blueprint default: `shiplens-web.onrender.com`. Add custom domains here. |
-| `CSRF_TRUSTED_ORIGINS` | Comma-separated origins including their scheme. Blueprint default: `https://shiplens-web.onrender.com`. Add custom HTTPS origins here. |
-| `RENDER_EXTERNAL_HOSTNAME` | Supplied automatically by Render and appended to the host/origin settings. Leave empty locally. |
-| `TRUSTED_PROXY_HOPS` | Trusted forwarded entries counted from the right; default `1` for Render. Set `0` to ignore forwarding headers when running without a trusted reverse proxy. The same client-IP helper is used for login lockout and rate-limit keys. |
-| `DEMO_MODE` | `false` in the local example; `true` in the Blueprint. Enables guarded demo seeding and Super Admin reset. |
-| `DEMO_PASSWORD` | Set manually during Blueprint creation (`sync: false`); at least 12 characters. Sets every demo user's password on import/reset. Manage later changes in Render's environment settings. |
-| `WEB_CONCURRENCY` | Production gunicorn worker count; Blueprint value: `2`. |
-| `LOG_LEVEL` | Python logging level; Blueprint value: `INFO`. |
-| `PORT` | Render supplies the listening port. Local default: `8000`; gunicorn and the Docker healthcheck use this value. |
-| `RENDER_GIT_COMMIT` | Supplied by Render; used for the short health-response version. |
-| `GIT_SHA` | Image build argument / fallback version when Render's commit variable is absent. Defaults to `dev`. |
-| `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD` | Local Compose database settings only; Render manages its linked database credentials. |
-
-The free web service sleeps after inactivity, so the first request can take about
-a minute. Free PostgreSQL expires 30 days after creation and has no backups; plan
-an upgrade or a replacement database before expiry if the judging window extends
-beyond it. See [Render's free-instance limits](https://render.com/docs/free).
+<!-- OWNER: Replace the existing copyright-holder placeholder in LICENSE before submission. -->

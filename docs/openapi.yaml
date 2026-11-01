@@ -1,0 +1,64 @@
+openapi: 3.1.0
+info:
+  title: ShipLens health probe
+  version: '2026-11-01'
+  description: >-
+    The only machine endpoint. Staff screens are server-rendered forms;
+    their route reference is api.md. No authentication or rate limit is required.
+servers:
+  - url: https://shiplens-web.onrender.com
+paths:
+  /health:
+    get:
+      operationId: health
+      summary: Check readiness and database connectivity
+      description: >-
+        Executes SELECT 1 on an isolated PostgreSQL connection with two-second
+        connection and statement timeouts. Internal HTTP/IP probes bypass normal
+        host and HTTPS redirects. The response never includes database errors.
+      security: []
+      responses:
+        '200':
+          description: Database is reachable
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                const: no-store
+            X-Request-ID:
+              schema:
+                type: string
+                format: uuid
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status, db, version, time]
+                additionalProperties: false
+                properties:
+                  status: {type: string, const: ok}
+                  db: {type: string, const: ok}
+                  version:
+                    type: string
+                    maxLength: 7
+                    description: First seven characters of RENDER_GIT_COMMIT, GIT_SHA or dev.
+                  time: {type: string, format: date-time}
+        '503':
+          description: Database check failed; no exception detail is returned
+          headers:
+            Cache-Control:
+              schema: {type: string, const: no-store}
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status, db]
+                additionalProperties: false
+                properties:
+                  status: {type: string, const: degraded}
+                  db: {type: string, const: error}
+        '405':
+          description: Only GET is accepted, including by the health middleware shortcut.
+          headers:
+            Allow:
+              schema: {type: string, const: GET}

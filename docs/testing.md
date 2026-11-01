@@ -181,3 +181,59 @@ mobile throttling were not relaxed. The final E2E run used Playwright's pinned
 headless Chromium, with all twenty-seven cases passing. Local regression tests
 also reproduced and checked the font fix in the installed Chrome channel used
 by Lighthouse.
+
+
+## F1 deterministic font loading
+
+The earlier P12 regular-face alias still allowed timing-dependent heading rewraps
+in CI. F1 removes it. Roboto 500/700 use `font-display: optional`: a late heading
+font will not replace its fallback during that page load. Roboto 400 and the
+Urdu Naskh faces retain `swap`. English pages preload 400 and 500; Urdu preloads
+only Naskh, with no new font files.
+
+The mobile font regression now checks 412 px and 360 px. At each width it creates
+six fresh browser contexts: five with both heading faces delayed 0.7 seconds,
+then one with the regular face also delayed 0.3 seconds. Every context must meet
+the unchanged CLS limit of 0.1. Per-run JSON and traces go to Playwright output.
+The complete E2E suite is run against a fresh seed three times for F1; R10 must
+be reset by the operator between runs, because its lifecycle test locks it.
+
+
+F1 Step 1 verification (1 November 2026): all three full Chromium runs passed
+28/28 cases (99.40 s, 92.84 s and 95.04 s). All 36 delayed-font contexts recorded
+CLS 0. The normal PostgreSQL suite passed 2,119 tests with 97.88% app coverage.
+The unchanged Lighthouse configuration produced fifteen successful mobile reports
+and passed all four median category gates:
+
+| Page | Performance | Accessibility | Best Practices | SEO |
+| --- | ---: | ---: | ---: | ---: |
+| `/en/` | 99 | 100 | 100 | 100 |
+| `/ur/` | 98 | 100 | 100 | 100 |
+| `/en/get-involved/` | 100 | 100 | 100 | 100 |
+| `/en/branches/` | 100 | 100 | 100 | 100 |
+| `/en/events/` | 100 | 100 | 100 | 100 |
+
+
+## F1 proxy header boundary
+
+The CI-only proxy drops copied request or response headers if either their name
+or value contains CR or LF. It writes a fixed direction-specific notice to stderr
+without printing the rejected data, avoiding log injection or credential leakage.
+Safe headers and duplicate response cookies are preserved. Unit tests inject
+CRLF, lone CR and lone LF into both names and values at the copy boundary; they
+mock transport because a real HTTP client may reject the payload before the
+proxy can inspect it.
+
+Newline-free candidate copies are compared with the originals; any difference
+drops the entire header, rather than forwarding a repaired value. Safe copies
+are forwarded only when unchanged. This also exposes the sanitization boundary
+to [CodeQL's Python header-injection model](https://github.com/github/codeql/blob/main/python/ql/lib/semmle/python/security/dataflow/HttpHeaderInjectionCustomizations.qll),
+which recognises newline replacement.
+
+
+F1 Step 2 verification: 21 focused safety tests passed, including six CR/LF
+header cases exercising both directions; all 17 public/Finance browser checks
+passed through the restarted proxy. The full PostgreSQL suite passed 2,125 tests
+with 97.88% app coverage. Ruff, formatting and convention checks passed.
+CodeQL was not executed locally because its CLI is unavailable; the existing
+CodeQL workflow will perform the scan in CI.

@@ -12,33 +12,67 @@ from PIL import Image
 pytestmark = pytest.mark.e2e
 
 
-def test_mobile_font_swap_does_not_move_content(page, context, target_url, output_path):
-    page.set_viewport_size({"width": 412, "height": 823})
-    context.add_init_script("""window.fontLayoutShift = 0;
-        new PerformanceObserver(list => {
-            for (const entry of list.getEntries()) {
-                if (!entry.hadRecentInput) window.fontLayoutShift += entry.value;
-            }
-        }).observe({type: 'layout-shift', buffered: true});""")
+def delay_fonts(page, delay_regular):
+    """Bind font timing to this page rather than the next loop iteration."""
 
-    def slow_heading_font(route):
-        # The regular face is preloaded; delay heading weights to force a swap.
-        time.sleep(0.7)
+    def slow_font(route):
+        regular = "roboto-400-latin." in route.request.url
+        if not regular:
+            time.sleep(0.7)
+        elif delay_regular:
+            time.sleep(0.3)
         route.continue_()
 
-    page.route(re.compile(r"/fonts/roboto-(?:500|700)-latin\."), slow_heading_font)
-    response = page.goto(f"{target_url}/en/", wait_until="networkidle")
-    assert response.status == 200
-    shift = page.evaluate("""async () => {
-        await document.fonts.ready;
-        await new Promise(resolve => requestAnimationFrame(() =>
-            requestAnimationFrame(resolve)));
-        return window.fontLayoutShift;
-    }""")
-    destination = Path(output_path) / "font-layout.json"
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    destination.write_text(json.dumps({"layout_shift": shift}), encoding="utf-8")
-    assert shift <= 0.1, f"Cold mobile font swap moved content: CLS={shift:.4f}"
+    page.route(re.compile(r"/fonts/roboto-(?:400|500|700)-latin\."), slow_font)
+
+
+@pytest.mark.parametrize("width", [412, 360])
+def test_mobile_font_swap_does_not_move_content(
+    browser, browser_context_args, target_url, output_path, width
+):
+    destination = Path(output_path)
+    destination.mkdir(parents=True, exist_ok=True)
+    results = []
+    for run in range(6):
+        delay_regular = run == 5
+        context = browser.new_context(
+            **{**browser_context_args, "viewport": {"width": width, "height": 823}}
+        )
+        context.tracing.start(screenshots=True, snapshots=True, sources=True)
+        try:
+            context.add_init_script("""window.fontLayoutShift = 0;
+                new PerformanceObserver(list => {
+                    for (const entry of list.getEntries()) {
+                        if (!entry.hadRecentInput)
+                            window.fontLayoutShift += entry.value;
+                    }
+                }).observe({type: 'layout-shift', buffered: true});""")
+            page = context.new_page()
+
+            delay_fonts(page, delay_regular)
+            response = page.goto(f"{target_url}/en/", wait_until="networkidle")
+            assert response.status == 200
+            shift = page.evaluate("""async () => {
+                await document.fonts.ready;
+                await new Promise(resolve => requestAnimationFrame(() =>
+                    requestAnimationFrame(resolve)));
+                return window.fontLayoutShift;
+            }""")
+            results.append(
+                {"run": run + 1, "delay_regular": delay_regular, "cls": shift}
+            )
+            (destination / "font-layout.json").write_text(
+                json.dumps(results), encoding="utf-8"
+            )
+            assert shift <= 0.1, (
+                f"{width}px run {run + 1}, regular delayed={delay_regular}: "
+                f"CLS={shift:.4f}"
+            )
+        finally:
+            try:
+                context.tracing.stop(path=str(destination / f"font-run-{run + 1}.zip"))
+            finally:
+                context.close()
 
 
 def luminance(rgb):

@@ -19,7 +19,8 @@
     <meta property="og:image" content="{{ og_image }}">
     {% else %}<meta name="robots" content="noindex, nofollow">{% endif %}
     {% if LANGUAGE_CODE == 'ur' %}<link rel="preload" href="{% static 'fonts/noto-naskh-arabic-400-urdu.woff2' %}" as="font" type="font/woff2" crossorigin>
-    {% else %}<link rel="preload" href="{% static 'fonts/roboto-400-latin.woff2' %}" as="font" type="font/woff2" crossorigin>{% endif %}
+    {% else %}<link rel="preload" href="{% static 'fonts/roboto-400-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% static 'fonts/roboto-500-latin.woff2' %}" as="font" type="font/woff2" crossorigin>{% endif %}
     <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/components.css' %}">

@@ -11,3 +11,4 @@ class Command(BaseCommand):
         call_command("createcachetable", stdout=self.stdout)
         if settings.DEMO_MODE:
             call_command("seed_demo", if_empty=True, stdout=self.stdout)
+        call_command("generate_weekly_drafts", stdout=self.stdout)

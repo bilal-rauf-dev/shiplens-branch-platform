@@ -146,7 +146,7 @@ This intentionally replaces demo domain data, settings overrides, sessions and a
 
 For a fresh seed in October 2026: Collected **Rs 73,250.50**, Approved **Rs 43,250.50**, Awaiting **Rs 30,000.00**, all-time Unsent **Rs 35,250.50 (6 entries)**, October Sent **Rs 38,000.00**. [All expected values](docs/planning/09-dashboard-and-seed-data.md#41-reference-period-october-2026) use 31 October 2026, 23:00 PKT; ages and compliance change with the business date.
 
-Production startup seeds with `--if-empty`; later redeployments preserve demonstration changes. Development Compose requires the explicit command above.
+Production startup seeds with `--if-empty`, then always generates missing weekly drafts in both demo and non-demo mode. Later redeployments preserve demonstration changes. The Branch Lead Reports list also fills gaps when a process stays running past Monday. Development Compose requires the explicit seed command above; run `docker compose exec web python manage.py generate_weekly_drafts` to fill draft gaps without opening Reports. After drafting, the dashboard's latest-report column shows the current week's Draft for Active branches; planning/09's older R10 label remains the lifecycle example.
 
 ## 🧪 Run the checks
 

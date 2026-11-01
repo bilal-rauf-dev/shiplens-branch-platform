@@ -8,7 +8,11 @@ week_bounds accepts Karachi business dates or aware timestamps, converting the
 latter before choosing Monday–Sunday. Drafts are created idempotently for Active
 branches from the opening week through this week. A missing opening date produces
 no drafts rather than inventing historical dates. Run generate_weekly_drafts to
-create missing weeks for all Active branches; page loads will use the same service.
+create missing weeks for all Active branches; production startup runs that command
+after any seed in both demo and non-demo mode. The command reports only new rows.
+Branch Lead Reports-list loads use the same service across week boundaries; the
+dashboard does not trigger drafts. After drafting, its latest-report column shows
+the current week's Draft, while K8/K9 ignore Draft rows.
 
 Live aggregates use current non-voided collections. Unsent at week end uses the
 recorded transfer date; active_members_end follows BR-083's explicit current-status

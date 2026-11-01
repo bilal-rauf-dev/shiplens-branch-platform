@@ -10,7 +10,7 @@ The demonstration needs reproducible hosting within the free-tier constraints.
 
 ## Decision
 
-Use the Docker Blueprint in render.yaml. bin/start.sh runs the single-process startup command before Gunicorn: migrate, createcachetable, then seed_demo --if-empty in demo mode.
+Use the Docker Blueprint in render.yaml. bin/start.sh runs the single-process startup command before Gunicorn: migrate, createcachetable, then seed_demo --if-empty in demo mode and generate_weekly_drafts in every mode.
 
 ## Consequences
 

@@ -402,7 +402,7 @@ and audit history have migration-level guards as well as service checks.
 The [business-rule catalogue](business-rules.md) names the enforcement and tests.
 
 Compared with planning/10 and planning/18: `/health` is the only machine endpoint;
-charts receive JSON embedded in HTML, and draft generation uses pages or a command.
+charts receive JSON embedded in HTML, and draft generation runs at production startup, on the Branch Lead Reports list, or by command.
 There is no `/internal/generate-drafts` or dashboard JSON API. There is no generic
 `services/` package: apps mostly use `services.py`, with finance report modules
 alongside it. No scheduler or outbound notification hook is required. Identifiers

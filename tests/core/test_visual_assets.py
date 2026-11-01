@@ -7,7 +7,10 @@ from xml.etree import ElementTree
 import pytest
 import tinycss2
 from django.conf import settings
+from django.template.loader import render_to_string
+from django.test import RequestFactory
 
+from apps.accounts.models import Role, User
 from apps.branches.models import BranchStatus
 from apps.cms.models import ILLUSTRATIONS, ContentStatus
 from apps.finance.models import CollectionState, ReportStatus
@@ -90,6 +93,18 @@ def test_t_ui_every_status_has_an_explicit_mask(statuses):
                 )
             )
     assert set(statuses.values) <= masks
+
+
+@pytest.mark.parametrize("role", Role.values)
+def test_t_ui_staff_navigation_icons_are_distinct(role):
+    request = RequestFactory().get("/en/app/dashboard/")
+    rendered = render_to_string(
+        "partials/staff_navigation.html",
+        {"user": User(role=role), "request": request, "csrf_token": "test-token"},
+    )
+    icons = re.findall(r"\bicon--([a-z0-9_]+)\b", rendered)
+    assert icons
+    assert len(icons) == len(set(icons)), (role, icons)
 
 
 def test_t_ui_motion_is_opt_in_and_composited():

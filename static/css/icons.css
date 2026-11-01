@@ -59,5 +59,9 @@
 .nav-link { gap: var(--md-s2); }
 .contact-line, .event-meta { display: flex; align-items: baseline; gap: var(--md-s2); }
 .contact-line { margin-block: 0; }
-.empty-state__icon { display: block; margin-inline: auto; margin-block-end: var(--md-s2); }
 .kpi-icon { display: inline-grid; place-items: center; color: var(--md-primary); }
+.icon--manage_accounts { mask-image: url("../img/icons/manage_accounts.svg"); }
+.icon--badge { mask-image: url("../img/icons/badge.svg"); }
+.icon--how_to_reg { mask-image: url("../img/icons/how_to_reg.svg"); }
+.icon--person { mask-image: url("../img/icons/person.svg"); }
+.icon--volunteer_activism { mask-image: url("../img/icons/volunteer_activism.svg"); }

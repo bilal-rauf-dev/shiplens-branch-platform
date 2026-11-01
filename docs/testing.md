@@ -299,3 +299,30 @@ text-only audit chips, and amount/date wrapping with contained table overflow
 at 360, 768 and 1440 px. Mobile table cards remained active below 640 px.
 Every value of the six domain status enums has an explicit badge-mask rule.
 Ruff, formatting, conventions and Urdu extraction passed (783 entries).
+
+Step 2: 2,208 PostgreSQL tests passed, 0 failed, with 97.86% app coverage.
+The complete E2E suite passed 42/42. The eight EN/UR viewports passed at 360,
+412, 768 and 1440 px. All four requested screenshots were recaptured with D3's
+Chrome settings (1440×1000, DPR 1, fonts/lazy images ready) and visually reviewed.
+Role-by-role template tests confirm every staff navigation uses distinct icons.
+Credits were regenerated with the existing hash-pinned pip-licenses tool and
+matching runtime versions. Ruff, formatting, conventions and Urdu extraction
+passed (783 entries).
+
+As requested for D4, empty states retain the illustration without an additional
+inventory icon. This differs from planning/24 §3's icon-based empty-state design.
+The named health illustration replaces the old artwork at the same health.svg
+path; no content paths or seed figures changed.
+
+D4 mobile Lighthouse medians, three completed runs per configured page:
+
+| Page | Performance | Accessibility | Best Practices | SEO |
+| --- | ---: | ---: | ---: | ---: |
+| `/en/` | 99 | 100 | 100 | 100 |
+| `/ur/` | 99 | 100 | 100 | 100 |
+| `/en/get-involved/` | 100 | 100 | 100 | 100 |
+| `/en/branches/` | 100 | 100 | 100 | 100 |
+| `/en/events/` | 100 | 100 | 100 | 100 |
+
+All fifteen individual audits scored at least 99 in every category. Collection
+ran after the test workloads finished; only the localhost HTTPS audit was skipped.

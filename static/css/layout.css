@@ -116,6 +116,7 @@ nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--md-s4); }
 .public-cta > * { position: relative; z-index: 1; }
 .public-cta > div:first-child { flex: 1 1 20rem; }
 .impact-section ul { display: flex; flex-wrap: wrap; gap: var(--md-s6); padding-inline-start: var(--md-s5); }
+.impact-section li { flex: 1 1 14rem; }
 .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: var(--md-s6); padding-block: var(--md-s5); }
 .footer-grid nav { align-content: start; }
 .footer-grid address { font-style: normal; line-height: 1.8; overflow-wrap: anywhere; }
@@ -136,6 +137,7 @@ nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--md-s4); }
 }
 @media (width < 480px) { .brand-full { display: none; } .brand-short { display: inline; } }
 @media (width >= 768px) {
+  .section-heading + .card--featured { margin-block-start: var(--md-s4); }
   .public-card.card--featured { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); align-items: center; gap: var(--md-s6); }
 }
 

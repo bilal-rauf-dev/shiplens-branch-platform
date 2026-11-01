@@ -80,10 +80,10 @@ pip-licenses is a development-only attribution tool, not an application dependen
   [provenance](../tests/e2e/vendor/README.md).
 
 The four original CMS illustrations (learning, community, care and growth)
-remain available for stored content. The owner-supplied unDraw illustrations,
-including the unselected health/tree variants, are by Katerina Limpitsouni and
-used under the [unDraw licence](https://undraw.co/license). Their geometry is
-unchanged; SVG metadata is stripped, inline styles use presentation attributes,
+remain available for stored content. The owner-supplied unDraw illustrations
+are by Katerina Limpitsouni and used under the
+[unDraw licence](https://undraw.co/license). Their geometry is unchanged;
+SVG metadata is stripped, inline styles use presentation attributes,
 and the original purple accent is aligned to #6750A4. The diya brand mark in
 `static/img/brand/diya.svg` is original artwork authored for this project.
 Public pages load no third-party fonts or

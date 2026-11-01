@@ -1,35 +1,35 @@
 {% load i18n navigation %}
-{% if user.role == "SUPER_ADMIN" or user.role == "CONTENT_EDITOR" %}{% nav_current 'content-list' as is_current %}<a class="nav-link" href="{% url 'content-list' %}"{% if is_current %} aria-current="page"{% endif %}>{% translate "Content" %}</a>{% endif %}
+{% if user.role == "SUPER_ADMIN" or user.role == "CONTENT_EDITOR" %}{% nav_current 'content-list' as is_current %}<a class="nav-link" href="{% url 'content-list' %}"{% if is_current %} aria-current="page"{% endif %}><span class="icon icon--inventory_2" aria-hidden="true"></span>{% translate "Content" %}</a>{% endif %}
 {% if user.role == "SUPER_ADMIN" or user.role == "FINANCE_REVIEWER" %}
-  {% nav_current 'dashboard-head-office' as is_current %}<a class="nav-link" href="{% url 'dashboard-head-office' %}"{% if is_current %} aria-current="page"{% endif %}>{% translate "Dashboard" %}</a>
+  {% nav_current 'dashboard-head-office' as is_current %}<a class="nav-link" href="{% url 'dashboard-head-office' %}"{% if is_current %} aria-current="page"{% endif %}><span class="icon icon--dashboard" aria-hidden="true"></span>{% translate "Dashboard" %}</a>
 {% elif user.role == "BRANCH_LEAD" %}
-  {% nav_current 'dashboard-branch' as is_current %}<a class="nav-link" href="{% url 'dashboard-branch' %}"{% if is_current %} aria-current="page"{% endif %}>{% translate "My branch" %}</a>
+  {% nav_current 'dashboard-branch' as is_current %}<a class="nav-link" href="{% url 'dashboard-branch' %}"{% if is_current %} aria-current="page"{% endif %}><span class="icon icon--dashboard" aria-hidden="true"></span>{% translate "My branch" %}</a>
 {% elif user.role == "HR_LEAD" %}
-  {% nav_current 'dashboard-hr' as is_current %}<a class="nav-link" href="{% url 'dashboard-hr' %}"{% if is_current %} aria-current="page"{% endif %}>{% translate "HR overview" %}</a>
+  {% nav_current 'dashboard-hr' as is_current %}<a class="nav-link" href="{% url 'dashboard-hr' %}"{% if is_current %} aria-current="page"{% endif %}><span class="icon icon--dashboard" aria-hidden="true"></span>{% translate "HR overview" %}</a>
 {% endif %}
 {% if user.role == "SUPER_ADMIN" %}
-  {% nav_current 'user-list' as is_current %}<a class="nav-link" href="{% url 'user-list' %}"{% if is_current %} aria-current="page"{% endif %}>{% translate "Users" %}</a>
-  {% nav_current 'settings-view' as is_current %}<a class="nav-link" href="{% url 'settings-view' %}"{% if is_current %} aria-current="page"{% endif %}>{% translate "System settings" %}</a>
-  {% nav_current 'volunteer-role-list' as is_current %}<a class="nav-link" href="{% url 'volunteer-role-list' %}"{% if is_current %} aria-current="page"{% endif %}>{% translate "Volunteer roles" %}</a>
-  {% nav_current 'audit-list' as is_current %}<a class="nav-link" href="{% url 'audit-list' %}"{% if is_current %} aria-current="page"{% endif %}>{% translate "Audit log" %}</a>
+  {% nav_current 'user-list' as is_current %}<a class="nav-link" href="{% url 'user-list' %}"{% if is_current %} aria-current="page"{% endif %}><span class="icon icon--manage_accounts" aria-hidden="true"></span>{% translate "Users" %}</a>
+  {% nav_current 'settings-view' as is_current %}<a class="nav-link" href="{% url 'settings-view' %}"{% if is_current %} aria-current="page"{% endif %}><span class="icon icon--settings" aria-hidden="true"></span>{% translate "System settings" %}</a>
+  {% nav_current 'volunteer-role-list' as is_current %}<a class="nav-link" href="{% url 'volunteer-role-list' %}"{% if is_current %} aria-current="page"{% endif %}><span class="icon icon--badge" aria-hidden="true"></span>{% translate "Volunteer roles" %}</a>
+  {% nav_current 'audit-list' as is_current %}<a class="nav-link" href="{% url 'audit-list' %}"{% if is_current %} aria-current="page"{% endif %}><span class="icon icon--history" aria-hidden="true"></span>{% translate "Audit log" %}</a>
 {% endif %}
 {% if user.role == "SUPER_ADMIN" or user.role == "FINANCE_REVIEWER" or user.role == "BRANCH_LEAD" or user.role == "HR_LEAD" %}
-  {% nav_current 'branch-list' as is_current %}<a class="nav-link" href="{% url 'branch-list' %}"{% if is_current %} aria-current="page"{% endif %}>{% translate "Branches" %}</a>
+  {% nav_current 'branch-list' as is_current %}<a class="nav-link" href="{% url 'branch-list' %}"{% if is_current %} aria-current="page"{% endif %}><span class="icon icon--location_on" aria-hidden="true"></span>{% translate "Branches" %}</a>
 {% endif %}
 {% if user.role == "SUPER_ADMIN" or user.role == "HR_LEAD" %}
-  {% nav_current 'application-list' as is_current %}<a class="nav-link" href="{% url 'application-list' %}"{% if is_current %} aria-current="page"{% endif %}>{% translate "Applications" %}</a>
+  {% nav_current 'application-list' as is_current %}<a class="nav-link" href="{% url 'application-list' %}"{% if is_current %} aria-current="page"{% endif %}><span class="icon icon--how_to_reg" aria-hidden="true"></span>{% translate "Applications" %}</a>
 {% endif %}
 {% if user.role == "SUPER_ADMIN" or user.role == "HR_LEAD" or user.role == "BRANCH_LEAD" %}
-  {% nav_current 'team-list' as is_current %}<a class="nav-link" href="{% url 'team-list' %}"{% if is_current %} aria-current="page"{% endif %}>{% translate "Teams" %}</a>
-  {% nav_current 'member-list' as is_current %}<a class="nav-link" href="{% url 'member-list' %}"{% if is_current %} aria-current="page"{% endif %}>{% translate "Members" %}</a>
+  {% nav_current 'team-list' as is_current %}<a class="nav-link" href="{% url 'team-list' %}"{% if is_current %} aria-current="page"{% endif %}><span class="icon icon--groups" aria-hidden="true"></span>{% translate "Teams" %}</a>
+  {% nav_current 'member-list' as is_current %}<a class="nav-link" href="{% url 'member-list' %}"{% if is_current %} aria-current="page"{% endif %}><span class="icon icon--person" aria-hidden="true"></span>{% translate "Members" %}</a>
 {% endif %}
 {% if user.role == "BRANCH_LEAD" or user.role == "FINANCE_REVIEWER" or user.role == "SUPER_ADMIN" %}
-  {% nav_current 'report-list' as is_current %}<a class="nav-link" href="{% url 'report-list' %}"{% if is_current %} aria-current="page"{% endif %}>{% translate "Weekly reports" %}</a>
-  {% nav_current 'collection-list' as is_current %}<a class="nav-link" href="{% url 'collection-list' %}"{% if is_current %} aria-current="page"{% endif %}>{% translate "Collections" %}</a>
-  {% nav_current 'transfer-list' as is_current %}<a class="nav-link" href="{% url 'transfer-list' %}"{% if is_current %} aria-current="page"{% endif %}>{% translate "Transfers" %}</a>
+  {% nav_current 'report-list' as is_current %}<a class="nav-link" href="{% url 'report-list' %}"{% if is_current %} aria-current="page"{% endif %}><span class="icon icon--receipt_long" aria-hidden="true"></span>{% translate "Weekly reports" %}</a>
+  {% nav_current 'collection-list' as is_current %}<a class="nav-link" href="{% url 'collection-list' %}"{% if is_current %} aria-current="page"{% endif %}><span class="icon icon--payments" aria-hidden="true"></span>{% translate "Collections" %}</a>
+  {% nav_current 'transfer-list' as is_current %}<a class="nav-link" href="{% url 'transfer-list' %}"{% if is_current %} aria-current="page"{% endif %}><span class="icon icon--account_balance" aria-hidden="true"></span>{% translate "Transfers" %}</a>
 {% endif %}
 {% if user.role == "FINANCE_REVIEWER" %}
-  {% nav_current 'report-review-queue' as is_current %}<a class="nav-link" href="{% url 'report-review-queue' %}"{% if is_current %} aria-current="page"{% endif %}>{% translate "Review queue" %}</a>
+  {% nav_current 'report-review-queue' as is_current %}<a class="nav-link" href="{% url 'report-review-queue' %}"{% if is_current %} aria-current="page"{% endif %}><span class="icon icon--check_circle" aria-hidden="true"></span>{% translate "Review queue" %}</a>
 {% endif %}
-{% nav_current 'account-change-password' as is_current %}<a class="nav-link" href="{% url 'account-change-password' %}"{% if is_current %} aria-current="page"{% endif %}>{% translate "Change password" %}</a>
-<form method="post" action="{% url 'account-logout' %}">{% csrf_token %}<button class="btn btn--text" type="submit">{% translate "Log out" %}</button></form>
+{% nav_current 'account-change-password' as is_current %}<a class="nav-link" href="{% url 'account-change-password' %}"{% if is_current %} aria-current="page"{% endif %}><span class="icon icon--lock" aria-hidden="true"></span>{% translate "Change password" %}</a>
+<form method="post" action="{% url 'account-logout' %}">{% csrf_token %}<button class="btn btn--text" type="submit"><span class="icon icon--logout" aria-hidden="true"></span>{% translate "Log out" %}</button></form>

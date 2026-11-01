@@ -1,0 +1,67 @@
+/* Material Symbols Rounded: 24px, weight 400, fill 0. See docs/credits.md. */
+.icon, .status-badge::before, .errorlist li::before, .form-errors:not(ul):not(ol)::before {
+  display: inline-block; inline-size: 1.25em; block-size: 1.25em; flex-shrink: 0;
+  background-color: currentColor; vertical-align: -.2em;
+  mask: url("../img/icons/edit_note.svg") center / contain no-repeat;
+}
+.icon--edit_note { mask-image: url("../img/icons/edit_note.svg"); }
+.icon--send { mask-image: url("../img/icons/send.svg"); }
+.icon--error { mask-image: url("../img/icons/error.svg"); }
+.icon--check_circle { mask-image: url("../img/icons/check_circle.svg"); }
+.icon--lock { mask-image: url("../img/icons/lock.svg"); }
+.icon--cancel { mask-image: url("../img/icons/cancel.svg"); }
+.icon--inventory_2 { mask-image: url("../img/icons/inventory_2.svg"); }
+.icon--call { mask-image: url("../img/icons/call.svg"); }
+.icon--mail { mask-image: url("../img/icons/mail.svg"); }
+.icon--location_on { mask-image: url("../img/icons/location_on.svg"); }
+.icon--calendar_month { mask-image: url("../img/icons/calendar_month.svg"); }
+.icon--arrow_forward { mask-image: url("../img/icons/arrow_forward.svg"); }
+.icon--translate { mask-image: url("../img/icons/translate.svg"); }
+.icon--dashboard { mask-image: url("../img/icons/dashboard.svg"); }
+.icon--payments { mask-image: url("../img/icons/payments.svg"); }
+.icon--receipt_long { mask-image: url("../img/icons/receipt_long.svg"); }
+.icon--account_balance { mask-image: url("../img/icons/account_balance.svg"); }
+.icon--groups { mask-image: url("../img/icons/groups.svg"); }
+.icon--history { mask-image: url("../img/icons/history.svg"); }
+.icon--settings { mask-image: url("../img/icons/settings.svg"); }
+.icon--logout { mask-image: url("../img/icons/logout.svg"); }
+.icon--schedule { mask-image: url("../img/icons/schedule.svg"); }
+
+/* Empty generated content keeps badge decoration out of accessible names. */
+.status-badge::before { content: ""; }
+.status-badge:not([data-status])::before { content: none; }
+.status-badge[data-status="DRAFT"]::before { mask-image: url("../img/icons/edit_note.svg"); }
+.status-badge[data-status="OPEN"]::before { mask-image: url("../img/icons/edit_note.svg"); }
+.status-badge[data-status="PENDING"]::before,
+.status-badge[data-status="FORMING"]::before { mask-image: url("../img/icons/schedule.svg"); }
+.status-badge[data-status="SUBMITTED"]::before,
+.status-badge[data-status="RESUBMITTED"]::before { mask-image: url("../img/icons/send.svg"); }
+.status-badge[data-status="RETURNED"]::before,
+.status-badge[data-status="PAUSED"]::before,
+.status-badge[data-status="INACTIVE"]::before { mask-image: url("../img/icons/error.svg"); }
+.status-badge[data-status="APPROVED"]::before,
+.status-badge[data-status="ACTIVE"]::before,
+.status-badge[data-status="ACCEPTED"]::before,
+.status-badge[data-status="SENT"]::before,
+.status-badge[data-status="PUBLISHED"]::before { mask-image: url("../img/icons/check_circle.svg"); }
+.status-badge[data-status="LOCKED"]::before { mask-image: url("../img/icons/lock.svg"); }
+.status-badge[data-status="VOIDED"]::before,
+.status-badge[data-status="CLOSED"]::before,
+.status-badge[data-status="DECLINED"]::before,
+.status-badge[data-status="LEFT"]::before { mask-image: url("../img/icons/cancel.svg"); }
+.status-badge[data-status="ARCHIVED"]::before { mask-image: url("../img/icons/inventory_2.svg"); }
+.errorlist { list-style: none; padding-inline-start: 0; }
+.errorlist li { display: flex; align-items: start; gap: var(--md-s2); }
+.errorlist li::before, .form-errors:not(ul):not(ol)::before {
+  content: ""; mask-image: url("../img/icons/error.svg");
+}
+.form-errors:not(ul):not(ol)::before { margin-inline-end: var(--md-s2); }
+.nav-link { gap: var(--md-s2); }
+.contact-line, .event-meta { display: flex; align-items: baseline; gap: var(--md-s2); }
+.contact-line { margin-block: 0; }
+.kpi-icon { display: inline-grid; place-items: center; color: var(--md-primary); }
+.icon--manage_accounts { mask-image: url("../img/icons/manage_accounts.svg"); }
+.icon--badge { mask-image: url("../img/icons/badge.svg"); }
+.icon--how_to_reg { mask-image: url("../img/icons/how_to_reg.svg"); }
+.icon--person { mask-image: url("../img/icons/person.svg"); }
+.icon--volunteer_activism { mask-image: url("../img/icons/volunteer_activism.svg"); }

@@ -9,7 +9,8 @@ image; it never accesses or resets the target database through Django fixtures.
 
 Use a disposable database with `DEMO_MODE=true` and a `DEMO_PASSWORD` of at least
 twelve characters supplied in your shell environment. Production startup runs
-`seed_demo --if-empty`. Use fresh containers/database storage for each complete
+`seed_demo --if-empty`, then generates missing weekly drafts. Use fresh
+containers/database storage for each complete
 run: E2E-04 intentionally advances the seeded R10 report from Draft to Locked.
 Do not point write journeys at a database you want to preserve.
 
@@ -37,6 +38,7 @@ and its HTTP origin as a trusted CSRF origin on the disposable stack.
 | E2E-03 / H-13 | Urdu switcher round-trip, server form errors, collections table and October dashboard; four screenshots |
 | E2E-04 | Today's collection, seeded R10 submit/return/resubmit/approve/lock and six audit actions |
 | E2E-05 | Finance October 2026 Collected KPI: Rs 73,250.50 |
+| D3 motion | Six local checks: EN/UR with and without reduced motion, visible hero text, four-pixel directional arrows, tonal KPI chips, static charts and unscaled staff rows |
 
 The public form test honours the real three-second default timing rule. R10 is
 identified by Karachi and week starting 19 October 2026, not a database ID. The
@@ -237,3 +239,110 @@ passed through the restarted proxy. The full PostgreSQL suite passed 2,125 tests
 with 97.88% app coverage. Ruff, formatting and convention checks passed.
 CodeQL was not executed locally because its CLI is unavailable; the existing
 CodeQL workflow will perform the scan in CI.
+
+## D3 visual polish checks
+
+`tests/core/test_visual_assets.py` checks every CMS illustration path, SVG size
+and safety, template icon coverage and the CSS motion boundary. Positive
+animations/transitions must opt in through `prefers-reduced-motion: no-preference`;
+keyframes and transitions may change only opacity or transform. The browser
+checks in `tests/e2e/test_motion.py` exercise both preferences and both languages.
+Directional icons stay mirrored even when motion is disabled. Staff charts render
+without animation, and staff data pages have no decorative gradient shapes.
+
+The D3 Lighthouse acceptance target is 95 in all four categories on all five
+configured pages, using the median of three valid mobile runs. The existing CI
+baseline in `lighthouserc.json` remains 90. Incomplete traces are not valid audits;
+retry those runs without discarding completed measurements. Prefer collecting
+performance measurements after CPU-heavy test runs finish.
+
+The README's home/dashboard screenshots were recaptured in EN and UR from a
+fresh local authored seed using installed Chrome at 1440×1000, device scale 1,
+full-page capture after fonts and lazy images loaded. The paired report images
+come from the existing export route; see [PDF verification](exports.md#verification).
+Financial reference values stay fixed; ages and compliance use the capture date.
+
+D3 completed local verification (1 November 2026):
+
+| Step | Full PostgreSQL suite | App coverage | Browser checks |
+| --- | --- | --- | --- |
+| 1 — Illustrations | 2,172 passed, 0 failed | 97.86% | 16 public-page cases; eight EN/UR viewports |
+| 2 — Icons | 2,194 passed, 0 failed | 97.86% | 16 public-page cases; eight EN/UR viewports |
+| 3 — Motion | 2,195 passed, 0 failed | 97.86% | Full E2E: 34 passed; final eight-viewport check |
+
+Ruff, formatting, conventions and Urdu extraction passed in every step. The
+final catalogue has 781 message entries. The final E2E run includes the original
+font-delay/CLS regressions. A new motion assertion was corrected to wait for CSS
+readiness on script-free public pages; both motion preferences then passed.
+
+Mobile Lighthouse medians (three completed runs per page in each step):
+
+| Page | Performance S1 | Performance S2 | Performance S3 | Accessibility, every step | Best Practices, every step | SEO, every step |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `/en/` | 99 | 99 | 99 | 100 | 100 | 100 |
+| `/ur/` | 98 | 99 | 99 | 100 | 100 | 100 |
+| `/en/get-involved/` | 100 | 98 | 100 | 100 | 100 | 100 |
+| `/en/branches/` | 100 | 100 | 100 | 100 | 100 | 100 |
+| `/en/events/` | 100 | 100 | 100 | 100 | 100 | 100 |
+
+All 45 completed audits scored at least 96 in every category. Two Step 2
+NO_NAVSTART recordings were retried; completed scores were retained. The final
+set ran after the heavy test workloads finished. HTTPS/certificate validation
+remains a separate live check; only the localhost HTTPS audit was skipped.
+
+## D4 visual review fixes
+
+Step 1: 2,202 PostgreSQL tests passed, 0 failed, with 97.86% app coverage.
+Eight new local EN/UR browser checks passed: Finance/HR/Branch Lead heading
+hierarchy, scoped summary/unsent export labels, unchanged generic CSV labels,
+text-only audit chips, and amount/date wrapping with contained table overflow
+at 360, 768 and 1440 px. Mobile table cards remained active below 640 px.
+Every value of the six domain status enums has an explicit badge-mask rule.
+Ruff, formatting, conventions and Urdu extraction passed (783 entries).
+
+Step 2: 2,208 PostgreSQL tests passed, 0 failed, with 97.86% app coverage.
+The complete E2E suite passed 42/42. The eight EN/UR viewports passed at 360,
+412, 768 and 1440 px. All four requested screenshots were recaptured with D3's
+Chrome settings (1440×1000, DPR 1, fonts/lazy images ready) and visually reviewed.
+Role-by-role template tests confirm every staff navigation uses distinct icons.
+Credits were regenerated with the existing hash-pinned pip-licenses tool and
+matching runtime versions. Ruff, formatting, conventions and Urdu extraction
+passed (783 entries).
+
+As requested for D4, empty states retain the illustration without an additional
+inventory icon. This differs from planning/24 §3's icon-based empty-state design.
+The named health illustration replaces the old artwork at the same health.svg
+path; no content paths or seed figures changed.
+
+D4 mobile Lighthouse medians, three completed runs per configured page:
+
+| Page | Performance | Accessibility | Best Practices | SEO |
+| --- | ---: | ---: | ---: | ---: |
+| `/en/` | 99 | 100 | 100 | 100 |
+| `/ur/` | 99 | 100 | 100 | 100 |
+| `/en/get-involved/` | 100 | 100 | 100 | 100 |
+| `/en/branches/` | 100 | 100 | 100 | 100 |
+| `/en/events/` | 100 | 100 | 100 | 100 |
+
+All fifteen individual audits scored at least 99 in every category. Collection
+ran after the test workloads finished; only the localhost HTTPS audit was skipped.
+
+## D5 dashboard width and featured-card gap
+
+The full PostgreSQL suite passed 2,208 tests, 0 failed (67 browser/visual cases
+deselected), with 97.86% app coverage. Ruff, formatting and conventions passed.
+
+The full local E2E suite passed 48/48, including Finance dashboard tables at
+1280 and 1440 px in EN/UR: every `.table-container` has `scrollWidth <= clientWidth`.
+Both home pages at 1440 px passed the measured minimum 23 px gap between the
+section heading and its following featured card. The eight EN/UR viewports
+(360, 412, 768 and 1440 px) passed too, including page overflow checks.
+
+All four home/dashboard screenshots were recaptured using D4's Chrome settings
+(1440×1000, DPR 1, fonts and lazy images ready) and visually reviewed: dashboard
+columns are visible and the featured-card heading gap is clear. The empty-state
+planning row now matches the illustration used since D4.
+
+Lighthouse was not rerun for D5: these CSS changes affect staff pages or viewports
+768 px and wider, so the mobile public-page audits are unaffected. CI runs
+Lighthouse on push.

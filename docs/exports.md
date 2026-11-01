@@ -29,15 +29,17 @@ branch, trend and unsent table rows together; above it, the page suggests CSV.
 Print styles use the same flat MD3 colours, A4 pages, 18 mm margins, repeating table
 headers, unbroken rows and page counters. Staticfiles finders resolve the stylesheet;
 its relative font URLs load local Roboto and Noto Naskh Arabic WOFF2 files. No TTF
-copies were needed. There is no logo asset in the repository, so the existing
-ShipLens wordmark identifies the organization.
+copies were needed. The web header uses the original diya mark; PDF templates
+retain the organisation's text name and flat print layout.
 
 ## Verification
 
 The production Docker image successfully rendered the imported R7 report in English
 and Urdu and the October summary. All six resulting pages were rendered to PNG and
 inspected for alignment, clipping, repeated headers, page breaks and RTL mirroring.
-The [Urdu first-page screenshot](screenshots/export-report-ur.png) records that check.
+The paired first-page screenshots show [English](screenshots/export-report-en.png)
+and [Urdu](screenshots/export-report-ur.png). D3 refreshed these from the same R7
+report and inspected both pages in both languages using bundled Poppler at 94 dpi.
 The sample report contains BR-KHI-01, 25,250.50 and Locked; summary totals match
 planning/09 §4. The existing WOFF2 fonts embed successfully.
 

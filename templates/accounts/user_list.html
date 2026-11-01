@@ -12,7 +12,7 @@
       {% for account in accounts %}
         <tr><td data-label="{% translate 'Name' %}"><a href="{% url 'user-detail' account.pk %}">{{ account.full_name }}</a></td><td data-label="{% translate 'Email' %}"><bdi>{{ account.email }}</bdi></td><td data-label="{% translate 'Role' %}">{{ account.get_role_display }}</td><td data-label="{% translate 'Active' %}">{% if account.is_active %}{% translate "Yes" %}{% else %}{% translate "No" %}{% endif %}</td></tr>
       {% empty %}
-        <tr><td colspan="4">{% translate "No users found." %}</td></tr>
+        <tr><td colspan="4">{% include "partials/empty_illustration.html" %}{% translate "No users found." %}</td></tr>
       {% endfor %}
       </tbody>
     </table>

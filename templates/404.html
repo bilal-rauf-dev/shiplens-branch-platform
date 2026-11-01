@@ -1,8 +1,9 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 {% block title %}{% translate "Page not found" %} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
   <section class="card empty-state">
+  <img class="state-illustration" src="{% static 'img/states/not-found.svg' %}" width="192" height="144" alt="">
   <h1 class="page-title">{% translate "Page not found" %}</h1>
   <p>{% translate "The page you requested could not be found." %}</p>
   <a class="btn btn--tonal" href="{% url 'home' %}">{% translate "Return home" %}</a>

@@ -87,15 +87,19 @@ The IDs below match the deliverables in [the compliance plan](docs/planning/01-c
 
 ## 🖼️ See it in both languages
 
+**Public home**
+
+| English | اردو |
+| --- | --- |
+| ![English public home with volunteer illustrations](docs/screenshots/home-en.png) | ![Urdu public home with mirrored navigation and local Naskh typography](docs/screenshots/home-ur.png) |
+
 **Head office — October 2026, fresh local sample data**
 
-![English head-office dashboard with October 2026 totals](docs/screenshots/dashboard-en.png)
+| English | اردو |
+| --- | --- |
+| ![English head-office dashboard with October 2026 totals](docs/screenshots/dashboard-en.png) | ![Urdu head-office dashboard with October 2026 totals](docs/screenshots/dashboard-ur.png) |
 
-**Urdu public home — right-to-left layout**
-
-![Urdu public home with mirrored navigation and local Naskh typography](docs/screenshots/home-ur.png)
-
-Also see the existing [Urdu weekly-report PDF example](docs/screenshots/export-report-ur.png). Screenshots contain fictional data; they do not certify the current live deployment.
+Weekly-report PDF examples: [English](docs/screenshots/export-report-en.png) · [اردو](docs/screenshots/export-report-ur.png). Screenshots contain fictional data; they do not certify the current live deployment.
 
 ## 🧭 Architecture and stack choices
 

@@ -7,18 +7,14 @@
   background: var(--md-primary); font-size: .875rem; font-weight: 500;
   line-height: 1.4; letter-spacing: .01em; text-align: center;
   text-decoration: none; cursor: pointer;
-  transition: background-color var(--md-dur-fast) var(--md-ease),
-              box-shadow var(--md-dur-fast) var(--md-ease),
-              transform var(--md-dur-fast) var(--md-ease);
 }
 .btn::before, button::before {
   content: ""; position: absolute; inset: 0; border-radius: inherit;
   background: currentColor; opacity: 0; pointer-events: none;
-  transition: opacity var(--md-dur-fast) var(--md-ease);
 }
 .btn:focus-visible::before, button:focus-visible::before { opacity: .10; }
 .btn:active::before, button:active::before { opacity: .12; }
-.btn:active, button:active { transform: scale(.95); }
+
 .btn:disabled, button:disabled, .btn[aria-disabled="true"] {
   opacity: .38; cursor: not-allowed; pointer-events: none;
 }
@@ -51,12 +47,11 @@
 }
 .card--interactive {
   display: block; text-decoration: none;
-  transition: box-shadow var(--md-dur) var(--md-ease), transform var(--md-dur) var(--md-ease);
 }
-.card--interactive:active { transform: scale(.98); }
+
 .card--featured { outline: 2px solid var(--md-primary); outline-offset: 0; }
 @media (hover: hover) {
-  .card--interactive:hover { box-shadow: var(--md-elev-2); transform: scale(1.02); }
+  .card--interactive:hover { box-shadow: var(--md-elev-2); }
 }
 @media (width >= 768px) { .card--featured { transform: translateY(-16px); } }
 
@@ -109,7 +104,6 @@
   border-start-end-radius: var(--md-radius-sm);
   border-end-start-radius: 0; border-end-end-radius: 0;
   color: var(--md-on-surface); background: var(--md-surface-container-low);
-  transition: background-color var(--md-dur-fast) var(--md-ease);
 }
 :is(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), select, textarea):focus {
   border-block-end: 2px solid var(--md-primary);
@@ -119,7 +113,7 @@ textarea { min-block-size: 112px; resize: block; }
 .form-field--error :is(input, select, textarea),
 :is(input, select, textarea)[aria-invalid="true"] { border-block-end: 2px solid var(--md-error); }
 .form-errors, .errorlist, .form-field--error .help-text { color: var(--md-error); }
-.errorlist::before { content: "!"; margin-inline-end: var(--md-s2); font-weight: 700; }
+
 .help-text { color: var(--md-on-surface-variant); font-size: .875rem; }
 input[type="checkbox"], input[type="radio"] {
   inline-size: 1.25rem; block-size: 1.25rem; flex: 0 0 1.25rem;
@@ -130,7 +124,6 @@ input[type="checkbox"], input[type="radio"] {
   display: flex; align-items: center; gap: var(--md-s3); min-block-size: 44px; min-inline-size: 44px;
   padding-inline: var(--md-s1); border-radius: var(--md-radius-xs);
   font-size: 1rem; font-weight: 400; cursor: pointer;
-  transition: background-color var(--md-dur-fast) var(--md-ease);
 }
 .choice-row > span { min-inline-size: 0; }
 .consent-row { display: flex; align-items: center; gap: var(--md-s3); }
@@ -157,7 +150,6 @@ input[type="checkbox"], input[type="radio"] {
   background: var(--md-secondary-container); font-size: .75rem; font-weight: 500;
   line-height: 1.4; white-space: nowrap;
 }
-.status-badge::before { content: "●"; font-size: .75em; }
 .status-badge[data-status="SUBMITTED"], .status-badge[data-status="RESUBMITTED"],
 .status-badge[data-status="FORMING"], .status-badge[data-status="PENDING"],
 .status-badge[data-status="OPEN"] {
@@ -176,19 +168,8 @@ input[type="checkbox"], input[type="radio"] {
 .status-badge[data-status="DECLINED"], .status-badge[data-status="LEFT"] {
   color: var(--md-on-error-container); background: var(--md-error-container);
 }
-.status-badge[data-status="LOCKED"]::before { content: "🔒"; font-size: 1em; }
-.status-badge[data-status="VOIDED"]::before, .status-badge[data-status="CLOSED"]::before,
-.status-badge[data-status="DECLINED"]::before, .status-badge[data-status="LEFT"]::before {
-  content: "×"; font-size: 1em;
-}
-.status-badge[data-status="RETURNED"]::before, .status-badge[data-status="PAUSED"]::before,
-.status-badge[data-status="INACTIVE"]::before { content: "!"; font-size: 1em; }
-.status-badge[data-status="APPROVED"]::before, .status-badge[data-status="ACTIVE"]::before,
-.status-badge[data-status="ACCEPTED"]::before, .status-badge[data-status="SENT"]::before {
-  content: "✓"; font-size: 1em;
-}
 
-.table-container { overflow: auto; }
+.table-container { overflow: auto; min-inline-size: 0; max-inline-size: 100%; }
 .pagination a, .filter-bar a {
   display: inline-flex; align-items: center; min-block-size: 40px;
   padding-inline: var(--md-s4); border-radius: var(--md-radius-full);
@@ -230,7 +211,6 @@ input[type="checkbox"], input[type="radio"] {
 .brand::before, .nav-link::before {
   content: ""; position: absolute; inset: 0; border-radius: inherit;
   background: currentColor; opacity: 0; pointer-events: none;
-  transition: opacity var(--md-dur-fast) var(--md-ease);
 }
 .brand:focus-visible::before, .nav-link:focus-visible::before { opacity: .10; }
 .brand:active::before, .nav-link:active::before { opacity: .12; }
@@ -242,7 +222,6 @@ input[type="checkbox"], input[type="radio"] {
 .staff-menu {
   border-radius: var(--md-radius-xl);
   background: var(--md-surface-container); box-shadow: var(--md-elev-2);
-  transition: box-shadow var(--md-dur-slow) var(--md-ease);
 }
 .staff-menu summary { cursor: pointer; padding-block: var(--md-s3); padding-inline: var(--md-s4); }
 .staff-menu[open] { padding-block-end: var(--md-s4); }
@@ -290,8 +269,6 @@ dialog, .confirm-panel {
   border: 0; border-radius: var(--md-radius-xl);
   color: var(--md-on-surface); background: var(--md-surface);
   box-shadow: var(--md-elev-3);
-  transition: opacity var(--md-dur-slow) var(--md-ease),
-              transform var(--md-dur-slow) var(--md-ease);
 }
 dialog::backdrop { background: rgb(0 0 0 / .32); }
 .confirm-panel { margin-block: var(--md-s6); }
@@ -317,6 +294,53 @@ dialog::backdrop { background: rgb(0 0 0 / .32); }
 .cms-preview-image { max-inline-size: 100%; block-size: auto; border-radius: var(--md-radius-lg); }
 .cms-changes { color: var(--md-on-warning-container); background: var(--md-warning-container); }
 .status-badge[data-status="PUBLISHED"] { color: var(--md-on-success-container); background: var(--md-success-container); }
-.status-badge[data-status="PUBLISHED"]::before { content: "✓"; }
 .status-badge[data-status="ARCHIVED"] { color: var(--md-on-surface-variant); background: var(--md-surface-container-low); }
-.status-badge[data-status="ARCHIVED"]::before { content: "▣"; }
+
+
+/* Small tonal markers belong to headings and KPI cards, not data rows. */
+.section-title { display: flex; align-items: center; gap: var(--md-s2); }
+.section-icon-chip, .kpi-icon {
+  display: inline-grid; place-items: center; flex-shrink: 0;
+  border-radius: var(--md-radius-sm); font-size: 1rem;
+  color: var(--md-on-secondary-container); background: var(--md-secondary-container);
+}
+.section-icon-chip { inline-size: 32px; block-size: 32px; }
+.kpi-icon { inline-size: 40px; block-size: 40px; }
+.staff-app .hero::before, .staff-app .hero::after,
+.staff-app .section--primary::before, .staff-app .empty-state::before { content: none; }
+
+/* Text is always visible; only decorative artwork enters. No public script. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  @keyframes hero-arrive {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .home-hero > img, .home-hero::before, .home-hero::after {
+    animation: hero-arrive var(--md-dur-slow) var(--md-ease) both;
+  }
+  .btn, button { transition: transform var(--md-dur-fast) var(--md-ease); }
+  .btn::before, button::before, .brand::before, .nav-link::before {
+    transition: opacity var(--md-dur-fast) var(--md-ease);
+  }
+  .card--interactive, .public-card__link .icon-directional {
+    transition: transform var(--md-dur) var(--md-ease);
+  }
+  dialog, .confirm-panel {
+    transition: opacity var(--md-dur-slow) var(--md-ease),
+                transform var(--md-dur-slow) var(--md-ease);
+  }
+  @media (hover: hover) {
+    .card--interactive:hover { transform: scale(1.02); }
+    /* The separate RTL scale mirrors the arrow's local 4px translation too. */
+    .public-card:hover .icon-directional { transform: translateX(4px); }
+    @media (width >= 768px) {
+      .card--featured:hover { transform: translateY(-16px) scale(1.02); }
+    }
+  }
+  .btn:active, button:active { transform: scale(.95); }
+  .card--interactive:active { transform: scale(.98); }
+  @media (width >= 768px) {
+    .card--featured:active { transform: translateY(-16px) scale(.98); }
+  }
+}

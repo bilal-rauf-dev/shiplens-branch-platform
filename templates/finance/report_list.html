@@ -33,7 +33,7 @@
 <td class="numeric" data-label="{% translate 'Revision' %}"><bdi>{{ report.revision }}</bdi></td>
 </tr>
 {% empty %}<tr>
-<td colspan="4">{% translate "No reports found." %}</td>
+<td colspan="4">{% include "partials/empty_illustration.html" %}{% translate "No reports found." %}</td>
 </tr>{% endfor %}</tbody>
 </table>
 </div>

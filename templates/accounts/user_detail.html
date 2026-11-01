@@ -30,7 +30,7 @@
       {% endif %}
     </li>
   {% empty %}
-    <li>{% translate "No branch assignments." %}</li>
+    <li>{% include "partials/empty_illustration.html" %}{% translate "No branch assignments." %}</li>
   {% endfor %}
   </ul>
   {% if not account.is_demo %}

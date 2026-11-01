@@ -62,6 +62,12 @@ pip-licenses is a development-only attribution tool, not an application dependen
 
 ## Vendored assets
 
+- **Material Symbols Rounded — Apache-2.0:** 24px, weight 400, fill 0 SVGs in
+  `static/img/icons/`, downloaded unchanged from Google's
+  [material-design-icons repository](https://github.com/google/material-design-icons/tree/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/symbols/web)
+  at commit `10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7`. Source pattern:
+  `symbols/web/<name>/materialsymbolsrounded/<name>_24px.svg`.
+  [Retained licence](../static/img/icons/MATERIAL-SYMBOLS-LICENSE.txt).
 - **Chart.js 4.6.1 — MIT:** `static/vendor/chart.umd.min.js`, dashboard only.
   [Retained licence](../static/vendor/CHARTJS-LICENSE.md).
 - **Roboto — Apache-2.0:** Latin WOFF2 weights 400/500/700 in `static/fonts/`.
@@ -73,8 +79,14 @@ pip-licenses is a development-only attribution tool, not an application dependen
   [third-party notices](../tests/e2e/vendor/LICENSE-3RD-PARTY.txt) and
   [provenance](../tests/e2e/vendor/README.md).
 
-The four bundled CMS SVG illustrations are authored in this repository, rather
-than fetched from an image service. Public pages load no third-party fonts or
+The four original CMS illustrations (learning, community, care and growth)
+remain available for stored content. The owner-supplied unDraw illustrations
+are by Katerina Limpitsouni and used under the
+[unDraw licence](https://undraw.co/license). Their geometry is unchanged;
+SVG metadata is stripped, inline styles use presentation attributes,
+and the original purple accent is aligned to #6750A4. The diya brand mark in
+`static/img/brand/diya.svg` is original artwork authored for this project.
+Public pages load no third-party fonts or
 analytics. Python, PostgreSQL and the Docker image's native libraries retain their
 upstream notices; the pip table inventories Python distributions, not OS packages.
 Urdu PDF shaping uses Pango/HarfBuzz through WeasyPrint. Material Design 3 informed

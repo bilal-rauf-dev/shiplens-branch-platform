@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title description">
+  <title id="title">ShipLens — from branch records to trusted decisions</title>
+  <desc id="description">A purple ShipLens banner showing the path from branch records through finance review to head-office insight. English and Urdu, offline collections, accountable reporting.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#30204f"/>
+      <stop offset="1" stop-color="#6750a4"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="360" rx="32" fill="url(#background)"/>
+  <circle cx="1120" cy="35" r="180" fill="#e8def8" opacity=".08"/>
+  <circle cx="840" cy="355" r="125" fill="#fbe7c2" opacity=".08"/>
+  <g font-family="Arial, sans-serif">
+    <rect x="48" y="35" width="260" height="29" rx="14.5" fill="#e8def8"/>
+    <text x="64" y="55" font-size="12" font-weight="700" fill="#30204f" letter-spacing="1">SOLO BUILD · SHIPLENS 1.0</text>
+    <text x="45" y="134" font-size="64" font-weight="700" fill="#fffbfe">ShipLens</text>
+    <text x="49" y="176" font-size="25" fill="#fffbfe">From branch records to trusted decisions.</text>
+    <text x="49" y="210" font-size="17" fill="#e8def8">English + Urdu · Offline collections · Accountable reporting</text>
+    <g transform="translate(48 252)">
+      <rect width="286" height="67" rx="18" fill="#e8def8"/>
+      <circle cx="31" cy="33" r="16" fill="#6750a4"/>
+      <text x="26" y="39" font-size="16" font-weight="700" fill="#fff">1</text>
+      <text x="58" y="29" font-size="16" font-weight="700" fill="#1d192b">Branch records</text>
+      <text x="58" y="49" font-size="13" fill="#49454f">Members, receipts and reports</text>
+      <path d="M 302 33 H 326 M 319 26 L 326 33 L 319 40" fill="none" stroke="#e8def8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g transform="translate(391 252)">
+      <rect width="286" height="67" rx="18" fill="#fbe7c2"/>
+      <circle cx="31" cy="33" r="16" fill="#7a5300"/>
+      <text x="26" y="39" font-size="16" font-weight="700" fill="#fff">2</text>
+      <text x="58" y="29" font-size="16" font-weight="700" fill="#2b1d00">Finance review</text>
+      <text x="58" y="49" font-size="13" fill="#49454f">Return, approve and lock</text>
+      <path d="M 302 33 H 326 M 319 26 L 326 33 L 319 40" fill="none" stroke="#e8def8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g transform="translate(734 252)">
+      <rect width="418" height="67" rx="18" fill="#d4edda"/>
+      <circle cx="31" cy="33" r="16" fill="#1e6b3a"/>
+      <text x="26" y="39" font-size="16" font-weight="700" fill="#fff">3</text>
+      <text x="58" y="29" font-size="16" font-weight="700" fill="#0b2e17">Head-office insight</text>
+      <text x="58" y="49" font-size="13" fill="#49454f">Approved figures with an audit trail</text>
+    </g>
+  </g>
+</svg>

@@ -11,10 +11,10 @@ void information. Adjustment columns are reserved for a later task; no adjustmen
 form or service exists.
 
 The Transfer table is created alongside Collection so its foreign key is real
-from the first migration. Transfer operations and immutability arrive in P6 Step 3.
+from the first migration. Transfer services and database guards are implemented.
 The partial unsent index follows BR-071 exactly: transfer is null and voided_at is
-null. `week_is_closed` is the explicit P7 integration point and currently returns
-False. No weekly-report behavior is implemented in P6.
+null. `week_is_closed` delegates to the report selector and blocks weeks with a
+Submitted, Resubmitted, Approved or Locked report; see [weekly reports](weekly-reports.md).
 
 ## Lock, edits and voids
 
@@ -55,10 +55,10 @@ Unsent collections block closing a branch, with their count and Decimal total in
 PKR. This is an all-time check and includes locked receipts. Sending or voiding
 removes an entry from that blocker. Branch close and finance writes take the
 branch lock first, so a collection cannot slip into a branch during its closure.
-The open-report check remains an explicit P7 integration comment.
+Submitted, Resubmitted and Returned weekly reports also block closure.
 
 Scope tests cover foreign collections, transfers and selection options, global
 Finance Reviewer reads, rejected finance writes, and HR/Content Editor denials.
 The close workflow is tested through HTTP: 409 while money is unsent, then a
-successful redirect after it is transferred. No exports, adjustments or weekly
-reports are implemented here.
+successful redirect after it is transferred. Adjustment entry remains unimplemented.
+[Exports](exports.md) and [weekly reports](weekly-reports.md) have their own guides.

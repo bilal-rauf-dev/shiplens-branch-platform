@@ -12,7 +12,9 @@ to `+923…`. Ages count completed birthdays on the Karachi business date. Conse
 is required below 18, and privacy consent is required for every application.
 Only Active or Forming branches are selectable. The submission service locks and
 re-checks the branch, so a pause/close after form validation still prevents a write.
-Interests are a fixed list until P10 supplies published programs.
+Interests are a fixed list (education, ration-drive, health-camps and general),
+not live published-program choices. This is a partial implementation of BR-046;
+see [the current rule catalogue](business-rules.md).
 
 The browser checks email type, mobile-number pattern, name and motivation lengths,
 inclusive birth-date bounds and required privacy consent using HTML attributes.

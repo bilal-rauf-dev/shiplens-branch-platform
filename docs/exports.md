@@ -43,8 +43,8 @@ planning/09 §4. The existing WOFF2 fonts embed successfully.
 
 The PDF test checks an extracted Urdu label and embedded Naskh font. Some other
 Urdu words extract imperfectly with pypdf despite correct visual shaping; the PDF
-image check is necessary alongside text extraction. New export strings fall back
-to English until the P11 translation pass.
+image check is necessary alongside text extraction. Export labels are included
+in the Urdu catalogue and checked by the translation parity suite.
 
 On Windows without Pango, run PDF tests in Linux using the production image's
 libraries and the locked development dependencies. Run `pytest tests/exports`

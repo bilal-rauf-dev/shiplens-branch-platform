@@ -70,6 +70,12 @@ pip-licenses is a development-only attribution tool, not an application dependen
 
 ## Vendored assets
 
+- **Material Symbols Rounded — Apache-2.0:** 24px, weight 400, fill 0 SVGs in
+  `static/img/icons/`, downloaded unchanged from Google's
+  [material-design-icons repository](https://github.com/google/material-design-icons/tree/10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7/symbols/web)
+  at commit `10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7`. Source pattern:
+  `symbols/web/<name>/materialsymbolsrounded/<name>_24px.svg`.
+  [Retained licence](../static/img/icons/MATERIAL-SYMBOLS-LICENSE.txt).
 - **Chart.js 4.6.1 — MIT:** `static/vendor/chart.umd.min.js`, dashboard only.
   [Retained licence](../static/vendor/CHARTJS-LICENSE.md).
 - **Roboto — Apache-2.0:** Latin WOFF2 weights 400/500/700 in `static/fonts/`.

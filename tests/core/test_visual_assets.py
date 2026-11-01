@@ -1,5 +1,6 @@
 """Bundled decorative SVGs stay local, inert and small under the strict CSP."""
 
+import re
 from pathlib import Path
 from xml.etree import ElementTree
 
@@ -37,3 +38,18 @@ def test_t_ui_svg_safety(path):
             assert local_name != "style"
             if local_name == "href":
                 assert value.startswith("#")
+
+
+def test_t_ui_template_icon_contract():
+    templates = "\n".join(
+        path.read_text(encoding="utf-8")
+        for path in (ROOT / "templates").rglob("*.html")
+    )
+    used = set(re.findall(r"\bicon--([a-z0-9_]+)\b", templates))
+    css = (ROOT / "static/css/icons.css").read_text(encoding="utf-8")
+    declared = set(re.findall(r"\.icon--([a-z0-9_]+)\s*\{", css))
+    assert used
+    assert used <= declared, used - declared
+    for name in declared:
+        assert (ROOT / "static/img/icons" / f"{name}.svg").is_file(), name
+        assert f'mask-image: url("../img/icons/{name}.svg")' in css

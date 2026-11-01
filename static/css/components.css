@@ -119,7 +119,7 @@ textarea { min-block-size: 112px; resize: block; }
 .form-field--error :is(input, select, textarea),
 :is(input, select, textarea)[aria-invalid="true"] { border-block-end: 2px solid var(--md-error); }
 .form-errors, .errorlist, .form-field--error .help-text { color: var(--md-error); }
-.errorlist::before { content: "!"; margin-inline-end: var(--md-s2); font-weight: 700; }
+
 .help-text { color: var(--md-on-surface-variant); font-size: .875rem; }
 input[type="checkbox"], input[type="radio"] {
   inline-size: 1.25rem; block-size: 1.25rem; flex: 0 0 1.25rem;
@@ -157,7 +157,6 @@ input[type="checkbox"], input[type="radio"] {
   background: var(--md-secondary-container); font-size: .75rem; font-weight: 500;
   line-height: 1.4; white-space: nowrap;
 }
-.status-badge::before { content: "●"; font-size: .75em; }
 .status-badge[data-status="SUBMITTED"], .status-badge[data-status="RESUBMITTED"],
 .status-badge[data-status="FORMING"], .status-badge[data-status="PENDING"],
 .status-badge[data-status="OPEN"] {
@@ -175,17 +174,6 @@ input[type="checkbox"], input[type="radio"] {
 .status-badge[data-status="VOIDED"], .status-badge[data-status="CLOSED"],
 .status-badge[data-status="DECLINED"], .status-badge[data-status="LEFT"] {
   color: var(--md-on-error-container); background: var(--md-error-container);
-}
-.status-badge[data-status="LOCKED"]::before { content: "🔒"; font-size: 1em; }
-.status-badge[data-status="VOIDED"]::before, .status-badge[data-status="CLOSED"]::before,
-.status-badge[data-status="DECLINED"]::before, .status-badge[data-status="LEFT"]::before {
-  content: "×"; font-size: 1em;
-}
-.status-badge[data-status="RETURNED"]::before, .status-badge[data-status="PAUSED"]::before,
-.status-badge[data-status="INACTIVE"]::before { content: "!"; font-size: 1em; }
-.status-badge[data-status="APPROVED"]::before, .status-badge[data-status="ACTIVE"]::before,
-.status-badge[data-status="ACCEPTED"]::before, .status-badge[data-status="SENT"]::before {
-  content: "✓"; font-size: 1em;
 }
 
 .table-container { overflow: auto; }
@@ -317,6 +305,4 @@ dialog::backdrop { background: rgb(0 0 0 / .32); }
 .cms-preview-image { max-inline-size: 100%; block-size: auto; border-radius: var(--md-radius-lg); }
 .cms-changes { color: var(--md-on-warning-container); background: var(--md-warning-container); }
 .status-badge[data-status="PUBLISHED"] { color: var(--md-on-success-container); background: var(--md-success-container); }
-.status-badge[data-status="PUBLISHED"]::before { content: "✓"; }
 .status-badge[data-status="ARCHIVED"] { color: var(--md-on-surface-variant); background: var(--md-surface-container-low); }
-.status-badge[data-status="ARCHIVED"]::before { content: "▣"; }

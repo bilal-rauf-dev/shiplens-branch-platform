@@ -1,9 +1,27 @@
 """Read-only branch listings and scoped history for the register."""
 
+from decimal import Decimal
+
+from django.db.models import (
+    Case,
+    Count,
+    DecimalField,
+    IntegerField,
+    OuterRef,
+    Subquery,
+    Sum,
+    Value,
+    When,
+)
+from django.db.models.functions import Coalesce
 from django.utils.translation import gettext_lazy as _
 
+from apps.accounts.permissions import scope_queryset
 from apps.audit.models import AuditLog
 from apps.branches.models import Branch, BranchStatus
+from apps.core import clock
+from apps.finance.models import Collection
+from apps.volunteers.models import Member, MemberStatus
 
 FIELD_LABELS = {
     "code": _("Code"),
@@ -32,6 +50,69 @@ ACTION_LABELS = {
 def branches():
     """Order branches predictably for the staff register."""
     return Branch.objects.select_related("city").order_by("city__code", "name_en", "pk")
+
+
+def with_register_counts(user, queryset):
+    """Add permission-gated counts to scoped branches without multiplying joins."""
+    current = clock.now()
+    member_branches = scope_queryset(
+        user, "member.list", Branch.objects.all(), branch_field="pk"
+    ).values("pk")
+    money_branches = scope_queryset(
+        user, "collection.list", Branch.objects.all(), branch_field="pk"
+    ).values("pk")
+    members = (
+        Member.objects.filter(
+            branch_id=OuterRef("pk"),
+            status=MemberStatus.ACTIVE,
+            created_at__lte=current,
+        )
+        .order_by()
+        .values("branch_id")
+        .annotate(total=Count("pk"))
+    )
+    # BR-071 / K4: all-time receipts with neither a transfer nor a void.
+    unsent = (
+        Collection.objects.filter(
+            branch_id=OuterRef("pk"),
+            transfer_id__isnull=True,
+            voided_at__isnull=True,
+            created_at__lte=current,
+        )
+        .order_by()
+        .values("branch_id")
+        .annotate(receipts=Count("pk"), amount=Sum("amount"))
+    )
+    # CASE keeps a denied count null; COALESCE gives an allowed empty branch zero.
+    # Separate grouped subqueries avoid a members × collections join.
+    return queryset.annotate(
+        member_count=Case(
+            When(
+                pk__in=member_branches,
+                then=Coalesce(Subquery(members.values("total")), Value(0)),
+            ),
+            default=Value(None),
+            output_field=IntegerField(),
+        ),
+        unsent_count=Case(
+            When(
+                pk__in=money_branches,
+                then=Coalesce(Subquery(unsent.values("receipts")), Value(0)),
+            ),
+            default=Value(None),
+            output_field=IntegerField(),
+        ),
+        unsent_amount=Case(
+            When(
+                pk__in=money_branches,
+                then=Coalesce(
+                    Subquery(unsent.values("amount")), Value(Decimal("0.00"))
+                ),
+            ),
+            default=Value(None),
+            output_field=DecimalField(max_digits=12, decimal_places=2),
+        ),
+    )
 
 
 def public_branches():

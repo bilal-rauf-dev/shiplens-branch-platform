@@ -3550,3 +3550,9 @@ msgstr "رضاکارانہ کردار غیر فعال کریں"
 #: templates/volunteers/volunteer_role_list.html:15
 msgid "No volunteer roles found."
 msgstr "کوئی رضاکارانہ کردار نہیں ملا۔"
+
+
+#: apps/finance/management/commands/generate_weekly_drafts.py
+#, python-format
+msgid "Created %(count)s weekly report drafts."
+msgstr "ہفتہ وار رپورٹوں کے %(count)s مسودے بنائے گئے۔"

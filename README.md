@@ -50,7 +50,7 @@ Start with a fresh demo seed. Use the logins above and log out between roles. R9
 
 1. **Dashboard · Finance · 45 seconds.** Select **October 2026**. Collected is **Rs 73,250.50 (8 entries)**; Approved is Rs 43,250.50; Awaiting approval is Rs 30,000.00.
 2. **Approve R9 · Finance · 60 seconds.** Open Review queue → **BR-LHE-01, 12–18 October 2026**, Submitted, Rs 15,000.00. Choose **Approve and lock**. The report becomes Locked. Refresh the October dashboard: Approved becomes **Rs 58,250.50** and Awaiting becomes **Rs 15,000.00**; Collected stays unchanged.
-3. **Seven-day lock · Branch Lead · 45 seconds.** Open Collections and find receipt **C05**, Karachi, 8 October, Rs 5,250.50. It is Locked and unsent, with no edit/void controls. The lock is measured from entry creation time. [Boundary tests](tests/finance/test_lock.py) check one second before and exactly at seven days; nobody can unlock it.
+3. **Seven-day lock · Branch Lead · 45 seconds.** Open Collections and find receipt **C05**, Karachi, 8 October, Rs 5,250.50. It is Locked and unsent, with no edit/void controls. The lock is measured from entry creation time. [Boundary tests](tests/finance/test_lock.py) check one second before and exactly at seven days; nobody can unlock it. See [correcting a mistake](docs/finance.md#correcting-a-mistake) for the current limits and how to flag a discrepancy to Finance.
 4. **Urdu · 30 seconds.** Open the public home and select **اردو**. Visit Get Involved to see the mirrored form and translated labels; staff pages and PDFs also support Urdu.
 5. **Audit · Super Admin · 60 seconds.** Open Audit log. Filter by Lahore and `report.approved`, open R9's approval event, then find `report.locked` for the same report. Check actor, changes and request ID; use **Verify chain** to check integrity. The lock event has a system actor.
 
@@ -146,7 +146,7 @@ This intentionally replaces demo domain data, settings overrides, sessions and a
 
 For a fresh seed in October 2026: Collected **Rs 73,250.50**, Approved **Rs 43,250.50**, Awaiting **Rs 30,000.00**, all-time Unsent **Rs 35,250.50 (6 entries)**, October Sent **Rs 38,000.00**. [All expected values](docs/planning/09-dashboard-and-seed-data.md#41-reference-period-october-2026) use 31 October 2026, 23:00 PKT; ages and compliance change with the business date.
 
-Production startup seeds with `--if-empty`; later redeployments preserve demonstration changes. Development Compose requires the explicit command above.
+Production startup seeds with `--if-empty`, then always generates missing weekly drafts in both demo and non-demo mode. Later redeployments preserve demonstration changes. The Branch Lead Reports list also fills gaps when a process stays running past Monday. Development Compose requires the explicit seed command above; run `docker compose exec web python manage.py generate_weekly_drafts` to fill draft gaps without opening Reports. After drafting, the dashboard's latest-report column shows the current week's Draft for Active branches; planning/09's older R10 label remains the lifecycle example.
 
 ## 🧪 Run the checks
 
@@ -190,7 +190,7 @@ The [handover runbook](docs/handover.md) covers password rotation, CLI rebuilds,
 
 ## 📚 Limits, credits and ownership
 
-The release has no online payments, outbound email, file uploads or adjustment-entry workflow. Interest choices are fixed; weeks start on Monday. Historical active-member counts use current status. Member/unsent counts in the branch register remain placeholders; use the dashboard and operational lists for actual figures. Free hosting can cold-start, and its database needs an expiry plan. See the [runbook](docs/handover.md#known-limitations-and-deferred-work), [security boundaries](docs/security.md) and [implementation differences](docs/business-rules.md#differences-from-the-earlier-plan).
+The release has no online payments, outbound email, file uploads or adjustment-entry workflow. Interest choices are fixed; weeks start on Monday. Historical active-member counts use current status. Branch-register member and unsent counts follow the underlying list permissions. Free hosting can cold-start, and its database needs an expiry plan. See the [runbook](docs/handover.md#known-limitations-and-deferred-work), [security boundaries](docs/security.md) and [implementation differences](docs/business-rules.md#differences-from-the-earlier-plan).
 
 AI assistance is declared in **[AI-USAGE.md](AI-USAGE.md)**. The owner maintains that dated log and reviews the implementation for the solo challenge's explainability requirement.
 

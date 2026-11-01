@@ -39,10 +39,15 @@ assignments once it is Closed.
 The register has city and branch create/edit screens for Super Admins. Finance
 Reviewers see every branch read-only; Branch and HR Leads see assigned branches.
 The list supports city/status filters and pages of 25. Only permitted staff see
-a branch's history. Members and Unsent in the branch list/detail remain `—`
-placeholders; those templates do not calculate counts. Use the scoped Members
-page and dashboard's unsent figures for real data. City codes stay fixed after
-creation so existing branch codes still match.
+a branch's history. Members counts Active members. Unsent shows the all-time
+receipt count and amount,
+excluding voided or transferred collections, matching dashboard K4/BR-071. Counts
+are grouped separately and annotated onto the scoped branch query, avoiding
+member/collection join multiplication and per-row queries. Each metric additionally
+checks its underlying list permission for that branch: member.list for Members,
+collection.list for Unsent. Denied metrics show `—`; permitted empty metrics show
+zero. Finance has no member count, and HR has no money count. City codes stay fixed
+after creation so existing branch codes still match.
 
 The POST-only `/en/branches/<id>/<action>/` endpoint (also available in Urdu)
 redirects successful actions to the detail page, where a translated message is

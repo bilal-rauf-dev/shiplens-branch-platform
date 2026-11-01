@@ -35,7 +35,7 @@ class BranchListView(PermissionRequiredMixin, ListView):
                 queryset = queryset.filter(city=city)
             if status:
                 queryset = queryset.filter(status=status)
-        return queryset
+        return selectors.with_register_counts(self.request.user, queryset)
 
     def get_context_data(self, **kwargs):
         return {
@@ -73,6 +73,9 @@ class BranchDetailView(PermissionRequiredMixin, DetailView):
     queryset = selectors.branches()
     template_name = "branches/branch_detail.html"
     context_object_name = "branch"
+
+    def get_queryset(self):
+        return selectors.with_register_counts(self.request.user, super().get_queryset())
 
     def get_context_data(self, **kwargs):
         return {
@@ -173,7 +176,10 @@ class CityEditView(CityCreateView):
 def branch_transition(request, pk, action):
     """Redirect successful actions; show conflicts beside the branch forms."""
     require(request.user, "branch.transition")
-    scoped = scope_queryset(request.user, "branch.transition", selectors.branches())
+    scoped = selectors.with_register_counts(
+        request.user,
+        scope_queryset(request.user, "branch.transition", selectors.branches()),
+    )
     branch = get_object_or_404(scoped, pk=pk)
     try:
         services.transition(

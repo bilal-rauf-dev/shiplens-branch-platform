@@ -24,7 +24,8 @@ Deploy through the root `render.yaml` Blueprint: connect the repository and `mai
 review Singapore/free-plan resources, supply `DEMO_PASSWORD` and deploy after CI.
 Render supplies the database URL, external hostname and commit environment values;
 it generates the signing key. `bin/start.sh` calls `manage.py startup` in one Python
-process: migrations → cache table → demo `--if-empty`, then Gunicorn. A seeded
+process: migrations → cache table → demo `--if-empty` when enabled → missing
+weekly drafts in every mode, then Gunicorn. A seeded
 marker preserves demo changes on ordinary redeployments. Development Compose does
 not call startup's seeding path.
 
@@ -190,9 +191,12 @@ The production image intentionally excludes docs/tests, so do not expect it to
 write the documentation pack. See [Urdu workflow](i18n-glossary.md) and
 [test requirements](ci.md) instead of duplicating those guides here.
 
-`generate_weekly_drafts` creates missing drafts for currently Active branches.
-The Branch Lead Reports list calls the same service; dashboards do not create
-drafts. A successful close needs no unsent receipts or open reports; read the
+`generate_weekly_drafts` creates missing drafts for currently Active branches
+and prints the number of new reports. Production startup always runs it after
+seeding, including outside demo mode. The Branch Lead Reports list calls the same
+service for a process that stays running across Monday; dashboards do not create
+drafts. Once drafted, L2 shows the current week's report as latest, rather than
+planning/09's older R10 example. K8/K9 and money are unchanged by Draft rows. A successful close needs no unsent receipts or open reports; read the
 [implemented rules](business-rules.md) before changing workflow behavior.
 
 ## Monitoring and incidents
@@ -219,8 +223,8 @@ adjustment-entry workflow, dashboard JSON API or scheduler endpoint. The importe
 accepts a CSV directory and optional YAML header mapping, not XLSX files. Interests
 are a fixed list; report weeks are Monday–Sunday. Active-member historical figures
 use current status, and dashboard as_of does not reconstruct every past state.
-Member/unsent counts in the branch register are still placeholders; the dashboard
-and scoped operational lists supply actual figures.
+Branch-register counts follow member.list and collection.list permissions for
+each branch; denied metrics display a dash rather than a zero.
 CMS seed event dates are fixed. Refreshing a page supplies current data; no push
 updates exist. Free hosting can cold-start and needs operator-managed backup/expiry
 work. [Security limitations](security.md#known-limitations-and-operator-checks) and

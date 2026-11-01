@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n money %}
 {% block title %}{{ branch.code }} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
   <p><a href="{% url 'branch-list' %}">{% translate "Back to branches" %}</a></p>
@@ -18,7 +18,7 @@
     <dt>{% translate "Opened on" %}</dt><dd>{{ branch.opened_on|default:"—" }}</dd>
     <dt>{% translate "Closed on" %}</dt><dd>{{ branch.closed_on|default:"—" }}</dd>
   </dl>
-  <section><h2>{% translate "Counts" %}</h2><p>{% translate "Members" %}: — · {% translate "Unsent collections" %}: —</p></section>
+  <section><h2>{% translate "Counts" %}</h2><p>{% translate "Members" %}: {% if branch.member_count != None %}<bdi>{{ branch.member_count }}</bdi>{% else %}—{% endif %} · {% translate "Unsent collections" %}: {% if branch.unsent_count != None %}<bdi>{{ branch.unsent_count }}</bdi> · <bdi>{{ branch.unsent_amount|money }}</bdi>{% else %}—{% endif %}</p></section>
   {% if can_edit %}<p><a href="{% url 'branch-edit' branch.pk %}">{% translate "Edit branch" %}</a></p>{% endif %}
   {% if actions %}
     <section><h2>{% translate "Change status" %}</h2>

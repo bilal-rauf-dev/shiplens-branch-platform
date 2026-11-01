@@ -23,6 +23,7 @@ def test_t_ops_health(client, clock, monkeypatch):
         "status": "ok",
         "db": "ok",
         "version": "abcdef1",
+        "release": "1.0.0",
         "time": "2026-10-25T20:30:00Z",
     }
     assert response["Cache-Control"] == "no-store"
@@ -64,6 +65,13 @@ def test_health_version_fallbacks(
 
     assert response.status_code == 200
     assert response.json()["version"] == expected
+
+
+def test_health_release_uses_settings(client, settings, monkeypatch):
+    settings.RELEASE_VERSION = "2.3.4"
+    monkeypatch.setattr(selectors, "check_database", lambda: True)
+
+    assert client.get("/health").json()["release"] == "2.3.4"
 
 
 def test_health_probe_timeouts_and_cleanup():

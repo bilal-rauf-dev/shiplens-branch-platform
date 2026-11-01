@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.templatetags.static import static
 from django.urls import translate_url
 from django.utils.translation import gettext as _
@@ -41,6 +42,7 @@ def public_context(request):
         ),
     }
     return {
+        "release_version": settings.RELEASE_VERSION,
         "page_title": _("Get involved")
         if match and match.url_name == "volunteer-apply"
         else _("Ujala Volunteer Network"),

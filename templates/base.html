@@ -59,6 +59,6 @@
       {% block content %}{% endblock %}
     </main>
     {% if user.is_authenticated and not public_page %}</div>{% endif %}
-    <footer class="site-footer"><div class="container footer-grid"><div><p class="type-title-l">{% translate "Ujala Volunteer Network" %}</p><p>{% translate "Light up your city" %}</p>{% if demo_mode %}<p class="chip">{% translate "Demo data" %}</p>{% endif %}</div><div>{% include "public/contact_details.html" %}</div><nav aria-label="{% translate 'Footer navigation' %}"><a href="{% url 'public-contact' %}">{% translate "Contact" %}</a><a href="{% url 'public-privacy' %}">{% translate "Privacy" %}</a>{% include "public/language_switcher.html" %}</nav></div></footer>
+    <footer class="site-footer"><div class="container footer-grid"><div><p class="type-title-l">{% translate "Ujala Volunteer Network" %}</p><p>{% translate "Light up your city" %}</p>{% if release_version %}<p>{% translate "Version" %} <bdi>{{ release_version }}</bdi></p>{% endif %}{% if demo_mode %}<p class="chip">{% translate "Demo data" %}</p>{% endif %}</div><div>{% include "public/contact_details.html" %}</div><nav aria-label="{% translate 'Footer navigation' %}"><a href="{% url 'public-contact' %}">{% translate "Contact" %}</a><a href="{% url 'public-privacy' %}">{% translate "Privacy" %}</a>{% include "public/language_switcher.html" %}</nav></div></footer>
   </body>
 </html>

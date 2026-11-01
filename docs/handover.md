@@ -29,8 +29,8 @@ weekly drafts in every mode, then Gunicorn. A seeded
 marker preserves demo changes on ordinary redeployments. Development Compose does
 not call startup's seeding path.
 
-After a deploy, check `/health` for HTTP 200, `db=ok` and the expected seven-character
-commit version; check HTTP→HTTPS redirect, certificate, `/en/`, `/ur/`, five logins
+After a deploy, check `/health` for HTTP 200, `db=ok`, `release=1.0.0` and the expected
+seven-character commit `version`; check HTTP→HTTPS redirect, certificate, `/en/`, `/ur/`, five logins
 and the October dashboard. Check actual GitHub job results and Render's checks-pass
 setting, not only the configuration file. A successful internal HTTP health probe
 does not prove public TLS. Use [CI](ci.md) and [testing](testing.md) for those checks.

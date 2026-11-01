@@ -49,8 +49,11 @@ in business-rules.md when checking delivered behavior.
 ## Screenshots and artwork
 
 - [screenshots/dashboard-en.png](screenshots/dashboard-en.png) — Fresh local October 2026 head-office dashboard.
+- [screenshots/dashboard-ur.png](screenshots/dashboard-ur.png) — The same October 2026 dashboard in Urdu.
 - [assets/readme-banner.svg](assets/readme-banner.svg) — Original purple README banner; vector artwork, not an application screenshot.
-- [screenshots/export-report-ur.png](screenshots/export-report-ur.png) — Existing Urdu weekly-report PDF verification image.
+- [screenshots/export-report-en.png](screenshots/export-report-en.png) — English R7 weekly-report PDF first page.
+- [screenshots/export-report-ur.png](screenshots/export-report-ur.png) — Urdu R7 weekly-report PDF first page.
+- [screenshots/home-en.png](screenshots/home-en.png) — English public home with the supplied illustrations and original diya mark.
 - [screenshots/home-ur.png](screenshots/home-ur.png) — Urdu public home captured from the local authored seed.
 
 ## Planning archive

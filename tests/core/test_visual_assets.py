@@ -5,6 +5,7 @@ from pathlib import Path
 from xml.etree import ElementTree
 
 import pytest
+import tinycss2
 from django.conf import settings
 
 from apps.cms.models import ILLUSTRATIONS
@@ -53,3 +54,52 @@ def test_t_ui_template_icon_contract():
     for name in declared:
         assert (ROOT / "static/img/icons" / f"{name}.svg").is_file(), name
         assert f'mask-image: url("../img/icons/{name}.svg")' in css
+
+
+def test_t_ui_motion_is_opt_in_and_composited():
+    """Future CSS must not animate layout, colour or reduced-motion pages."""
+    transitions = []
+
+    def declarations(content, opted_in, *, keyframe=False):
+        for declaration in tinycss2.parse_declaration_list(
+            content, skip_comments=True, skip_whitespace=True
+        ):
+            if declaration.type != "declaration":
+                continue
+            name = declaration.lower_name
+            value = tinycss2.serialize(declaration.value).strip()
+            if keyframe:
+                assert name in {"opacity", "transform"}
+            if name == "scroll-behavior":
+                assert value != "smooth"
+            if name.startswith(("animation", "transition")) and value != "none":
+                assert opted_in, (name, value)
+                if name in {"transition", "transition-property"}:
+                    properties = set(re.findall(r"(?:^|,)\s*([-\w]+)", value))
+                    assert properties <= {"opacity", "transform"}
+
+    def rules(items, opted_in=False):
+        for rule in items:
+            if rule.type == "qualified-rule":
+                declarations(rule.content, opted_in)
+            elif rule.type == "at-rule" and rule.content is not None:
+                if rule.lower_at_keyword == "media":
+                    media = tinycss2.serialize(rule.prelude)
+                    rules(
+                        tinycss2.parse_rule_list(rule.content),
+                        opted_in or "prefers-reduced-motion: no-preference" in media,
+                    )
+                elif rule.lower_at_keyword == "keyframes":
+                    assert opted_in
+                    for frame in tinycss2.parse_rule_list(
+                        rule.content, skip_comments=True, skip_whitespace=True
+                    ):
+                        declarations(frame.content, opted_in, keyframe=True)
+                elif rule.lower_at_keyword == "view-transition":
+                    assert opted_in
+                    assert "navigation: auto" in tinycss2.serialize(rule.content)
+                    transitions.append(rule)
+
+    for path in (ROOT / "static/css").glob("*.css"):
+        rules(tinycss2.parse_stylesheet(path.read_text(encoding="utf-8")))
+    assert len(transitions) == 1

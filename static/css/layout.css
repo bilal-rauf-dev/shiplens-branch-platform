@@ -133,7 +133,7 @@ nav { display: flex; flex-wrap: wrap; align-items: center; gap: var(--md-s4); }
   .public-header-actions .btn { padding-inline: var(--md-s2); }
   .brand { min-inline-size: 0; padding-inline: var(--md-s2); }
 }
-@media (width < 400px) { .brand-full { display: none; } .brand-short { display: inline; } }
+@media (width < 480px) { .brand-full { display: none; } .brand-short { display: inline; } }
 @media (width >= 768px) {
   .public-card.card--featured { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); align-items: center; gap: var(--md-s6); }
 }

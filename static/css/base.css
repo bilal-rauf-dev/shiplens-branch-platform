@@ -23,7 +23,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: auto; }
 body {
   margin-block: 0;
   margin-inline: 0;
@@ -93,8 +93,8 @@ bdi, [dir="ltr"] { unicode-bidi: isolate; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
-    transition-duration: 1ms !important;
-    animation-duration: 1ms !important;
+    transition: none !important;
+    animation: none !important;
     transform: none !important;
   }
   .skip-link { inset-block-start: -100vh; }
@@ -103,4 +103,7 @@ bdi, [dir="ltr"] { unicode-bidi: isolate; }
 
 /* Mirroring is a reading direction, independent of motion preferences. */
 .icon-directional { display: inline-block; }
-[dir="rtl"] .icon-directional { scale: -1 1; }
+[dir="rtl"] .icon-directional, [dir="rtl"] .icon--send,
+[dir="rtl"] .icon--logout,
+[dir="rtl"] .status-badge[data-status="SUBMITTED"]::before,
+[dir="rtl"] .status-badge[data-status="RESUBMITTED"]::before { scale: -1 1; }

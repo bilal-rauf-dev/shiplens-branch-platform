@@ -12,7 +12,6 @@
     ? '"Noto Naskh Arabic", "Roboto", serif'
     : tokens.getPropertyValue("--md-font").trim();
   Chart.defaults.color = tokens.getPropertyValue("--md-on-surface-variant").trim();
-  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const monthLabel = new Intl.DateTimeFormat(locale, {
     month: "short", year: "2-digit", timeZone: "UTC", numberingSystem: "latn"
   });
@@ -20,7 +19,8 @@
     locale: locale + "-u-nu-latn",
     responsive: true,
     maintainAspectRatio: false,
-    animation: reducedMotion ? false : { duration: 300 },
+    // Keep data charts still; page motion is limited to CSS opacity/transform.
+    animation: false,
     plugins: {
       legend: { rtl, textDirection: rtl ? "rtl" : "ltr" },
       tooltip: { rtl, textDirection: rtl ? "rtl" : "ltr" }

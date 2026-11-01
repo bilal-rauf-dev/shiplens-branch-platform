@@ -12,6 +12,6 @@
       <td data-label="{% translate 'Actions' %}"><a href="{% url 'volunteer-role-edit' role.pk %}">{% translate "Edit volunteer role" %}</a>
         {% if role.is_active %}<form method="post" action="{% url 'volunteer-role-deactivate' role.pk %}" class="inline-action">{% csrf_token %}<button type="submit" class="btn btn--filled btn--error btn--sm">{% translate "Deactivate volunteer role" %}</button></form>{% endif %}
       </td>
-    </tr>{% empty %}<tr><td colspan="6">{% translate "No volunteer roles found." %}</td></tr>{% endfor %}</tbody>
+    </tr>{% empty %}<tr><td colspan="6">{% include "partials/empty_illustration.html" %}{% translate "No volunteer roles found." %}</td></tr>{% endfor %}</tbody>
   </table></div>
 {% endblock %}

@@ -17,7 +17,7 @@
       <td data-label="{% translate 'Action' %}"><span class="chip status-badge"><bdi>{{ row.event.action }}</bdi></span></td>
       <td data-label="{% translate 'Entity' %}">{% if row.entity_url %}<a href="{{ row.entity_url }}"><bdi>{{ row.event.entity_label }}</bdi></a>{% else %}{{ row.event.entity_label|default:"—" }}{% endif %}</td>
       <td data-label="{% translate 'Branch' %}"><bdi>{{ row.branch_code }}</bdi></td><td data-label="{% translate 'Changed fields' %}">{{ row.summary }}</td>
-    </tr>{% empty %}<tr><td colspan="6">{% translate "No audit events found." %}</td></tr>{% endfor %}</tbody>
+    </tr>{% empty %}<tr><td colspan="6">{% include "partials/empty_illustration.html" %}{% translate "No audit events found." %}</td></tr>{% endfor %}</tbody>
   </table></div>
   {% if is_paginated %}<nav class="pagination" aria-label="{% translate 'Audit pages' %}">
     {% if page_obj.has_previous %}<a href="?{{ filter_query }}&amp;page={{ page_obj.previous_page_number }}">{% translate "Previous" %}</a>{% endif %}

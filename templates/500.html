@@ -1,8 +1,9 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 {% block title %}{% translate "Something went wrong" %} · {% translate "ShipLens" %}{% endblock %}
 {% block content %}
   <section class="card empty-state">
+  <img class="state-illustration" src="{% static 'img/states/empty.svg' %}" width="192" height="144" alt="">
   <h1 class="page-title">{% translate "Something went wrong" %}</h1>
   <p>{% translate "Please try again later." %}</p>
   <a class="btn btn--tonal" href="{% url 'home' %}">{% translate "Return home" %}</a>

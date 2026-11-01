@@ -23,7 +23,7 @@
         <td data-label="{% translate 'Full name' %}">{{ application.full_name }}</td><td data-label="{% translate 'Branch' %}"><bdi>{{ application.preferred_branch.code }}</bdi></td>
         <td data-label="{% translate 'Status' %}"><span class="chip status-badge" data-status="{{ application.status }}">{{ application.get_status_display }}</span></td><td data-label="{% translate 'Submitted (PKT)' %}"><bdi>{{ application.created_at|date:"DATETIME_FORMAT" }}</bdi></td>
       </tr>
-    {% empty %}<tr><td colspan="5">{% translate "No applications found." %}</td></tr>{% endfor %}</tbody>
+    {% empty %}<tr><td colspan="5">{% include "partials/empty_illustration.html" %}{% translate "No applications found." %}</td></tr>{% endfor %}</tbody>
   </table></div>
   {% if is_paginated %}<nav class="pagination" aria-label="{% translate 'Application pages' %}">
     {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}&amp;status={{ selected_status }}&amp;branch_id={{ request.GET.branch_id|urlencode }}">{% translate "Previous" %}</a>{% endif %}

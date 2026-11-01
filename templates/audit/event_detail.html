@@ -17,7 +17,7 @@
   </dl>
   <div class="table-container card"><table class="data-table"><caption class="visually-hidden">{% translate "Audit log" %}</caption>
     <thead><tr><th scope="col">{% translate "Field" %}</th><th scope="col">{% translate "Before" %}</th><th scope="col">{% translate "After" %}</th></tr></thead>
-    <tbody>{% for change in changes %}<tr><th scope="row">{{ change.field }}</th><td data-label="{% translate 'Field' %}"><pre><bdi>{{ change.before }}</bdi></pre></td><td data-label="{% translate 'Before' %}"><pre><bdi>{{ change.after }}</bdi></pre></td></tr>{% empty %}<tr><td colspan="3">{% translate "No field changes" %}</td></tr>{% endfor %}</tbody>
+    <tbody>{% for change in changes %}<tr><th scope="row">{{ change.field }}</th><td data-label="{% translate 'Field' %}"><pre><bdi>{{ change.before }}</bdi></pre></td><td data-label="{% translate 'Before' %}"><pre><bdi>{{ change.after }}</bdi></pre></td></tr>{% empty %}<tr><td colspan="3">{% include "partials/empty_illustration.html" %}{% translate "No field changes" %}</td></tr>{% endfor %}</tbody>
   </table></div>
   <h2>{% translate "Metadata" %}</h2><pre>{{ metadata }}</pre>
   <p><a href="{% url 'audit-list' %}">{% translate "Back to audit log" %}</a></p>

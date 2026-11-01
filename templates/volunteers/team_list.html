@@ -12,6 +12,6 @@
       {% if can_manage %}<td data-label="{% translate 'Actions' %}"><a href="{% url 'team-edit' team.pk %}">{% translate "Rename team" %}</a>
         {% if team.is_active %}<form method="post" action="{% url 'team-deactivate' team.pk %}" class="inline-action">{% csrf_token %}<button type="submit" class="btn btn--filled btn--error btn--sm">{% translate "Deactivate team" %}</button></form>{% endif %}
       </td>{% endif %}
-    </tr>{% empty %}<tr><td colspan="4">{% translate "No teams found." %}</td></tr>{% endfor %}</tbody>
+    </tr>{% empty %}<tr><td colspan="4">{% include "partials/empty_illustration.html" %}{% translate "No teams found." %}</td></tr>{% endfor %}</tbody>
   </table></div>
 {% endblock %}

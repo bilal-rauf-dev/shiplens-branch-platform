@@ -81,8 +81,14 @@ pip-licenses is a development-only attribution tool, not an application dependen
   [third-party notices](../tests/e2e/vendor/LICENSE-3RD-PARTY.txt) and
   [provenance](../tests/e2e/vendor/README.md).
 
-The four bundled CMS SVG illustrations are authored in this repository, rather
-than fetched from an image service. Public pages load no third-party fonts or
+The four original CMS illustrations (learning, community, care and growth)
+remain available for stored content. The owner-supplied unDraw illustrations,
+including the unselected health/tree variants, are by Katerina Limpitsouni and
+used under the [unDraw licence](https://undraw.co/license). Their geometry is
+unchanged; SVG metadata is stripped, inline styles use presentation attributes,
+and the original purple accent is aligned to #6750A4. The diya brand mark in
+`static/img/brand/diya.svg` is original artwork authored for this project.
+Public pages load no third-party fonts or
 analytics. Python, PostgreSQL and the Docker image's native libraries retain their
 upstream notices; the pip table inventories Python distributions, not OS packages.
 Urdu PDF shaping uses Pango/HarfBuzz through WeasyPrint. Material Design 3 informed

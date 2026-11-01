@@ -24,6 +24,12 @@ ILLUSTRATIONS = [
     ("img/cms/community.svg", _("Community")),
     ("img/cms/care.svg", _("Care")),
     ("img/cms/growth.svg", _("Growth")),
+    ("img/cms/hero-volunteers.svg", _("Volunteers")),
+    ("img/cms/education.svg", _("Education")),
+    ("img/cms/rations.svg", _("Rations")),
+    ("img/cms/health.svg", _("Health")),
+    ("img/cms/trees.svg", _("Trees")),
+    ("img/cms/orientation.svg", _("Orientation")),
 ]
 
 

@@ -19,7 +19,7 @@
       <td data-label="{% translate 'Volunteer role' %}">{% if LANGUAGE_CODE == 'ur' %}{{ member.volunteer_role.name_ur }}{% else %}{{ member.volunteer_role.name_en }}{% endif %}</td>
       <td data-label="{% translate 'Status' %}"><span class="chip status-badge" data-status="{{ member.status }}">{{ member.get_status_display }}</span></td>
       <td data-label="{% translate 'Joined on' %}"><bdi>{{ member.joined_on|date:"DATE_FORMAT" }}</bdi></td>
-    </tr>{% empty %}<tr><td colspan="7">{% translate "No members found." %}</td></tr>{% endfor %}</tbody>
+    </tr>{% empty %}<tr><td colspan="7">{% include "partials/empty_illustration.html" %}{% translate "No members found." %}</td></tr>{% endfor %}</tbody>
   </table></div>
   {% if is_paginated %}<nav class="pagination" aria-label="{% translate 'Member pages' %}">
     {% if page_obj.has_previous %}<a href="?{{ filter_query }}&amp;page={{ page_obj.previous_page_number }}">{% translate "Previous" %}</a>{% endif %}

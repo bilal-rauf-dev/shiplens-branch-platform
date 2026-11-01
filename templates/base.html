@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% translate "ShipLens" %}{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{{ meta_description }}{% endblock %}">
-    <link rel="icon" href="{% static 'img/cms/growth.svg' %}" type="image/svg+xml">
+    <link rel="icon" href="{% static 'img/brand/diya.svg' %}" type="image/svg+xml">
     {% if indexable %}
     <link rel="canonical" href="{{ canonical_url }}">
     <link rel="alternate" hreflang="en" href="{{ alternate_en }}">
@@ -32,7 +32,7 @@
     <a class="skip-link" href="#main">{% translate "Skip to main content" %}</a>
     <header class="site-header top-app-bar">
       <div class="container top-app-bar__inner">
-        <a class="brand" href="{% url 'home' %}" aria-label="{% translate 'Ujala Volunteer Network' %}"><span class="brand-full">{% translate "Ujala Volunteer Network" %}</span><span class="brand-short" aria-hidden="true">{% translate "Ujala" %}</span></a>
+        <a class="brand" href="{% url 'home' %}" aria-label="{% translate 'Ujala Volunteer Network' %}"><img class="brand-mark" src="{% static 'img/brand/diya.svg' %}" width="32" height="32" alt=""><span class="brand-full">{% translate "Ujala Volunteer Network" %}</span><span class="brand-short" aria-hidden="true">{% translate "Ujala" %}</span></a>
         {% if user.is_authenticated and not public_page %}
           <details class="staff-menu"><summary>{% translate "Menu" %}</summary><nav aria-label="{% translate 'Main navigation' %}">{% include "partials/staff_navigation.html" %}</nav></details>
         {% else %}

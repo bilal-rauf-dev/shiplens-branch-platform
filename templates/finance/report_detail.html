@@ -54,7 +54,7 @@
 <td data-label="{% translate 'Method' %}">{{ line.method }}</td>
 <td class="numeric" data-label="{% translate 'Amount (PKR)' %}"><bdi>{{ line.amount|money }}</bdi></td>
 </tr>{% empty %}<tr>
-<td colspan="4">{% translate "No collections found." %}</td>
+<td colspan="4">{% include "partials/empty_illustration.html" %}{% translate "No collections found." %}</td>
 </tr>{% endfor %}</tbody>
 </table>
 </div>

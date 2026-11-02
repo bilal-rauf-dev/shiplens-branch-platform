@@ -92,8 +92,9 @@ remain available for stored content. The owner-supplied unDraw illustrations
 are by Katerina Limpitsouni and used under the
 [unDraw licence](https://undraw.co/license). Their geometry is unchanged;
 SVG metadata is stripped, inline styles use presentation attributes,
-and the original purple accent is aligned to #6750A4. The diya brand mark in
-`static/img/brand/diya.svg` is original artwork authored for this project.
+and the original purple accent is aligned to #6750A4. The redrawn diya brand mark
+in `static/img/brand/diya.svg` and the skyline in
+`templates/partials/skyline.html` are original artwork for this project.
 Public pages load no third-party fonts or
 analytics. Python, PostgreSQL and the Docker image's native libraries retain their
 upstream notices; the pip table inventories Python distributions, not OS packages.

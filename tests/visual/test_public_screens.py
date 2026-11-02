@@ -107,10 +107,10 @@ async def check_and_capture(page, server_url, viewport, path, name):
     else:
         assert await page.locator('header [aria-current="page"]:visible').count() == 1
     assert (
-        await page.locator(".brand").evaluate(
+        await page.locator(".brand .lockup__name").evaluate(
             "node => getComputedStyle(node).fontWeight"
         )
-        == "500"
+        == "700"
     )
     assert (
         await page.locator(".brand").evaluate(

@@ -47,7 +47,18 @@ def test_decorative_shapes_fade_inside_their_boxes_and_avoid_form_cards():
                     assert ".public-form-card" not in selector
                     assert ".login-card" not in selector
                 if declaration.name == "mix-blend-mode":
-                    assert selector.strip() in {".hero::before", ".hero::after"}
+                    # The night bands specialise the same hero pseudo-elements.
+                    assert all(
+                        item.strip()
+                        in {
+                            ".hero::before",
+                            ".hero::after",
+                            ".home-hero::before",
+                            ".home-hero::after",
+                            ".public-stack > .hero::before",
+                        }
+                        for item in selector.split(",")
+                    )
 
 
 def test_button_state_layers_are_clipped_to_the_button():

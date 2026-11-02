@@ -2,6 +2,8 @@
 
 **Decision (2026-10-28, owner):** the UI uses **Material You / Material Design 3** with a purple seed (`#6750A4`). This replaces the teal/amber palette in `16-ux-design-screens.md` §2. Screen inventory, wireframes and page structure in `16-…` still apply; only the visual language changes.
 
+**Amendment (2026-11-02, owner):** public pages gain a "night city" layer so the site stops reading as a stock template. The purple seed stays, so staff pages and the illustrations don't change; night and amber tokens are added for public pages only. Ujala means light and the tagline is "Light up your city", so the page opens on a dark skyline whose windows switch on. Staff pages stay calm and only pick up the brand lockup and the loader. Public pages still load no JavaScript. Sections below that this changes say so.
+
 The owner's reference spec is written for Tailwind. **We don't use Tailwind** (see `AGENTS.md` §3: hand-written CSS, logical properties only, no build step). This file translates every rule into plain CSS custom properties and classes, and adds constraints from our other hard requirements: Lighthouse ≥ 90 on mobile, WCAG 2.1 AA, a strict CSP (no inline styles or scripts, fonts from `'self'` only), Urdu RTL, and zero JavaScript on public pages.
 
 ## 1. Tokens (`static/css/tokens.css`, loaded first)
@@ -27,6 +29,10 @@ The owner's reference spec is written for Tailwind. **We don't use Tailwind** (s
   --md-success: #1E6B3A;      --md-success-container: #D4EDDA; --md-on-success-container: #0B2E17;
   --md-warning: #7A5300;      --md-warning-container: #FBE7C2; --md-on-warning-container: #2B1D00;
   --md-info: #1F4E99;         --md-info-container: #DCE6F7;    --md-on-info-container: #0A1F44;
+  /* Public pages only (2026-11-02): the night, and the diya's flame */
+  --md-night: #160D2B;        --md-night-2: #2B1A55;           --md-night-3: #4F378B;
+  --md-on-night: #FFFBFE;     --md-on-night-variant: #D9CEF0;
+  --md-glow: #FFB95C;         --md-on-glow: #2B1700;           --md-warm-container: #FBE9D0;
 
   /* Shape */
   --md-radius-xs: 8px; --md-radius-sm: 12px; --md-radius-md: 16px;
@@ -57,7 +63,7 @@ Contrast checks to verify in tests/Lighthouse: on-surface on surface ≈ 16:1; p
 
 ## 2. Typography
 
-- **Roboto, self-hosted** (`static/fonts/roboto-{400,500,700}-latin.woff2`, Apache-2.0 licence file included). Not Google Fonts: our CSP allows fonts from `'self'` only, and a third-party font request costs Lighthouse points. `font-display: swap` for 400; `optional` for 500/700 to prevent late heading reflow (F1). English pages preload 400 and 500; Urdu preloads only Naskh. Latin subset only (~20 KB per weight).
+- **Roboto, self-hosted** (`static/fonts/roboto-{400,500,700}-latin.woff2`, Apache-2.0 licence file included). Not Google Fonts: our CSP allows fonts from `'self'` only, and a third-party font request costs Lighthouse points. `font-display: swap` for 400; `optional` for 500/700 to prevent late heading reflow (F1). English pages preload 400, 500 and 700; Urdu preloads Naskh 400 and 700, because the brand lockup and public headings use the bold weight on every page. Latin subset only (~20 KB per weight).
 - **Urdu keeps Noto Naskh Arabic** (Roboto has no Urdu glyphs), loaded only on `/ur/` pages, as already planned in `12-i18n-rtl.md`.
 - Scale (mobile steps one size down): Display 3.5rem/1.2 · Headline L 3rem/1.2 · Headline M 2rem/1.25 · Title L 1.5rem/1.3 · Body L 1.25rem/1.5 · Body M 1rem/1.55 · Label M 0.875rem/1.4 (letter-spacing .01em, weight 500) · Label S 0.75rem/1.4. Headings weight 500; body 400. Urdu line-height +0.25 on every step.
 
@@ -67,12 +73,13 @@ Contrast checks to verify in tests/Lighthouse: on-surface on surface ≈ 16:1; p
 |---|---|
 | **Buttons** `.btn` + `.btn--filled` / `--tonal` / `--outlined` / `--text`; sizes `--sm` 36px, default 40px, `--lg` 48px | Always pill (`--md-radius-full`), padding-inline 24–32px, Label M. Filled: primary bg, white text, no shadow at rest, `--md-elev-2` on hover. Tonal: secondary-container. Outlined: 1px outline border, primary text. Text: transparent. **State layers** via a `::before` overlay of `currentColor` at 8% (hover) / 12% (pressed) / 10% (focus) — this is the MD3 way and works for every variant and in RTL. `:active { transform: scale(.95) }`. Transition `background-color, box-shadow, transform` at `--md-dur-fast` with `--md-ease`. Disabled: opacity .38, `cursor: not-allowed`, `pointer-events: none`. Danger actions (void, close branch, return) use `.btn--filled.btn--error`. |
 | **FAB** `.fab` | Tertiary bg, 56×56, radius 16px (MD3 FAB), `--md-elev-3`. Use only for the main "add" action on mobile lists (New collection, New application review is not a FAB). Has an accessible label. |
-| **Cards** `.card`, `.card--interactive`, `.card--featured` | surface-container bg, radius 24px, padding 24–32px, no border, `--md-elev-1`. Interactive cards (links): hover → `--md-elev-2` + `scale(1.02)`; press → `scale(.98)`. Featured (e.g. the next upcoming event on Home): 2px primary ring and `translate-y(-16px)` on ≥ 768px only. |
-| **Hero / major sections** `.hero`, `.section--tonal`, `.section--primary` | Radius 48px (24px under 640px), surface-container bg, generous padding (48–96px block). `--primary` sections (final "Volunteer with us" CTA) use primary bg + white text, with nested glass cards (`rgb(255 255 255 / .12)` bg, 1px `rgb(255 255 255 / .18)` border). |
+| **Cards** `.card`, `.card--interactive`, `.card--featured` | surface-container bg, radius 24px, padding 24–32px, no border, `--md-elev-1`. Interactive cards (links): hover → `--md-elev-2` + `scale(1.02)`; press → `scale(.98)`. Public cards with artwork drop the box and use an arch-topped image instead; cards without artwork (branches) keep it. Featured (the next event on Home) is a ticket: a date stub, a dashed divider and artwork breaking out of the top edge. |
+| **Hero / major sections** `.hero`, `.section--tonal`, `.section--primary` | Public titles are full-width night bands with the skyline (`partials/skyline.html`, original artwork) and an amber glow. The Home hero holds the volunteers in a lit arch and, on desktop, stays in place while the page sheet slides over it. Inside the sheet: impact as giant numbers with no box, programs in arches, the event ticket on a band that overlaps the section above, then a lit-city call to action. On tall enough desktops, Home's footer is revealed from underneath. Remaining tonal sections keep radius 48px (24px under 640px). |
+| **Loader** `.spinner` | The Android-style circular indicator, transform-only. Shown only for a real wait: on a submitted button (`static/js/busy.js`, staff pages and login) and on dashboard charts until they draw. No splash screen, because a fake wait would cost Lighthouse points and feel slower. The public volunteer form has none, so public pages stay free of scripts. Export links have none, because a download gives the page no signal that it finished. |
 | **Inputs** (MD3 filled text field) | Height 56px, bg surface-container-low, radius 12px 12px 0 0, bottom border 1px outline at rest → 2px primary on focus (200ms colour transition), plus a visible focus ring for keyboard users. Label always visible above the field (not placeholder-only — accessibility). Errors: bottom border and helper text in `--md-error`, an error icon, `aria-invalid`. Selects, textareas and date inputs share the style; checkboxes/radios use `accent-color: var(--md-primary)` with 44px hit areas. |
 | **Chips / badges** `.chip`, `.badge--{status}` | Pill, Label S/M, tonal container colours. Status badges always include text (and an icon), never colour alone: Draft (secondary-container), Submitted/Resubmitted (info), Returned (warning), Approved/Locked (success, lock icon), Voided/Closed (error), Paused (warning), Forming (info), Active (success). |
 | **Tables** `.data-table` | Inside a card; header row on surface-container-low; row hover is a state layer only (**no scale on rows** — scaling tables causes layout jank); numbers `text-align: end` with `<bdi>`; card layout under 640px (existing behaviour). |
-| **Navigation** | Top app bar: surface at 85% opacity with `backdrop-filter: blur(12px)` and a 1px outline-variant bottom border; sticky. Active nav item = secondary-container pill. Staff app on ≥ 1024px: a navigation rail/drawer with pill active indicator; mobile: the existing `<details>` menu styled as a sheet (radius 28px). |
+| **Navigation** | Top app bar: surface at 94% opacity with `backdrop-filter: blur(12px)` and a 1px outline-variant bottom border; sticky. The brand is a lockup: the diya, a bold name and a small tracked line (never tracked or capitalised in Urdu). Public bar: the brand is the Home link, then four words, the language switch with its label, a Log in icon and a filled Get involved button; under 768px these collapse into the existing `<details>` menu behind an icon. Icon-only controls keep hidden text for screen readers. Active nav item = secondary-container pill. Staff app on ≥ 1024px: a navigation rail/drawer with pill active indicator; mobile: the existing `<details>` menu styled as a sheet (radius 28px). |
 | **Messages / toasts** | Server flash messages as a snackbar-style card (inverse surface `#313033`, text `#F4EFF4`), radius 8px, `role="status"`; errors use error-container. |
 | **Empty states** | Card with an illustration, one sentence and a tonal button. |
 | **Dialogs** (confirm transitions) | Native `<dialog>` or a confirm page; radius 28px, `--md-elev-3`, scrim `rgb(0 0 0 / .32)`. |
@@ -91,6 +98,7 @@ The spec's signature is large blurred colour shapes. CSS `filter: blur(64px)` on
 
 - Easing `--md-ease` everywhere; 200ms for buttons/colours, 300ms for cards/shadows, ≤ 400ms for sheets/dialogs.
 - Only `background-color`, `box-shadow`, `opacity`, `transform` animate. Never radius or layout.
+- Home: skyline windows light up in eight batches on load (opacity only). On desktop, scrolling sinks the skyline and dims the hero through an overlay, so the hero text itself never animates. Scroll-driven rules sit behind `@supports (animation-timeline: scroll())`, so other browsers simply skip them.
 - Hover-only effects are wrapped in `@media (hover: hover)` so touch devices don't get stuck hover states.
 - `@media (prefers-reduced-motion: reduce)`: remove all transforms and transitions except colour changes ≤ 1ms.
 
@@ -102,9 +110,9 @@ All new CSS uses logical properties (`padding-inline`, `inset-inline-start`, `bo
 
 | Area | Treatment |
 |---|---|
-| Public site (7 pages) | Full expression: hero with organic shapes, tonal sections, interactive cards, featured event, primary CTA band, pill buttons. |
+| Public site (7 pages) | Full expression, in `static/css/public.css`, which staff pages don't load: night bands with the skyline, arches, the event ticket, overlapping layers, pill buttons. |
 | Login / password pages | Centered card (radius 28px) on surface with one soft shape. |
-| Staff app | Calm: tonal surfaces, rounded cards, MD3 inputs and buttons, status chips, navigation rail; no decorative shapes; no hover scaling on tables. |
+| Staff app | Calm: tonal surfaces, rounded cards, MD3 inputs and buttons, status chips, navigation rail; no decorative shapes; no hover scaling on tables. Only the brand lockup and the loader are shared with the 2026-11-02 redesign. |
 | PDFs | Same colour roles and Roboto/Naskh, but flat (no shadows, gradients or shapes). |
 | Dark mode | Not in scope (spec defines light only). |
 

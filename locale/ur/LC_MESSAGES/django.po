@@ -3390,10 +3390,6 @@ msgid ""
 "A little of your time can make a lasting difference in your neighbourhood."
 msgstr "آپ کا تھوڑا سا وقت آپ کے محلے میں دیرپا اچھا فرق لا سکتا ہے۔"
 
-#: templates/public/navigation.html:2
-msgid "Home"
-msgstr "صفحۂ اول"
-
 #: templates/public/navigation.html:3
 msgid "About"
 msgstr "تعارف"
@@ -3578,3 +3574,7 @@ msgstr "غیر ارسال شدہ وصولیوں کی سی ایس وی برآمد
 #: templates/base.html
 msgid "Version"
 msgstr "ورژن"
+
+#: templates/partials/brand_lockup.html
+msgid "Volunteer Network"
+msgstr "رضاکار نیٹ ورک"

@@ -21,6 +21,15 @@ TEXT_PAIRS = [
     ("on-success-container", "success-container"),
     ("on-warning-container", "warning-container"),
     ("on-info-container", "info-container"),
+    ("on-night", "night"),
+    ("on-night", "night-2"),
+    ("on-night", "night-3"),
+    ("on-night-variant", "night-2"),
+    ("on-night-variant", "night-3"),
+    ("glow", "night"),
+    ("glow", "night-2"),
+    ("on-glow", "glow"),
+    ("on-surface", "warm-container"),
 ]
 
 UI_BORDER_PAIRS = [

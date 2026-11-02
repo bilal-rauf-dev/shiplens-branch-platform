@@ -28,8 +28,8 @@ Workflow: `makemessages -l ur --ignore=venv` → translate → `compilemessages`
 ## 5. Typography and font cost
 | Locale | Font | Delivery |
 |---|---|---|
-| en | System font stack (`system-ui, -apple-system, Segoe UI, Roboto, sans-serif`) | 0 KB |
-| ur | **Noto Naskh Arabic** (OFL) regular + bold, subset to Arabic + Urdu ranges (U+0600–06FF, U+0750–077F, U+FB50–FDFF, U+FE70–FEFF, digits, punctuation) with `pyftsubset`, woff2 | ~2 × 45–70 KB; loaded **only on `/ur/` pages** via a locale-specific stylesheet; `font-display: swap`; `<link rel="preload">` for regular weight only |
+| en | Self-hosted **Roboto** (Apache-2.0), Latin WOFF2 400/500/700 | All three weights preloaded under plan 24's 2026-11-02 amendment; 400 uses `swap`, 500/700 use `optional` (F1). |
+| ur | **Noto Naskh Arabic** (OFL) regular + bold, subset to Arabic + Urdu ranges (U+0600–06FF, U+0750–077F, U+FB50–FDFF, U+FE70–FEFF, digits, punctuation) with `pyftsubset`, woff2 | ~2 × 45–70 KB; loaded **only on `/ur/` pages** via a locale-specific stylesheet; `font-display: swap`; both weights preloaded under plan 24's 2026-11-02 amendment. |
 - Urdu line-height 1.8, base size 1.0625rem (Urdu glyphs read small).
 - OPT-07: Noto Nastaliq Urdu for headings only.
 

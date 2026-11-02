@@ -89,6 +89,10 @@ The IDs below match the deliverables in [the compliance plan](docs/planning/01-c
 
 **Public home**
 
+The night-city home pairs an original skyline and diya with volunteer artwork,
+large impact numbers and an event ticket. Sticky layers and window lighting use
+CSS; public content pages still ship no scripts. See the [public-site guide](docs/public-website.md).
+
 | English | اردو |
 | --- | --- |
 | ![English public home with volunteer illustrations](docs/screenshots/home-en.png) | ![Urdu public home with mirrored navigation and local Naskh typography](docs/screenshots/home-ur.png) |

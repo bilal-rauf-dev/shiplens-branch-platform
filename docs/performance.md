@@ -23,9 +23,9 @@ latency or Lighthouse scores.
 | Images | 3,357 |
 | **Total including images** | **107,331** |
 
-There are no script elements on public pages. Only the active language's regular
-font is preloaded: Roboto for English, Noto Naskh Arabic for Urdu. Other weights
-load when used. Existing CMS SVG illustrations are already minified, below the
+There are no script elements on public content pages. At this P13 measurement,
+only the active language's regular font was preloaded. The current policy is
+described below. Existing CMS SVG illustrations are already minified, below the
 60 KB hero budget, and rendered images have explicit width and height.
 
 ## Query budgets
@@ -63,7 +63,14 @@ Run the query tests with the normal PostgreSQL test settings. Asset or content
 changes can change the byte totals; query budgets remain regression assertions.
 
 
-F1 supersedes the preload policy measured above: English now preloads Roboto 400
-and 500, with 500/700 set to `font-display: optional` to prevent late heading
-swaps. Urdu still preloads only Naskh. The earlier byte measurements are retained
-as dated P13 evidence and are not measurements of this updated font policy.
+F1 changed Roboto 500/700 to `font-display: optional` to prevent late heading swaps.
+Roboto 400 and both Naskh weights retain `swap`; the regular-face fallback alias
+remains removed.
+
+The D6 amendment preloads Roboto 400/500/700 on English pages and Noto Naskh Arabic
+400/700 on Urdu pages, because the brand lockup and public headings use bold.
+No font files were added. The earlier byte measurements remain dated P13 evidence,
+not measurements of the current policy. Public window lighting and scroll effects
+use only CSS opacity/transform and respect reduced motion; public pages load no
+loader script. [D6 verification](testing.md#d6-night-city-verification) records the
+current browser and Lighthouse checks.

@@ -25,6 +25,15 @@
   --md-info: #1F4E99;
   --md-info-container: #DCE6F7;
   --md-on-info-container: #0A1F44;
+  /* Public pages only: the night the city lights up in, and the diya's flame. */
+  --md-night: #160D2B;
+  --md-night-2: #2B1A55;
+  --md-night-3: #4F378B;
+  --md-on-night: #FFFBFE;
+  --md-on-night-variant: #D9CEF0;
+  --md-glow: #FFB95C;
+  --md-on-glow: #2B1700;
+  --md-warm-container: #FBE9D0;
 
   --md-radius-xs: 8px;
   --md-radius-sm: 12px;
@@ -52,6 +61,9 @@
   --md-s6: 32px;
   --md-s8: 48px;
   --md-s12: 96px;
+  --md-bar: 70px;
+  /* Lines full-width bands up with the 72rem content column. */
+  --md-gutter: max(var(--md-s4), calc((100% - 72rem) / 2));
 
   --md-font: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
   --md-font-ur: "Noto Naskh Arabic", "Roboto", serif;

@@ -2,14 +2,14 @@
 
 ## 1. Pages measured (mobile preset, LHCI on CI + manual PageSpeed on live)
 `/en/` · `/ur/` · `/en/get-involved/` (form) · `/en/branches/` · `/en/events/` — plus spot checks of `/ur/get-involved/` and `/en/programs/`.
-**Targets:** ≥ 90 in Performance, Accessibility, Best Practices, SEO on every measured page. Staff pages: not scored by judges, but kept light (same CSS, Chart.js only on dashboard).
+**Targets:** ≥ 90 in Performance, Accessibility, Best Practices, SEO on every measured page. D6's verification target is ≥ 95. Staff pages share the core CSS, load busy.js for forms and Chart.js only on financial dashboards; they omit public.css.
 
 ## 2. Performance tactics
 | Tactic | Detail |
 |---|---|
-| Zero JS on public pages | No framework; language switcher is a plain form; mobile nav via `<details>/<summary>`. Only the form page loads a ~1 KB script for live character counters (optional). |
-| Small CSS layers | MD3 tokens/base/components/layout, loaded in order and compressed; hashed filename via WhiteNoise manifest; `Cache-Control: max-age=31536000, immutable`. Critical CSS inlining unnecessary at this size. |
-| Fonts | MD3 (plan 24) uses self-hosted Roboto for EN and subset woff2 Naskh for UR; `swap` for regular Roboto/Naskh and `optional` for Roboto 500/700; EN preloads Roboto 400/500, UR only regular Naskh (F1). Naskh loads only on `/ur/`. |
+| Zero JS on public pages | No framework or counter script; language switcher is a plain form; mobile nav via `<details>/<summary>`. busy.js is reserved for staff screens and login. |
+| Small CSS layers | MD3 tokens/base/components/icons/layout, then public.css on public pages and urdu.css on Urdu pages; hashed filename via WhiteNoise manifest; `Cache-Control: max-age=31536000, immutable`. Critical CSS inlining unnecessary at this size. |
+| Fonts | MD3 (plan 24) uses self-hosted Roboto for EN and subset woff2 Naskh for UR; `swap` for regular Roboto/Naskh and `optional` for Roboto 500/700. Under the 2026-11-02 amendment, EN preloads Roboto 400/500/700 and UR preloads Naskh 400/700 for the bold lockup/headings. Naskh loads only on `/ur/`. |
 | Images | Few, pre-optimised at build time: AVIF/WebP + JPEG fallback via `<picture>`, explicit `width`/`height` (no CLS), `loading="lazy"` below the fold, `fetchpriority="high"` for hero. Hero ≤ 60 KB. SVG logo inline. |
 | Server | gunicorn 2 workers; DB queries per public page ≤ 6 (`select_related`, `prefetch_related`); `django-debug-toolbar` locally to check N+1. Template fragment cache for public CMS blocks (60 s, invalidated on publish) — optional. |
 | Compression | WhiteNoise brotli/gzip for static; `GZipMiddleware` **off** (BREACH risk with CSRF tokens on HTML) — HTML is small anyway. |

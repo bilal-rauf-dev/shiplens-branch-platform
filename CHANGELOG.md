@@ -25,6 +25,7 @@ and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Night city public design, brand lockup and loader ([#29])
 - Material You design system adapted to handwritten CSS ([#11]).
 - Illustrations, distinct icons, motion and staff layout refinements ([#27]).
 
@@ -60,3 +61,4 @@ and uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 [#25]: https://github.com/bilal-rauf-dev/shiplens-branch-platform/pull/25
 [#26]: https://github.com/bilal-rauf-dev/shiplens-branch-platform/pull/26
 [#27]: https://github.com/bilal-rauf-dev/shiplens-branch-platform/pull/27
+[#29]: https://github.com/bilal-rauf-dev/shiplens-branch-platform/pull/29

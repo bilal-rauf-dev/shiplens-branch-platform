@@ -1,10 +1,10 @@
 # ShipLens design system
 
-The source of truth is [the Material You specification](planning/24-design-system.md). Use its light colour roles and components when changing a template. The public site can use soft radial shapes; staff data pages stay plain and tonal.
+The source of truth is [the Material You specification](planning/24-design-system.md), including the 2 November night-city amendment. Public pages add night/amber roles, skylines, arches and layered sections; staff data pages keep the light, plain tonal design. The brand lockup and real-wait indicators are shared.
 
 ## Use the styles
 
-`base.html` loads `tokens.css`, `base.css`, `components.css`, then `layout.css` (and `urdu.css` on Urdu pages). Use a token such as `var(--md-primary)` or `var(--md-s4)` instead of a new colour or spacing value. Typography and the keyboard focus ring come from `base.css`. Roboto and Noto Naskh Arabic are served locally from `static/fonts/`.
+`base.html` loads `tokens.css`, `base.css`, `components.css`, `icons.css`, then `layout.css`. Public pages additionally load `public.css`; Urdu pages then load `urdu.css`. Staff pages omit `public.css`. Use a token such as `var(--md-primary)` or `var(--md-s4)` instead of a new colour or spacing value. Typography and the keyboard focus ring come from `base.css`. Roboto and Noto Naskh Arabic are served locally from `static/fonts/`; see the [current preload policy](performance.md).
 
 Use the existing classes in `components.css`: `.btn` plus a variant (`.btn--filled`, `.btn--tonal`, `.btn--outlined`, `.btn--text`, or `.btn--error`), `.card`, `.chip`, `.status-badge`, `.data-table`, `.filter-panel`, `.notice`, and `.empty-state`. Status badges take a `data-status` value matching the model status; the CSS supplies the tonal colour and icon. Keep their visible text. Wrap tables in `.table-container.card`, give each numeric cell `.numeric`, and wrap displayed numbers or codes in `<bdi>`.
 
@@ -23,6 +23,6 @@ Run `python bin/check_conventions.py` and the full pytest suite after CSS or tem
 
 ## Lighthouse
 
-Use the production Docker image and an empty database. Audit `/en/`, `/ur/`, and `/en/get-involved/` in mobile mode, checking Performance, Accessibility, Best Practices, and SEO. Production redirects plain HTTP to HTTPS; when testing on localhost, send `X-Forwarded-Proto: https` to simulate the trusted proxy. The [design specification](planning/24-design-system.md#8-acceptance-for-the-design-pr) sets a minimum score of 90 in each category.
+Use the production Docker image with a disposable authored seed and the five configured mobile pages, three valid runs each. D6 targets median scores of at least 95 in Performance, Accessibility, Best Practices and SEO; the existing CI baseline remains 90. The local proxy supplies the trusted TLS header for all requests, including `robots.txt`. See [testing](testing.md#d6-night-city-verification) for current results.
 
-The D1 check on 28 October 2026 used Lighthouse 13.6.0 and a fresh Docker image containing the current source and collected static files on the existing production runtime, with an empty PostgreSQL database. Scores (Performance / Accessibility / Best Practices / SEO) were **100 / 100 / 96 / 91** on each of the three routes. A full default Dockerfile rebuild was attempted but stopped while the package registry was delivering wheels at about 12–25 KB/s; rerun that build before release. The local HTTP proxy simulation causes Lighthouse's separate `robots.txt` fetch to time out, which accounts for the remaining SEO deduction.
+Historical D1 evidence (28 October 2026, Lighthouse 13.6.0, empty PostgreSQL database): **100 / 100 / 96 / 91** on each of the three routes then audited. That run used a rebuilt application layer; its attempted full dependency rebuild stopped during slow package downloads. The old proxy also timed out on Lighthouse's separate `robots.txt` request. Later work fixed the proxy, and D6 uses a complete default Docker build and the seeded five-page checks above.

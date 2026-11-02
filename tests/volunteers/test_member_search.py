@@ -6,6 +6,7 @@ from urllib.parse import parse_qs, urlsplit
 import polib
 import pytest
 from django.db import connection
+from django.templatetags.static import static
 from django.test.utils import CaptureQueriesContext
 from django.urls import reverse
 
@@ -304,7 +305,8 @@ def test_member_list_urdu_and_mobile_labels(
     assert "ارکان" in response.text
     assert "آزمائشی شاخ" in response.text
     assert 'data-label="رکن شناخت"' in response.text
-    assert "<script" not in response.text
+    assert response.text.count("<script") == 1
+    assert f'<script src="{static("js/busy.js")}" defer></script>' in response.text
 
 
 @pytest.mark.performance

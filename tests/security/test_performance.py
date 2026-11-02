@@ -121,7 +121,10 @@ class PageAssets(HTMLParser):
 
 @pytest.mark.parametrize(
     "language,fonts",
-    [("en", ["roboto-400", "roboto-500"]), ("ur", ["noto-naskh-arabic-400"])],
+    [
+        ("en", ["roboto-400", "roboto-500", "roboto-700"]),
+        ("ur", ["noto-naskh-arabic-400", "noto-naskh-arabic-700"]),
+    ],
 )
 def test_only_active_language_fonts_are_preloaded(client, sample_data, language, fonts):
     page = PageAssets(client.get(f"/{language}/").text)

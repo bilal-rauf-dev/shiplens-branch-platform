@@ -50,4 +50,6 @@
       options: { ...options, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } }
     });
   }
+  // The charts have drawn, so the wait is over.
+  document.querySelectorAll(".chart-frame > .spinner").forEach(spinner => spinner.remove());
 })();

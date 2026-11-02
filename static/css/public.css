@@ -1,0 +1,257 @@
+/* Public pages: a night city that lights up as you arrive. No script is involved.
+   Layers, back to front: the hero stays put, the page sheet slides over it, bands
+   overlap inside the sheet, and at the end the page lifts off the footer. */
+
+/* Main is full width here; each child picks its own width. */
+.public-main { position: relative; z-index: 1; padding-block: 0 var(--md-s8); background: var(--md-surface); }
+.public-main > * { inline-size: min(72rem, 100% - 2 * var(--md-s4)); margin-inline: auto; }
+.public-main > .public-stack, .public-main > .home-hero, .public-main > .home-sheet { inline-size: 100%; }
+.public-main:not(:has(> .public-stack, > .home-hero)) { padding-block-start: var(--md-s8); }
+.public-main:has(> .home-hero) { padding-block: 0; background: var(--md-night); }
+.public-stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--md-s8); }
+.public-stack > * { inline-size: min(72rem, 100% - 2 * var(--md-s4)); justify-self: center; }
+
+/* One row: four words, then the controls. Home is the brand itself. */
+.top-app-bar { background: rgb(255 251 254 / .94); }
+/* Header, footer and page content all share one 72rem column. */
+.top-app-bar__inner, .footer-grid { max-inline-size: calc(72rem + 2 * var(--md-s4)); }
+.top-app-bar__inner > .brand { margin-inline-start: calc(-1 * var(--md-s2)); }
+.top-app-bar__inner:has(.public-header-actions) { flex-wrap: nowrap; gap: var(--md-s2); }
+.public-navigation { flex-wrap: nowrap; gap: var(--md-s1); margin-inline-start: var(--md-s3); }
+.public-header-actions { display: flex; align-items: center; flex-shrink: 0; gap: var(--md-s1); margin-inline-start: auto; }
+.public-header-actions .btn--text { min-block-size: 44px; }
+.icon-btn { inline-size: 44px; padding-inline: 0; }
+.icon-btn .icon { font-size: 1.2rem; }
+.icon-btn[aria-current="page"] { background: var(--md-secondary-container); }
+.public-menu { display: none; }
+.public-menu summary { list-style: none; cursor: pointer; }
+.public-menu summary::-webkit-details-marker { display: none; }
+@media (width < 1024px) {
+  .public-navigation { margin-inline-start: 0; }
+  .public-navigation .nav-link { padding-inline: var(--md-s2); }
+  .header-cta { padding-inline: var(--md-s4); }
+}
+@media (width < 768px) {
+  .public-navigation, .header-cta { display: none; }
+  .public-menu { display: block; }
+  .public-menu nav {
+    position: absolute; z-index: 70; inset-block-start: 100%; inset-inline-end: var(--md-s4);
+    inline-size: min(20rem, calc(100vw - 2rem)); padding-block: var(--md-s4); padding-inline: var(--md-s4);
+    flex-direction: column; align-items: stretch;
+    border-radius: var(--md-radius-xl); background: var(--md-surface-container); box-shadow: var(--md-elev-3);
+  }
+  .public-header-actions .btn--text:not(.icon-btn) { padding-inline: var(--md-s2); }
+}
+
+/* The night band is shared by the home hero and every inner page title. */
+.home-hero, .public-stack > .hero {
+  padding-inline: var(--md-gutter); border-radius: 0; color: var(--md-on-night);
+  background: linear-gradient(170deg, var(--md-night) 0%, var(--md-night-2) 58%, var(--md-night-3) 100%);
+}
+.public-stack > .hero {
+  inline-size: 100%; padding-block: var(--md-s12) calc(var(--md-s12) + var(--md-s8));
+  border-end-start-radius: var(--md-radius-3xl); border-end-end-radius: var(--md-radius-3xl);
+}
+.public-stack > .hero h1 { font-weight: 700; letter-spacing: -.02em; }
+[lang="ur"] .public-stack > .hero h1 { letter-spacing: 0; }
+.public-stack > .hero a:not(.btn) { color: var(--md-on-night); }
+.home-hero::before, .public-stack > .hero::before {
+  inset-block-start: auto; inset-block-end: -30%; inset-inline-end: -6%; inline-size: 62%; block-size: 110%;
+  background: radial-gradient(closest-side, rgb(255 185 92 / .42), rgb(255 185 92 / 0));
+  mix-blend-mode: normal;
+}
+.public-stack > .hero::after { content: none; }
+/* Darkens the whole hero as the sheet covers it, so the text itself never animates. */
+.home-hero::after {
+  inset: 0; z-index: 2; inline-size: auto; block-size: auto; border-radius: 0;
+  background: var(--md-night); mix-blend-mode: normal; opacity: 0;
+}
+.home-hero :focus-visible, .public-stack > .hero :focus-visible, .public-cta :focus-visible,
+.site-footer :focus-visible { outline-color: var(--md-glow); }
+
+/* Original skyline artwork. Each path draws one batch of windows. */
+.hero > .skyline, .public-cta > .skyline {
+  position: absolute; z-index: 0; inset-inline: 0; inset-block-end: 0;
+  inline-size: 100%; block-size: 220px; pointer-events: none;
+}
+.public-stack > .hero > .skyline { block-size: 150px; }
+[dir="rtl"] .skyline { scale: -1 1; }
+.skyline__back { fill: var(--md-night-2); }
+.skyline__front { fill: var(--md-night); }
+.skyline__win { fill: var(--md-glow); }
+.skyline__win--off { opacity: .16; }
+.public-cta .skyline__win--off { opacity: 1; }
+
+/* Layer one: the home hero. */
+.eyebrow { color: var(--md-primary); font-size: .875rem; font-weight: 500; }
+.home-hero .eyebrow { display: flex; align-items: center; gap: var(--md-s2); margin-block: 0; color: var(--md-glow); letter-spacing: .08em; text-transform: uppercase; }
+.home-hero .eyebrow::before { content: ""; inline-size: 28px; block-size: 2px; background: var(--md-glow); }
+[lang="ur"] .home-hero .eyebrow { font-size: 1rem; letter-spacing: 0; text-transform: none; }
+.public-hero { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: center; gap: var(--md-s6); }
+.public-hero > *, .public-card > * { position: relative; z-index: 1; min-inline-size: 0; }
+.public-hero img, .public-card img { inline-size: 100%; max-inline-size: 100%; block-size: auto; border-radius: var(--md-radius-lg); aspect-ratio: 4 / 3; object-fit: contain; }
+.public-hero .actions { margin-block-start: var(--md-s6); }
+.home-hero { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: end; min-block-size: calc(100svh - var(--md-bar)); padding-block: var(--md-s8) 0; }
+.home-hero > div { align-self: center; padding-block-end: var(--md-s12); }
+.home-hero h1 { margin-block: var(--md-s4) var(--md-s5); font-size: clamp(3.25rem, 7.2vw, 6rem); font-weight: 700; line-height: 1.02; letter-spacing: -.03em; }
+[lang="ur"] .home-hero h1 { font-size: clamp(2.75rem, 6vw, 5rem); line-height: 1.35; letter-spacing: 0; }
+.home-hero .type-body-l { margin-block: 0; font-weight: 500; }
+.home-hero .cms-prose { max-inline-size: 34rem; color: var(--md-on-night-variant); }
+.home-hero .btn--outlined { color: var(--md-on-night); background: var(--md-night-2); border-color: rgb(255 255 255 / .45); }
+.home-hero .btn--filled, .public-cta .btn--filled { color: var(--md-on-glow); background: var(--md-glow); box-shadow: 0 8px 28px rgb(255 185 92 / .35); }
+/* The volunteers stand in a lit archway: a doorway in the night city. */
+.home-hero > img, .public-stack > .public-hero > img {
+  justify-self: end; object-position: 50% 100%; padding-block: var(--md-s8) var(--md-s6); padding-inline: var(--md-s5);
+  border-radius: 0; border-start-start-radius: 50% 40%; border-start-end-radius: 50% 40%;
+  background: linear-gradient(180deg, #FFF7E8 0%, var(--md-surface-container) 100%);
+  box-shadow: 0 0 90px rgb(255 185 92 / .45);
+}
+.home-hero > img { inline-size: min(100%, 31rem); aspect-ratio: 5 / 6; padding-block-end: calc(var(--md-s8) + var(--md-s6)); }
+.public-stack > .public-hero > img { border-end-start-radius: var(--md-radius-lg); border-end-end-radius: var(--md-radius-lg); }
+.public-stack > .card > h2, .public-stack > section > h2 { font-size: clamp(1.75rem, 3.4vw, 2.5rem); font-weight: 700; line-height: 1.2; letter-spacing: -.01em; }
+[lang="ur"] .public-stack > .card > h2, [lang="ur"] .public-stack > section > h2 { line-height: 1.45; letter-spacing: 0; }
+/* Inner pages: the first card or filter overlaps the band's lower edge. */
+.public-stack > .hero + .card, .public-stack > .hero + .filter-panel {
+  position: relative; z-index: 1; margin-block-start: calc(-2 * var(--md-s8)); box-shadow: var(--md-elev-3);
+}
+
+/* Layer two: the page itself is a sheet. */
+.home-sheet {
+  position: relative; z-index: 2; margin-block-start: calc(-1 * var(--md-s8));
+  border-radius: var(--md-radius-3xl); background: var(--md-surface);
+  box-shadow: 0 -18px 50px rgb(10 4 25 / .45);
+}
+.home-sheet > section { padding-inline: var(--md-gutter); }
+.home-sheet h2 { margin-block: 0; font-size: clamp(2.25rem, 4.4vw, 3.5rem); font-weight: 700; line-height: 1.1; letter-spacing: -.02em; }
+[lang="ur"] .home-sheet h2 { line-height: 1.4; letter-spacing: 0; }
+.impact-section { padding-block: var(--md-s12) var(--md-s8); }
+.impact-section > .type-body-l { margin-block: var(--md-s3) 0; color: var(--md-on-surface-variant); }
+.impact-section ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-block: var(--md-s8) 0; padding-inline: 0; list-style: none; }
+.impact-section li { display: grid; align-content: start; gap: var(--md-s1); padding-inline: var(--md-s6); border-inline-start: 1px solid var(--md-outline-variant); color: var(--md-on-surface-variant); }
+.impact-section li:first-child { padding-inline-start: 0; border-inline-start: 0; }
+.impact-section li > strong:first-child { font-size: clamp(4.5rem, 9vw, 7.5rem); font-weight: 700; line-height: 1; letter-spacing: -.04em; color: var(--md-primary); }
+.impact-section li > strong:nth-child(2) { font-size: 1.25rem; font-weight: 500; color: var(--md-on-surface); }
+
+.section-heading { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--md-s3); margin-block-end: var(--md-s6); }
+.section-heading h2 { margin-block: 0; }
+.programs-section { padding-block: var(--md-s4) calc(var(--md-s12) + var(--md-s8)); }
+.public-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: var(--md-s6); }
+.public-card { display: block; color: var(--md-on-surface); text-decoration: none; overflow-wrap: anywhere; }
+.public-card h3 { margin-block: var(--md-s4); }
+.public-card__link { color: var(--md-primary); font-weight: 500; }
+/* Cards with artwork lose the box: the shape is the arch. Branch cards keep theirs. */
+.public-card:not(.card--featured):has(> img) { max-inline-size: 32rem; padding-block: 0; padding-inline: 0; border-radius: 0; background: none; box-shadow: none; }
+.public-card:not(.card--featured):has(> img):hover { box-shadow: none; }
+.public-card:not(.card--featured) > img {
+  padding-block-start: var(--md-s8); padding-inline: var(--md-s6); object-position: 50% 100%;
+  border-radius: 0; border-start-start-radius: 50% 42%; border-start-end-radius: 50% 42%;
+  background: var(--md-secondary-container);
+}
+.public-card:not(.card--featured):nth-child(even) > img { background: var(--md-warm-container); }
+.public-card:not(.card--featured) h3 { margin-block: var(--md-s5) var(--md-s2); font-size: 1.75rem; font-weight: 700; }
+.public-card:not(.card--featured) p { margin-block: 0 var(--md-s2); color: var(--md-on-surface-variant); }
+@media (width >= 768px) {
+  .home-sheet .public-card:nth-child(even) { margin-block-start: var(--md-s8); }
+}
+
+/* Layer three: a band that overlaps the section above, holding an event ticket. */
+.event-band {
+  position: relative; z-index: 3; margin-block-start: calc(-1 * var(--md-s8));
+  padding-block: var(--md-s12) calc(var(--md-s12) + var(--md-s8));
+  border-start-start-radius: var(--md-radius-3xl); border-start-end-radius: var(--md-radius-3xl);
+  background: var(--md-secondary-container);
+}
+.card--featured { padding-block: 0; padding-inline: 0; border-radius: var(--md-radius-xl); background: var(--md-surface); box-shadow: 0 18px 40px rgb(79 55 139 / .22); }
+.card--featured > div { padding-block: var(--md-s5); padding-inline: var(--md-s5); }
+.card--featured h3 { margin-block: 0 var(--md-s2); }
+.card--featured p { margin-block: 0 var(--md-s2); }
+.card--featured > img { display: none; }
+.ticket-stub { position: relative; display: flex; align-items: baseline; gap: var(--md-s2); padding-block: var(--md-s4); padding-inline: var(--md-s5); border-block-end: 2px dashed var(--md-outline-variant); color: var(--md-primary); }
+.ticket-stub__day { font-size: 3rem; font-weight: 700; line-height: 1; letter-spacing: -.03em; }
+.ticket-stub__month { font-weight: 500; }
+@media (width >= 768px) {
+  .card--featured { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 18rem); align-items: center; }
+  .ticket-stub {
+    display: grid; grid-row: 1; grid-column: 1; align-self: stretch; align-content: center; justify-items: center;
+    min-inline-size: 10rem; border-block-end: 0; border-inline-end: 2px dashed var(--md-outline-variant);
+  }
+  .ticket-stub::before, .ticket-stub::after {
+    content: ""; position: absolute; inset-inline-end: -13px; inline-size: 24px; block-size: 24px;
+    border-radius: 50%; background: var(--md-secondary-container);
+  }
+  .ticket-stub::before { inset-block-start: -12px; }
+  .ticket-stub::after { inset-block-end: -12px; }
+  .ticket-stub__day { font-size: 5rem; }
+  .card--featured > div { grid-row: 1; grid-column: 2; padding-block: var(--md-s6); padding-inline: var(--md-s6); }
+  /* The art breaks out of the ticket's top edge. */
+  .card--featured > img { display: block; grid-row: 1; grid-column: 3; align-self: end; margin-block-start: -88px; border-radius: 0; object-position: 50% 100%; }
+}
+
+/* Layer four: at the end of the page every window is lit. */
+.public-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--md-s5); }
+.public-cta > * { position: relative; z-index: 1; }
+.public-cta > div:first-of-type { flex: 1 1 20rem; }
+.home-sheet > .public-cta {
+  position: relative; z-index: 4; margin-block-start: calc(-1 * var(--md-s8));
+  padding-block: var(--md-s12) calc(var(--md-s12) + 124px); padding-inline: var(--md-gutter);
+  border-radius: var(--md-radius-3xl); color: var(--md-on-night);
+  background: linear-gradient(190deg, var(--md-night-3) 0%, var(--md-night-2) 70%, var(--md-night) 100%);
+}
+.public-cta p { margin-block: var(--md-s3) 0; max-inline-size: 34rem; font-size: 1.125rem; color: var(--md-on-night-variant); }
+
+/* Layer five: the footer waits underneath. */
+.site-footer { border-block-start: 0; color: var(--md-on-night); background: var(--md-night); }
+.site-footer a, .site-footer .btn--text { color: var(--md-on-night); }
+.site-footer .lockup__tag { color: var(--md-on-night-variant); }
+.site-footer .chip { color: var(--md-on-glow); background: var(--md-glow); }
+
+@media (width >= 1024px) and (height >= 680px) {
+  .home-hero { position: sticky; z-index: 0; inset-block-start: var(--md-bar); }
+  /* Home only: on short pages the reveal would slice the footer at the fold. */
+  body:has(.home-hero) .site-footer { position: sticky; z-index: 0; inset-block-end: 0; }
+}
+
+@media (width < 768px) {
+  .public-hero { grid-template-columns: minmax(0, 1fr); }
+  .home-hero { min-block-size: 0; padding-block-start: var(--md-s6); }
+  .home-hero > div { padding-block-end: 0; }
+  .home-hero > img, .public-stack > .public-hero > img { justify-self: center; max-inline-size: 22rem; }
+  .public-stack { gap: var(--md-s6); }
+}
+@media (width < 640px) {
+  .public-stack > .hero { padding-block: var(--md-s8) calc(var(--md-s12) + var(--md-s6)); border-end-start-radius: var(--md-radius-xl); border-end-end-radius: var(--md-radius-xl); }
+  .home-sheet { border-radius: var(--md-radius-xl); }
+  .event-band { border-start-start-radius: var(--md-radius-xl); border-start-end-radius: var(--md-radius-xl); }
+  .home-sheet > .public-cta { border-radius: var(--md-radius-xl); }
+  .home-hero h1 { font-size: clamp(2.75rem, 13vw, 3.5rem); }
+  .impact-section ul { grid-template-columns: minmax(0, 1fr); gap: var(--md-s5); margin-block-start: var(--md-s6); }
+  .impact-section li { padding-inline: 0; padding-block-start: var(--md-s4); border-inline-start: 0; border-block-start: 1px solid var(--md-outline-variant); }
+  .impact-section li:first-child { padding-block-start: 0; border-block-start: 0; }
+}
+
+/* Windows light up in batches. Opacity only, and only where motion is welcome. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes window-on { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes window-dim { from { opacity: 0; } to { opacity: .16; } }
+  @keyframes city-sink { to { transform: translateY(40px); } }
+  @keyframes hero-dim { from { opacity: 0; } to { opacity: .6; } }
+  @keyframes lift-in { from { transform: translateY(24px); } to { transform: translateY(0); } }
+  .home-hero .skyline__win { animation: window-on 500ms ease-out both; }
+  .home-hero .skyline__win--off { animation-name: window-dim; }
+  .home-hero .skyline__win--1 { animation-delay: 150ms; }
+  .home-hero .skyline__win--2 { animation-delay: 400ms; }
+  .home-hero .skyline__win--3 { animation-delay: 650ms; }
+  .home-hero .skyline__win--4 { animation-delay: 900ms; }
+  .home-hero .skyline__win--5 { animation-delay: 1150ms; }
+  .home-hero .skyline__win--6 { animation-delay: 1400ms; }
+  .home-hero .skyline__win--7 { animation-delay: 1650ms; }
+  .home-hero .skyline__win--8 { animation-delay: 1900ms; }
+  /* Scroll-driven depth. Browsers without it simply skip this block. */
+  @supports (animation-timeline: scroll()) {
+    @media (width >= 1024px) and (height >= 680px) {
+      .home-hero .skyline { animation: city-sink linear both; animation-timeline: scroll(root); animation-range: 0 90vh; }
+      .home-hero::after { animation: hero-dim linear both; animation-timeline: scroll(root); animation-range: 0 90vh; }
+    }
+    .impact-section li, .public-card:not(.card--featured) > img { animation: lift-in linear both; animation-timeline: view(); animation-range: entry 0% entry 45%; }
+  }
+}

@@ -146,6 +146,8 @@ def test_t_ui_motion_is_opt_in_and_composited():
                         rule.content, skip_comments=True, skip_whitespace=True
                     ):
                         declarations(frame.content, opted_in, keyframe=True)
+                elif rule.lower_at_keyword == "supports":
+                    rules(tinycss2.parse_rule_list(rule.content), opted_in)
                 elif rule.lower_at_keyword == "view-transition":
                     assert opted_in
                     assert "navigation: auto" in tinycss2.serialize(rule.content)

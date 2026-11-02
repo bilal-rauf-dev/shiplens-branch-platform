@@ -1,6 +1,7 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 {% block title %}{% translate "Log in" %} — {% translate "ShipLens" %}{% endblock %}
+{% block extra_head %}<script src="{% static 'js/busy.js' %}" defer></script>{% endblock %}
 {% block content %}
   <section class="login-card card">
   <h1 class="page-title">{% translate "Log in" %}</h1>

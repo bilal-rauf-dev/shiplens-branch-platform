@@ -47,9 +47,9 @@ def test_nav_current_handles_error_pages_without_a_request():
 def test_public_header_marks_only_its_current_destination(client, route):
     response = client.get(reverse(route))
     assert response.status_code == 200
-    # Desktop and mobile share the same navigation partial; only one is visible.
+    # Home is the brand alone; Apply has desktop and mobile destinations.
     assert CurrentLinks(response.text).links == [reverse(route)] * (
-        1 if route == "account-login" else 2
+        2 if route == "volunteer-apply" else 1
     )
 
 

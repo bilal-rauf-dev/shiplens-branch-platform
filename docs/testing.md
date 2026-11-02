@@ -190,8 +190,9 @@ by Lighthouse.
 The earlier P12 regular-face alias still allowed timing-dependent heading rewraps
 in CI. F1 removes it. Roboto 500/700 use `font-display: optional`: a late heading
 font will not replace its fallback during that page load. Roboto 400 and the
-Urdu Naskh faces retain `swap`. English pages preload 400 and 500; Urdu preloads
-only Naskh, with no new font files.
+Urdu Naskh faces retain `swap`. At F1 verification, English preloaded 400 and 500;
+Urdu preloaded Naskh 400, with no new font files. The D6 amendment below supersedes
+that preload selection while retaining the display policies and CLS limit.
 
 The mobile font regression now checks 412 px and 360 px. At each width it creates
 six fresh browser contexts: five with both heading faces delayed 0.7 seconds,
@@ -346,3 +347,61 @@ planning row now matches the illustration used since D4.
 Lighthouse was not rerun for D5: these CSS changes affect staff pages or viewports
 768 px and wider, so the mobile public-page audits are unaffected. CI runs
 Lighthouse on push.
+
+## D6 night-city verification
+
+Step 1 passed 2,312 PostgreSQL tests, 0 failed, with 97.86% app coverage.
+Ruff, formatting, conventions, translation coverage (784 entries) and migration
+drift checks passed. The 217 focused server checks cover both languages, the
+4/3/1 impact display, two Home skylines, the four-link navigation, ticket dates,
+script boundaries and the nine new 4.5:1 text pairs. Corrected markup checks
+passed 127 cases. The new design/motion/width browser group passed 22 cases.
+
+The public accessibility preflight found a real brand-label mismatch: adjacent
+wordmark spans joined the English words without a space. One space between those
+spans fixes the accessible name without changing the grid layout. All sixteen
+EN/UR public accessibility cases then passed. The font-shift and hero-contrast
+preflight cases also passed without changing their thresholds.
+
+The older navigation-count, staff-script, hero-selector and brand-weight tests
+now match the amendment. Staff script checks allow exactly the external
+`busy.js`, preserving the ban on inline scripts; every public no-script assertion
+remains. The motion guard also checks nested `@supports` rules. The unused Home
+translation was removed after a source search; the replaced brand-full,
+brand-short, card--glass and volunteer_activism classes/icon are absent too.
+
+Screenshot capture uses Chrome at 1440×1000, DPR 1, reduced motion, fonts ready
+and a full lazy-image scroll. Only capture contexts bypass CSP and inject
+`.home-hero, .site-footer { position: static !important; }` so full-page images
+show every layer. Capture also sets `.home-hero { contain: layout; }`: making
+the hero static otherwise moves its absolute decorative layers to the main's
+containing block and causes capture-only overflow. This restores their bounds
+without changing production CSS. Normal E2E and Lighthouse retain production CSP
+and positioning.
+
+Step 2 passed 2,312 PostgreSQL tests, 0 failed, with 97.86% app coverage, and the
+complete E2E suite passed 58/58. This includes the unchanged 0.1 font-shift limit
+and 4.5:1 rendered hero-button contrast checks. The eight EN/UR viewports at 360,
+412, 768 and 1440 px passed, as did the sixteen existing desktop/mobile visual
+cases against the disposable seeded HTTP stack. The latter retain their control,
+navigation, RTL and overflow assertions and now check the bold lockup text.
+
+D6 mobile Lighthouse medians (three valid runs per page, after the heavy suites):
+
+| Page | Performance | Accessibility | Best Practices | SEO |
+| --- | ---: | ---: | ---: | ---: |
+| `/en/` | 99 | 100 | 100 | 100 |
+| `/ur/` | 99 | 100 | 100 | 100 |
+| `/en/get-involved/` | 99 | 100 | 100 | 100 |
+| `/en/branches/` | 100 | 100 | 100 | 100 |
+| `/en/events/` | 99 | 100 | 100 | 100 |
+
+All fifteen individual audits met 95 in every category. No window-path reduction
+was needed. Only the localhost HTTPS audit was skipped; live certificate checks
+remain separate. Lighthouse collection settings and CI thresholds were unchanged.
+
+All four EN/UR home/dashboard screenshots were retaken from the restored
+disposable authored seed and individually inspected. The skylines, arches and
+ticket are visible, and no dashboard column is clipped. Age/compliance indicators
+use the capture date, 2 November 2026. Ruff, formatting and conventions passed;
+the final documentation-link check passed all 62 cases.

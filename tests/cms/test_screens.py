@@ -1,4 +1,5 @@
 import pytest
+from django.templatetags.static import static
 from django.test import Client
 from django.urls import reverse
 
@@ -39,7 +40,10 @@ def test_editor_saves_and_previews_working_copy(client, editor, item):
         'class="cms-image-picker"',
     ]:
         assert marker in response.text
-    assert "<script" not in response.text
+    # Staff editors load only the external submission indicator, never inline JS.
+    assert response.text.count("<script") == 1
+    assert f'<script src="{static("js/busy.js")}" defer></script>' in response.text
+    assert "css/public.css" not in response.text
     assert (
         client.post(reverse("content-edit", args=[item.pk]), payload()).status_code
         == 302

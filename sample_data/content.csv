@@ -1,10 +1,10 @@
 type,slug,status,sort_order,image,event_start,event_end,location_en,location_ur,title_en,summary_en,body_en,title_ur,summary_ur,body_ur
 PAGE_SECTION,home-hero,PUBLISHED,1,img/cms/hero-volunteers.svg,,,,,Light up your city,Give a few hours. Help your neighbours. Grow together.,"You do not need to do everything. A little time, shared with care, can make your neighbourhood stronger.",اپنے شہر کو روشن کریں,کچھ وقت دیجیے، اپنے پڑوسیوں کا ساتھ دیجیے، اور مل کر آگے بڑھیے۔,آپ کو سب کچھ اکیلے کرنے کی ضرورت نہیں۔ آپ کا تھوڑا سا وقت اور خلوص آپ کے محلے میں اچھا فرق لا سکتا ہے۔
-PAGE_SECTION,home-impact,PUBLISHED,2,,,,,,"Small acts, shared purpose","Our community story, in a few numbers.","- **4 neighbourhood branches** connecting local volunteers
-- **3 areas of service**: learning, food support and community health
-- **1 shared purpose**: service with dignity",چھوٹے قدم، مشترک مقصد,چند اعداد میں ہماری اجتماعی کوششوں کی جھلک۔,"- **4 مقامی شاخیں** رضاکاروں کو ایک دوسرے سے جوڑتی ہیں
-- **3 شعبوں میں خدمت**: تعلیم، غذائی تعاون اور صحت
-- **1 مشترک مقصد**: عزتِ نفس کے ساتھ خدمت"
+PAGE_SECTION,home-impact,PUBLISHED,2,,,,,,"Small acts, shared purpose","Our community story, in a few numbers.","- **4** **neighbourhood branches** connecting local volunteers
+- **3** **areas of service** across learning, food support and community health
+- **1** **shared purpose** of service with dignity",چھوٹے قدم، مشترک مقصد,چند اعداد میں ہماری اجتماعی کوششوں کی جھلک۔,"- **4** **مقامی شاخیں** رضاکاروں کو ایک دوسرے سے جوڑتی ہیں
+- **3** **شعبوں میں خدمت** تعلیم، غذائی تعاون اور صحت
+- **1** **مشترک مقصد** عزتِ نفس کے ساتھ خدمت"
 PAGE_SECTION,about-story,PUBLISHED,3,,,,,,Neighbours helping neighbours,A fictional network built around a simple idea: show up for one another.,"Ujala Volunteer Network brings local people together for practical community service. Our teams make room for different skills and schedules.
 
 We value dignity, transparency and steady, thoughtful service. You are welcome to start small and learn alongside others.",پڑوسیوں کے لیے پڑوسیوں کا ساتھ,ایک فرضی تنظیم، جس کا مقصد ایک دوسرے کے کام آنا ہے۔,"اجالا والنٹیئر نیٹ ورک مقامی لوگوں کو بامقصد خدمت کے لیے یکجا کرتا ہے۔ ہماری ٹیموں میں مختلف مہارتوں اور اوقات رکھنے والے افراد کے لیے جگہ ہے۔
